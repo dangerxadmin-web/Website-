@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no,viewport-fit=cover" />
+<meta name="theme-color" content="#05070d" />
+<title>Download ArenaX App — Esports Tournaments</title>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent;}
+:root{
+  --bg-0:#05070d; --bg-1:#0a0e1a; --bg-2:#10162a; --bg-3:#1a2238;
+  --stroke:#1f2a4a; --stroke-2:#2a3860;
+  --text:#eef2ff; --dim:#8892b0; --mute:#5c6784;
+  --cyan:#00e5ff; --cyan-2:#7c4dff;
+  --red:#ff2e51; --red-2:#ff5c73;
+  --gold:#ffb300; --green:#00e676; --orange:#ff9500;
+  --r:14px; --r-sm:10px;
+  --shadow:0 10px 30px rgba(0,0,0,.6);
+  --glow:0 0 22px rgba(0,229,255,.4);
+  --font-d:'Orbitron','Rajdhani',system-ui,sans-serif;
+  --font-b:'Rajdhani','Segoe UI',system-ui,sans-serif;
+}
+html,body{min-height:100%;background:var(--bg-0);color:var(--text);font-family:var(--font-b);font-size:15px;overflow-x:hidden;-webkit-font-smoothing:antialiased;}
+body::before{content:"";position:fixed;inset:0;pointer-events:none;z-index:0;background:radial-gradient(700px 500px at -10% -20%,rgba(124,77,255,.18),transparent 60%),radial-gradient(700px 500px at 110% 5%,rgba(0,229,255,.14),transparent 60%),radial-gradient(500px 400px at 50% 110%,rgba(255,46,81,.12),transparent 60%);}
+a{color:inherit;text-decoration:none;}
+img{display:block;max-width:100%;}
+.dl-shell{position:relative;z-index:1;min-height:100vh;display:flex;flex-direction:column;align-items:center;padding:32px 20px 48px;max-width:720px;margin:0 auto;}
+
+/* ── Hero ─────────────────────────────────────────────── */
+.dl-hero{text-align:center;margin-bottom:28px;width:100%;}
+.dl-logo{font-family:var(--font-d);font-size:34px;font-weight:900;letter-spacing:6px;color:var(--text);margin-bottom:10px;}
+.dl-logo span{color:var(--cyan);text-shadow:var(--glow);}
+.dl-tagline{color:var(--dim);font-size:14px;letter-spacing:1.5px;font-weight:600;text-transform:uppercase;}
+.dl-emblem{font-size:64px;line-height:1;margin-bottom:14px;}
+
+/* ── Download Card ───────────────────────────────────── */
+.dl-card{
+  width:100%;
+  background:linear-gradient(160deg,var(--bg-2),var(--bg-1));
+  border:1px solid var(--stroke);
+  border-radius:22px;
+  padding:28px 22px 26px;
+  text-align:center;
+  box-shadow:var(--shadow);
+  margin-bottom:26px;
+  position:relative;
+  overflow:hidden;
+}
+.dl-card::before{
+  content:"";position:absolute;top:0;left:0;right:0;height:3px;
+  background:linear-gradient(90deg,var(--cyan),var(--cyan-2),var(--red));
+}
+.dl-card h1{
+  font-family:var(--font-d);
+  font-size:22px;
+  font-weight:900;
+  letter-spacing:2px;
+  margin-bottom:10px;
+  color:var(--text);
+}
+.dl-card .dl-sub{
+  color:var(--dim);
+  font-size:13.5px;
+  line-height:1.6;
+  margin-bottom:22px;
+  max-width:440px;
+  margin-left:auto;
+  margin-right:auto;
+}
+
+/* ── Primary Download Button ─────────────────────────── */
+.dl-btn{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  gap:10px;
+  width:100%;
+  padding:18px 24px;
+  border-radius:14px;
+  font-family:var(--font-d);
+  font-weight:900;
+  font-size:17px;
+  letter-spacing:2px;
+  color:#04121a;
+  background:linear-gradient(135deg,var(--cyan),var(--cyan-2));
+  box-shadow:0 10px 36px rgba(0,229,255,.45);
+  transition:transform .18s ease,box-shadow .18s ease;
+  cursor:pointer;
+  border:none;
+  text-transform:uppercase;
+}
+.dl-btn:hover,.dl-btn:focus-visible{
+  transform:translateY(-2px);
+  box-shadow:0 14px 44px rgba(0,229,255,.6);
+  outline:none;
+}
+.dl-btn:active{transform:translateY(0);}
+.dl-btn .dl-btn-ico{font-size:22px;line-height:1;}
+
+.dl-meta{
+  margin-top:16px;
+  display:flex;
+  justify-content:center;
+  gap:16px;
+  flex-wrap:wrap;
+  font-size:12px;
+  color:var(--mute);
+  font-weight:600;
+}
+.dl-meta span{display:inline-flex;align-items:center;gap:5px;}
+
+/* ── Features Grid ───────────────────────────────────── */
+.dl-features{
+  display:grid;
+  grid-template-columns:1fr;
+  gap:14px;
+  width:100%;
+  margin-bottom:26px;
+}
+.dl-feature{
+  background:linear-gradient(160deg,var(--bg-2),var(--bg-1));
+  border:1px solid var(--stroke);
+  border-radius:var(--r);
+  padding:20px 18px;
+  display:flex;
+  gap:14px;
+  align-items:flex-start;
+  transition:border-color .2s,transform .2s;
+}
+.dl-feature:hover{
+  border-color:rgba(0,229,255,.4);
+  transform:translateY(-2px);
+}
+.dl-feature-ico{
+  font-size:28px;
+  flex-shrink:0;
+  width:44px;
+  height:44px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  border-radius:12px;
+  background:rgba(0,229,255,.08);
+  border:1px solid rgba(0,229,255,.25);
+}
+.dl-feature-body{min-width:0;text-align:left;}
+.dl-feature-title{
+  font-family:var(--font-d);
+  font-size:13px;
+  font-weight:700;
+  letter-spacing:1.2px;
+  color:var(--text);
+  margin-bottom:5px;
+  text-transform:uppercase;
+}
+.dl-feature-desc{
+  font-size:13px;
+  color:var(--dim);
+  line-height:1.55;
+}
+
+/* ── Benefits Strip ──────────────────────────────────── */
+.dl-benefits{
+  width:100%;
+  background:linear-gradient(135deg,rgba(0,229,255,.08),rgba(124,77,255,.06));
+  border:1px solid rgba(0,229,255,.3);
+  border-radius:var(--r);
+  padding:20px 18px;
+  margin-bottom:26px;
+  text-align:left;
+}
+.dl-benefits h2{
+  font-family:var(--font-d);
+  font-size:12px;
+  font-weight:700;
+  letter-spacing:2.5px;
+  color:var(--cyan);
+  margin-bottom:14px;
+  text-transform:uppercase;
+  display:flex;
+  align-items:center;
+  gap:8px;
+}
+.dl-benefits h2::before{
+  content:"";width:3px;height:14px;border-radius:3px;
+  background:linear-gradient(180deg,var(--cyan),var(--cyan-2));
+  box-shadow:0 0 10px var(--cyan);
+}
+.dl-benefits ul{list-style:none;padding:0;display:flex;flex-direction:column;gap:10px;}
+.dl-benefits li{
+  display:flex;
+  align-items:flex-start;
+  gap:10px;
+  font-size:13.5px;
+  color:var(--dim);
+  line-height:1.55;
+}
+.dl-benefits li::before{
+  content:"✓";
+  color:var(--green);
+  font-weight:900;
+  flex-shrink:0;
+  font-size:14px;
+  line-height:1.4;
+}
+
+/* ── Secondary / Back Link ───────────────────────────── */
+.dl-back{
+  display:inline-flex;
+  align-items:center;
+  gap:8px;
+  padding:11px 22px;
+  border-radius:100px;
+  border:1px solid var(--stroke);
+  background:var(--bg-2);
+  color:var(--dim);
+  font-size:13px;
+  font-weight:700;
+  letter-spacing:.8px;
+  transition:all .2s;
+}
+.dl-back:hover{
+  color:var(--cyan);
+  border-color:rgba(0,229,255,.45);
+  background:rgba(0,229,255,.08);
+}
+
+/* ── Safe area bottom ────────────────────────────────── */
+.dl-footnote{
+  margin-top:28px;
+  font-size:11.5px;
+  color:var(--mute);
+  text-align:center;
+  line-height:1.7;
+}
+
+/* ── Responsive ──────────────────────────────────────── */
+@media(min-width:560px){
+  .dl-features{grid-template-columns:1fr 1fr;}
+  .dl-card h1{font-size:26px;}
+  .dl-btn{font-size:18px;padding:20px 28px;}
+  .dl-logo{font-size:40px;}
+}
+@media(max-width:360px){
+  .dl-btn{font-size:15px;padding:16px 18px;letter-spacing:1.5px;}
+  .dl-card h1{font-size:19px;}
+}
+</style>
+</head>
+<body>
+
+<div class="dl-shell">
+
+  <!-- Hero -->
+  <div class="dl-hero">
+    <div class="dl-emblem">📲</div>
+    <div class="dl-logo">ARENA<span>X</span></div>
+    <div class="dl-tagline">Compete · Win · Cash Out</div>
+  </div>
+
+  <!-- Primary Download Card -->
+  <div class="dl-card">
+    <h1>Download the ArenaX App</h1>
+    <p class="dl-sub">
+      Get the full ArenaX experience — lightning-fast matchmaking, instant room credentials,
+      real-time prize notifications, and one-tap withdrawals. Built for serious mobile gamers.
+    </p>
+
+    <!-- ⬇️ Direct APK download link -->
+    <a class="dl-btn" href="arenax.apk" download="arenaX-app-release.apk">
+      <span class="dl-btn-ico">⬇️</span>
+      Download Now
+    </a>
+
+    <div class="dl-meta">
+      <span>🤖 Android 7.0+</span>
+      <span>📦 ~25 MB</span>
+      <span>🔒 100% Safe</span>
+    </div>
+  </div>
+
+  <!-- Features Grid -->
+  <div class="dl-features">
+    <div class="dl-feature">
+      <div class="dl-feature-ico">⚡</div>
+      <div class="dl-feature-body">
+        <div class="dl-feature-title">Blazing Fast</div>
+        <div class="dl-feature-desc">Native app performance means instant load times and zero lag during match joins.</div>
+      </div>
+    </div>
+
+    <div class="dl-feature">
+      <div class="dl-feature-ico">🔔</div>
+      <div class="dl-feature-body">
+        <div class="dl-feature-title">Instant Alerts</div>
+        <div class="dl-feature-desc">Get push notifications the moment your room is ready or your prize is credited.</div>
+      </div>
+    </div>
+
+    <div class="dl-feature">
+      <div class="dl-feature-ico">💰</div>
+      <div class="dl-feature-body">
+        <div class="dl-feature-title">One-Tap Withdrawals</div>
+        <div class="dl-feature-desc">Cash out to UPI directly from the app — no browser redirects, no waiting.</div>
+      </div>
+    </div>
+
+    <div class="dl-feature">
+      <div class="dl-feature-ico">🎮</div>
+      <div class="dl-feature-body">
+        <div class="dl-feature-title">Optimized for Gaming</div>
+        <div class="dl-feature-desc">Designed for BGMI &amp; Free Fire players with quick-join flows and match reminders.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Benefits Strip -->
+  <div class="dl-benefits">
+    <h2>Why Download the App?</h2>
+    <ul>
+      <li>Faster than the mobile web version — no browser overhead.</li>
+      <li>Auto-login with saved credentials — jump straight into matches.</li>
+      <li>Live prize popups and room-ready alerts you won't miss.</li>
+      <li>Works on all Android devices with a stable, lightweight build.</li>
+      <li>Free to download — no hidden charges, no ads.</li>
+    </ul>
+  </div>
+
+  <!-- Back to site -->
+  <a class="dl-back" href="index.html">← Back to ArenaX</a>
+
+  <div class="dl-footnote">
+    🔒 Your data stays secure. ArenaX never shares your info with third parties.<br>
+    By downloading, you agree to our Terms &amp; Privacy Policy.
+  </div>
+
+</div>
+
+</body>
+</html>
