@@ -1,0 +1,1992 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no,viewport-fit=cover" />
+<meta name="theme-color" content="#05070d" />
+<title>ArenaX — Esports Tournaments</title>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent;}
+:root{
+  --bg-0:#05070d; --bg-1:#0a0e1a; --bg-2:#10162a; --bg-3:#1a2238;
+  --stroke:#1f2a4a; --stroke-2:#2a3860;
+  --text:#eef2ff; --dim:#8892b0; --mute:#5c6784;
+  --cyan:#00e5ff; --cyan-2:#7c4dff;
+  --red:#ff2e51; --red-2:#ff5c73;
+  --gold:#ffb300; --green:#00e676; --orange:#ff9500;
+  --r:14px; --r-sm:10px;
+  --shadow:0 10px 30px rgba(0,0,0,.6);
+  --glow:0 0 22px rgba(0,229,255,.4);
+  --font-d:'Orbitron','Rajdhani',system-ui,sans-serif;
+  --font-b:'Rajdhani','Segoe UI',system-ui,sans-serif;
+}
+html,body{height:100%;background:var(--bg-0);color:var(--text);font-family:var(--font-b);font-size:15px;overflow-x:hidden;overscroll-behavior-y:contain;-webkit-font-smoothing:antialiased;}
+body::before{content:"";position:fixed;inset:0;pointer-events:none;z-index:0;background:radial-gradient(700px 500px at -10% -20%,rgba(124,77,255,.18),transparent 60%),radial-gradient(700px 500px at 110% 5%,rgba(0,229,255,.14),transparent 60%),radial-gradient(500px 400px at 50% 110%,rgba(255,46,81,.12),transparent 60%);}
+button{font-family:inherit;cursor:pointer;border:none;background:none;color:inherit;}
+input,textarea{font-family:inherit;}
+img{display:block;max-width:100%;}
+.hidden{display:none!important;}
+#bootLoader{position:fixed;inset:0;z-index:900;display:flex;flex-direction:column;align-items:center;justify-content:center;background:radial-gradient(circle at 50% 40%,#0d1424,#04060c 80%);transition:opacity .4s ease;padding:24px;}
+#bootLoader.fade{opacity:0;pointer-events:none;}
+.boot-logo{font-family:var(--font-d);font-size:38px;font-weight:900;letter-spacing:6px;color:var(--text);margin-bottom:22px;}
+.boot-logo span{color:var(--cyan);text-shadow:var(--glow);}
+.boot-ring{width:52px;height:52px;border-radius:50%;border:3px solid rgba(0,229,255,.15);border-top-color:var(--cyan);animation:spin .9s linear infinite;}
+@keyframes spin{to{transform:rotate(360deg);}}
+#bootError{max-width:340px;margin:24px auto 0;padding:14px 16px;background:rgba(255,46,81,.1);border:1px solid rgba(255,46,81,.4);border-radius:10px;color:#ff5c73;font-size:13px;line-height:1.55;text-align:center;}
+#bootError button{margin-top:12px;padding:9px 18px;background:linear-gradient(135deg,#ff2e51,#ff5c73);color:#fff;border-radius:8px;font-weight:700;font-size:12px;cursor:pointer;}
+#forceUpdateScreen{position:fixed;inset:0;z-index:9999;background:radial-gradient(circle at 50% 30%,#1a0a12,#050208 90%);display:none;align-items:center;justify-content:center;padding:24px;overflow-y:auto;}
+#forceUpdateScreen.show{display:flex;}
+.fu-card{width:100%;max-width:420px;background:linear-gradient(160deg,var(--bg-2),var(--bg-1));border:2px solid var(--red);border-radius:22px;padding:32px 24px 26px;text-align:center;box-shadow:0 0 60px rgba(255,46,81,.5);}
+.fu-icon{font-size:64px;margin-bottom:14px;}
+.fu-title{font-family:var(--font-d);font-size:24px;font-weight:900;letter-spacing:3px;color:var(--red-2);margin-bottom:8px;}
+.fu-version{font-family:var(--font-d);font-size:13px;font-weight:700;color:var(--gold);margin-bottom:16px;padding:6px 14px;background:rgba(255,179,0,.1);border:1px solid rgba(255,179,0,.4);border-radius:100px;display:inline-block;}
+.fu-msg{color:var(--dim);font-size:14px;line-height:1.6;margin-bottom:20px;}
+.fu-changelog{background:var(--bg-1);border:1px solid var(--stroke);border-radius:var(--r-sm);padding:14px;text-align:left;margin-bottom:20px;font-size:13px;color:var(--dim);line-height:1.7;white-space:pre-wrap;max-height:160px;overflow-y:auto;}
+.fu-changelog-title{font-family:var(--font-d);font-size:11px;color:var(--cyan);margin-bottom:8px;font-weight:700;}
+.fu-btn{width:100%;padding:16px;border-radius:12px;font-family:var(--font-d);font-weight:900;font-size:15px;color:#fff;background:linear-gradient(135deg,var(--red),var(--red-2));box-shadow:0 8px 30px rgba(255,46,81,.5);}
+.fu-note{font-size:11.5px;color:var(--mute);margin-top:14px;line-height:1.6;}
+#updateBanner{position:fixed;top:0;left:0;right:0;z-index:250;background:linear-gradient(135deg,rgba(255,179,0,.95),rgba(255,149,0,.95));color:#1a1200;padding:12px 14px;display:none;align-items:center;gap:12px;}
+#updateBanner.show{display:flex;}
+.ub-icon{font-size:22px;flex-shrink:0;}
+.ub-text{flex:1;font-size:13px;line-height:1.4;}
+.ub-text strong{display:block;font-weight:800;margin-bottom:2px;font-size:13.5px;}
+.ub-btn{padding:8px 14px;border-radius:8px;background:#1a1200;color:#ffb300;font-weight:800;font-size:12px;white-space:nowrap;flex-shrink:0;}
+.ub-close{width:28px;height:28px;border-radius:50%;display:flex;align-items:center;justify-content:center;color:#1a1200;font-size:18px;font-weight:700;flex-shrink:0;}
+#authGate{position:fixed;inset:0;z-index:100;display:flex;align-items:center;justify-content:center;padding:22px;background:radial-gradient(circle at 50% 30%,#0d1424,#03050a 85%);overflow-y:auto;}
+.auth-card{width:100%;max-width:400px;background:linear-gradient(160deg,var(--bg-2),var(--bg-1));border:1px solid var(--stroke);border-radius:22px;padding:32px 24px 26px;text-align:center;box-shadow:var(--shadow);margin:auto;}
+.auth-emblem{font-size:48px;line-height:1;margin-bottom:12px;}
+.auth-brand{font-family:var(--font-d);font-size:30px;font-weight:900;letter-spacing:5px;color:var(--text);}
+.auth-brand span{color:var(--cyan);text-shadow:var(--glow);}
+.auth-tag{color:var(--dim);margin:6px 0 22px;font-size:13px;letter-spacing:1.5px;}
+.auth-tabs{display:flex;gap:6px;margin-bottom:18px;background:var(--bg-1);padding:4px;border-radius:100px;border:1px solid var(--stroke);}
+.auth-tab{flex:1;padding:9px 12px;border-radius:100px;font-size:13px;font-weight:700;color:var(--dim);transition:all .2s;}
+.auth-tab.active{background:linear-gradient(135deg,var(--cyan),var(--cyan-2));color:#04121a;}
+.auth-field{display:flex;flex-direction:column;gap:6px;margin-bottom:12px;text-align:left;}
+.auth-field label{font-size:10.5px;color:var(--dim);font-weight:700;text-transform:uppercase;letter-spacing:1.2px;}
+.auth-field input{width:100%;padding:12px 14px;background:var(--bg-1);border:1px solid var(--stroke);border-radius:var(--r-sm);color:var(--text);font-size:14.5px;font-weight:500;outline:none;}
+.auth-field input:focus{border-color:var(--cyan);box-shadow:0 0 0 3px rgba(0,229,255,.13);}
+.auth-field .pw-wrap{position:relative;}
+.auth-field .pw-wrap input{padding-right:44px;}
+.pw-toggle{position:absolute;right:8px;top:50%;transform:translateY(-50%);width:34px;height:34px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:16px;color:var(--dim);}
+.auth-btn{display:flex;align-items:center;justify-content:center;gap:10px;width:100%;padding:13px;border-radius:var(--r-sm);font-weight:700;font-size:14.5px;margin-top:6px;}
+.auth-btn:disabled{opacity:.55;cursor:not-allowed;}
+.auth-btn.primary{background:linear-gradient(135deg,var(--cyan),var(--cyan-2));color:#04121a;}
+.auth-btn.google{background:#fff;color:#1a1a1a;margin-top:0;}
+.auth-btn.link{background:transparent;color:var(--cyan);font-size:13px;padding:8px;}
+.divider{display:flex;align-items:center;gap:10px;margin:18px 0 12px;color:var(--mute);font-size:11px;text-transform:uppercase;letter-spacing:1.5px;}
+.divider::before,.divider::after{content:"";flex:1;height:1px;background:var(--stroke);}
+.auth-msg{font-size:12.5px;margin-top:10px;min-height:16px;font-weight:600;}
+.auth-msg.error{color:var(--red-2);}
+.auth-msg.success{color:var(--green);}
+.auth-hint{font-size:11px;color:var(--mute);margin-top:4px;line-height:1.4;text-align:left;}
+.auth-fine{color:var(--mute);font-size:11px;margin-top:14px;line-height:1.6;}
+#appShell{position:relative;z-index:1;min-height:100vh;padding-bottom:calc(80px + env(safe-area-inset-bottom,0px));max-width:680px;margin:0 auto;}
+.app-header{position:sticky;top:0;z-index:30;display:flex;align-items:center;justify-content:space-between;padding:14px 16px;background:rgba(10,14,26,.92);backdrop-filter:blur(14px);border-bottom:1px solid var(--stroke);gap:8px;}
+.hdr-user{display:flex;align-items:center;gap:10px;min-width:0;}
+.hdr-avatar{width:42px;height:42px;border-radius:50%;background:linear-gradient(135deg,var(--cyan-2),var(--cyan));display:flex;align-items:center;justify-content:center;font-family:var(--font-d);font-weight:900;font-size:17px;color:#050810;border:2px solid var(--stroke-2);overflow:hidden;flex-shrink:0;}
+.hdr-avatar img{width:100%;height:100%;object-fit:cover;}
+.hdr-meta{display:flex;flex-direction:column;line-height:1.15;min-width:0;}
+.hdr-hi{font-size:10px;color:var(--mute);text-transform:uppercase;letter-spacing:1.5px;font-weight:600;}
+.hdr-name{font-weight:700;font-size:15px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:110px;}
+.hdr-right{display:flex;align-items:center;gap:8px;}
+.hdr-wallet{display:flex;align-items:center;gap:6px;background:linear-gradient(135deg,rgba(255,179,0,.18),rgba(255,179,0,.06));border:1px solid rgba(255,179,0,.45);color:var(--gold);padding:7px 13px;border-radius:100px;font-family:var(--font-d);font-weight:700;font-size:13px;}
+.hdr-wallet .coin{background:var(--gold);color:#050810;width:18px;height:18px;border-radius:50%;display:inline-flex;align-items:center;justify-content:center;font-size:11px;font-weight:900;}
+.hdr-notif{position:relative;width:40px;height:40px;border-radius:50%;background:var(--bg-2);border:1px solid var(--stroke);display:flex;align-items:center;justify-content:center;font-size:18px;}
+.notif-badge{display:none;position:absolute;top:2px;right:2px;min-width:18px;height:18px;padding:0 4px;background:var(--red);color:#fff;border-radius:100px;font-size:10px;font-weight:700;align-items:center;justify-content:center;border:2px solid var(--bg-1);}
+.game-filter{display:flex;gap:8px;padding:12px 14px 6px;overflow-x:auto;scrollbar-width:none;}
+.game-filter::-webkit-scrollbar{display:none;}
+.gf-btn{flex-shrink:0;padding:9px 18px;border-radius:100px;background:var(--bg-2);border:1px solid var(--stroke);color:var(--dim);font-weight:700;font-size:13px;transition:all .2s;white-space:nowrap;}
+.gf-btn.active{background:linear-gradient(135deg,var(--cyan),var(--cyan-2));color:#050810;border-color:transparent;}
+.mode-filter{display:flex;gap:8px;padding:6px 14px 10px;overflow-x:auto;scrollbar-width:none;}
+.mode-filter::-webkit-scrollbar{display:none;}
+.mode-btn{flex-shrink:0;padding:7px 15px;border-radius:100px;background:rgba(255,255,255,.03);border:1px solid var(--stroke);color:var(--mute);font-weight:600;font-size:12px;transition:all .2s;white-space:nowrap;}
+.mode-btn.active{background:rgba(0,229,255,.1);color:var(--cyan);border-color:rgba(0,229,255,.45);}
+.team-filter{display:flex;gap:8px;padding:0 14px 10px;overflow-x:auto;scrollbar-width:none;}
+.team-filter::-webkit-scrollbar{display:none;}
+.team-btn{flex-shrink:0;padding:6px 14px;border-radius:100px;background:rgba(255,255,255,.03);border:1px solid var(--stroke);color:var(--mute);font-weight:600;font-size:11.5px;transition:all .2s;white-space:nowrap;}
+.team-btn.active{background:rgba(0,230,118,.1);color:var(--green);border-color:rgba(0,230,118,.45);}
+.view-container{padding:0 14px 0;position:relative;z-index:1;}
+.view{display:none;}
+.view.active{display:block;animation:fadeIn .3s ease;}
+@keyframes fadeIn{from{opacity:0;transform:translateY(6px);}to{opacity:1;transform:translateY(0);}}
+@keyframes slideUp{from{opacity:0;transform:translateY(16px);}to{opacity:1;transform:translateY(0);}}
+.sec-title{font-family:var(--font-d);font-size:12px;letter-spacing:2.5px;color:var(--dim);text-transform:uppercase;margin:20px 4px 12px;display:flex;align-items:center;gap:8px;}
+.sec-title::before{content:"";width:3px;height:14px;border-radius:3px;background:linear-gradient(180deg,var(--cyan),var(--cyan-2));box-shadow:0 0 10px var(--cyan);}
+.card-list{display:flex;flex-direction:column;gap:14px;}
+.t-card{position:relative;background:linear-gradient(160deg,var(--bg-2),var(--bg-1));border:1px solid var(--stroke);border-radius:var(--r);overflow:hidden;box-shadow:0 6px 22px rgba(0,0,0,.45);animation:slideUp .35s ease backwards;}
+.t-card::before{content:"";position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--cyan),var(--cyan-2),var(--red));z-index:2;}
+.t-card.status-completed::before{background:linear-gradient(90deg,var(--green),#00b894);}
+.t-card.status-cancelled::before{background:linear-gradient(90deg,var(--red),#8b0000);}
+.t-card.status-cancelled{opacity:.72;}
+.t-banner{width:100%;height:110px;object-fit:cover;display:block;}
+.t-banner-fallback{width:100%;height:110px;background:linear-gradient(135deg,#131a2e,#0a0e1a);display:flex;align-items:center;justify-content:center;font-family:var(--font-d);font-size:22px;letter-spacing:3px;color:var(--stroke-2);}
+.t-body{padding:14px;}
+.t-head{display:flex;justify-content:space-between;align-items:flex-start;gap:10px;margin-bottom:10px;}
+.t-head-left{min-width:0;flex:1;}
+.match-badges{display:flex;flex-wrap:wrap;gap:6px;align-items:center;}
+.t-game-tag{font-family:var(--font-d);font-size:10px;font-weight:700;letter-spacing:1.5px;padding:4px 9px;border-radius:6px;text-transform:uppercase;display:inline-block;}
+.tag-BGMI{background:rgba(255,179,0,.15);color:var(--gold);border:1px solid rgba(255,179,0,.4);}
+.tag-FreeFire{background:rgba(255,46,81,.15);color:var(--red-2);border:1px solid rgba(255,46,81,.4);}
+.t-cat-tag{font-family:var(--font-d);font-size:10px;font-weight:700;letter-spacing:1.5px;padding:4px 9px;border-radius:6px;text-transform:uppercase;display:inline-block;}
+.cat-solo{background:rgba(0,230,118,.15);color:var(--green);border:1px solid rgba(0,230,118,.4);}
+.cat-duo{background:rgba(0,229,255,.15);color:var(--cyan);border:1px solid rgba(0,229,255,.4);}
+.cat-squad{background:rgba(255,46,81,.15);color:var(--red-2);border:1px solid rgba(255,46,81,.4);}
+.cat-br{background:rgba(255,179,0,.15);color:var(--gold);border:1px solid rgba(255,179,0,.4);}
+.cat-cs{background:rgba(124,77,255,.15);color:#b388ff;border:1px solid rgba(124,77,255,.4);}
+.cat-tdm{background:rgba(255,149,0,.15);color:var(--orange);border:1px solid rgba(255,149,0,.4);}
+.team-tag{font-family:var(--font-d);font-size:10px;font-weight:700;letter-spacing:1.2px;padding:4px 9px;border-radius:6px;text-transform:uppercase;display:inline-block;}
+.team-solo{background:rgba(0,230,118,.18);color:#00e676;border:1px solid rgba(0,230,118,.5);}
+.team-duo{background:rgba(0,229,255,.18);color:#00e5ff;border:1px solid rgba(0,229,255,.5);}
+.team-squad{background:rgba(255,179,0,.18);color:#ffb300;border:1px solid rgba(255,179,0,.5);}
+.team-label{font-family:var(--font-b);font-size:11px;font-weight:700;color:var(--dim);letter-spacing:.5px;padding:3px 8px;border-radius:5px;background:rgba(255,255,255,.04);border:1px dashed var(--stroke-2);display:inline-block;text-transform:uppercase;}
+.t-map-tag{font-family:var(--font-b);font-size:11px;font-weight:700;letter-spacing:.5px;padding:4px 9px;border-radius:6px;background:rgba(255,255,255,.06);color:var(--dim);border:1px solid var(--stroke);display:inline-block;}
+.t-status-pill{font-family:var(--font-d);font-size:10px;font-weight:700;letter-spacing:1.5px;padding:5px 10px;border-radius:6px;text-transform:uppercase;white-space:nowrap;flex-shrink:0;}
+.pill-upcoming{background:rgba(255,255,255,.06);color:var(--dim);border:1px solid var(--stroke-2);}
+.pill-room-ready{background:rgba(0,229,255,.15);color:var(--cyan);border:1px solid rgba(0,229,255,.45);}
+.pill-started{background:rgba(0,230,118,.15);color:var(--green);border:1px solid rgba(0,230,118,.45);}
+.pill-completed{background:rgba(255,179,0,.15);color:var(--gold);border:1px solid rgba(255,179,0,.45);}
+.pill-cancelled{background:rgba(255,46,81,.15);color:var(--red-2);border:1px solid rgba(255,46,81,.45);}
+.t-title{font-size:16px;font-weight:700;line-height:1.3;margin-bottom:5px;}
+.t-time{font-size:12px;color:var(--mute);display:flex;align-items:center;gap:5px;}
+.t-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin:12px 0;padding:11px 8px;background:rgba(0,0,0,.35);border:1px solid var(--stroke);border-radius:var(--r-sm);}
+.stat{text-align:center;min-width:0;}
+.stat .lbl{display:block;font-size:9px;color:var(--mute);text-transform:uppercase;letter-spacing:1px;margin-bottom:3px;font-weight:600;}
+.stat .val{font-family:var(--font-d);font-size:13px;font-weight:700;white-space:nowrap;}
+.stat .val.prize{color:var(--gold);}
+.stat .val.kill{color:var(--cyan);}
+.stat .val.fee{color:var(--green);}
+.stat .val.fee.paid{color:var(--red-2);}
+.progress-wrap{margin-bottom:12px;}
+.progress-meta{display:flex;justify-content:space-between;font-size:11px;color:var(--dim);margin-bottom:6px;font-weight:600;}
+.progress-meta strong{color:var(--cyan);}
+.progress-bar{height:7px;border-radius:100px;background:rgba(255,255,255,.08);overflow:hidden;}
+.progress-fill{height:100%;border-radius:100px;background:linear-gradient(90deg,var(--cyan),var(--cyan-2));transition:width .5s;}
+.progress-fill.almost{background:linear-gradient(90deg,var(--gold),var(--red));}
+.join-btn{width:100%;padding:12px;border-radius:var(--r-sm);font-family:var(--font-d);font-weight:700;font-size:13px;letter-spacing:1.5px;color:#fff;background:linear-gradient(135deg,var(--red),var(--red-2));box-shadow:0 4px 18px rgba(255,46,81,.35);}
+.join-btn:disabled{background:var(--bg-3);color:var(--mute);box-shadow:none;cursor:not-allowed;}
+.join-btn.joined{background:rgba(0,230,118,.15);color:var(--green);border:1px solid rgba(0,230,118,.4);box-shadow:none;}
+.join-btn.started{background:linear-gradient(135deg,var(--green),#00b894);color:#04121a;}
+.join-btn.completed{background:linear-gradient(135deg,var(--gold),var(--orange));color:#1a1200;}
+.join-btn.cancelled{background:rgba(255,46,81,.1);color:var(--red-2);border:1px solid rgba(255,46,81,.35);box-shadow:none;}
+.join-btn.banned{background:linear-gradient(135deg,#8b0000,#5c0000);color:#fff;cursor:not-allowed;}
+.skel{height:290px;border-radius:var(--r);background:linear-gradient(90deg,var(--bg-2) 25%,var(--bg-3) 50%,var(--bg-2) 75%);background-size:200% 100%;animation:shimmer 1.4s infinite;border:1px solid var(--stroke);}
+@keyframes shimmer{0%{background-position:200% 0;}100%{background-position:-200% 0;}}
+.empty-state{text-align:center;padding:60px 22px;color:var(--mute);}
+.empty-icon{font-size:52px;margin-bottom:14px;opacity:.5;}
+.empty-state h3{color:var(--dim);font-size:16px;margin-bottom:6px;}
+.empty-state p{font-size:13px;line-height:1.5;}
+.wallet-hero{position:relative;background:linear-gradient(135deg,var(--bg-3),var(--bg-2));border:1px solid var(--stroke-2);border-radius:var(--r);padding:26px 22px;text-align:center;overflow:hidden;margin-bottom:20px;}
+.wallet-hero .lbl{font-size:11px;color:var(--mute);text-transform:uppercase;letter-spacing:2px;font-weight:600;}
+.wallet-hero .bal{font-family:var(--font-d);font-size:42px;font-weight:900;color:var(--gold);margin:8px 0 6px;text-shadow:0 0 24px rgba(255,179,0,.45);}
+.wallet-hero .bonus{font-size:13px;color:var(--green);margin-bottom:18px;font-weight:700;}
+.wallet-actions{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
+.wbtn{padding:12px;border-radius:var(--r-sm);font-family:var(--font-d);font-weight:700;font-size:12px;}
+.wbtn:disabled{opacity:.4;cursor:not-allowed;}
+.wbtn.deposit{background:linear-gradient(135deg,var(--cyan),var(--cyan-2));color:#04121a;}
+.wbtn.withdraw{background:linear-gradient(135deg,var(--red),var(--red-2));color:#fff;}
+.tx-list{display:flex;flex-direction:column;gap:8px;}
+.tx-item{display:flex;justify-content:space-between;align-items:center;padding:13px 14px;background:var(--bg-2);border:1px solid var(--stroke);border-radius:var(--r-sm);}
+.tx-left{display:flex;flex-direction:column;gap:3px;min-width:0;flex:1;}
+.tx-title{font-weight:600;font-size:13px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.tx-time{font-size:11px;color:var(--mute);}
+.tx-amt{font-family:var(--font-d);font-weight:700;font-size:14px;flex-shrink:0;margin-left:10px;}
+.tx-amt.credit{color:var(--green);}
+.tx-amt.debit{color:var(--red-2);}
+.profile-card{background:linear-gradient(160deg,var(--bg-2),var(--bg-1));border:1px solid var(--stroke);border-radius:var(--r);padding:24px 20px;text-align:center;margin-bottom:16px;}
+.profile-avatar{width:88px;height:88px;border-radius:50%;margin:0 auto 14px;background:linear-gradient(135deg,var(--cyan-2),var(--cyan));display:flex;align-items:center;justify-content:center;font-family:var(--font-d);font-size:32px;font-weight:900;color:#050810;border:3px solid var(--stroke-2);overflow:hidden;}
+.profile-avatar img{width:100%;height:100%;object-fit:cover;}
+.profile-name{font-family:var(--font-d);font-size:20px;font-weight:700;margin-bottom:4px;}
+.profile-email{font-size:13px;color:var(--dim);margin-bottom:16px;word-break:break-all;}
+.info-list{display:flex;flex-direction:column;gap:10px;margin-top:16px;}
+.info-row{display:flex;justify-content:space-between;align-items:center;padding:12px 14px;background:var(--bg-2);border:1px solid var(--stroke);border-radius:var(--r-sm);font-size:13px;}
+.info-row .k{color:var(--dim);font-weight:600;}
+.info-row .v{font-weight:700;font-family:var(--font-d);font-size:13px;}
+.info-row .v.green{color:var(--green);}
+.info-row .v.gold{color:var(--gold);}
+.ref-card{background:linear-gradient(135deg,rgba(0,229,255,.08),rgba(124,77,255,.06));border:1px solid rgba(0,229,255,.35);border-radius:var(--r);padding:20px 18px;margin-bottom:14px;}
+.ref-code-box{background:var(--bg-1);border:2px dashed rgba(0,229,255,.5);border-radius:var(--r-sm);padding:16px;text-align:center;margin:12px 0;}
+.ref-code{font-family:var(--font-d);font-size:24px;font-weight:900;color:var(--cyan);letter-spacing:3px;word-break:break-all;}
+.ref-actions{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:12px;}
+.ref-btn{padding:11px;border-radius:var(--r-sm);font-family:var(--font-d);font-weight:700;font-size:12px;letter-spacing:1px;}
+.ref-btn.copy{background:rgba(0,229,255,.15);color:var(--cyan);border:1px solid rgba(0,229,255,.4);}
+.ref-btn.share{background:linear-gradient(135deg,var(--green),#00b894);color:#04121a;}
+.ref-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:14px;}
+.ref-stat{text-align:center;padding:12px 6px;background:var(--bg-1);border:1px solid var(--stroke);border-radius:var(--r-sm);}
+.ref-stat .num{font-family:var(--font-d);font-size:18px;font-weight:900;color:var(--gold);display:block;margin-bottom:4px;}
+.ref-stat .lbl{font-size:9.5px;color:var(--mute);text-transform:uppercase;letter-spacing:1px;font-weight:600;}
+.terms-card{background:var(--bg-2);border:1px solid var(--stroke);border-radius:var(--r);padding:20px 18px;margin-bottom:14px;}
+.terms-card h3{font-family:var(--font-d);font-size:14px;letter-spacing:1.5px;color:var(--cyan);margin-bottom:12px;display:flex;align-items:center;gap:8px;}
+.terms-card p, .terms-card li{font-size:13px;color:var(--dim);line-height:1.7;}
+.terms-card ol, .terms-card ul{padding-left:20px;margin-top:6px;}
+.terms-card li{margin-bottom:6px;}
+.terms-card .warn{background:rgba(255,46,81,.08);border-left:3px solid var(--red);padding:10px 12px;border-radius:6px;margin-top:10px;font-size:12.5px;color:var(--red-2);}
+.modal-overlay{position:fixed;inset:0;z-index:400;background:rgba(0,0,0,.78);backdrop-filter:blur(6px);display:none;align-items:flex-end;justify-content:center;}
+.modal-overlay.open{display:flex;}
+.modal{width:100%;max-width:680px;background:var(--bg-1);border-top-left-radius:22px;border-top-right-radius:22px;border:1px solid var(--stroke-2);border-bottom:none;max-height:92vh;overflow-y:auto;animation:sheetUp .32s cubic-bezier(.34,1.2,.64,1);}
+@keyframes sheetUp{from{transform:translateY(100%);}to{transform:translateY(0);}}
+.modal-hd{position:sticky;top:0;z-index:2;display:flex;justify-content:space-between;align-items:center;padding:18px 20px 12px;border-bottom:1px solid var(--stroke);background:var(--bg-1);}
+.modal-hd h3{font-family:var(--font-d);font-size:15px;letter-spacing:1.5px;}
+.modal-x{width:32px;height:32px;border-radius:50%;display:flex;align-items:center;justify-content:center;color:var(--dim);font-size:18px;}
+.modal-bd{padding:18px 20px 26px;}
+.match-summary{background:var(--bg-2);border:1px solid var(--stroke);border-radius:var(--r-sm);padding:14px;margin-bottom:16px;}
+.ms-title{font-weight:700;font-size:15px;margin-bottom:8px;}
+.ms-row{display:flex;justify-content:space-between;font-size:13px;color:var(--dim);padding:4px 0;}
+.ms-row strong{color:var(--text);}
+.ms-row.fee strong{color:var(--red-2);font-family:var(--font-d);}
+.field{display:block;margin-bottom:14px;}
+.field .lbl{display:block;font-size:11px;font-weight:600;color:var(--dim);text-transform:uppercase;letter-spacing:1.2px;margin-bottom:6px;}
+.field input{width:100%;padding:13px 14px;background:var(--bg-2);border:1px solid var(--stroke);border-radius:var(--r-sm);color:var(--text);font-size:15px;font-weight:500;outline:none;}
+.field input:focus{border-color:var(--cyan);box-shadow:0 0 0 3px rgba(0,229,255,.13);}
+.btn-main{width:100%;padding:14px;border-radius:var(--r-sm);font-family:var(--font-d);font-weight:700;font-size:14px;letter-spacing:1.5px;color:#fff;background:linear-gradient(135deg,var(--red),var(--red-2));box-shadow:0 6px 22px rgba(255,46,81,.35);}
+.btn-main:disabled{opacity:.5;cursor:not-allowed;}
+.btn-cyan{background:linear-gradient(135deg,var(--cyan),var(--cyan-2));color:#04121a;}
+.btn-green{background:linear-gradient(135deg,var(--green),#00b894);color:#04121a;}
+.hint{font-size:12px;color:var(--mute);margin-bottom:12px;line-height:1.5;}
+.err{color:var(--red-2);font-size:13px;font-weight:600;min-height:16px;margin-bottom:10px;word-break:break-word;}
+.room-box{background:linear-gradient(135deg,rgba(0,229,255,.08),rgba(124,77,255,.06));border:1px solid rgba(0,229,255,.3);border-radius:var(--r-sm);padding:14px;margin-bottom:14px;}
+.room-box.locked{background:rgba(255,255,255,.03);border-color:var(--stroke);}
+.room-row{display:flex;justify-content:space-between;align-items:center;padding:8px 0;font-size:14px;border-bottom:1px dashed var(--stroke);}
+.room-row:last-child{border-bottom:none;}
+.room-row .k{color:var(--dim);font-weight:600;font-size:12px;text-transform:uppercase;}
+.room-row .v{font-family:var(--font-d);font-weight:700;color:var(--cyan);font-size:14px;user-select:text;}
+.room-locked-msg{text-align:center;padding:14px 8px;color:var(--mute);font-size:13px;}
+.status-banner{display:flex;align-items:center;gap:10px;padding:12px 14px;border-radius:var(--r-sm);margin-bottom:14px;font-weight:700;font-size:13.5px;}
+.sb-upcoming{background:rgba(255,255,255,.05);color:var(--dim);border:1px solid var(--stroke);}
+.sb-room-ready{background:rgba(0,229,255,.1);color:var(--cyan);border:1px solid rgba(0,229,255,.4);}
+.sb-started{background:rgba(0,230,118,.1);color:var(--green);border:1px solid rgba(0,230,118,.4);}
+.sb-completed{background:rgba(255,179,0,.1);color:var(--gold);border:1px solid rgba(255,179,0,.4);}
+.sb-cancelled{background:rgba(255,46,81,.1);color:var(--red-2);border:1px solid rgba(255,46,81,.4);}
+.sb-dot{width:9px;height:9px;border-radius:50%;background:currentColor;box-shadow:0 0 10px currentColor;flex-shrink:0;}
+.notif-item{padding:14px;margin-bottom:10px;border-radius:var(--r-sm);}
+.notif-item.unread{background:linear-gradient(135deg,rgba(0,229,255,.08),rgba(124,77,255,.05));border:1px solid rgba(0,229,255,.35);}
+.notif-item.read{background:var(--bg-2);border:1px solid var(--stroke);opacity:.75;}
+.notif-item.prize{background:linear-gradient(135deg,rgba(255,179,0,.12),rgba(255,149,0,.06));border:1px solid rgba(255,179,0,.5);}
+.notif-head{display:flex;justify-content:space-between;align-items:flex-start;gap:10px;margin-bottom:6px;}
+.notif-title{font-weight:700;font-size:14px;}
+.notif-dot{width:8px;height:8px;border-radius:50%;background:var(--cyan);flex-shrink:0;margin-top:6px;}
+.notif-body{font-size:13px;color:var(--dim);line-height:1.5;margin-bottom:6px;}
+.notif-time{font-size:11px;color:var(--mute);}
+.bottom-nav{position:fixed;bottom:0;left:0;right:0;z-index:40;display:flex;justify-content:space-around;align-items:center;padding:8px 0 calc(8px + env(safe-area-inset-bottom,0px));background:rgba(10,14,26,.96);backdrop-filter:blur(16px);border-top:1px solid var(--stroke);max-width:680px;margin:0 auto;}
+.nav-btn{flex:1;display:flex;flex-direction:column;align-items:center;gap:3px;padding:6px 4px;color:var(--mute);transition:color .2s;font-size:10px;font-weight:600;letter-spacing:.5px;font-family:var(--font-d);}
+.nav-btn .ico{font-size:20px;line-height:1;position:relative;}
+.nav-btn.active{color:var(--cyan);}
+.nav-btn.active .ico{transform:translateY(-2px);}
+.nav-dot{position:absolute;top:-2px;right:-6px;min-width:14px;height:14px;padding:0 3px;background:var(--red);color:#fff;border-radius:100px;font-size:9px;font-weight:700;display:none;align-items:center;justify-content:center;border:2px solid var(--bg-1);}
+#toast{position:fixed;bottom:100px;left:50%;transform:translate(-50%,140%);padding:13px 22px;border-radius:100px;background:var(--bg-3);border:1px solid var(--stroke-2);color:var(--text);font-weight:600;font-size:13.5px;box-shadow:var(--shadow);z-index:900;max-width:90vw;text-align:center;transition:transform .38s;pointer-events:none;}
+#toast.show{transform:translate(-50%,0);}
+#toast.success{border-color:rgba(0,230,118,.55);color:var(--green);}
+#toast.error{border-color:rgba(255,46,81,.55);color:var(--red-2);}
+#toast.prize{border-color:rgba(255,179,0,.7);color:var(--gold);background:linear-gradient(135deg,rgba(255,179,0,.15),var(--bg-3));font-weight:800;font-size:14.5px;box-shadow:0 0 30px rgba(255,179,0,.5);}
+@media(min-width:640px){.modal-overlay{align-items:center;padding:24px;}.modal{border-radius:20px;border-bottom:1px solid var(--stroke-2);}}
+.spinner{display:inline-block;width:16px;height:16px;border:2px solid rgba(255,255,255,.3);border-top-color:#fff;border-radius:50%;animation:spin .7s linear infinite;vertical-align:middle;margin-right:8px;}
+.amount-chips{display:flex;gap:8px;margin-bottom:14px;flex-wrap:wrap;}
+.amt-chip{padding:10px 18px;border-radius:100px;background:var(--bg-2);border:1px solid var(--stroke);color:var(--dim);font-weight:700;font-size:13px;transition:all .2s;}
+.amt-chip.active{background:linear-gradient(135deg,var(--cyan),var(--cyan-2));color:#050810;border-color:transparent;}
+.deposit-step{display:flex;gap:14px;padding:14px 0;position:relative;}
+.step-num{width:34px;height:34px;border-radius:50%;background:var(--bg-3);border:2px solid var(--stroke);display:flex;align-items:center;justify-content:center;font-family:var(--font-d);font-weight:700;font-size:14px;color:var(--mute);flex-shrink:0;transition:all .3s;}
+.deposit-step.active .step-num{background:linear-gradient(135deg,var(--cyan),var(--cyan-2));color:#050810;border-color:transparent;}
+.step-body{flex:1;min-width:0;}
+.step-title{font-weight:700;font-size:14px;margin-bottom:4px;}
+.step-desc{font-size:12px;color:var(--mute);line-height:1.5;}
+.utr-status{display:flex;align-items:center;gap:8px;padding:12px 14px;border-radius:var(--r-sm);margin-bottom:14px;font-size:13px;font-weight:600;line-height:1.5;word-break:break-word;}
+.utr-status.checking{background:rgba(0,229,255,.08);border:1px solid rgba(0,229,255,.3);color:var(--cyan);}
+.utr-status.verified{background:rgba(0,230,118,.1);border:1px solid rgba(0,230,118,.4);color:var(--green);}
+.utr-status.failed{background:rgba(255,46,81,.1);border:1px solid rgba(255,46,81,.4);color:var(--red-2);}
+.utr-status.pending{background:rgba(255,179,0,.1);border:1px solid rgba(255,179,0,.4);color:var(--gold);}
+.prize-notif-popup{position:fixed;top:80px;left:50%;transform:translateX(-50%) translateY(-200px);z-index:850;background:linear-gradient(135deg,#ffb300,#ff8c00);color:#1a1200;padding:16px 22px;border-radius:16px;box-shadow:0 10px 40px rgba(255,179,0,.6);font-weight:800;font-size:15px;text-align:center;transition:transform .5s cubic-bezier(.34,1.56,.64,1);max-width:90vw;pointer-events:none;}
+.prize-notif-popup.show{transform:translateX(-50%) translateY(0);}
+.prize-notif-popup .pnp-icon{font-size:32px;margin-bottom:6px;}
+.prize-notif-popup .pnp-title{font-family:var(--font-d);font-size:14px;letter-spacing:1.5px;margin-bottom:4px;}
+.prize-notif-popup .pnp-amt{font-family:var(--font-d);font-size:22px;font-weight:900;color:#1a1200;}
+.paypal-badge{display:inline-flex;align-items:center;gap:6px;padding:6px 12px;border-radius:100px;background:linear-gradient(135deg,#0070ba,#003087);color:#fff;font-family:var(--font-d);font-size:11px;font-weight:700;letter-spacing:1px;margin-bottom:12px;}
+.paypal-badge .pp-ico{font-size:16px;}
+</style>
+</head>
+<body>
+
+<div id="forceUpdateScreen">
+  <div class="fu-card">
+    <div class="fu-icon">🚀</div>
+    <div class="fu-title">UPDATE REQUIRED</div>
+    <div class="fu-version" id="fuVersion">v?.?.? available</div>
+    <p class="fu-msg">A new version of <b>ArenaX</b> is available.<br>Please update the app to continue.</p>
+    <div class="fu-changelog" id="fuChangelog" style="display:none;">
+      <div class="fu-changelog-title">✨ WHAT'S NEW</div>
+      <div id="fuChangelogText"></div>
+    </div>
+    <button class="fu-btn" id="fuUpdateBtn">⬇️ UPDATE NOW</button>
+    <p class="fu-note">🔒 App is locked until you update.</p>
+  </div>
+</div>
+
+<div id="updateBanner">
+  <div class="ub-icon">🎉</div>
+  <div class="ub-text"><strong>New update available!</strong><span id="ubVersionText">v?.?.? is ready</span></div>
+  <button class="ub-btn" id="ubUpdateBtn">UPDATE</button>
+  <button class="ub-close" id="ubCloseBtn">✕</button>
+</div>
+
+<div id="bootLoader">
+  <div class="boot-logo">ARENA<span>X</span></div>
+  <div class="boot-ring"></div>
+  <div id="bootError" class="hidden">
+    <strong>⚠️ Failed to load</strong>
+    <span id="bootErrorMsg">Unknown error</span>
+    <button onclick="location.reload()">🔄 RETRY</button>
+  </div>
+</div>
+
+<script>
+(function () {
+  var BOOT_TIMEOUT_MS = 8000;
+  var bootEl = document.getElementById("bootLoader");
+  var errEl = document.getElementById("bootError");
+  var errMsgEl = document.getElementById("bootErrorMsg");
+  var bootTimer = setTimeout(function () {
+    if (bootEl && !bootEl.classList.contains("fade")) {
+      if (errMsgEl) errMsgEl.textContent = "The app is taking too long to load.";
+      if (errEl) errEl.classList.remove("hidden");
+      bootEl.classList.add("fade");
+    }
+  }, BOOT_TIMEOUT_MS);
+  window.addEventListener("error", function (e) {
+    console.error("Global error:", e);
+    clearTimeout(bootTimer);
+    if (errMsgEl) errMsgEl.textContent = e.message || "Script error.";
+    if (errEl) errEl.classList.remove("hidden");
+    if (bootEl) bootEl.classList.add("fade");
+  });
+  window.addEventListener("unhandledrejection", function (e) {
+    console.error("Unhandled rejection:", e.reason);
+    if (bootEl && !bootEl.classList.contains("fade")) {
+      clearTimeout(bootTimer);
+      if (errMsgEl) errMsgEl.textContent = (e.reason && e.reason.message) || "Async error.";
+      if (errEl) errEl.classList.remove("hidden");
+      bootEl.classList.add("fade");
+    }
+  });
+  window.__hideBoot = function () {
+    clearTimeout(bootTimer);
+    if (bootEl && !bootEl.classList.contains("fade")) {
+      bootEl.classList.add("fade");
+      setTimeout(function () { if (bootEl) bootEl.classList.add("hidden"); }, 500);
+    }
+  };
+  window.addEventListener("load", function () { setTimeout(function () { window.__hideBoot(); }, 900); });
+})();
+</script>
+
+<div id="prizePopup" class="prize-notif-popup">
+  <div class="pnp-icon">🏆</div>
+  <div class="pnp-title" id="pnpTitle">PRIZE CREDITED!</div>
+  <div class="pnp-amt" id="pnpAmt">₹0</div>
+</div>
+
+<div id="authGate" class="hidden">
+  <div class="auth-card">
+    <div class="auth-emblem">🎮</div>
+    <div class="auth-brand">ARENA<span>X</span></div>
+    <p class="auth-tag">COMPETE · WIN · CASH OUT</p>
+    <div class="auth-tabs">
+      <button class="auth-tab active" id="tabLogin" type="button">LOGIN</button>
+      <button class="auth-tab" id="tabSignup" type="button">SIGN UP</button>
+    </div>
+    <form id="loginForm" autocomplete="on">
+      <div class="auth-field"><label for="loginEmail">Email</label><input type="email" id="loginEmail" required placeholder="you@example.com" autocomplete="email" /></div>
+      <div class="auth-field"><label for="loginPassword">Password</label><div class="pw-wrap"><input type="password" id="loginPassword" required minlength="6" placeholder="••••••••" autocomplete="current-password" /><button type="button" class="pw-toggle" data-target="loginPassword">👁️</button></div></div>
+      <button type="submit" class="auth-btn primary" id="loginSubmit">LOGIN</button>
+    </form>
+    <form id="signupForm" class="hidden" autocomplete="on">
+      <div class="auth-field"><label for="signupName">Display Name</label><input type="text" id="signupName" required minlength="2" maxlength="24" placeholder="e.g. ShadowX" autocomplete="nickname" /></div>
+      <div class="auth-field"><label for="signupEmail">Email</label><input type="email" id="signupEmail" required placeholder="you@example.com" autocomplete="email" /></div>
+      <div class="auth-field"><label for="signupPassword">Password</label><div class="pw-wrap"><input type="password" id="signupPassword" required minlength="6" placeholder="Min 6 characters" autocomplete="new-password" /><button type="button" class="pw-toggle" data-target="signupPassword">👁️</button></div></div>
+      <div class="auth-field"><label for="signupConfirm">Confirm Password</label><div class="pw-wrap"><input type="password" id="signupConfirm" required minlength="6" placeholder="Re-enter password" autocomplete="new-password" /><button type="button" class="pw-toggle" data-target="signupConfirm">👁️</button></div></div>
+      <div class="auth-field"><label for="signupReferral">Referral Code (Optional)</label><input type="text" id="signupReferral" maxlength="20" placeholder="e.g. SHADOW123" autocomplete="off" style="text-transform:uppercase;" /><p class="auth-hint">💡 Referral code gets you ₹5 instantly + ₹20 on first ₹100 deposit!</p></div>
+      <button type="submit" class="auth-btn primary" id="signupSubmit">CREATE ACCOUNT</button>
+    </form>
+    <div id="socialBlock">
+      <div class="divider"><span>OR CONTINUE WITH</span></div>
+      <button class="auth-btn google" id="btnGoogle" type="button">G Sign in with Google</button>
+    </div>
+    <p class="auth-msg" id="authMsg"></p>
+    <p class="auth-fine">By continuing, you agree to our Terms & Anti-Cheat rules. 18+ only for paid tournaments.</p>
+  </div>
+</div>
+
+<div id="appShell" class="hidden">
+  <header class="app-header">
+    <div class="hdr-user">
+      <div class="hdr-avatar" id="hdrAvatar">U</div>
+      <div class="hdr-meta"><span class="hdr-hi">Welcome</span><span class="hdr-name" id="hdrName">Player</span></div>
+    </div>
+    <div class="hdr-right">
+      <button class="hdr-wallet" id="hdrWallet"><span class="coin">₹</span><span id="hdrBal">0.00</span></button>
+      <button class="hdr-notif" id="notifBtn">🔔<span class="notif-badge" id="notifBadge">0</span></button>
+    </div>
+  </header>
+
+  <div class="view-container">
+    <section id="view-home" class="view active">
+      <div class="game-filter">
+        <button class="gf-btn active" data-game="BGMI">🔥 BGMI</button>
+        <button class="gf-btn" data-game="Free Fire">💥 Free Fire</button>
+      </div>
+      <div class="mode-filter" id="modeFilter"></div>
+      <div class="team-filter" id="teamFilter">
+        <button class="team-btn active" data-team="ALL">🎯 All</button>
+        <button class="team-btn" data-team="Solo">👤 Solo</button>
+        <button class="team-btn" data-team="Duo">👥 Duo</button>
+        <button class="team-btn" data-team="Squad">👨‍👩‍👦 Squad</button>
+      </div>
+      <div id="tournamentsList" class="card-list" style="padding-top:6px;"></div>
+      <div id="tournamentsSkeleton" class="card-list"><div class="skel"></div><div class="skel"></div></div>
+      <div id="tournamentsEmpty" class="empty-state hidden"><div class="empty-icon">🎯</div><h3>No active tournaments</h3><p>New matches drop daily. Check back soon!</p></div>
+    </section>
+
+    <section id="view-joined" class="view">
+      <div class="sec-title">My Joined Matches</div>
+      <div id="joinedList" class="card-list"></div>
+      <div id="joinedEmpty" class="empty-state hidden"><div class="empty-icon">🎫</div><h3>No matches joined yet</h3><p>Join a tournament from Home to see it here.</p></div>
+    </section>
+
+    <section id="view-wallet" class="view">
+      <div class="wallet-hero">
+        <span class="lbl">Available Balance</span>
+        <div class="bal">₹<span id="walletBig">0.00</span></div>
+        <div class="bonus hidden" id="walletBonus">🎁 Bonus: ₹<span id="bonusBig">0</span> (tournament only)</div>
+        <div class="wallet-actions">
+          <button class="wbtn deposit" id="btnDeposit">＋ DEPOSIT</button>
+          <button class="wbtn withdraw" id="btnWithdraw">↓ WITHDRAW</button>
+        </div>
+      </div>
+      <div class="sec-title">Transaction History</div>
+      <div id="txList" class="tx-list"></div>
+      <div id="txEmpty" class="empty-state hidden" style="padding:28px"><p>No transactions yet.</p></div>
+    </section>
+
+    <section id="view-profile" class="view">
+      <div class="profile-card">
+        <div class="profile-avatar" id="profAvatar">U</div>
+        <div class="profile-name" id="profName">Player</div>
+        <div class="profile-email" id="profEmail">—</div>
+      </div>
+      <div class="info-list">
+        <div class="info-row"><span class="k">Wallet Balance</span><span class="v" id="profBal">₹0.00</span></div>
+        <div class="info-row"><span class="k">Bonus Balance</span><span class="v green" id="profBonus">₹0.00</span></div>
+        <div class="info-row"><span class="k">Game UID</span><span class="v" id="profUid">Not Set</span></div>
+        <div class="info-row"><span class="k">In-Game Name</span><span class="v" id="profIgn">Not Set</span></div>
+        <div class="info-row"><span class="k">Matches Played</span><span class="v gold" id="profMatches">0 / 3</span></div>
+        <div class="info-row"><span class="k">Total Won</span><span class="v gold" id="profWon">₹0.00</span></div>
+        <div class="info-row"><span class="k">App Version</span><span class="v" id="profVersion">v1.0.0</span></div>
+      </div>
+
+      <div class="sec-title">🎁 Refer &amp; Earn</div>
+      <div class="ref-card">
+        <p style="font-size:12.5px;color:var(--dim);line-height:1.6;margin-bottom:12px;">
+          Share your code. When your friend deposits <b style="color:var(--cyan)">₹100</b>, you earn <b style="color:var(--gold)">₹5</b>. Your friend gets <b style="color:var(--green)">₹5 sign-up + ₹20 first-deposit</b>!
+        </p>
+        <div class="ref-code-box">
+          <div style="font-size:10.5px;color:var(--mute);letter-spacing:2px;font-weight:700;margin-bottom:6px;">YOUR REFERRAL CODE</div>
+          <div class="ref-code" id="refCode">—</div>
+        </div>
+        <div class="ref-actions">
+          <button class="ref-btn copy" id="refCopyBtn">📋 COPY CODE</button>
+          <button class="ref-btn share" id="refShareBtn">📤 SHARE LINK</button>
+        </div>
+        <div class="ref-stats">
+          <div class="ref-stat"><span class="num" id="refCountJoined">0</span><span class="lbl">Joined</span></div>
+          <div class="ref-stat"><span class="num" id="refCountEarned">₹0</span><span class="lbl">Earned</span></div>
+          <div class="ref-stat"><span class="num" id="refCountPending">0</span><span class="lbl">Pending</span></div>
+        </div>
+      </div>
+
+      <div class="sec-title">Account</div>
+      <button class="btn-main" id="btnEditProfile" style="margin-bottom:10px">✏️ Update Game Details</button>
+      <button class="btn-main" id="btnSignOut" style="background:linear-gradient(135deg,#2a3860,#1a2238);box-shadow:none">🚪 Sign Out</button>
+    </section>
+
+    <section id="view-terms" class="view">
+      <div class="terms-card">
+        <h3>📜 TERMS &amp; CONDITIONS</h3>
+        <ol>
+          <li><strong>Eligibility:</strong> Users must be 18+ for paid tournaments.</li>
+          <li><strong>Account:</strong> One account per person.</li>
+          <li><strong>Entry Fees:</strong> Non-refundable once joined.</li>
+          <li><strong>Prizes:</strong> Credited within 24 hours.</li>
+          <li><strong>Withdrawals:</strong> Processed within 24-48 hours.</li>
+        </ol>
+      </div>
+      <div class="terms-card">
+        <h3>🎁 REFERRAL &amp; BONUS RULES</h3>
+        <ul>
+          <li><strong>Sign-up Bonus:</strong> ₹5 instantly in wallet (bonus balance).</li>
+          <li><strong>First Deposit Bonus:</strong> ₹20 on first ₹100+ deposit.</li>
+          <li><strong>Referrer Bonus:</strong> ₹5 when your friend deposits ₹100+.</li>
+          <li><strong>Bonus Use:</strong> Bonus can only be used for tournament entries.</li>
+          <li><strong>Withdrawal Rule:</strong> Minimum 3 matches must be played before withdrawal.</li>
+        </ul>
+      </div>
+      <div class="terms-card">
+        <h3>🛡️ ANTI-CHEAT POLICY</h3>
+        <ul>
+          <li><strong>No Hacks:</strong> Aimbots, ESP, wallhacks banned.</li>
+          <li><strong>No Team-ups:</strong> Teaming with opponents banned.</li>
+          <li><strong>No Account Sharing:</strong> One UID per account.</li>
+        </ul>
+        <div class="warn">⚠️ Violation = Permanent ban + Wallet forfeited.</div>
+      </div>
+    </section>
+  </div>
+
+  <nav class="bottom-nav">
+    <button class="nav-btn active" data-nav="home"><span class="ico">🏠</span><span>Home</span></button>
+    <button class="nav-btn" data-nav="joined"><span class="ico">🎫</span><span>Matches</span></button>
+    <button class="nav-btn" data-nav="wallet"><span class="ico">💰</span><span>Wallet</span></button>
+    <button class="nav-btn" data-nav="profile"><span class="ico">👤</span><span>Profile</span><span class="nav-dot" id="navNotifDot"></span></button>
+    <button class="nav-btn" data-nav="terms"><span class="ico">📜</span><span>Rules</span></button>
+  </nav>
+</div>
+
+<!-- JOIN MODAL -->
+<div class="modal-overlay" id="joinModal">
+  <div class="modal">
+    <div class="modal-hd"><h3>JOIN MATCH</h3><button class="modal-x" data-close="joinModal">✕</button></div>
+    <div class="modal-bd">
+      <div class="match-summary" id="joinSummary"></div>
+      <form id="joinForm" autocomplete="off">
+        <label class="field"><span class="lbl">In-Game Name (IGN)</span><input type="text" id="joinIgn" required minlength="2" maxlength="24" placeholder="e.g. ShadowX_007" /></label>
+        <label class="field"><span class="lbl">Game UID</span><input type="text" id="joinUid" required pattern="[0-9]{6,15}" placeholder="e.g. 1234567890" inputmode="numeric" /></label>
+        <p class="err" id="joinErr"></p>
+        <button type="submit" class="btn-main" id="joinSubmit">CONFIRM &amp; PAY</button>
+      </form>
+    </div>
+  </div>
+</div>
+
+<!-- DETAIL MODAL -->
+<div class="modal-overlay" id="detailModal">
+  <div class="modal">
+    <div class="modal-hd"><h3>MATCH DETAILS</h3><button class="modal-x" data-close="detailModal">✕</button></div>
+    <div class="modal-bd" id="detailBody"></div>
+  </div>
+</div>
+
+<!-- WITHDRAW MODAL -->
+<div class="modal-overlay" id="withdrawModal">
+  <div class="modal">
+    <div class="modal-hd"><h3>WITHDRAW FUNDS</h3><button class="modal-x" data-close="withdrawModal">✕</button></div>
+    <div class="modal-bd">
+      <form id="withdrawForm" autocomplete="off">
+        <div id="wdRuleBox" class="utr-status pending" style="display:none;margin-bottom:14px;"></div>
+        <label class="field"><span class="lbl">UPI ID</span><input type="text" id="wdUpi" required placeholder="yourname@upi" /></label>
+        <label class="field"><span class="lbl">Amount (₹)</span><input type="number" id="wdAmt" required min="50" step="1" placeholder="Min ₹50" inputmode="numeric" /></label>
+        <p class="hint">Minimum withdrawal: ₹50. Bonus balance cannot be withdrawn.</p>
+        <p class="err" id="wdErr"></p>
+        <button type="submit" class="btn-main" id="wdSubmit">REQUEST WITHDRAWAL</button>
+      </form>
+    </div>
+  </div>
+</div>
+
+<!-- DEPOSIT MODAL -->
+<div class="modal-overlay" id="depositModal">
+  <div class="modal">
+    <div class="modal-hd"><h3>💳 ADD MONEY</h3><button class="modal-x" data-close="depositModal">✕</button></div>
+    <div class="modal-bd">
+      <div class="deposit-step active" id="step1">
+        <div class="step-num">1</div>
+        <div class="step-body">
+          <div class="step-title">Enter Amount</div>
+          <div class="step-desc">Choose a quick amount or enter custom.</div>
+          <div class="amount-chips" style="margin-top:10px;">
+            <button class="amt-chip" data-amt="50">₹50</button>
+            <button class="amt-chip" data-amt="100">₹100</button>
+            <button class="amt-chip" data-amt="200">₹200</button>
+            <button class="amt-chip" data-amt="500">₹500</button>
+            <button class="amt-chip" data-amt="1000">₹1000</button>
+          </div>
+          <label class="field"><span class="lbl">Custom Amount (₹)</span><input type="number" id="depAmount" min="10" step="1" placeholder="Min ₹10" inputmode="numeric" /></label>
+          <div id="depBonusHint" class="hint" style="color:var(--green);display:none;">🎁 Deposit ₹100+ and get ₹20 bonus!</div>
+        </div>
+      </div>
+
+      <div class="deposit-step" id="step2">
+        <div class="step-num">2</div>
+        <div class="step-body">
+          <div class="step-title">Pay via PayPal</div>
+          <div class="step-desc">You will be redirected to PayPal's secure payment page.</div>
+          <div style="text-align:center;margin:14px 0;">
+            <div class="paypal-badge"><span class="pp-ico">💳</span> SECURE PAYMENT VIA PAYPAL</div>
+          </div>
+          <div id="utrStatusBox" class="utr-status hidden"></div>
+          <p class="err" id="depErr"></p>
+          <button class="btn-main btn-cyan" id="btnPayNow">💳 PAY VIA PAYPAL</button>
+        </div>
+      </div>
+
+      <p class="hint" style="margin-top:14px;text-align:center;">🔒 Balance is added automatically after payment.</p>
+    </div>
+  </div>
+</div>
+
+<!-- PROFILE MODAL -->
+<div class="modal-overlay" id="profileModal">
+  <div class="modal">
+    <div class="modal-hd"><h3>UPDATE GAME DETAILS</h3><button class="modal-x" data-close="profileModal">✕</button></div>
+    <div class="modal-bd">
+      <form id="profileForm" autocomplete="off">
+        <label class="field"><span class="lbl">Display Name</span><input type="text" id="pfName" required minlength="2" maxlength="24" /></label>
+        <label class="field"><span class="lbl">Default Game UID</span><input type="text" id="pfUid" pattern="[0-9]{6,15}" inputmode="numeric" placeholder="Optional" /></label>
+        <label class="field"><span class="lbl">Default IGN</span><input type="text" id="pfIgn" maxlength="24" placeholder="Optional" /></label>
+        <p class="err" id="pfErr"></p>
+        <button type="submit" class="btn-main btn-cyan" id="pfSubmit">SAVE CHANGES</button>
+      </form>
+    </div>
+  </div>
+</div>
+
+<!-- NOTIF MODAL -->
+<div class="modal-overlay" id="notifModal">
+  <div class="modal">
+    <div class="modal-hd"><h3>🔔 NOTIFICATIONS</h3><button class="modal-x" data-close="notifModal">✕</button></div>
+    <div class="modal-bd"><div id="notifList"></div></div>
+  </div>
+</div>
+
+<div id="toast"></div>
+
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+import {
+  getAuth, GoogleAuthProvider, signInWithPopup, signOut,
+  onAuthStateChanged, createUserWithEmailAndPassword,
+  signInWithEmailAndPassword, updateProfile, sendPasswordResetEmail,
+  setPersistence, browserLocalPersistence
+} from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
+import {
+  getFirestore, doc, getDoc, setDoc, updateDoc, addDoc,
+  collection, query, where, onSnapshot, getDocs,
+  serverTimestamp, increment
+} from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+
+/* ═══════════════════════════════════════════════════════════
+   CONFIG
+═══════════════════════════════════════════════════════════ */
+const firebaseConfig = {
+  apiKey: "AIzaSyDEquBta5rSGYGbFe1EhzC7vSIjrWqSIkk",
+  authDomain: "tournament-b2771.firebaseapp.com",
+  databaseURL: "https://tournament-b2771-default-rtdb.firebaseio.com",
+  projectId: "tournament-b2771",
+  storageBucket: "tournament-b2771.firebasestorage.app",
+  messagingSenderId: "219838143541",
+  appId: "1:219838143541:web:ebd560a0d3b9dab572257c"
+};
+
+const DOWNLOAD_URL = "https://sites.google.com/view/arenaxofficial";
+const MIN_WITHDRAW = 50;
+const MIN_DEPOSIT = 10;
+const MIN_MATCHES_FOR_WITHDRAW = 3;
+const REFERRER_BONUS = 5;
+const MIN_DEPOSIT_FOR_BONUS = 100;
+const SIGNUP_BONUS = 5;
+const CURRENT_VERSION_CODE = 11;
+const CURRENT_VERSION_NAME = "4.3.0";
+
+const GAME_MODES = {
+  "BGMI": ["Battle Royale", "TDM"],
+  "Free Fire": ["Clash Squad", "Battle Royale"]
+};
+
+/* ═══════════════════════════════════════════════════════════
+   FIREBASE INIT
+═══════════════════════════════════════════════════════════ */
+const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
+const db = getFirestore(app);
+const googleProvider = new GoogleAuthProvider();
+setPersistence(auth, browserLocalPersistence).catch(() => {});
+
+/* ═══════════════════════════════════════════════════════════
+   STATE
+═══════════════════════════════════════════════════════════ */
+const state = {
+  user: null, profile: null,
+  activeGame: "BGMI", activeMode: "Battle Royale", activeTeam: "ALL",
+  activeNav: "home",
+  tournaments: [], joinedMatches: [], transactions: [], notifications: [],
+  appConfig: null, forceUpdateActive: false, bannerDismissed: false,
+  selectedMatch: null, referrals: [],
+  unsubs: {},
+  deposit: { amount: 0, orderId: "", pollTimer: null },
+  lastPrizeNotifId: null
+};
+
+/* ═══════════════════════════════════════════════════════════
+   DOM HELPERS
+═══════════════════════════════════════════════════════════ */
+const $ = (s) => document.querySelector(s);
+const $$ = (s) => document.querySelectorAll(s);
+
+const D = {
+  forceUpdateScreen: $("#forceUpdateScreen"), fuVersion: $("#fuVersion"), fuChangelog: $("#fuChangelog"), fuChangelogText: $("#fuChangelogText"), fuUpdateBtn: $("#fuUpdateBtn"),
+  updateBanner: $("#updateBanner"), ubVersionText: $("#ubVersionText"), ubUpdateBtn: $("#ubUpdateBtn"), ubCloseBtn: $("#ubCloseBtn"),
+  authGate: $("#authGate"), appShell: $("#appShell"),
+  tabLogin: $("#tabLogin"), tabSignup: $("#tabSignup"),
+  loginForm: $("#loginForm"), signupForm: $("#signupForm"),
+  socialBlock: $("#socialBlock"), authMsg: $("#authMsg"),
+  loginEmail: $("#loginEmail"), loginPassword: $("#loginPassword"), loginSubmit: $("#loginSubmit"),
+  signupName: $("#signupName"), signupEmail: $("#signupEmail"),
+  signupPassword: $("#signupPassword"), signupConfirm: $("#signupConfirm"), signupReferral: $("#signupReferral"), signupSubmit: $("#signupSubmit"),
+  btnGoogle: $("#btnGoogle"),
+  hdrAvatar: $("#hdrAvatar"), hdrName: $("#hdrName"), hdrBal: $("#hdrBal"), hdrWallet: $("#hdrWallet"),
+  notifBtn: $("#notifBtn"), notifBadge: $("#notifBadge"), navNotifDot: $("#navNotifDot"),
+  modeFilter: $("#modeFilter"), teamFilter: $("#teamFilter"),
+  tournamentsList: $("#tournamentsList"), tournamentsSkeleton: $("#tournamentsSkeleton"), tournamentsEmpty: $("#tournamentsEmpty"),
+  joinedList: $("#joinedList"), joinedEmpty: $("#joinedEmpty"),
+  walletBig: $("#walletBig"), walletBonus: $("#walletBonus"), bonusBig: $("#bonusBig"), txList: $("#txList"), txEmpty: $("#txEmpty"),
+  profAvatar: $("#profAvatar"), profName: $("#profName"), profEmail: $("#profEmail"),
+  profBal: $("#profBal"), profBonus: $("#profBonus"), profUid: $("#profUid"), profIgn: $("#profIgn"), profMatches: $("#profMatches"), profWon: $("#profWon"), profVersion: $("#profVersion"),
+  refCode: $("#refCode"), refCopyBtn: $("#refCopyBtn"), refShareBtn: $("#refShareBtn"),
+  refCountJoined: $("#refCountJoined"), refCountEarned: $("#refCountEarned"), refCountPending: $("#refCountPending"),
+  joinModal: $("#joinModal"), joinSummary: $("#joinSummary"), joinForm: $("#joinForm"),
+  joinIgn: $("#joinIgn"), joinUid: $("#joinUid"), joinErr: $("#joinErr"), joinSubmit: $("#joinSubmit"),
+  detailModal: $("#detailModal"), detailBody: $("#detailBody"),
+  withdrawModal: $("#withdrawModal"), withdrawForm: $("#withdrawForm"), wdRuleBox: $("#wdRuleBox"),
+  wdUpi: $("#wdUpi"), wdAmt: $("#wdAmt"), wdErr: $("#wdErr"), wdSubmit: $("#wdSubmit"),
+  depositModal: $("#depositModal"),
+  depAmount: $("#depAmount"), depBonusHint: $("#depBonusHint"), depErr: $("#depErr"), btnPayNow: $("#btnPayNow"),
+  utrStatusBox: $("#utrStatusBox"),
+  btnDeposit: $("#btnDeposit"), btnWithdraw: $("#btnWithdraw"),
+  profileModal: $("#profileModal"), profileForm: $("#profileForm"),
+  pfName: $("#pfName"), pfUid: $("#pfUid"), pfIgn: $("#pfIgn"), pfErr: $("#pfErr"), pfSubmit: $("#pfSubmit"),
+  btnEditProfile: $("#btnEditProfile"),
+  btnSignOut: $("#btnSignOut"),
+  notifModal: $("#notifModal"), notifList: $("#notifList"),
+  prizePopup: $("#prizePopup"), pnpTitle: $("#pnpTitle"), pnpAmt: $("#pnpAmt"),
+  toast: $("#toast")
+};
+
+D.profVersion.textContent = "v" + CURRENT_VERSION_NAME;
+
+/* ═══════════════════════════════════════════════════════════
+   UTILITIES
+═══════════════════════════════════════════════════════════ */
+function showBootError(msg) {
+  const errEl = document.getElementById("bootError");
+  const errMsgEl = document.getElementById("bootErrorMsg");
+  if (errEl && errMsgEl) { errMsgEl.textContent = msg; errEl.classList.remove("hidden"); }
+  if (window.__hideBoot) window.__hideBoot();
+}
+function showToast(msg, type = "") {
+  D.toast.textContent = msg;
+  D.toast.className = "show " + type;
+  clearTimeout(showToast._t);
+  showToast._t = setTimeout(() => D.toast.classList.remove("show"), 3200);
+}
+function showPrizePopup(title, amount) {
+  D.pnpTitle.textContent = title;
+  D.pnpAmt.textContent = "₹" + fmtMoney(amount);
+  D.prizePopup.classList.add("show");
+  setTimeout(() => D.prizePopup.classList.remove("show"), 4000);
+}
+function setAuthMsg(msg, type = "") { D.authMsg.textContent = msg; D.authMsg.className = "auth-msg " + type; }
+function clearAuthMsg() { D.authMsg.textContent = ""; D.authMsg.className = "auth-msg"; }
+function fmtMoney(n) { return Number(n || 0).toLocaleString("en-IN", { minimumFractionDigits: 2, maximumFractionDigits: 2 }); }
+function fmtDateTime(ts) {
+  if (!ts) return "TBA";
+  const d = ts?.toDate ? ts.toDate() : new Date(ts);
+  if (isNaN(d.getTime())) return "TBA";
+  return d.toLocaleString("en-IN", { day: "2-digit", month: "short", hour: "2-digit", minute: "2-digit", hour12: true });
+}
+function escHTML(s) { const d = document.createElement("div"); d.textContent = s ?? ""; return d.innerHTML; }
+function openModal(id) { if (state.forceUpdateActive) return; document.getElementById(id)?.classList.add("open"); }
+function closeModal(id) { document.getElementById(id)?.classList.remove("open"); }
+function friendlyAuthError(code) {
+  const map = {
+    "auth/invalid-email": "Invalid email address.", "auth/user-disabled": "Account disabled.",
+    "auth/user-not-found": "No account found with this email.", "auth/wrong-password": "Incorrect password.",
+    "auth/invalid-credential": "Invalid email or password.", "auth/invalid-login-credentials": "Invalid credentials.",
+    "auth/email-already-in-use": "This email is already registered. Please login instead.",
+    "auth/weak-password": "Password must be at least 6 characters.",
+    "auth/too-many-requests": "Too many attempts. Try again later.", "auth/network-request-failed": "Network error.",
+    "auth/popup-closed-by-user": "Sign-in cancelled."
+  };
+  return map[code] || "Something went wrong.";
+}
+function isBanned() { return state.profile?.banned === true; }
+
+/* ═══════════════════════════════════════════════════════════
+   NORMALIZERS
+═══════════════════════════════════════════════════════════ */
+function normalizeTeamSize(t) {
+  const c = [t.teamSize, t.team, t.teamType, t.type, t.matchType, t.category, t.mode];
+  for (const val of c) {
+    if (!val) continue;
+    const r = String(val).trim().toLowerCase();
+    if (r === "solo" || r === "1v1" || r === "single") return "Solo";
+    if (r === "duo" || r === "2v2" || r === "double") return "Duo";
+    if (r === "squad" || r === "4v4" || r === "team") return "Squad";
+  }
+  const title = String(t.title || "").toLowerCase();
+  if (title.includes("solo")) return "Solo";
+  if (title.includes("duo")) return "Duo";
+  if (title.includes("squad")) return "Squad";
+  return "UNKNOWN";
+}
+function displayTeamSize(t) { const n = normalizeTeamSize(t); return n === "UNKNOWN" ? "Solo" : n; }
+function normalizeMode(t) { return String(t.mode || t.category || "").trim() || "Battle Royale"; }
+
+function getBonusBalance(u) {
+  if (!u) return 0;
+  const c = [u.bonusBalance, u.bonus, u.bonusWallet, u.signupBonus, u.referralBonus, u.bonusAmount, u.walletBonus];
+  for (const v of c) { const n = Number(v); if (!isNaN(n) && n > 0) return n; }
+  return 0;
+}
+function getRealBalance(u) {
+  if (!u) return 0;
+  const c = [u.balance, u.realBalance, u.mainBalance, u.wallet, u.walletBalance];
+  for (const v of c) { const n = Number(v); if (!isNaN(n)) return n; }
+  return 0;
+}
+
+function getMatchStatus(m) {
+  if (!m) return { key: "upcoming", label: "UPCOMING" };
+  if (m.status === "CANCELLED") return { key: "cancelled", label: "CANCELLED" };
+  if (m.status === "COMPLETED" || m.completed === true) return { key: "completed", label: "COMPLETED" };
+  if (m.status === "STARTED" || m.started === true) return { key: "started", label: "● LIVE NOW" };
+  if (m.roomId && m.roomPassword) return { key: "room-ready", label: "ROOM READY" };
+  return { key: "upcoming", label: "UPCOMING" };
+}
+function statusPillHTML(k, l) {
+  const cls = { "upcoming": "pill-upcoming", "room-ready": "pill-room-ready", "started": "pill-started", "completed": "pill-completed", "cancelled": "pill-cancelled" };
+  return `<span class="t-status-pill ${cls[k] || 'pill-upcoming'}">${escHTML(l)}</span>`;
+}
+function statusBannerHTML(k, l) {
+  const cls = { "upcoming": "sb-upcoming", "room-ready": "sb-room-ready", "started": "sb-started", "completed": "sb-completed", "cancelled": "sb-cancelled" };
+  const ico = { "upcoming": "🗓", "room-ready": "🔑", "started": "🔴", "completed": "🏆", "cancelled": "🚫" };
+  return `<div class="status-banner ${cls[k] || 'sb-upcoming'}"><span class="sb-dot"></span><span>${ico[k] || "•"} ${escHTML(l)}</span></div>`;
+}
+function catClass(mode) {
+  const m = String(mode || "").toLowerCase();
+  if (m.includes("clash")) return "cat-cs";
+  if (m.includes("tdm")) return "cat-tdm";
+  if (m.includes("battle royale") || m.includes("br")) return "cat-br";
+  if (m === "solo") return "cat-solo";
+  if (m === "duo") return "cat-duo";
+  if (m === "squad") return "cat-squad";
+  return "cat-br";
+}
+function teamClass(t) {
+  const s = String(t || "").toLowerCase();
+  if (s === "duo") return "team-duo";
+  if (s === "squad") return "team-squad";
+  return "team-solo";
+}
+function teamIcon(t) {
+  const s = String(t || "").toLowerCase();
+  if (s === "duo") return "👥";
+  if (s === "squad") return "👨‍👩‍👦";
+  return "👤";
+}
+function generateReferralCode(name) {
+  const base = String(name || "PLAYER").toUpperCase().replace(/[^A-Z0-9]/g, "").slice(0, 8);
+  return (base || "PLAYER") + Math.floor(1000 + Math.random() * 9000);
+}
+
+/* ═══════════════════════════════════════════════════════════
+   MODE FILTER
+═══════════════════════════════════════════════════════════ */
+function renderModeFilter() {
+  const modes = GAME_MODES[state.activeGame] || [];
+  D.modeFilter.innerHTML = modes.map(m => 
+    `<button class="mode-btn ${m === state.activeMode ? 'active' : ''}" data-mode="${escHTML(m)}">${escHTML(m)}</button>`
+  ).join("");
+}
+D.modeFilter.addEventListener("click", (e) => {
+  const btn = e.target.closest("[data-mode]");
+  if (!btn) return;
+  state.activeMode = btn.dataset.mode;
+  renderModeFilter();
+  attachTournamentsListener();
+});
+D.teamFilter.addEventListener("click", (e) => {
+  const btn = e.target.closest("[data-team]");
+  if (!btn) return;
+  state.activeTeam = btn.dataset.team;
+  $$(".team-btn").forEach(b => b.classList.toggle("active", b === btn));
+  attachTournamentsListener();
+});
+
+/* ═══════════════════════════════════════════════════════════
+   AUTH VIEW
+═══════════════════════════════════════════════════════════ */
+function showAuthView(view) {
+  D.loginForm.classList.toggle("hidden", view !== "login");
+  D.signupForm.classList.toggle("hidden", view !== "signup");
+  D.socialBlock.classList.toggle("hidden", view !== "login" && view !== "signup");
+  D.tabLogin.classList.toggle("active", view === "login");
+  D.tabSignup.classList.toggle("active", view === "signup");
+  clearAuthMsg();
+}
+D.tabLogin.addEventListener("click", () => showAuthView("login"));
+D.tabSignup.addEventListener("click", () => showAuthView("signup"));
+
+$$(".pw-toggle").forEach(btn => {
+  btn.addEventListener("click", () => {
+    const t = document.getElementById(btn.dataset.target);
+    if (!t) return;
+    const isPw = t.type === "password";
+    t.type = isPw ? "text" : "password";
+    btn.textContent = isPw ? "🙈" : "👁️";
+  });
+});
+
+/* ═══════════════════════════════════════════════════════════
+   SIGNUP
+═══════════════════════════════════════════════════════════ */
+D.signupForm.addEventListener("submit", async (e) => {
+  e.preventDefault(); clearAuthMsg();
+  const name = D.signupName.value.trim();
+  const email = D.signupEmail.value.trim().toLowerCase();
+  const pw = D.signupPassword.value;
+  const pw2 = D.signupConfirm.value;
+  const refInput = D.signupReferral.value.trim().toUpperCase();
+
+  if (name.length < 2) { setAuthMsg("Name too short.", "error"); return; }
+  if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) { setAuthMsg("Invalid email.", "error"); return; }
+  if (pw.length < 6) { setAuthMsg("Min 6 characters.", "error"); return; }
+  if (pw !== pw2) { setAuthMsg("Passwords don't match.", "error"); return; }
+
+  D.signupSubmit.disabled = true;
+  D.signupSubmit.innerHTML = `<span class="spinner"></span>CREATING...`;
+
+  try {
+    const cred = await createUserWithEmailAndPassword(auth, email, pw);
+    await updateProfile(cred.user, { displayName: name });
+
+    const myRefCode = generateReferralCode(name);
+    await setDoc(doc(db, "users", cred.user.uid), {
+      uid: cred.user.uid,
+      name, email, phone: "",
+      balance: 0,
+      bonusBalance: SIGNUP_BONUS,
+      referralCode: myRefCode,
+      referredBy: "",
+      referredByName: "",
+      referralCodeUsed: refInput || "",
+      referralRewarded: false,
+      firstDepositRewarded: false,
+      matchesPlayed: 0,
+      totalWon: 0,
+      banned: false,
+      createdAt: serverTimestamp()
+    });
+
+    await addDoc(collection(db, "wallet_transactions"), {
+      uid: cred.user.uid, amount: SIGNUP_BONUS, type: "credit",
+      category: "signup_bonus", description: "🎁 Signup bonus",
+      createdAt: serverTimestamp()
+    });
+
+    if (refInput) {
+      try {
+        const q = query(collection(db, "users"), where("referralCode", "==", refInput));
+        const snap = await getDocs(q);
+        if (!snap.empty) {
+          const refDoc = snap.docs[0];
+          await updateDoc(doc(db, "users", cred.user.uid), {
+            referredBy: refDoc.id,
+            referredByName: refDoc.data().name || "Player"
+          });
+        }
+      } catch (err) { console.warn("Referral link failed:", err); }
+    }
+
+    showToast(`🎁 ₹${SIGNUP_BONUS} signup bonus credited!`, "success");
+  } catch (err) {
+    setAuthMsg(friendlyAuthError(err.code), "error");
+  } finally {
+    D.signupSubmit.disabled = false;
+    D.signupSubmit.textContent = "CREATE ACCOUNT";
+  }
+});
+
+/* ═══════════════════════════════════════════════════════════
+   LOGIN
+═══════════════════════════════════════════════════════════ */
+D.loginForm.addEventListener("submit", async (e) => {
+  e.preventDefault(); clearAuthMsg();
+  const email = D.loginEmail.value.trim().toLowerCase();
+  const pw = D.loginPassword.value;
+  if (!email || !pw) { setAuthMsg("Enter email and password.", "error"); return; }
+  D.loginSubmit.disabled = true;
+  D.loginSubmit.innerHTML = `<span class="spinner"></span>LOGGING IN...`;
+  try {
+    await signInWithEmailAndPassword(auth, email, pw);
+  } catch (err) {
+    setAuthMsg(friendlyAuthError(err.code), "error");
+  } finally {
+    D.loginSubmit.disabled = false;
+    D.loginSubmit.textContent = "LOGIN";
+  }
+});
+
+/* ═══════════════════════════════════════════════════════════
+   GOOGLE SIGN-IN
+═══════════════════════════════════════════════════════════ */
+D.btnGoogle.addEventListener("click", async () => {
+  clearAuthMsg();
+  try {
+    D.btnGoogle.disabled = true;
+    await signInWithPopup(auth, googleProvider);
+  } catch (err) {
+    if (err.code !== "auth/popup-closed-by-user") setAuthMsg(friendlyAuthError(err.code), "error");
+  } finally {
+    D.btnGoogle.disabled = false;
+  }
+});
+
+/* ═══════════════════════════════════════════════════════════
+   AUTH STATE LISTENER
+═══════════════════════════════════════════════════════════ */
+onAuthStateChanged(auth, async (user) => {
+  Object.keys(state.unsubs).forEach(k => {
+    if (state.unsubs[k]) { state.unsubs[k](); state.unsubs[k] = null; }
+  });
+
+  if (window.__hideBoot) window.__hideBoot();
+
+  if (!user) {
+    state.user = null; state.profile = null;
+    D.authGate.classList.remove("hidden");
+    D.appShell.classList.add("hidden");
+    showAuthView("login");
+    return;
+  }
+
+  const adminSnap = await getDoc(doc(db, "admins", user.uid)).catch(() => null);
+  if (adminSnap && adminSnap.exists()) {
+    await signOut(auth);
+    D.authGate.classList.remove("hidden");
+    D.appShell.classList.add("hidden");
+    showAuthView("login");
+    setAuthMsg("⛔ Admins must use the Admin Panel.", "error");
+    return;
+  }
+
+  state.user = user;
+
+  const userSnap = await getDoc(doc(db, "users", user.uid));
+  if (!userSnap.exists()) {
+    const fallbackName = user.displayName || user.email?.split("@")[0] || "Player";
+    const myRefCode = generateReferralCode(fallbackName);
+    await setDoc(doc(db, "users", user.uid), {
+      uid: user.uid, name: fallbackName,
+      email: user.email || "", phone: user.phoneNumber || "",
+      balance: 0, bonusBalance: SIGNUP_BONUS,
+      referralCode: myRefCode,
+      referredBy: "", referredByName: "",
+      referralRewarded: false, firstDepositRewarded: false,
+      matchesPlayed: 0, totalWon: 0, banned: false,
+      createdAt: serverTimestamp()
+    });
+    await addDoc(collection(db, "wallet_transactions"), {
+      uid: user.uid, amount: SIGNUP_BONUS, type: "credit",
+      category: "signup_bonus", description: "🎁 Signup bonus",
+      createdAt: serverTimestamp()
+    });
+  }
+
+  D.authGate.classList.add("hidden");
+  D.appShell.classList.remove("hidden");
+  renderModeFilter();
+  attachProfileListener(user.uid);
+  attachTournamentsListener();
+  attachJoinedListener(user.uid);
+  attachTxListener(user.uid);
+  attachNotifListener(user.uid);
+  attachReferralsListener(user.uid);
+  checkPaymentRedirect();
+});
+
+/* ═══════════════════════════════════════════════════════════
+   PROFILE LISTENER
+═══════════════════════════════════════════════════════════ */
+function attachProfileListener(uid) {
+  state.unsubs.profile = onSnapshot(doc(db, "users", uid), (snap) => {
+    if (!snap.exists()) return;
+    const data = snap.data();
+    state.profile = data;
+    const banned = data.banned === true;
+    const bal = banned ? 0 : getRealBalance(data);
+    const bonus = banned ? 0 : getBonusBalance(data);
+    const matchesPlayed = Number(data.matchesPlayed || 0);
+    const totalWon = Number(data.totalWon || 0);
+
+    D.hdrBal.textContent = fmtMoney(bal);
+    D.hdrName.textContent = data.name || "Player";
+    if (data.photoURL) {
+      D.hdrAvatar.innerHTML = `<img src="${escHTML(data.photoURL)}" alt="av"/>`;
+      D.profAvatar.innerHTML = `<img src="${escHTML(data.photoURL)}" alt="av"/>`;
+    } else {
+      const initial = (data.name || "U").charAt(0).toUpperCase();
+      D.hdrAvatar.textContent = initial;
+      D.profAvatar.textContent = initial;
+    }
+    D.walletBig.textContent = fmtMoney(bal);
+    if (bonus > 0) {
+      D.walletBonus.classList.remove("hidden");
+      D.bonusBig.textContent = fmtMoney(bonus);
+    } else {
+      D.walletBonus.classList.add("hidden");
+    }
+    D.profName.textContent = data.name || "Player";
+    D.profEmail.textContent = data.email || data.phone || "—";
+    D.profBal.textContent = "₹" + fmtMoney(bal);
+    D.profBonus.textContent = "₹" + fmtMoney(bonus);
+    D.profUid.textContent = data.gameUid || "Not Set";
+    D.profIgn.textContent = data.ign || "Not Set";
+    D.profMatches.textContent = matchesPlayed + " / " + MIN_MATCHES_FOR_WITHDRAW;
+    D.profWon.textContent = "₹" + fmtMoney(totalWon);
+
+    if (data.referralCode) D.refCode.textContent = data.referralCode;
+
+    if (state.tournaments.length) renderTournaments(state.tournaments);
+    if (state.joinedMatches.length) renderJoined(state.joinedMatches);
+  }, (err) => console.error("Profile listener:", err));
+}
+
+/* ═══════════════════════════════════════════════════════════
+   TOURNAMENTS LISTENER
+═══════════════════════════════════════════════════════════ */
+function attachTournamentsListener() {
+  if (state.unsubs.tournaments) state.unsubs.tournaments();
+  D.tournamentsSkeleton.classList.remove("hidden");
+  D.tournamentsList.innerHTML = "";
+  D.tournamentsEmpty.classList.add("hidden");
+
+  const q = query(collection(db, "tournaments"), where("game", "==", state.activeGame));
+  state.unsubs.tournaments = onSnapshot(q, (snap) => {
+    let items = [];
+    snap.forEach(d => items.push({ id: d.id, ...d.data() }));
+    items = items.filter(t => normalizeMode(t).toLowerCase() === state.activeMode.toLowerCase());
+    if (state.activeTeam !== "ALL") {
+      items = items.filter(t => normalizeTeamSize(t).toLowerCase() === state.activeTeam.toLowerCase());
+    }
+    const visible = items.filter(t => t.status !== "CANCELLED");
+    visible.sort((a, b) => (b.createdAt?.toMillis?.() || 0) - (a.createdAt?.toMillis?.() || 0));
+    state.tournaments = visible;
+    renderTournaments(visible);
+  }, (err) => {
+    console.error("Tournaments listener:", err);
+    D.tournamentsSkeleton.classList.add("hidden");
+    D.tournamentsEmpty.classList.remove("hidden");
+  });
+}
+
+function attachJoinedListener(uid) {
+  const q = query(collection(db, "tournaments"), where("joinedUsers", "array-contains", uid));
+  state.unsubs.joined = onSnapshot(q, (snap) => {
+    const items = [];
+    snap.forEach(d => items.push({ id: d.id, ...d.data() }));
+    items.sort((a, b) => (b.createdAt?.toMillis?.() || 0) - (a.createdAt?.toMillis?.() || 0));
+    state.joinedMatches = items;
+    renderJoined(items);
+    if (state.tournaments.length) renderTournaments(state.tournaments);
+  }, (err) => console.error("Joined listener:", err));
+}
+
+function attachTxListener(uid) {
+  const q = query(collection(db, "wallet_transactions"), where("uid", "==", uid));
+  state.unsubs.tx = onSnapshot(q, (snap) => {
+    const items = [];
+    snap.forEach(d => items.push({ id: d.id, ...d.data() }));
+    items.sort((a, b) => (b.createdAt?.toMillis?.() || 0) - (a.createdAt?.toMillis?.() || 0));
+    state.transactions = items;
+    renderTransactions(items);
+
+    const latestPrize = items.find(tx => tx.type === "credit" && (tx.category === "prize" || (tx.description || "").toLowerCase().includes("prize")));
+    if (latestPrize && latestPrize.id !== state.lastPrizeNotifId) {
+      if (state.lastPrizeNotifId !== null) {
+        showPrizePopup("🏆 PRIZE CREDITED!", latestPrize.amount);
+        showToast(`🏆 ₹${fmtMoney(latestPrize.amount)} prize credited!`, "prize");
+      }
+      state.lastPrizeNotifId = latestPrize.id;
+    }
+  }, (err) => console.error("Tx listener:", err));
+}
+
+function attachNotifListener(uid) {
+  const q = query(collection(db, "notifications"), where("uid", "==", uid));
+  state.unsubs.notif = onSnapshot(q, (snap) => {
+    const items = [];
+    snap.forEach(d => items.push({ id: d.id, ...d.data() }));
+    items.sort((a, b) => (b.createdAt?.toMillis?.() || 0) - (a.createdAt?.toMillis?.() || 0));
+    state.notifications = items;
+    renderNotifBadge();
+    renderNotifList();
+  }, (err) => console.error("Notif listener:", err));
+}
+
+function attachReferralsListener(uid) {
+  const q = query(collection(db, "users"), where("referredBy", "==", uid));
+  state.unsubs.referrals = onSnapshot(q, (snap) => {
+    const items = [];
+    snap.forEach(d => items.push({ id: d.id, ...d.data() }));
+    state.referrals = items;
+    renderReferralStats();
+  }, (err) => console.warn("Referrals listener:", err));
+}
+
+/* ═══════════════════════════════════════════════════════════
+   RENDER FUNCTIONS
+═══════════════════════════════════════════════════════════ */
+function renderReferralStats() {
+  if (!D.refCountJoined) return;
+  const total = state.referrals.length;
+  const rewarded = state.referrals.filter(r => r.referralRewarded === true).length;
+  D.refCountJoined.textContent = total;
+  D.refCountEarned.textContent = "₹" + (rewarded * REFERRER_BONUS);
+  D.refCountPending.textContent = total - rewarded;
+}
+
+function renderNotifBadge() {
+  const unread = state.notifications.filter(n => !n.read).length;
+  if (D.notifBadge) {
+    if (unread > 0) { D.notifBadge.textContent = unread > 9 ? "9+" : unread; D.notifBadge.style.display = "inline-flex"; }
+    else D.notifBadge.style.display = "none";
+  }
+  if (D.navNotifDot) {
+    if (unread > 0) { D.navNotifDot.textContent = unread > 9 ? "9+" : unread; D.navNotifDot.style.display = "inline-flex"; }
+    else D.navNotifDot.style.display = "none";
+  }
+}
+
+function renderNotifList() {
+  if (!D.notifList) return;
+  if (!state.notifications.length) {
+    D.notifList.innerHTML = `<div class="empty-state" style="padding:32px 16px;"><p>No notifications yet.</p></div>`;
+    return;
+  }
+  D.notifList.innerHTML = state.notifications.slice(0, 50).map(n => {
+    const isPrize = n.type === "prize" || (n.title || "").includes("🏆");
+    return `<div class="notif-item ${n.read ? 'read' : 'unread'} ${isPrize ? 'prize' : ''}">
+      <div class="notif-head"><div class="notif-title">${escHTML(n.title || "Notification")}</div>${!n.read ? '<span class="notif-dot"></span>' : ''}</div>
+      <div class="notif-body">${escHTML(n.body || "")}</div>
+      <div class="notif-time">${escHTML(fmtDateTime(n.createdAt))}</div>
+    </div>`;
+  }).join("");
+}
+
+function tournamentCardHTML(t, idx, joinedIds) {
+  const banned = isBanned();
+  const max = Number(t.maxSlots || 100);
+  const jc = Number(t.joinedCount || 0);
+  const pct = Math.min(100, Math.round((jc / max) * 100));
+  const full = jc >= max;
+  const isJoined = joinedIds.has(t.id);
+  const fee = Number(t.entryFee || 0);
+  const gameCls = t.game === "Free Fire" ? "tag-FreeFire" : "tag-BGMI";
+  const progressCls = pct >= 85 ? "progress-fill almost" : "progress-fill";
+  const status = getMatchStatus(t);
+  const pillHTML = statusPillHTML(status.key, status.label);
+  const modeName = normalizeMode(t);
+  const modeCls = catClass(modeName);
+  const teamSizeDisplay = displayTeamSize(t);
+  const rawTeam = normalizeTeamSize(t);
+  const teamCls = teamClass(rawTeam);
+  const teamIco = teamIcon(rawTeam);
+
+  let btn = "JOIN NOW", disabled = "", extra = "", actionAttr = "";
+  if (banned) { btn = "🚫 ACCOUNT BANNED"; disabled = "disabled"; extra = "banned"; }
+  else if (status.key === "cancelled") { btn = "🚫 MATCH CANCELLED"; disabled = "disabled"; extra = "cancelled"; }
+  else if (status.key === "completed") { btn = "🏆 MATCH COMPLETED"; disabled = "disabled"; extra = "completed"; }
+  else if (status.key === "started") {
+    if (isJoined) { btn = "🎮 VIEW ROOM — STARTED"; extra = "started"; actionAttr = `data-detail="${escHTML(t.id)}"`; }
+    else { btn = "🔴 MATCH IN PROGRESS"; disabled = "disabled"; extra = "cancelled"; }
+  }
+  else if (isJoined) { btn = "✓ JOINED — TAP FOR DETAILS"; extra = "joined"; actionAttr = `data-detail="${escHTML(t.id)}"`; }
+  else if (full) { btn = "SLOTS FULL"; disabled = "disabled"; }
+  else { actionAttr = `data-join="${escHTML(t.id)}"`; }
+
+  const banner = t.bannerUrl
+    ? `<img class="t-banner" src="${escHTML(t.bannerUrl)}" alt="" loading="lazy" onerror="this.style.display='none'"/>`
+    : `<div class="t-banner-fallback">${escHTML(t.game || "MATCH")}</div>`;
+  const cardCls = status.key === "cancelled" ? "status-cancelled" : status.key === "completed" ? "status-completed" : "";
+
+  return `<article class="t-card ${cardCls}" style="animation-delay:${idx * 40}ms" data-id="${escHTML(t.id)}">
+    ${banner}
+    <div class="t-body">
+      <div class="t-head">
+        <div class="t-head-left">
+          <div class="match-badges">
+            <span class="t-game-tag ${gameCls}">${escHTML(t.game || "MATCH")}</span>
+            <span class="t-cat-tag ${modeCls}">${escHTML(modeName)}</span>
+            <span class="team-tag ${teamCls}">${teamIco} ${escHTML(teamSizeDisplay)} Match</span>
+            <span class="t-map-tag">🗺️ ${escHTML(t.map || "TBA")}</span>
+          </div>
+          <h3 class="t-title" style="margin-top:8px"><span class="team-label">${escHTML(teamSizeDisplay)}</span> ${escHTML(t.title || "Untitled Match")}</h3>
+          <div class="t-time">🗓 ${escHTML(fmtDateTime(t.matchTime))}</div>
+        </div>
+        ${pillHTML}
+      </div>
+      <div class="t-stats">
+        <div class="stat"><span class="lbl">Prize</span><span class="val prize">₹${fmtMoney(t.prizePool)}</span></div>
+        <div class="stat"><span class="lbl">Per Kill</span><span class="val kill">₹${fmtMoney(t.perKill)}</span></div>
+        <div class="stat"><span class="lbl">Entry</span><span class="val fee ${fee > 0 ? 'paid' : ''}">${fee > 0 ? "₹" + fmtMoney(fee) : "FREE"}</span></div>
+      </div>
+      <div class="progress-wrap">
+        <div class="progress-meta"><span><strong>${jc}</strong> / ${max} slots filled</span><span>${pct}%</span></div>
+        <div class="progress-bar"><div class="${progressCls}" style="width:${pct}%"></div></div>
+      </div>
+      <button class="join-btn ${extra}" ${disabled} ${actionAttr}>${btn}</button>
+    </div>
+  </article>`;
+}
+
+function renderTournaments(items) {
+  D.tournamentsSkeleton.classList.add("hidden");
+  if (!items || items.length === 0) {
+    D.tournamentsList.innerHTML = "";
+    D.tournamentsEmpty.classList.remove("hidden");
+    return;
+  }
+  D.tournamentsEmpty.classList.add("hidden");
+  const joinedIds = new Set(state.joinedMatches.map(m => m.id));
+  D.tournamentsList.innerHTML = items.map((t, i) => tournamentCardHTML(t, i, joinedIds)).join("");
+}
+
+function renderJoined(items) {
+  if (!items || items.length === 0) {
+    D.joinedList.innerHTML = "";
+    D.joinedEmpty.classList.remove("hidden");
+    return;
+  }
+  D.joinedEmpty.classList.add("hidden");
+  D.joinedList.innerHTML = items.map((t, idx) => {
+    const max = Number(t.maxSlots || 100);
+    const jc = Number(t.joinedCount || 0);
+    const pct = Math.min(100, Math.round((jc / max) * 100));
+    const gameCls = t.game === "Free Fire" ? "tag-FreeFire" : "tag-BGMI";
+    const status = getMatchStatus(t);
+    const pillHTML = statusPillHTML(status.key, status.label);
+    const modeName = normalizeMode(t);
+    const modeCls = catClass(modeName);
+    const teamSizeDisplay = displayTeamSize(t);
+    const rawTeam = normalizeTeamSize(t);
+    const teamCls = teamClass(rawTeam);
+    const teamIco = teamIcon(rawTeam);
+    const banner = t.bannerUrl
+      ? `<img class="t-banner" src="${escHTML(t.bannerUrl)}" alt="" loading="lazy" onerror="this.style.display='none'"/>`
+      : `<div class="t-banner-fallback">${escHTML(t.game || "MATCH")}</div>`;
+    let btnHTML = "";
+    if (status.key === "cancelled") btnHTML = `<button class="join-btn cancelled" disabled>🚫 CANCELLED — REFUNDED</button>`;
+    else if (status.key === "completed") btnHTML = `<button class="join-btn completed" disabled>🏆 COMPLETED</button>`;
+    else if (status.key === "started") btnHTML = `<button class="join-btn started" data-detail="${escHTML(t.id)}">🎮 STARTED — VIEW ROOM</button>`;
+    else if (t.roomId && t.roomPassword) btnHTML = `<button class="join-btn joined" data-detail="${escHTML(t.id)}">🔑 ROOM READY</button>`;
+    else btnHTML = `<button class="join-btn joined" data-detail="${escHTML(t.id)}">⏳ AWAITING ROOM</button>`;
+    const cardCls = status.key === "cancelled" ? "status-cancelled" : status.key === "completed" ? "status-completed" : "";
+    return `<article class="t-card ${cardCls}" style="animation-delay:${idx * 40}ms">
+      ${banner}
+      <div class="t-body">
+        <div class="t-head">
+          <div class="t-head-left">
+            <div class="match-badges">
+              <span class="t-game-tag ${gameCls}">${escHTML(t.game || "MATCH")}</span>
+              <span class="t-cat-tag ${modeCls}">${escHTML(modeName)}</span>
+              <span class="team-tag ${teamCls}">${teamIco} ${escHTML(teamSizeDisplay)} Match</span>
+              <span class="t-map-tag">🗺️ ${escHTML(t.map || "TBA")}</span>
+            </div>
+            <h3 class="t-title" style="margin-top:8px"><span class="team-label">${escHTML(teamSizeDisplay)}</span> ${escHTML(t.title || "Match")}</h3>
+            <div class="t-time">🗓 ${escHTML(fmtDateTime(t.matchTime))}</div>
+          </div>
+          ${pillHTML}
+        </div>
+        <div class="t-stats">
+          <div class="stat"><span class="lbl">Prize</span><span class="val prize">₹${fmtMoney(t.prizePool)}</span></div>
+          <div class="stat"><span class="lbl">Per Kill</span><span class="val kill">₹${fmtMoney(t.perKill)}</span></div>
+          <div class="stat"><span class="lbl">Entry</span><span class="val fee">₹${fmtMoney(t.entryFee)}</span></div>
+        </div>
+        <div class="progress-wrap">
+          <div class="progress-meta"><span><strong>${jc}</strong> / ${max} slots filled</span><span>${pct}%</span></div>
+          <div class="progress-bar"><div class="progress-fill" style="width:${pct}%"></div></div>
+        </div>
+        ${btnHTML}
+      </div>
+    </article>`;
+  }).join("");
+}
+
+function renderTransactions(items) {
+  if (!items || items.length === 0) {
+    D.txList.innerHTML = "";
+    D.txEmpty.classList.remove("hidden");
+    return;
+  }
+  D.txEmpty.classList.add("hidden");
+  D.txList.innerHTML = items.slice(0, 40).map((tx, i) => {
+    const amt = Number(tx.amount || 0);
+    const credit = tx.type === "credit" || amt > 0;
+    const sign = credit ? "+" : "−";
+    const cls = credit ? "credit" : "debit";
+    return `<div class="tx-item" style="animation-delay:${i * 25}ms">
+      <div class="tx-left">
+        <div class="tx-title">${escHTML(tx.description || "Transaction")}</div>
+        <div class="tx-time">${escHTML(fmtDateTime(tx.createdAt))}</div>
+      </div>
+      <div class="tx-amt ${cls}">${sign}₹${fmtMoney(Math.abs(amt))}</div>
+    </div>`;
+  }).join("");
+}
+
+/* ═══════════════════════════════════════════════════════════
+   NAVIGATION
+═══════════════════════════════════════════════════════════ */
+function setNav(nav) {
+  state.activeNav = nav;
+  $$(".nav-btn").forEach(b => b.classList.toggle("active", b.dataset.nav === nav));
+  $$(".view").forEach(v => v.classList.remove("active"));
+  const map = { home: "view-home", joined: "view-joined", wallet: "view-wallet", profile: "view-profile", terms: "view-terms" };
+  document.getElementById(map[nav])?.classList.add("active");
+  window.scrollTo({ top: 0, behavior: "instant" });
+}
+$$(".nav-btn").forEach(b => b.addEventListener("click", () => setNav(b.dataset.nav)));
+
+$$(".gf-btn").forEach(b => {
+  b.addEventListener("click", () => {
+    if (state.activeGame === b.dataset.game) return;
+    state.activeGame = b.dataset.game;
+    state.activeMode = (GAME_MODES[state.activeGame] || [])[0] || "Battle Royale";
+    $$(".gf-btn").forEach(x => x.classList.toggle("active", x === b));
+    renderModeFilter();
+    attachTournamentsListener();
+  });
+});
+
+D.hdrWallet.addEventListener("click", () => setNav("wallet"));
+
+D.notifBtn?.addEventListener("click", async () => {
+  openModal("notifModal");
+  renderNotifList();
+  const unread = state.notifications.filter(n => !n.read);
+  for (const n of unread) {
+    try { await updateDoc(doc(db, "notifications", n.id), { read: true }); } catch (e) {}
+  }
+});
+
+document.addEventListener("click", (e) => {
+  const closeBtn = e.target.closest("[data-close]");
+  if (closeBtn) { closeModal(closeBtn.dataset.close); return; }
+  if (e.target.classList.contains("modal-overlay")) e.target.classList.remove("open");
+});
+document.addEventListener("keydown", (e) => {
+  if (e.key === "Escape") $$(".modal-overlay.open").forEach(m => m.classList.remove("open"));
+});
+
+/* ═══════════════════════════════════════════════════════════
+   TOURNAMENT CARD CLICK — OPEN JOIN / DETAIL MODALS
+═══════════════════════════════════════════════════════════ */
+D.tournamentsList.addEventListener("click", (e) => {
+  if (state.forceUpdateActive) { e.preventDefault(); e.stopPropagation(); return; }
+  const joinBtn = e.target.closest("[data-join]");
+  const detailBtn = e.target.closest("[data-detail]");
+  if (joinBtn) {
+    const id = joinBtn.dataset.join;
+    const match = state.tournaments.find(t => t.id === id);
+    if (match) openJoinModal(match);
+  } else if (detailBtn) {
+    const id = detailBtn.dataset.detail;
+    const match = state.tournaments.find(t => t.id === id) || state.joinedMatches.find(t => t.id === id);
+    if (match) openDetailModal(match);
+  }
+});
+D.joinedList.addEventListener("click", (e) => {
+  if (state.forceUpdateActive) { e.preventDefault(); e.stopPropagation(); return; }
+  const detailBtn = e.target.closest("[data-detail]");
+  if (detailBtn) {
+    const id = detailBtn.dataset.detail;
+    const match = state.joinedMatches.find(t => t.id === id);
+    if (match) openDetailModal(match);
+  }
+});
+
+/* ═══════════════════════════════════════════════════════════
+   OPEN JOIN MODAL
+═══════════════════════════════════════════════════════════ */
+function openJoinModal(match) {
+  if (state.forceUpdateActive) { showToast("Please update the app first.", "error"); return; }
+  if (isBanned()) { showToast("🚫 Your account is banned.", "error"); return; }
+  state.selectedMatch = match;
+  const fee = Number(match.entryFee || 0);
+  const bal = getRealBalance(state.profile);
+  const bonus = getBonusBalance(state.profile);
+  const total = bal + bonus;
+  const modeName = normalizeMode(match);
+  const teamSizeDisplay = displayTeamSize(match);
+  const rawTeam = normalizeTeamSize(match);
+  const teamIco = teamIcon(rawTeam);
+
+  D.joinSummary.innerHTML = `
+    <div class="ms-title">${escHTML(match.title || "Match")}</div>
+    <div class="ms-row"><span>Game</span><strong>${escHTML(match.game || "")}</strong></div>
+    <div class="ms-row"><span>Mode</span><strong>${escHTML(modeName)}</strong></div>
+    <div class="ms-row"><span>Team</span><strong>${teamIco} ${escHTML(teamSizeDisplay)}</strong></div>
+    <div class="ms-row"><span>Map</span><strong>${escHTML(match.map || "TBA")}</strong></div>
+    <div class="ms-row"><span>Match Time</span><strong>${escHTML(fmtDateTime(match.matchTime))}</strong></div>
+    <div class="ms-row fee"><span>Entry Fee</span><strong>₹${fmtMoney(fee)}</strong></div>
+    <div class="ms-row"><span>Wallet</span><strong>₹${fmtMoney(bal)}</strong></div>
+    ${bonus > 0 ? `<div class="ms-row"><span>Bonus</span><strong style="color:var(--green)">₹${fmtMoney(bonus)}</strong></div>` : ""}
+    <div class="ms-row"><span>Total Available</span><strong>₹${fmtMoney(total)}</strong></div>
+  `;
+
+  D.joinForm.reset();
+  D.joinErr.textContent = "";
+  if (state.profile?.ign) D.joinIgn.value = state.profile.ign;
+  if (state.profile?.gameUid) D.joinUid.value = state.profile.gameUid;
+  if (fee > total) {
+    D.joinErr.textContent = `Insufficient balance. Need ₹${fmtMoney(fee - total)} more.`;
+    D.joinSubmit.disabled = true;
+  } else {
+    D.joinSubmit.disabled = false;
+  }
+  openModal("joinModal");
+}
+
+/* ═══════════════════════════════════════════════════════════
+   JOIN FORM SUBMIT — POST /api/join-match
+═══════════════════════════════════════════════════════════ */
+D.joinForm.addEventListener("submit", async (e) => {
+  e.preventDefault();
+  if (!state.user || !state.selectedMatch) return;
+  if (isBanned()) { D.joinErr.textContent = "Account banned."; return; }
+
+  const match = state.selectedMatch;
+  const ign = D.joinIgn.value.trim();
+  const gameUid = D.joinUid.value.trim();
+
+  if (ign.length < 2) { D.joinErr.textContent = "Enter a valid IGN."; return; }
+  if (!/^[0-9]{6,15}$/.test(gameUid)) { D.joinErr.textContent = "Game UID must be 6-15 digits."; return; }
+
+  D.joinSubmit.disabled = true;
+  D.joinSubmit.innerHTML = `<span class="spinner"></span>PROCESSING...`;
+  D.joinErr.textContent = "";
+
+  try {
+    const idToken = await state.user.getIdToken();
+    const resp = await fetch("/api/join-match", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": "Bearer " + idToken
+      },
+      body: JSON.stringify({ matchId: match.id, ign, gameUid })
+    });
+    const result = await resp.json();
+    if (!resp.ok || !result.ok) throw new Error(result.error || "Failed to join match.");
+
+    const newCount = (Number(state.profile?.matchesPlayed || 0) + 1);
+    if (newCount >= MIN_MATCHES_FOR_WITHDRAW) showToast("🎉 Withdrawal unlocked! You can now withdraw funds.", "success");
+    else showToast(`Match joined! ${newCount}/${MIN_MATCHES_FOR_WITHDRAW} matches played.`, "success");
+
+    closeModal("joinModal");
+  } catch (err) {
+    D.joinErr.textContent = err.message || "Failed to join.";
+  } finally {
+    D.joinSubmit.disabled = false;
+    D.joinSubmit.textContent = "CONFIRM & PAY";
+  }
+});
+
+/* ═══════════════════════════════════════════════════════════
+   OPEN DETAIL MODAL
+═══════════════════════════════════════════════════════════ */
+function openDetailModal(match) {
+  if (state.forceUpdateActive) return;
+  const isJoined = state.joinedMatches.some(m => m.id === match.id);
+  const max = Number(match.maxSlots || 100);
+  const jc = Number(match.joinedCount || 0);
+  const pct = Math.min(100, Math.round((jc / max) * 100));
+  const status = getMatchStatus(match);
+  const bannerHTML = statusBannerHTML(status.key, status.label);
+  const hasRoom = match.roomId && match.roomPassword;
+  const canSeeRoom = isJoined && hasRoom && (status.key === "room-ready" || status.key === "started" || status.key === "completed");
+  const modeName = normalizeMode(match);
+  const teamSizeDisplay = displayTeamSize(match);
+  const rawTeam = normalizeTeamSize(match);
+  const teamIco = teamIcon(rawTeam);
+
+  let roomSection = "";
+  if (!isJoined) roomSection = `<div class="room-box locked"><div class="room-locked-msg">🔒 Join this match to view room credentials.</div></div>`;
+  else if (canSeeRoom) roomSection = `
+      <div class="room-box">
+        <div class="room-row"><span class="k">Room ID</span><span class="v">${escHTML(match.roomId)}</span></div>
+        <div class="room-row"><span class="k">Password</span><span class="v">${escHTML(match.roomPassword)}</span></div>
+      </div>
+      <p class="hint">⏱ Join the custom room 5 minutes before match time.</p>`;
+  else if (status.key === "cancelled") roomSection = `<div class="room-box locked"><div class="room-locked-msg">🚫 Match cancelled. Refunded.</div></div>`;
+  else if (status.key === "completed") roomSection = `<div class="room-box locked"><div class="room-locked-msg">🏆 Match completed.</div></div>`;
+  else roomSection = `<div class="room-box locked"><div class="room-locked-msg">🔒 Room credentials will appear once admin publishes them.</div></div>`;
+
+  let statusNote = "";
+  if (status.key === "started") statusNote = `<p class="hint" style="color:var(--green);font-weight:700;">🔴 Match is LIVE!</p>`;
+  else if (status.key === "completed") statusNote = `<p class="hint" style="color:var(--gold);font-weight:700;">🏆 Match ended. Check your wallet!</p>`;
+  else if (status.key === "cancelled") statusNote = `<p class="hint" style="color:var(--red-2);font-weight:700;">🚫 Match cancelled. Refund processed.</p>`;
+
+  D.detailBody.innerHTML = `
+    ${bannerHTML}
+    <div class="match-summary">
+      <div class="ms-title">${escHTML(match.title || "Match")}</div>
+      <div class="ms-row"><span>Game</span><strong>${escHTML(match.game || "")}</strong></div>
+      <div class="ms-row"><span>Mode</span><strong>${escHTML(modeName)}</strong></div>
+      <div class="ms-row"><span>Team</span><strong>${teamIco} ${escHTML(teamSizeDisplay)}</strong></div>
+      <div class="ms-row"><span>Map</span><strong>${escHTML(match.map || "TBA")}</strong></div>
+      <div class="ms-row"><span>Match Time</span><strong>${escHTML(fmtDateTime(match.matchTime))}</strong></div>
+      <div class="ms-row"><span>Prize Pool</span><strong style="color:var(--gold)">₹${fmtMoney(match.prizePool)}</strong></div>
+      <div class="ms-row"><span>Per Kill</span><strong style="color:var(--cyan)">₹${fmtMoney(match.perKill)}</strong></div>
+      <div class="ms-row fee"><span>Entry Fee</span><strong>₹${fmtMoney(match.entryFee)}</strong></div>
+    </div>
+    ${statusNote}
+    <div class="progress-wrap" style="margin-top:14px;">
+      <div class="progress-meta"><span><strong>${jc}</strong> / ${max} slots</span><span>${pct}%</span></div>
+      <div class="progress-bar"><div class="progress-fill" style="width:${pct}%"></div></div>
+    </div>
+    <div class="sec-title" style="margin:18px 0 10px">🔑 Room Credentials</div>
+    ${roomSection}
+  `;
+  openModal("detailModal");
+}
+
+/* ═══════════════════════════════════════════════════════════
+   WITHDRAW
+═══════════════════════════════════════════════════════════ */
+D.btnWithdraw.addEventListener("click", () => {
+  if (state.forceUpdateActive) { showToast("Please update the app first.", "error"); return; }
+  if (isBanned()) { showToast("🚫 Banned accounts cannot withdraw.", "error"); return; }
+  D.withdrawForm.reset();
+  D.wdErr.textContent = "";
+  const matchesPlayed = Number(state.profile?.matchesPlayed || 0);
+  if (matchesPlayed < MIN_MATCHES_FOR_WITHDRAW) {
+    D.wdRuleBox.style.display = "flex";
+    D.wdRuleBox.className = "utr-status pending";
+    D.wdRuleBox.innerHTML = `⚠️ You must play at least <b>${MIN_MATCHES_FOR_WITHDRAW} matches</b> before withdrawing. You have played <b>${matchesPlayed}/${MIN_MATCHES_FOR_WITHDRAW}</b>.`;
+  } else {
+    D.wdRuleBox.style.display = "none";
+  }
+  openModal("withdrawModal");
+});
+
+D.withdrawForm.addEventListener("submit", async (e) => {
+  e.preventDefault();
+  if (!state.user) return;
+  if (isBanned()) { D.wdErr.textContent = "Account banned."; return; }
+
+  const matchesPlayed = Number(state.profile?.matchesPlayed || 0);
+  if (matchesPlayed < MIN_MATCHES_FOR_WITHDRAW) {
+    D.wdErr.textContent = `You must play at least ${MIN_MATCHES_FOR_WITHDRAW} matches. Currently: ${matchesPlayed}/${MIN_MATCHES_FOR_WITHDRAW}.`;
+    return;
+  }
+
+  const upi = D.wdUpi.value.trim();
+  const amt = Number(D.wdAmt.value);
+  D.wdErr.textContent = "";
+
+  if (!/^[\w.\-]{2,}@[\w.\-]{2,}$/.test(upi)) { D.wdErr.textContent = "Enter a valid UPI ID."; return; }
+  if (!amt || amt < MIN_WITHDRAW) { D.wdErr.textContent = `Minimum withdrawal is ₹${MIN_WITHDRAW}.`; return; }
+
+  const bal = getRealBalance(state.profile);
+  if (amt > bal) { D.wdErr.textContent = "Insufficient balance. (Bonus cannot be withdrawn)"; return; }
+
+  D.wdSubmit.disabled = true;
+  D.wdSubmit.innerHTML = `<span class="spinner"></span>SUBMITTING...`;
+
+  try {
+    const idToken = await state.user.getIdToken();
+    const resp = await fetch("/api/withdraw", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": "Bearer " + idToken
+      },
+      body: JSON.stringify({ upi, amount: amt })
+    });
+    const result = await resp.json();
+    if (!resp.ok || !result.ok) throw new Error(result.error || "Withdrawal failed.");
+
+    closeModal("withdrawModal");
+    showToast("Withdrawal request submitted successfully.", "success");
+  } catch (err) {
+    D.wdErr.textContent = err.message || "Withdrawal failed.";
+  } finally {
+    D.wdSubmit.disabled = false;
+    D.wdSubmit.textContent = "REQUEST WITHDRAWAL";
+  }
+});
+
+/* ═══════════════════════════════════════════════════════════
+   DEPOSIT — POST /api/create-paypal-order
+═══════════════════════════════════════════════════════════ */
+function resetDepositFlow() {
+  stopDepositPolling();
+  state.deposit = { amount: 0, orderId: "", pollTimer: null };
+  D.depAmount.value = "";
+  D.depErr.textContent = "";
+  D.depBonusHint.style.display = "none";
+  D.utrStatusBox.classList.add("hidden");
+  D.utrStatusBox.className = "utr-status hidden";
+  D.btnPayNow.disabled = false;
+  D.btnPayNow.style.display = "block";
+  D.btnPayNow.innerHTML = `💳 PAY VIA PAYPAL`;
+  $$(".amt-chip").forEach(c => c.classList.remove("active"));
+}
+
+$$(".amt-chip").forEach(chip => {
+  chip.addEventListener("click", () => {
+    $$(".amt-chip").forEach(c => c.classList.remove("active"));
+    chip.classList.add("active");
+    D.depAmount.value = chip.dataset.amt;
+    state.deposit.amount = Number(chip.dataset.amt);
+    checkBonusHint(Number(chip.dataset.amt));
+  });
+});
+
+D.depAmount.addEventListener("input", () => {
+  const v = Number(D.depAmount.value);
+  $$(".amt-chip").forEach(c => c.classList.remove("active"));
+  if (v > 0) {
+    state.deposit.amount = v;
+    checkBonusHint(v);
+  }
+});
+
+function checkBonusHint(amt) {
+  const firstDepositDone = state.profile?.firstDepositRewarded === true;
+  if (!firstDepositDone && amt >= MIN_DEPOSIT_FOR_BONUS) {
+    D.depBonusHint.style.display = "block";
+  } else {
+    D.depBonusHint.style.display = "none";
+  }
+}
+
+D.btnPayNow.addEventListener("click", async () => {
+  if (state.forceUpdateActive) { showToast("Please update the app first.", "error"); return; }
+  if (isBanned()) { showToast("🚫 Banned accounts cannot deposit.", "error"); return; }
+
+  const amt = Number(D.depAmount.value);
+  if (!amt || amt < MIN_DEPOSIT) { D.depErr.textContent = `Minimum deposit is ₹${MIN_DEPOSIT}.`; return; }
+  if (!state.user) return;
+
+  D.btnPayNow.disabled = true;
+  D.btnPayNow.innerHTML = `<span class="spinner"></span>CREATING ORDER...`;
+  D.depErr.textContent = "";
+  D.utrStatusBox.className = "utr-status checking";
+  D.utrStatusBox.innerHTML = `🔄 Creating PayPal order...`;
+  D.utrStatusBox.classList.remove("hidden");
+
+  try {
+    const idToken = await state.user.getIdToken();
+    const resp = await fetch("/api/create-paypal-order", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": "Bearer " + idToken
+      },
+      body: JSON.stringify({
+        amount: amt,
+        name: state.profile?.name || "Player",
+        email: state.profile?.email || "user@arenax.app"
+      })
+    });
+    const result = await resp.json();
+    if (!resp.ok || !result.ok) throw new Error(result.error || "Failed to create PayPal order.");
+
+    state.deposit.orderId = result.orderId;
+    state.deposit.amount = amt;
+
+    D.utrStatusBox.className = "utr-status verified";
+    D.utrStatusBox.innerHTML = `✅ Redirecting to PayPal...`;
+    showToast("Redirecting to PayPal...", "success");
+
+    startDepositPolling(result.orderId, amt);
+
+    let paymentUrl = result.approvalUrl;
+    if (paymentUrl && paymentUrl.indexOf("?") === -1) paymentUrl += "?orderId=" + encodeURIComponent(result.orderId);
+    else if (paymentUrl) paymentUrl += "&orderId=" + encodeURIComponent(result.orderId);
+
+    window.location.href = paymentUrl;
+  } catch (err) {
+    D.utrStatusBox.className = "utr-status failed";
+    D.utrStatusBox.innerHTML = `❌ Error: ${err.message}`;
+    D.depErr.textContent = "Payment initiate failed.";
+    D.btnPayNow.disabled = false;
+    D.btnPayNow.innerHTML = `💳 PAY VIA PAYPAL`;
+  }
+});
+
+function startDepositPolling(orderId, amount) {
+  stopDepositPolling();
+  let attempts = 0;
+  state.deposit.pollTimer = setInterval(async () => {
+    attempts++;
+    if (attempts > 120) { stopDepositPolling(); return; }
+    try {
+      const pendingRef = doc(db, "pending_deposits", orderId);
+      const snap = await getDoc(pendingRef);
+      if (snap.exists() && snap.data().status === "COMPLETED") {
+        stopDepositPolling();
+        showToast(`✅ ₹${fmtMoney(amount)} credited!`, "success");
+        closeModal("depositModal");
+        resetDepositFlow();
+      }
+    } catch (e) {}
+  }, 5000);
+}
+
+function stopDepositPolling() {
+  if (state.deposit.pollTimer) { clearInterval(state.deposit.pollTimer); state.deposit.pollTimer = null; }
+}
+
+function checkPaymentRedirect() {
+  const params = new URLSearchParams(window.location.search);
+  const status = params.get("status");
+  if (status === "success") {
+    showToast("✅ Payment successful! Balance updating...", "success");
+    window.history.replaceState({}, document.title, window.location.pathname);
+  }
+}
+
+D.btnDeposit.addEventListener("click", () => {
+  if (state.forceUpdateActive) { showToast("Please update the app first.", "error"); return; }
+  if (isBanned()) { showToast("🚫 Banned accounts cannot deposit.", "error"); return; }
+  resetDepositFlow();
+  openModal("depositModal");
+});
+
+/* ═══════════════════════════════════════════════════════════
+   PROFILE UPDATE — Firebase Firestore
+═══════════════════════════════════════════════════════════ */
+D.btnEditProfile.addEventListener("click", () => {
+  D.profileForm.reset();
+  D.pfErr.textContent = "";
+  D.pfName.value = state.profile?.name || "";
+  D.pfUid.value = state.profile?.gameUid || "";
+  D.pfIgn.value = state.profile?.ign || "";
+  openModal("profileModal");
+});
+
+D.profileForm.addEventListener("submit", async (e) => {
+  e.preventDefault();
+  if (!state.user) return;
+  const name = D.pfName.value.trim();
+  const uid = D.pfUid.value.trim();
+  const ign = D.pfIgn.value.trim();
+  D.pfErr.textContent = "";
+
+  if (name.length < 2) { D.pfErr.textContent = "Name too short."; return; }
+  if (uid && !/^[0-9]{6,15}$/.test(uid)) { D.pfErr.textContent = "Game UID must be 6-15 digits."; return; }
+
+  D.pfSubmit.disabled = true;
+  D.pfSubmit.innerHTML = `<span class="spinner"></span>SAVING...`;
+
+  try {
+    await updateDoc(doc(db, "users", state.user.uid), {
+      name, gameUid: uid, ign, updatedAt: serverTimestamp()
+    });
+    try { await updateProfile(state.user, { displayName: name }); } catch (e) {}
+    closeModal("profileModal");
+    showToast("Profile updated successfully.", "success");
+  } catch (err) {
+    D.pfErr.textContent = "Failed to save. " + (err.message || "");
+  } finally {
+    D.pfSubmit.disabled = false;
+    D.pfSubmit.textContent = "SAVE CHANGES";
+  }
+});
+
+/* ═══════════════════════════════════════════════════════════
+   REFERRAL — COPY & SHARE
+═══════════════════════════════════════════════════════════ */
+D.refCopyBtn?.addEventListener("click", async () => {
+  const code = D.refCode.textContent;
+  if (!code || code === "—") { showToast("Referral code not loaded yet.", "error"); return; }
+  const copyText = `🎮 Join ArenaX and win real cash!\n\n🎁 Use my referral code: ${code}\n\n📲 Download: ${DOWNLOAD_URL}`;
+  try {
+    await navigator.clipboard.writeText(copyText);
+    showToast("✅ Referral code + link copied!", "success");
+  } catch (e) {
+    const ta = document.createElement("textarea");
+    ta.value = copyText;
+    document.body.appendChild(ta);
+    ta.select();
+    document.execCommand("copy");
+    ta.remove();
+    showToast("✅ Referral code + link copied!", "success");
+  }
+});
+
+D.refShareBtn?.addEventListener("click", async () => {
+  const code = D.refCode.textContent;
+  if (!code || code === "—") { showToast("Referral code not loaded yet.", "error"); return; }
+  const shareText = `🎮 Join ArenaX and win real cash!\n\n🎁 Use my referral code: ${code}\n\n💰 You get ₹5 sign-up bonus + ₹20 first-deposit bonus!\n🏆 Compete in BGMI & Free Fire tournaments\n\n📲 Download the app now:\n${DOWNLOAD_URL}\n\nStart winning today!`;
+  const shareTitle = "Join ArenaX — Win Real Cash!";
+  if (navigator.share) {
+    try {
+      await navigator.share({ title: shareTitle, text: shareText, url: DOWNLOAD_URL });
+      return;
+    } catch (err) {
+      if (err.name === "AbortError") return;
+    }
+  }
+  try {
+    await navigator.clipboard.writeText(shareText);
+    showToast("✅ Share text copied to clipboard!", "success");
+  } catch (e) {
+    showToast("Copy failed.", "error");
+  }
+});
+
+/* ═══════════════════════════════════════════════════════════
+   SIGN OUT
+═══════════════════════════════════════════════════════════ */
+D.btnSignOut.addEventListener("click", async () => {
+  if (!confirm("Sign out of ArenaX?")) return;
+  try {
+    stopDepositPolling();
+    Object.keys(state.unsubs).forEach((k) => {
+      if (state.unsubs[k]) { state.unsubs[k](); state.unsubs[k] = null; }
+    });
+    state.user = null;
+    state.profile = null;
+    state.tournaments = [];
+    state.joinedMatches = [];
+    state.transactions = [];
+    state.notifications = [];
+    state.referrals = [];
+    state.appConfig = null;
+    const banner = document.getElementById("banBanner");
+    if (banner) banner.remove();
+    await signOut(auth);
+    showToast("Signed out successfully.", "success");
+  } catch (err) {
+    console.error("Sign out error:", err);
+    showToast("Sign out failed.", "error");
+  }
+});
+
+/* ═══════════════════════════════════════════════════════════
+   GLOBAL TOUCH HANDLER
+═══════════════════════════════════════════════════════════ */
+let lastTouch = 0;
+document.addEventListener("touchend", (e) => {
+  const now = Date.now();
+  if (now - lastTouch <= 300) e.preventDefault();
+  lastTouch = now;
+}, { passive: false });
+
+console.log(
+  "%c ArenaX ",
+  "background:#00e5ff;color:#050810;font-weight:bold;padding:4px 8px;border-radius:4px",
+  "User App Loaded ✅"
+);
+</script>
+</body>
+</html>
