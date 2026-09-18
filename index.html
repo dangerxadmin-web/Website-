@@ -25,6 +25,7 @@ body::before{content:"";position:fixed;inset:0;pointer-events:none;z-index:0;bac
 button{font-family:inherit;cursor:pointer;border:none;background:none;color:inherit;}
 input,textarea{font-family:inherit;}
 img{display:block;max-width:100%;}
+a{color:inherit;text-decoration:none;}
 .hidden{display:none!important;}
 #bootLoader{position:fixed;inset:0;z-index:900;display:flex;flex-direction:column;align-items:center;justify-content:center;background:radial-gradient(circle at 50% 40%,#0d1424,#04060c 80%);transition:opacity .4s ease;padding:24px;}
 #bootLoader.fade{opacity:0;pointer-events:none;}
@@ -80,6 +81,46 @@ img{display:block;max-width:100%;}
 .auth-msg.success{color:var(--green);}
 .auth-hint{font-size:11px;color:var(--mute);margin-top:4px;line-height:1.4;text-align:left;}
 .auth-fine{color:var(--mute);font-size:11px;margin-top:14px;line-height:1.6;}
+
+/* ── Pre-login app download promo ──────────────────── */
+.app-dl-promo {
+  margin-top: 18px;
+  padding: 14px 16px 16px;
+  background: linear-gradient(135deg, rgba(0,229,255,.08), rgba(124,77,255,.06));
+  border: 1px solid rgba(0,229,255,.3);
+  border-radius: var(--r-sm);
+  text-align: center;
+}
+.app-dl-promo p {
+  font-size: 12.5px;
+  color: var(--dim);
+  margin-bottom: 11px;
+  font-weight: 600;
+  letter-spacing: .3px;
+}
+.app-dl-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 11px 24px;
+  border-radius: 100px;
+  background: linear-gradient(135deg, var(--cyan), var(--cyan-2));
+  color: #04121a;
+  font-family: var(--font-d);
+  font-weight: 700;
+  font-size: 12.5px;
+  letter-spacing: 1px;
+  text-decoration: none;
+  box-shadow: 0 6px 20px rgba(0,229,255,.35);
+  transition: transform .18s ease, box-shadow .18s ease;
+}
+.app-dl-btn:hover, .app-dl-btn:focus-visible {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 28px rgba(0,229,255,.5);
+  outline: none;
+}
+
 #appShell{position:relative;z-index:1;min-height:100vh;padding-bottom:calc(80px + env(safe-area-inset-bottom,0px));max-width:680px;margin:0 auto;}
 .app-header{position:sticky;top:0;z-index:30;display:flex;align-items:center;justify-content:space-between;padding:14px 16px;background:rgba(10,14,26,.92);backdrop-filter:blur(14px);border-bottom:1px solid var(--stroke);gap:8px;}
 .hdr-user{display:flex;align-items:center;gap:10px;min-width:0;}
@@ -89,6 +130,36 @@ img{display:block;max-width:100%;}
 .hdr-hi{font-size:10px;color:var(--mute);text-transform:uppercase;letter-spacing:1.5px;font-weight:600;}
 .hdr-name{font-weight:700;font-size:15px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:110px;}
 .hdr-right{display:flex;align-items:center;gap:8px;}
+
+/* ── Post-login header download button ──────────────── */
+.hdr-dl-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 7px 12px;
+  border-radius: 100px;
+  background: linear-gradient(135deg, rgba(0,229,255,.15), rgba(124,77,255,.1));
+  border: 1px solid rgba(0,229,255,.4);
+  color: var(--cyan);
+  font-family: var(--font-d);
+  font-weight: 700;
+  font-size: 10.5px;
+  letter-spacing: .5px;
+  text-decoration: none;
+  white-space: nowrap;
+  flex-shrink: 0;
+  transition: all .2s;
+}
+.hdr-dl-btn:hover, .hdr-dl-btn:focus-visible {
+  background: rgba(0,229,255,.25);
+  border-color: var(--cyan);
+  outline: none;
+}
+@media (max-width: 460px) {
+  .hdr-dl-btn span { display: none; }
+  .hdr-dl-btn { padding: 8px 11px; font-size: 15px; gap: 0; }
+}
+
 .hdr-wallet{display:flex;align-items:center;gap:6px;background:linear-gradient(135deg,rgba(255,179,0,.18),rgba(255,179,0,.06));border:1px solid rgba(255,179,0,.45);color:var(--gold);padding:7px 13px;border-radius:100px;font-family:var(--font-d);font-weight:700;font-size:13px;}
 .hdr-wallet .coin{background:var(--gold);color:#050810;width:18px;height:18px;border-radius:50%;display:inline-flex;align-items:center;justify-content:center;font-size:11px;font-weight:900;}
 .hdr-notif{position:relative;width:40px;height:40px;border-radius:50%;background:var(--bg-2);border:1px solid var(--stroke);display:flex;align-items:center;justify-content:center;font-size:18px;}
@@ -461,6 +532,13 @@ img{display:block;max-width:100%;}
       <div class="divider"><span>OR CONTINUE WITH</span></div>
       <button class="auth-btn google" id="btnGoogle" type="button">G Sign in with Google</button>
     </div>
+
+    <!-- 📱 Pre-login App Download Promo -->
+    <div class="app-dl-promo">
+      <p>📱 Better experience using our app</p>
+      <a href="download.html" class="app-dl-btn">⬇️ App Download</a>
+    </div>
+
     <p class="auth-msg" id="authMsg"></p>
     <p class="auth-fine">By continuing, you agree to our Terms & Anti-Cheat rules. 18+ only for paid tournaments.</p>
   </div>
@@ -473,6 +551,8 @@ img{display:block;max-width:100%;}
       <div class="hdr-meta"><span class="hdr-hi">Welcome</span><span class="hdr-name" id="hdrName">Player</span></div>
     </div>
     <div class="hdr-right">
+      <!-- 📲 Post-login Download App Button -->
+      <a href="download.html" class="hdr-dl-btn" aria-label="Download App">⬇️ <span>Download App</span></a>
       <button class="hdr-wallet" id="hdrWallet"><span class="coin">₹</span><span id="hdrBal">0.00</span></button>
       <button class="hdr-notif" id="notifBtn">🔔<span class="notif-badge" id="notifBadge">0</span></button>
     </div>
@@ -599,6 +679,7 @@ img{display:block;max-width:100%;}
       <a href="privacy-policy.html">Privacy Policy</a>
       <a href="rules.html">Match Rules</a>
       <a href="refund-policy.html">Refund Policy</a>
+      <a href="download.html">⬇️ Download App</a>
     </div>
     <div class="lf-copy">© 2025 ArenaX. All rights reserved.</div>
   </footer>
