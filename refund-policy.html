@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1.0,viewport-fit=cover" />
+<meta name="theme-color" content="#0d1117" />
+<title>Refund & Wallet Policy — ArenaX</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700;900&family=Rajdhani:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent;}
+:root{
+  --bg-0:#0d1117; --bg-1:#131922; --bg-2:#1a2230;
+  --stroke:#232d3d; --text:#e8eef7; --dim:#8b97aa; --mute:#5a6478;
+  --cyan:#00c6ff; --cyan-2:#0072ff; --red:#ff2e51; --gold:#ffb300; --green:#00e676; --orange:#ff9500;
+  --font-d:'Orbitron',sans-serif; --font-b:'Rajdhani',system-ui,sans-serif;
+}
+html,body{min-height:100%;background:var(--bg-0);color:var(--text);font-family:var(--font-b);font-size:16px;line-height:1.65;-webkit-font-smoothing:antialiased;overflow-x:hidden;}
+body::before{content:"";position:fixed;inset:0;z-index:0;pointer-events:none;background:radial-gradient(600px 400px at -10% -10%,rgba(0,114,255,.18),transparent 60%),radial-gradient(600px 400px at 110% 5%,rgba(0,198,255,.14),transparent 60%),radial-gradient(500px 300px at 50% 110%,rgba(255,46,81,.08),transparent 60%);}
+.topbar{position:sticky;top:0;z-index:30;background:rgba(13,17,23,.92);backdrop-filter:blur(14px);border-bottom:1px solid var(--stroke);padding:14px 18px;display:flex;align-items:center;justify-content:space-between;gap:12px;}
+.brand{font-family:var(--font-d);font-size:20px;font-weight:900;letter-spacing:3px;color:var(--text);text-decoration:none;}
+.brand span{color:var(--cyan);text-shadow:0 0 18px rgba(0,198,255,.55);}
+.back-btn{display:inline-flex;align-items:center;gap:8px;padding:9px 16px;border-radius:100px;background:linear-gradient(135deg,var(--cyan),var(--cyan-2));color:#04121a;font-weight:700;font-size:13px;text-decoration:none;font-family:var(--font-d);letter-spacing:1px;box-shadow:0 6px 20px rgba(0,114,255,.35);transition:transform .15s;}
+.back-btn:active{transform:scale(.96);}
+.wrap{position:relative;z-index:1;max-width:860px;margin:0 auto;padding:32px 18px 60px;}
+.page-header{text-align:center;padding:24px 0 28px;border-bottom:1px solid var(--stroke);margin-bottom:28px;}
+.page-icon{font-size:48px;line-height:1;margin-bottom:12px;}
+.page-title{font-family:var(--font-d);font-size:26px;font-weight:900;letter-spacing:3px;background:linear-gradient(135deg,var(--cyan),var(--cyan-2));-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;margin-bottom:8px;text-transform:uppercase;}
+.page-sub{color:var(--dim);font-size:13.5px;letter-spacing:.5px;}
+.page-meta{margin-top:14px;font-size:12px;color:var(--mute);letter-spacing:1px;text-transform:uppercase;}
+.card{background:linear-gradient(160deg,var(--bg-1),var(--bg-0));border:1px solid var(--stroke);border-radius:16px;padding:22px 20px;margin-bottom:16px;position:relative;overflow:hidden;}
+.card::before{content:"";position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,var(--cyan),var(--cyan-2));opacity:.85;}
+.card h2{font-family:var(--font-d);font-size:15px;font-weight:700;letter-spacing:1.8px;color:var(--cyan);margin-bottom:14px;display:flex;align-items:center;gap:10px;text-transform:uppercase;}
+.card h2 .num{display:inline-flex;align-items:center;justify-content:center;width:26px;height:26px;border-radius:8px;background:rgba(0,198,255,.12);border:1px solid rgba(0,198,255,.4);font-size:12px;color:var(--cyan);flex-shrink:0;}
+.card p{color:var(--dim);font-size:15px;margin-bottom:12px;}
+.card p:last-child{margin-bottom:0;}
+.card strong{color:var(--text);font-weight:700;}
+.card ul,.card ol{padding-left:22px;margin:10px 0;}
+.card li{color:var(--dim);font-size:15px;margin-bottom:8px;line-height:1.7;}
+.card li strong{color:var(--text);}
+.card li::marker{color:var(--cyan);}
+.callout{border-radius:12px;padding:14px 16px;margin:14px 0;font-size:14.5px;line-height:1.65;display:flex;gap:12px;align-items:flex-start;}
+.callout .ico{font-size:20px;flex-shrink:0;line-height:1.4;}
+.callout.warn{background:rgba(255,46,81,.08);border-left:3px solid var(--red);color:#ff9aad;}
+.callout.warn strong{color:#ff5c73;}
+.callout.info{background:rgba(0,198,255,.07);border-left:3px solid var(--cyan);color:#a9dcff;}
+.callout.info strong{color:var(--cyan);}
+.callout.success{background:rgba(0,230,118,.07);border-left:3px solid var(--green);color:#9aeabc;}
+.callout.success strong{color:var(--green);}
+.callout.gold{background:rgba(255,179,0,.07);border-left:3px solid var(--gold);color:#ffd98a;}
+.callout.gold strong{color:var(--gold);}
+.table-wrap{overflow-x:auto;margin:14px 0;border-radius:10px;border:1px solid var(--stroke);}
+table{width:100%;border-collapse:collapse;font-size:14px;min-width:460px;}
+th,td{padding:11px 14px;text-align:left;border-bottom:1px solid var(--stroke);}
+th{background:rgba(0,198,255,.06);color:var(--cyan);font-family:var(--font-d);font-size:12px;letter-spacing:1px;text-transform:uppercase;font-weight:700;}
+td{color:var(--dim);}
+tr:last-child td{border-bottom:none;}
+.footer{margin-top:40px;padding:26px 18px 20px;border-top:1px solid var(--stroke);text-align:center;position:relative;z-index:1;}
+.footer-title{font-family:var(--font-d);font-size:14px;letter-spacing:2px;color:var(--dim);margin-bottom:14px;text-transform:uppercase;}
+.footer-nav{display:flex;flex-wrap:wrap;justify-content:center;gap:8px 6px;margin-bottom:18px;}
+.footer-nav a{color:var(--dim);text-decoration:none;font-size:13px;padding:7px 13px;border-radius:100px;border:1px solid var(--stroke);background:var(--bg-1);transition:all .2s;font-weight:600;}
+.footer-nav a:hover,.footer-nav a:active{color:var(--cyan);border-color:rgba(0,198,255,.5);background:rgba(0,198,255,.06);}
+.footer-nav a.active{color:var(--cyan);border-color:rgba(0,198,255,.6);background:rgba(0,198,255,.1);}
+.footer-copy{color:var(--mute);font-size:12px;line-height:1.7;}
+.footer-copy strong{color:var(--dim);}
+@media(min-width:640px){.page-title{font-size:32px;}.card{padding:28px 26px;}.wrap{padding:44px 24px 70px;}}
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <a class="brand" href="/">ARENA<span>X</span></a>
+  <a class="back-btn" href="/">← BACK</a>
+</div>
+
+<main class="wrap">
+
+  <header class="page-header">
+    <div class="page-icon">💸</div>
+    <h1 class="page-title">Refund &amp; Wallet Policy</h1>
+    <p class="page-sub">Everything you need to know about refunds, deposits, and withdrawals.</p>
+    <div class="page-meta">Last Updated: 2026</div>
+  </header>
+
+  <section class="card">
+    <h2><span class="num">1</span> Refunds for Cancelled Matches</h2>
+    <p>If a match is <strong>cancelled by ArenaX admins</strong> for any reason (not enough players, technical issues, server downtime, etc.), the following refund rules apply:</p>
+    <ul>
+      <li><strong>100% of entry fee refunded</strong> to your wallet balance.</li>
+      <li>Refund is processed automatically within <strong>24 hours</strong>.</li>
+      <li>Bonus balance used for the entry fee is <strong>restored to bonus balance</strong>.</li>
+      <li>Real balance used for the entry fee is <strong>restored to real balance</strong>.</li>
+      <li>You will receive a notification once the refund is processed.</li>
+    </ul>
+    <div class="callout success">
+      <span class="ico">✅</span>
+      <div><strong>Auto-refund:</strong> No need to raise a ticket — cancelled match refunds are automatic.</div>
+    </div>
+  </section>
+
+  <section class="card">
+    <h2><span class="num">2</span> Non-Refundable Entry Fees</h2>
+    <p>Once you join a match, the entry fee is <strong>non-refundable</strong>. You will NOT receive a refund if:</p>
+    <ul>
+      <li>You change your mind after joining.</li>
+      <li>You miss the match because you forgot the time.</li>
+      <li>You lose internet connection during the match.</li>
+      <li>Your device crashes, dies, or has technical issues.</li>
+      <li>You get banned for cheating or rule violations.</li>
+      <li>Your game account gets temporarily suspended by the publisher.</li>
+      <li>You arrive late to the custom room.</li>
+    </ul>
+    <div class="callout warn">
+      <span class="ico">⚠️</span>
+      <div><strong>Careful before you click JOIN:</strong> Entry fees are deducted immediately and are not reversible.</div>
+    </div>
+  </section>
+
+  <section class="card">
+    <h2><span class="num">3</span> Deposit Policy</h2>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th>Item</th><th>Details</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><strong>Minimum Deposit</strong></td><td>₹10</td></tr>
+          <tr><td><strong>Payment Method</strong></td><td>PayPal (secure checkout)</td></tr>
+          <tr><td><strong>Processing Time</strong></td><td>Instant after payment confirmation</td></tr>
+          <tr><td><strong>Sign-up Bonus</strong></td><td>₹5 credited instantly on registration</td></tr>
+          <tr><td><strong>First Deposit Bonus</strong></td><td>₹20 on first deposit of ₹100 or more</td></tr>
+          <tr><td><strong>Bonus Usage</strong></td><td>Bonus can only be used for tournament entries</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="callout info">
+      <span class="ico">💡</span>
+      <div>Bonus balance is <strong>never withdrawable</strong> — only real balance can be withdrawn.</div>
+    </div>
+  </section>
+
+  <section class="card">
+    <h2><span class="num">4</span> Withdrawal Process &amp; Timeline</h2>
+    <p>Withdrawals go through the following steps:</p>
+    <ol>
+      <li><strong>Eligibility Check:</strong> You must have played at least <strong>3 matches</strong> on ArenaX.</li>
+      <li><strong>Withdrawal Request:</strong> Enter your UPI ID and amount in the Wallet section.</li>
+      <li><strong>Admin Verification:</strong> Our team verifies your account and request.</li>
+      <li><strong>Payment Processing:</strong> Money is transferred to your UPI ID.</li>
+      <li><strong>Confirmation:</strong> You receive a notification once the transfer is complete.</li>
+    </ol>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th>Item</th><th>Details</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><strong>Minimum Withdrawal</strong></td><td>₹50</td></tr>
+          <tr><td><strong>Minimum Matches Required</strong></td><td>3</td></tr>
+          <tr><td><strong>Processing Time</strong></td><td>24 – 48 working hours</td></tr>
+          <tr><td><strong>Payment Method</strong></td><td>UPI (India)</td></tr>
+          <tr><td><strong>Withdrawal Fee</strong></td><td>None (free)</td></tr>
+          <tr><td><strong>Bonus Withdrawal</strong></td><td>Not allowed — only real balance</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="callout gold">
+      <span class="ico">⏱</span>
+      <div>Withdrawals are processed on working days. Weekends and public holidays may add extra delay.</div>
+    </div>
+  </section>
+
+  <section class="card">
+    <h2><span class="num">5</span> Wallet Balance Types</h2>
+    <p>ArenaX uses two separate balances:</p>
+    <ul>
+      <li><strong>Real Balance:</strong> Deposits + winnings. Fully withdrawable after the 3-match rule.</li>
+      <li><strong>Bonus Balance:</strong> Sign-up bonus + first-deposit bonus + referral rewards. <strong>Only usable for tournament entries</strong> — never withdrawable.</li>
+    </ul>
+    <div class="callout info">
+      <span class="ico">💡</span>
+      <div>When you join a match, <strong>bonus balance is used first</strong>, then real balance.</div>
+    </div>
+  </section>
+
+  <section class="card">
+    <h2><span class="num">6</span> Failed or Rejected Withdrawals</h2>
+    <p>A withdrawal may be rejected or delayed if:</p>
+    <ul>
+      <li>The UPI ID provided is invalid or inactive.</li>
+      <li>Suspicious activity is detected on the account.</li>
+      <li>The 3-match rule has not been fulfilled.</li>
+      <li>Your account has pending rule violations.</li>
+      <li>KYC verification (if requested) is incomplete.</li>
+    </ul>
+    <div class="callout success">
+      <span class="ico">✅</span>
+      <div>If a withdrawal is rejected, the amount is <strong>refunded to your wallet balance immediately</strong>.</div>
+    </div>
+  </section>
+
+  <section class="card">
+    <h2><span class="num">7</span> Disputes &amp; Support</h2>
+    <p>For any refund or wallet-related issue, contact us within <strong>7 days</strong>:</p>
+    <div class="callout info">
+      <span class="ico">📧</span>
+      <div><strong>Support:</strong> support@arenax.gg</div>
+    </div>
+    <p>Please include your registered email, transaction ID (if applicable), and a brief description of the issue.</p>
+  </section>
+
+</main>
+
+<footer class="footer">
+  <div class="footer-title">Legal &amp; Information</div>
+  <nav class="footer-nav">
+    <a href="/term-conditions.html">Terms &amp; Conditions</a>
+    <a href="/privacy-policy.html">Privacy Policy</a>
+    <a href="/rules.html">Fair Play &amp; Match Rules</a>
+    <a href="/refund-policy.html" class="active">Refund &amp; Wallet Policy</a>
+  </nav>
+  <div class="footer-copy">
+    © 2026 <strong>ArenaX</strong> — All rights reserved.<br>
+    Not affiliated with Krafton, Tencent, or Garena.
+  </div>
+</footer>
+
+</body>
+</html>
