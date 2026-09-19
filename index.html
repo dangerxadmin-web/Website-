@@ -25,7 +25,6 @@ body::before{content:"";position:fixed;inset:0;pointer-events:none;z-index:0;bac
 button{font-family:inherit;cursor:pointer;border:none;background:none;color:inherit;}
 input,textarea{font-family:inherit;}
 img{display:block;max-width:100%;}
-a{color:inherit;text-decoration:none;}
 .hidden{display:none!important;}
 #bootLoader{position:fixed;inset:0;z-index:900;display:flex;flex-direction:column;align-items:center;justify-content:center;background:radial-gradient(circle at 50% 40%,#0d1424,#04060c 80%);transition:opacity .4s ease;padding:24px;}
 #bootLoader.fade{opacity:0;pointer-events:none;}
@@ -73,6 +72,7 @@ a{color:inherit;text-decoration:none;}
 .auth-btn:disabled{opacity:.55;cursor:not-allowed;}
 .auth-btn.primary{background:linear-gradient(135deg,var(--cyan),var(--cyan-2));color:#04121a;}
 .auth-btn.google{background:#fff;color:#1a1a1a;margin-top:0;}
+.auth-btn.phone{background:var(--bg-3);color:var(--text);border:1px solid var(--stroke-2);margin-top:10px;}
 .auth-btn.link{background:transparent;color:var(--cyan);font-size:13px;padding:8px;}
 .divider{display:flex;align-items:center;gap:10px;margin:18px 0 12px;color:var(--mute);font-size:11px;text-transform:uppercase;letter-spacing:1.5px;}
 .divider::before,.divider::after{content:"";flex:1;height:1px;background:var(--stroke);}
@@ -81,46 +81,6 @@ a{color:inherit;text-decoration:none;}
 .auth-msg.success{color:var(--green);}
 .auth-hint{font-size:11px;color:var(--mute);margin-top:4px;line-height:1.4;text-align:left;}
 .auth-fine{color:var(--mute);font-size:11px;margin-top:14px;line-height:1.6;}
-
-/* ── Pre-login app download promo ──────────────────── */
-.app-dl-promo {
-  margin-top: 18px;
-  padding: 14px 16px 16px;
-  background: linear-gradient(135deg, rgba(0,229,255,.08), rgba(124,77,255,.06));
-  border: 1px solid rgba(0,229,255,.3);
-  border-radius: var(--r-sm);
-  text-align: center;
-}
-.app-dl-promo p {
-  font-size: 12.5px;
-  color: var(--dim);
-  margin-bottom: 11px;
-  font-weight: 600;
-  letter-spacing: .3px;
-}
-.app-dl-btn {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: 8px;
-  padding: 11px 24px;
-  border-radius: 100px;
-  background: linear-gradient(135deg, var(--cyan), var(--cyan-2));
-  color: #04121a;
-  font-family: var(--font-d);
-  font-weight: 700;
-  font-size: 12.5px;
-  letter-spacing: 1px;
-  text-decoration: none;
-  box-shadow: 0 6px 20px rgba(0,229,255,.35);
-  transition: transform .18s ease, box-shadow .18s ease;
-}
-.app-dl-btn:hover, .app-dl-btn:focus-visible {
-  transform: translateY(-2px);
-  box-shadow: 0 10px 28px rgba(0,229,255,.5);
-  outline: none;
-}
-
 #appShell{position:relative;z-index:1;min-height:100vh;padding-bottom:calc(80px + env(safe-area-inset-bottom,0px));max-width:680px;margin:0 auto;}
 .app-header{position:sticky;top:0;z-index:30;display:flex;align-items:center;justify-content:space-between;padding:14px 16px;background:rgba(10,14,26,.92);backdrop-filter:blur(14px);border-bottom:1px solid var(--stroke);gap:8px;}
 .hdr-user{display:flex;align-items:center;gap:10px;min-width:0;}
@@ -130,36 +90,6 @@ a{color:inherit;text-decoration:none;}
 .hdr-hi{font-size:10px;color:var(--mute);text-transform:uppercase;letter-spacing:1.5px;font-weight:600;}
 .hdr-name{font-weight:700;font-size:15px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:110px;}
 .hdr-right{display:flex;align-items:center;gap:8px;}
-
-/* ── Post-login header download button ──────────────── */
-.hdr-dl-btn {
-  display: inline-flex;
-  align-items: center;
-  gap: 5px;
-  padding: 7px 12px;
-  border-radius: 100px;
-  background: linear-gradient(135deg, rgba(0,229,255,.15), rgba(124,77,255,.1));
-  border: 1px solid rgba(0,229,255,.4);
-  color: var(--cyan);
-  font-family: var(--font-d);
-  font-weight: 700;
-  font-size: 10.5px;
-  letter-spacing: .5px;
-  text-decoration: none;
-  white-space: nowrap;
-  flex-shrink: 0;
-  transition: all .2s;
-}
-.hdr-dl-btn:hover, .hdr-dl-btn:focus-visible {
-  background: rgba(0,229,255,.25);
-  border-color: var(--cyan);
-  outline: none;
-}
-@media (max-width: 460px) {
-  .hdr-dl-btn span { display: none; }
-  .hdr-dl-btn { padding: 8px 11px; font-size: 15px; gap: 0; }
-}
-
 .hdr-wallet{display:flex;align-items:center;gap:6px;background:linear-gradient(135deg,rgba(255,179,0,.18),rgba(255,179,0,.06));border:1px solid rgba(255,179,0,.45);color:var(--gold);padding:7px 13px;border-radius:100px;font-family:var(--font-d);font-weight:700;font-size:13px;}
 .hdr-wallet .coin{background:var(--gold);color:#050810;width:18px;height:18px;border-radius:50%;display:inline-flex;align-items:center;justify-content:center;font-size:11px;font-weight:900;}
 .hdr-notif{position:relative;width:40px;height:40px;border-radius:50%;background:var(--bg-2);border:1px solid var(--stroke);display:flex;align-items:center;justify-content:center;font-size:18px;}
@@ -369,60 +299,154 @@ a{color:inherit;text-decoration:none;}
 .prize-notif-popup .pnp-icon{font-size:32px;margin-bottom:6px;}
 .prize-notif-popup .pnp-title{font-family:var(--font-d);font-size:14px;letter-spacing:1.5px;margin-bottom:4px;}
 .prize-notif-popup .pnp-amt{font-family:var(--font-d);font-size:22px;font-weight:900;color:#1a1200;}
+.share-menu-overlay{position:fixed;inset:0;z-index:500;background:rgba(0,0,0,.8);backdrop-filter:blur(8px);display:flex;align-items:flex-end;justify-content:center;animation:fadeIn .2s ease;}
+.share-menu{width:100%;max-width:680px;background:var(--bg-1);border-top-left-radius:22px;border-top-right-radius:22px;border:1px solid var(--stroke-2);border-bottom:none;padding:20px 18px 26px;animation:sheetUp .3s cubic-bezier(.34,1.2,.64,1);max-height:90vh;overflow-y:auto;}
+.share-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:16px;}
+.share-opt{display:flex;flex-direction:column;align-items:center;gap:8px;padding:14px 6px;border-radius:12px;background:var(--bg-2);border:1px solid var(--stroke);transition:all .2s;}
+.share-opt:active{transform:scale(.95);}
+.share-opt .share-ico{font-size:26px;line-height:1;}
+.share-opt .share-name{font-size:10px;font-weight:600;color:var(--dim);text-align:center;line-height:1.2;}
 .paypal-badge{display:inline-flex;align-items:center;gap:6px;padding:6px 12px;border-radius:100px;background:linear-gradient(135deg,#0070ba,#003087);color:#fff;font-family:var(--font-d);font-size:11px;font-weight:700;letter-spacing:1px;margin-bottom:12px;}
 .paypal-badge .pp-ico{font-size:16px;}
 
-/* ── Legal footer ─────────────────────────────────────── */
-.legal-footer {
-  margin: 28px 14px 16px;
-  padding: 22px 18px;
-  background: linear-gradient(160deg, var(--bg-2), var(--bg-1));
-  border: 1px solid var(--stroke);
-  border-radius: var(--r);
-  text-align: center;
-}
-.legal-footer .lf-title {
-  font-family: var(--font-d);
-  font-size: 11px;
-  font-weight: 700;
-  letter-spacing: 2.5px;
-  text-transform: uppercase;
-  color: var(--mute);
-  margin-bottom: 14px;
-}
-.legal-links {
+/* ═══════════════════════════════════════════════════════════
+   🎧 FLOATING SUPPORT BUTTON (FAB) — added feature
+   - Shown on login page (bottom-right, 20px)
+   - Shown on dashboard (bottom-right, 90px above bottom-nav)
+   - Neon cyan/purple cyberpunk glow theme
+═══════════════════════════════════════════════════════════ */
+#supportFab {
+  position: fixed;
+  right: 20px;
+  bottom: 20px;
+  z-index: 999;
+  width: 58px;
+  height: 58px;
+  border-radius: 50%;
   display: flex;
-  flex-wrap: wrap;
+  align-items: center;
   justify-content: center;
-  gap: 8px 6px;
-}
-.legal-links a {
-  padding: 8px 14px;
-  border-radius: 100px;
-  background: rgba(255,255,255,.04);
-  border: 1px solid var(--stroke);
-  color: var(--dim);
-  font-size: 12px;
-  font-weight: 600;
-  text-decoration: none;
-  transition: all .2s;
-  white-space: nowrap;
-}
-.legal-links a:hover,
-.legal-links a:focus-visible {
-  color: var(--cyan);
-  border-color: rgba(0,229,255,.45);
-  background: rgba(0,229,255,.08);
+  cursor: pointer;
+  background: radial-gradient(circle at 30% 30%, #1a0f3a, #05060d 85%);
+  border: 2px solid #00f2fe;
+  box-shadow:
+    0 0 12px rgba(0, 242, 254, 0.55),
+    0 0 26px rgba(157, 0, 255, 0.35),
+    0 6px 20px rgba(0, 0, 0, 0.55);
+  transition: transform .25s cubic-bezier(.34,1.56,.64,1),
+              box-shadow .25s ease,
+              bottom .25s ease;
+  animation: supportPulse 2.6s ease-in-out infinite;
+  color: #00f2fe;
+  -webkit-tap-highlight-color: transparent;
   outline: none;
+  padding: 0;
 }
-.legal-footer .lf-copy {
-  margin-top: 14px;
-  font-size: 11px;
-  color: var(--mute);
-  line-height: 1.6;
+#supportFab svg {
+  width: 26px;
+  height: 26px;
+  display: block;
+  filter: drop-shadow(0 0 6px rgba(0, 242, 254, 0.75));
+  transition: transform .25s ease;
 }
-@media (max-width: 400px) {
-  .legal-links a { padding: 7px 11px; font-size: 11px; }
+#supportFab:hover,
+#supportFab:focus-visible {
+  transform: scale(1.12);
+  border-color: #9d00ff;
+  color: #9d00ff;
+  box-shadow:
+    0 0 20px rgba(0, 242, 254, 0.75),
+    0 0 40px rgba(157, 0, 255, 0.6),
+    0 8px 26px rgba(0, 0, 0, 0.6);
+}
+#supportFab:hover svg { transform: rotate(-8deg) scale(1.06); }
+#supportFab:active { transform: scale(0.96); }
+
+/* Logged-in position — sits above bottom navigation */
+#supportFab.support-logged-in {
+  bottom: 90px;
+}
+
+/* Neon pulse animation */
+@keyframes supportPulse {
+  0%, 100% {
+    box-shadow:
+      0 0 10px rgba(0, 242, 254, 0.45),
+      0 0 22px rgba(157, 0, 255, 0.28),
+      0 6px 20px rgba(0, 0, 0, 0.5);
+  }
+  50% {
+    box-shadow:
+      0 0 22px rgba(0, 242, 254, 0.85),
+      0 0 44px rgba(157, 0, 255, 0.55),
+      0 6px 22px rgba(0, 0, 0, 0.55);
+  }
+}
+
+/* Tooltip */
+#supportFab .support-tooltip {
+  position: absolute;
+  right: 74px;
+  top: 50%;
+  transform: translateY(-50%) translateX(8px);
+  background: linear-gradient(135deg, rgba(10,14,26,.98), rgba(16,22,42,.98));
+  color: #eef2ff;
+  font-family: var(--font-d, 'Orbitron', system-ui, sans-serif);
+  font-size: 11.5px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  padding: 9px 14px;
+  border-radius: 10px;
+  border: 1px solid #00f2fe;
+  box-shadow:
+    0 0 14px rgba(0, 242, 254, 0.5),
+    0 0 28px rgba(157, 0, 255, 0.3);
+  white-space: nowrap;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity .22s ease, transform .22s ease;
+}
+#supportFab .support-tooltip::after {
+  content: "";
+  position: absolute;
+  right: -6px;
+  top: 50%;
+  transform: translateY(-50%) rotate(45deg);
+  width: 10px;
+  height: 10px;
+  background: rgba(16,22,42,.98);
+  border-right: 1px solid #00f2fe;
+  border-top: 1px solid #00f2fe;
+}
+#supportFab:hover .support-tooltip,
+#supportFab:focus-visible .support-tooltip {
+  opacity: 1;
+  transform: translateY(-50%) translateX(0);
+}
+
+/* Mobile responsiveness */
+@media (max-width: 480px) {
+  #supportFab {
+    width: 54px;
+    height: 54px;
+    right: 16px;
+    bottom: 16px;
+  }
+  #supportFab.support-logged-in {
+    bottom: 84px;
+  }
+  #supportFab svg { width: 24px; height: 24px; }
+  #supportFab .support-tooltip {
+    font-size: 10.5px;
+    padding: 8px 12px;
+    right: 68px;
+  }
+}
+
+/* When the app is force-update-locked, hide the FAB */
+#forceUpdateScreen.show ~ #supportFab,
+body.force-update-locked #supportFab {
+  display: none !important;
 }
 </style>
 </head>
@@ -519,6 +543,7 @@ a{color:inherit;text-decoration:none;}
       <div class="auth-field"><label for="loginEmail">Email</label><input type="email" id="loginEmail" required placeholder="you@example.com" autocomplete="email" /></div>
       <div class="auth-field"><label for="loginPassword">Password</label><div class="pw-wrap"><input type="password" id="loginPassword" required minlength="6" placeholder="••••••••" autocomplete="current-password" /><button type="button" class="pw-toggle" data-target="loginPassword">👁️</button></div></div>
       <button type="submit" class="auth-btn primary" id="loginSubmit">LOGIN</button>
+      <button type="button" class="auth-btn link" id="forgotBtn">Forgot password?</button>
     </form>
     <form id="signupForm" class="hidden" autocomplete="on">
       <div class="auth-field"><label for="signupName">Display Name</label><input type="text" id="signupName" required minlength="2" maxlength="24" placeholder="e.g. ShadowX" autocomplete="nickname" /></div>
@@ -528,17 +553,17 @@ a{color:inherit;text-decoration:none;}
       <div class="auth-field"><label for="signupReferral">Referral Code (Optional)</label><input type="text" id="signupReferral" maxlength="20" placeholder="e.g. SHADOW123" autocomplete="off" style="text-transform:uppercase;" /><p class="auth-hint">💡 Referral code gets you ₹5 instantly + ₹20 on first ₹100 deposit!</p></div>
       <button type="submit" class="auth-btn primary" id="signupSubmit">CREATE ACCOUNT</button>
     </form>
+    <form id="forgotForm" class="hidden" autocomplete="on">
+      <p class="hint" style="text-align:left;margin-bottom:14px;">Enter your registered email.</p>
+      <div class="auth-field"><label for="forgotEmail">Email</label><input type="email" id="forgotEmail" required placeholder="you@example.com" autocomplete="email" /></div>
+      <button type="submit" class="auth-btn primary" id="forgotSubmit">SEND RESET LINK</button>
+      <button type="button" class="auth-btn link" id="backToLogin">← Back to Login</button>
+    </form>
     <div id="socialBlock">
       <div class="divider"><span>OR CONTINUE WITH</span></div>
       <button class="auth-btn google" id="btnGoogle" type="button">G Sign in with Google</button>
+      <button class="auth-btn phone" id="btnPhone" type="button">📱 Sign in with Phone</button>
     </div>
-
-    <!-- 📱 Pre-login App Download Promo -->
-    <div class="app-dl-promo">
-      <p>📱 Better experience using our app</p>
-      <a href="download.html" class="app-dl-btn">⬇️ App Download</a>
-    </div>
-
     <p class="auth-msg" id="authMsg"></p>
     <p class="auth-fine">By continuing, you agree to our Terms & Anti-Cheat rules. 18+ only for paid tournaments.</p>
   </div>
@@ -551,8 +576,6 @@ a{color:inherit;text-decoration:none;}
       <div class="hdr-meta"><span class="hdr-hi">Welcome</span><span class="hdr-name" id="hdrName">Player</span></div>
     </div>
     <div class="hdr-right">
-      <!-- 📲 Post-login Download App Button -->
-      <a href="download.html" class="hdr-dl-btn" aria-label="Download App">⬇️ <span>Download App</span></a>
       <button class="hdr-wallet" id="hdrWallet"><span class="coin">₹</span><span id="hdrBal">0.00</span></button>
       <button class="hdr-notif" id="notifBtn">🔔<span class="notif-badge" id="notifBadge">0</span></button>
     </div>
@@ -634,6 +657,7 @@ a{color:inherit;text-decoration:none;}
       </div>
 
       <div class="sec-title">Account</div>
+      <button class="btn-main" id="btnChangePw" style="margin-bottom:10px">🔑 Change Password</button>
       <button class="btn-main" id="btnEditProfile" style="margin-bottom:10px">✏️ Update Game Details</button>
       <button class="btn-main" id="btnSignOut" style="background:linear-gradient(135deg,#2a3860,#1a2238);box-shadow:none">🚪 Sign Out</button>
     </section>
@@ -643,10 +667,11 @@ a{color:inherit;text-decoration:none;}
         <h3>📜 TERMS &amp; CONDITIONS</h3>
         <ol>
           <li><strong>Eligibility:</strong> Users must be 18+ for paid tournaments.</li>
-          <li><strong>Account:</strong> One account per person.</li>
+          <li><strong>Account:</strong> One account per person. Multiple accounts with same email/phone will be terminated.</li>
           <li><strong>Entry Fees:</strong> Non-refundable once joined.</li>
-          <li><strong>Prizes:</strong> Credited within 24 hours.</li>
+          <li><strong>Prizes:</strong> Credited within 24 hours after verification.</li>
           <li><strong>Withdrawals:</strong> Processed within 24-48 hours.</li>
+          <li><strong>Cancellations:</strong> Auto-refund on cancellation.</li>
         </ol>
       </div>
       <div class="terms-card">
@@ -657,6 +682,7 @@ a{color:inherit;text-decoration:none;}
           <li><strong>Referrer Bonus:</strong> ₹5 when your friend deposits ₹100+.</li>
           <li><strong>Bonus Use:</strong> Bonus can only be used for tournament entries.</li>
           <li><strong>Withdrawal Rule:</strong> Minimum 3 matches must be played before withdrawal.</li>
+          <li><strong>Winnings:</strong> Match winnings go to real balance — withdrawable.</li>
         </ul>
       </div>
       <div class="terms-card">
@@ -664,25 +690,18 @@ a{color:inherit;text-decoration:none;}
         <ul>
           <li><strong>No Hacks:</strong> Aimbots, ESP, wallhacks banned.</li>
           <li><strong>No Team-ups:</strong> Teaming with opponents banned.</li>
+          <li><strong>No Emulators:</strong> Emulator-only lobbies.</li>
+          <li><strong>No Abuse:</strong> Toxic behavior = suspension.</li>
           <li><strong>No Account Sharing:</strong> One UID per account.</li>
         </ul>
         <div class="warn">⚠️ Violation = Permanent ban + Wallet forfeited.</div>
       </div>
+      <div class="terms-card">
+        <h3>❓ SUPPORT</h3>
+        <p>Contact <strong style="color:var(--cyan)">support@arenax.gg</strong> within 24 hours.</p>
+      </div>
     </section>
   </div>
-
-  <!-- ── Legal Footer ─────────────────────────────────────── -->
-  <footer class="legal-footer">
-    <div class="lf-title">Legal & Policies</div>
-    <div class="legal-links">
-      <a href="term-conditions.html">Terms &amp; Conditions</a>
-      <a href="privacy-policy.html">Privacy Policy</a>
-      <a href="rules.html">Match Rules</a>
-      <a href="refund-policy.html">Refund Policy</a>
-      <a href="download.html">⬇️ Download App</a>
-    </div>
-    <div class="lf-copy">© 2025 ArenaX. All rights reserved.</div>
-  </footer>
 
   <nav class="bottom-nav">
     <button class="nav-btn active" data-nav="home"><span class="ico">🏠</span><span>Home</span></button>
@@ -693,7 +712,6 @@ a{color:inherit;text-decoration:none;}
   </nav>
 </div>
 
-<!-- JOIN MODAL -->
 <div class="modal-overlay" id="joinModal">
   <div class="modal">
     <div class="modal-hd"><h3>JOIN MATCH</h3><button class="modal-x" data-close="joinModal">✕</button></div>
@@ -709,7 +727,6 @@ a{color:inherit;text-decoration:none;}
   </div>
 </div>
 
-<!-- DETAIL MODAL -->
 <div class="modal-overlay" id="detailModal">
   <div class="modal">
     <div class="modal-hd"><h3>MATCH DETAILS</h3><button class="modal-x" data-close="detailModal">✕</button></div>
@@ -717,7 +734,6 @@ a{color:inherit;text-decoration:none;}
   </div>
 </div>
 
-<!-- WITHDRAW MODAL -->
 <div class="modal-overlay" id="withdrawModal">
   <div class="modal">
     <div class="modal-hd"><h3>WITHDRAW FUNDS</h3><button class="modal-x" data-close="withdrawModal">✕</button></div>
@@ -734,7 +750,6 @@ a{color:inherit;text-decoration:none;}
   </div>
 </div>
 
-<!-- DEPOSIT MODAL -->
 <div class="modal-overlay" id="depositModal">
   <div class="modal">
     <div class="modal-hd"><h3>💳 ADD MONEY</h3><button class="modal-x" data-close="depositModal">✕</button></div>
@@ -760,13 +775,18 @@ a{color:inherit;text-decoration:none;}
         <div class="step-num">2</div>
         <div class="step-body">
           <div class="step-title">Pay via PayPal</div>
-          <div class="step-desc">You will be redirected to PayPal's secure payment page.</div>
+          <div class="step-desc">You will be redirected to PayPal's secure payment page. Pay using your PayPal account or card. After payment, you'll return to the app.</div>
+
           <div style="text-align:center;margin:14px 0;">
             <div class="paypal-badge"><span class="pp-ico">💳</span> SECURE PAYMENT VIA PAYPAL</div>
           </div>
+
           <div id="utrStatusBox" class="utr-status hidden"></div>
           <p class="err" id="depErr"></p>
-          <button class="btn-main btn-cyan" id="btnPayNow">💳 PAY VIA PAYPAL</button>
+
+          <div style="margin-top:12px;">
+            <button class="btn-main btn-cyan" id="btnPayNow">💳 PAY VIA PAYPAL</button>
+          </div>
         </div>
       </div>
 
@@ -775,7 +795,6 @@ a{color:inherit;text-decoration:none;}
   </div>
 </div>
 
-<!-- PROFILE MODAL -->
 <div class="modal-overlay" id="profileModal">
   <div class="modal">
     <div class="modal-hd"><h3>UPDATE GAME DETAILS</h3><button class="modal-x" data-close="profileModal">✕</button></div>
@@ -791,7 +810,21 @@ a{color:inherit;text-decoration:none;}
   </div>
 </div>
 
-<!-- NOTIF MODAL -->
+<div class="modal-overlay" id="passwordModal">
+  <div class="modal">
+    <div class="modal-hd"><h3>CHANGE PASSWORD</h3><button class="modal-x" data-close="passwordModal">✕</button></div>
+    <div class="modal-bd">
+      <form id="passwordForm" autocomplete="off">
+        <label class="field"><span class="lbl">Current Password</span><input type="password" id="curPw" required minlength="6" placeholder="••••••••" autocomplete="current-password" /></label>
+        <label class="field"><span class="lbl">New Password</span><input type="password" id="newPw" required minlength="6" placeholder="Min 6 characters" autocomplete="new-password" /></label>
+        <label class="field"><span class="lbl">Confirm New Password</span><input type="password" id="newPwConfirm" required minlength="6" placeholder="Re-enter new password" autocomplete="new-password" /></label>
+        <p class="err" id="pwErr"></p>
+        <button type="submit" class="btn-main btn-cyan" id="pwSubmit">UPDATE PASSWORD</button>
+      </form>
+    </div>
+  </div>
+</div>
+
 <div class="modal-overlay" id="notifModal">
   <div class="modal">
     <div class="modal-hd"><h3>🔔 NOTIFICATIONS</h3><button class="modal-x" data-close="notifModal">✕</button></div>
@@ -799,25 +832,43 @@ a{color:inherit;text-decoration:none;}
   </div>
 </div>
 
+<!-- ═══════════════════════════════════════════════════════════
+     🎧 FLOATING SUPPORT BUTTON — added feature
+═══════════════════════════════════════════════════════════ -->
+<button
+  id="supportFab"
+  type="button"
+  aria-label="Need Help? Contact Support"
+  title="Need Help? Contact Support"
+>
+  <!-- Headset / Support SVG icon -->
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"
+       stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+       aria-hidden="true">
+    <path d="M3 18v-6a9 9 0 0 1 18 0v6"/>
+    <path d="M21 19a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2h3zM3 19a2 2 0 0 0 2 2h1a2 2 0 0 0 2-2v-3a2 2 0 0 0-2-2H3z"/>
+  </svg>
+  <span class="support-tooltip">Need Help? Contact Support</span>
+</button>
+
 <div id="toast"></div>
 
 <script type="module">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
 import {
   getAuth, GoogleAuthProvider, signInWithPopup, signOut,
-  onAuthStateChanged, createUserWithEmailAndPassword,
-  signInWithEmailAndPassword, updateProfile, sendPasswordResetEmail,
+  onAuthStateChanged, RecaptchaVerifier, signInWithPhoneNumber,
+  createUserWithEmailAndPassword, signInWithEmailAndPassword,
+  sendPasswordResetEmail, updateProfile, updatePassword,
+  EmailAuthProvider, reauthenticateWithCredential,
   setPersistence, browserLocalPersistence
 } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
 import {
   getFirestore, doc, getDoc, setDoc, updateDoc, addDoc,
   collection, query, where, onSnapshot, getDocs,
-  serverTimestamp, increment
+  runTransaction, serverTimestamp, increment
 } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
 
-/* ═══════════════════════════════════════════════════════════
-   CONFIG
-═══════════════════════════════════════════════════════════ */
 const firebaseConfig = {
   apiKey: "AIzaSyDEquBta5rSGYGbFe1EhzC7vSIjrWqSIkk",
   authDomain: "tournament-b2771.firebaseapp.com",
@@ -825,51 +876,60 @@ const firebaseConfig = {
   projectId: "tournament-b2771",
   storageBucket: "tournament-b2771.firebasestorage.app",
   messagingSenderId: "219838143541",
-  appId: "1:219838143541:web:ebd560a0d3b9dab572257c"
+  appId: "1:219838143541:web:ebd560a0d3b9dab572257c",
+  measurementId: "G-9KWMTN1TLG"
 };
 
+const SERVER_URL = "https://arenax-webhook.onrender.com";
 const DOWNLOAD_URL = "https://sites.google.com/view/arenaxofficial";
 const MIN_WITHDRAW = 50;
 const MIN_DEPOSIT = 10;
 const MIN_MATCHES_FOR_WITHDRAW = 3;
 const REFERRER_BONUS = 5;
 const MIN_DEPOSIT_FOR_BONUS = 100;
+const CURRENT_VERSION_CODE = 8;
+const CURRENT_VERSION_NAME = "2.8.7";
 const SIGNUP_BONUS = 5;
-const CURRENT_VERSION_CODE = 11;
-const CURRENT_VERSION_NAME = "4.3.0";
 
 const GAME_MODES = {
   "BGMI": ["Battle Royale", "TDM"],
   "Free Fire": ["Clash Squad", "Battle Royale"]
 };
 
-/* ═══════════════════════════════════════════════════════════
-   FIREBASE INIT
-═══════════════════════════════════════════════════════════ */
-const app = initializeApp(firebaseConfig);
-const auth = getAuth(app);
-const db = getFirestore(app);
-const googleProvider = new GoogleAuthProvider();
-setPersistence(auth, browserLocalPersistence).catch(() => {});
+let app, auth, db, googleProvider;
 
-/* ═══════════════════════════════════════════════════════════
-   STATE
-═══════════════════════════════════════════════════════════ */
+function showBootError(msg) {
+  const errEl = document.getElementById("bootError");
+  const errMsgEl = document.getElementById("bootErrorMsg");
+  if (errEl && errMsgEl) { errMsgEl.textContent = msg; errEl.classList.remove("hidden"); }
+  if (window.__hideBoot) window.__hideBoot();
+}
+
+try {
+  app = initializeApp(firebaseConfig);
+  auth = getAuth(app);
+  db = getFirestore(app);
+  googleProvider = new GoogleAuthProvider();
+  setPersistence(auth, browserLocalPersistence).catch(err => console.warn("Auth persistence failed:", err));
+} catch (initErr) {
+  console.error("Firebase init failed:", initErr);
+  showBootError("Firebase failed to initialize. (" + (initErr.message || "unknown") + ")");
+}
+
 const state = {
   user: null, profile: null,
-  activeGame: "BGMI", activeMode: "Battle Royale", activeTeam: "ALL",
+  activeGame: "BGMI",
+  activeMode: "Battle Royale",
+  activeTeam: "ALL",
   activeNav: "home",
   tournaments: [], joinedMatches: [], transactions: [], notifications: [],
   appConfig: null, forceUpdateActive: false, bannerDismissed: false,
   selectedMatch: null, referrals: [],
-  unsubs: {},
+  unsubs: { profile: null, tournaments: null, joined: null, tx: null, notif: null, appConfig: null, pendingDeposit: null, referrals: null },
   deposit: { amount: 0, orderId: "", pollTimer: null },
   lastPrizeNotifId: null
 };
 
-/* ═══════════════════════════════════════════════════════════
-   DOM HELPERS
-═══════════════════════════════════════════════════════════ */
 const $ = (s) => document.querySelector(s);
 const $$ = (s) => document.querySelectorAll(s);
 
@@ -878,12 +938,13 @@ const D = {
   updateBanner: $("#updateBanner"), ubVersionText: $("#ubVersionText"), ubUpdateBtn: $("#ubUpdateBtn"), ubCloseBtn: $("#ubCloseBtn"),
   authGate: $("#authGate"), appShell: $("#appShell"),
   tabLogin: $("#tabLogin"), tabSignup: $("#tabSignup"),
-  loginForm: $("#loginForm"), signupForm: $("#signupForm"),
+  loginForm: $("#loginForm"), signupForm: $("#signupForm"), forgotForm: $("#forgotForm"),
   socialBlock: $("#socialBlock"), authMsg: $("#authMsg"),
-  loginEmail: $("#loginEmail"), loginPassword: $("#loginPassword"), loginSubmit: $("#loginSubmit"),
+  loginEmail: $("#loginEmail"), loginPassword: $("#loginPassword"), loginSubmit: $("#loginSubmit"), forgotBtn: $("#forgotBtn"),
   signupName: $("#signupName"), signupEmail: $("#signupEmail"),
   signupPassword: $("#signupPassword"), signupConfirm: $("#signupConfirm"), signupReferral: $("#signupReferral"), signupSubmit: $("#signupSubmit"),
-  btnGoogle: $("#btnGoogle"),
+  forgotEmail: $("#forgotEmail"), forgotSubmit: $("#forgotSubmit"), backToLogin: $("#backToLogin"),
+  btnGoogle: $("#btnGoogle"), btnPhone: $("#btnPhone"),
   hdrAvatar: $("#hdrAvatar"), hdrName: $("#hdrName"), hdrBal: $("#hdrBal"), hdrWallet: $("#hdrWallet"),
   notifBtn: $("#notifBtn"), notifBadge: $("#notifBadge"), navNotifDot: $("#navNotifDot"),
   modeFilter: $("#modeFilter"), teamFilter: $("#teamFilter"),
@@ -901,12 +962,14 @@ const D = {
   wdUpi: $("#wdUpi"), wdAmt: $("#wdAmt"), wdErr: $("#wdErr"), wdSubmit: $("#wdSubmit"),
   depositModal: $("#depositModal"),
   depAmount: $("#depAmount"), depBonusHint: $("#depBonusHint"), depErr: $("#depErr"), btnPayNow: $("#btnPayNow"),
-  utrStatusBox: $("#utrStatusBox"),
+  utrStatusBox: $("#utrStatusBox"), step1: $("#step1"), step2: $("#step2"),
   btnDeposit: $("#btnDeposit"), btnWithdraw: $("#btnWithdraw"),
   profileModal: $("#profileModal"), profileForm: $("#profileForm"),
   pfName: $("#pfName"), pfUid: $("#pfUid"), pfIgn: $("#pfIgn"), pfErr: $("#pfErr"), pfSubmit: $("#pfSubmit"),
   btnEditProfile: $("#btnEditProfile"),
-  btnSignOut: $("#btnSignOut"),
+  passwordModal: $("#passwordModal"), passwordForm: $("#passwordForm"),
+  curPw: $("#curPw"), newPw: $("#newPw"), newPwConfirm: $("#newPwConfirm"), pwErr: $("#pwErr"), pwSubmit: $("#pwSubmit"),
+  btnChangePw: $("#btnChangePw"), btnSignOut: $("#btnSignOut"),
   notifModal: $("#notifModal"), notifList: $("#notifList"),
   prizePopup: $("#prizePopup"), pnpTitle: $("#pnpTitle"), pnpAmt: $("#pnpAmt"),
   toast: $("#toast")
@@ -915,14 +978,329 @@ const D = {
 D.profVersion.textContent = "v" + CURRENT_VERSION_NAME;
 
 /* ═══════════════════════════════════════════════════════════
-   UTILITIES
+   ⚡ TEAM SIZE NORMALIZE
 ═══════════════════════════════════════════════════════════ */
-function showBootError(msg) {
-  const errEl = document.getElementById("bootError");
-  const errMsgEl = document.getElementById("bootErrorMsg");
-  if (errEl && errMsgEl) { errMsgEl.textContent = msg; errEl.classList.remove("hidden"); }
-  if (window.__hideBoot) window.__hideBoot();
+function normalizeTeamSize(t) {
+  const candidates = [t.teamSize, t.team, t.teamType, t.type, t.matchType, t.category, t.mode];
+  for (const val of candidates) {
+    if (!val) continue;
+    const raw = String(val).trim().toLowerCase();
+    if (raw === "solo" || raw === "1v1" || raw === "single") return "Solo";
+    if (raw === "duo" || raw === "2v2" || raw === "double") return "Duo";
+    if (raw === "squad" || raw === "4v4" || raw === "team") return "Squad";
+  }
+  const title = String(t.title || "").toLowerCase();
+  if (title.includes("solo")) return "Solo";
+  if (title.includes("duo")) return "Duo";
+  if (title.includes("squad")) return "Squad";
+  return "UNKNOWN";
 }
+
+function displayTeamSize(t) {
+  const n = normalizeTeamSize(t);
+  return n === "UNKNOWN" ? "Solo" : n;
+}
+
+/* ═══════════════════════════════════════════════════════════
+   💰 BALANCE FIELD READERS
+═══════════════════════════════════════════════════════════ */
+function getBonusBalance(uData) {
+  if (!uData) return 0;
+  const candidates = [
+    uData.bonusBalance, uData.bonus, uData.bonusWallet,
+    uData.signupBonus, uData.referralBonus, uData.bonusAmount,
+    uData.walletBonus, uData.bonus_balance,
+    uData.balances?.bonus, uData.wallet?.bonus, uData.wallet?.bonusBalance
+  ];
+  for (const v of candidates) {
+    const n = Number(v);
+    if (!isNaN(n) && n > 0) return n;
+  }
+  return 0;
+}
+
+function getRealBalance(uData) {
+  if (!uData) return 0;
+  const candidates = [
+    uData.balance, uData.realBalance, uData.mainBalance,
+    uData.wallet, uData.walletBalance,
+    uData.balances?.real, uData.wallet?.real
+  ];
+  for (const v of candidates) {
+    const n = Number(v);
+    if (!isNaN(n)) return n;
+  }
+  return 0;
+}
+
+function normalizeMode(t) {
+  const raw = String(t.mode || t.category || "").trim();
+  return raw || "Battle Royale";
+}
+
+function renderModeFilter() {
+  const modes = GAME_MODES[state.activeGame] || [];
+  D.modeFilter.innerHTML = modes.map(m => 
+    `<button class="mode-btn ${m === state.activeMode ? 'active' : ''}" data-mode="${escHTML(m)}">${escHTML(m)}</button>`
+  ).join("");
+}
+
+D.modeFilter.addEventListener("click", (e) => {
+  const btn = e.target.closest("[data-mode]");
+  if (!btn) return;
+  state.activeMode = btn.dataset.mode;
+  renderModeFilter();
+  attachTournamentsListener();
+});
+
+D.teamFilter.addEventListener("click", (e) => {
+  const btn = e.target.closest("[data-team]");
+  if (!btn) return;
+  state.activeTeam = btn.dataset.team;
+  $$(".team-btn").forEach(b => b.classList.toggle("active", b === btn));
+  attachTournamentsListener();
+});
+
+/* ═══════════════════════════════════════════════════════════
+   🔄 VERSION CHECK + FORCE UPDATE (CHROME APP LAUNCH)
+═══════════════════════════════════════════════════════════ */
+function parseVersionCode(cfg) {
+  if (!cfg) return 0;
+  const candidates = [
+    cfg.versionCode, cfg.version_code, cfg.version,
+    cfg.appVersionCode, cfg.app_version_code,
+    cfg.latestVersionCode, cfg.latest_version_code,
+    cfg.minVersionCode, cfg.min_version_code
+  ];
+  for (const v of candidates) {
+    if (v === undefined || v === null || v === "") continue;
+    const n = parseInt(String(v).replace(/[^\d]/g, ""), 10);
+    if (!isNaN(n) && n > 0) return n;
+  }
+  return 0;
+}
+
+function parseVersionName(cfg) {
+  if (!cfg) return "?";
+  const candidates = [
+    cfg.versionName, cfg.version_name, cfg.appVersion,
+    cfg.app_version, cfg.latestVersion, cfg.latest_version
+  ];
+  for (const v of candidates) {
+    if (v === undefined || v === null || v === "") continue;
+    return String(v);
+  }
+  return "?";
+}
+
+function parseForceUpdate(cfg) {
+  if (!cfg) return false;
+  const candidates = [
+    cfg.forceUpdate, cfg.force_update, cfg.mandatory,
+    cfg.isMandatory, cfg.is_mandatory, cfg.force
+  ];
+  for (const v of candidates) {
+    if (v === undefined || v === null) continue;
+    if (v === true || v === "true" || v === 1 || v === "1") return true;
+    if (v === false || v === "false" || v === 0 || v === "0") return false;
+  }
+  return false;
+}
+
+function parseDownloadUrl(cfg) {
+  if (!cfg) return DOWNLOAD_URL;
+  const candidates = [
+    cfg.downloadUrl, cfg.download_url,
+    cfg.updateUrl, cfg.update_url,
+    cfg.apkUrl, cfg.apk_url,
+    cfg.url, cfg.link
+  ];
+  for (const v of candidates) {
+    if (v && typeof v === "string" && v.trim()) return v.trim();
+  }
+  return DOWNLOAD_URL;
+}
+
+function openInChrome(url) {
+  if (!url) {
+    alert("Update link not set by admin. Please contact support.");
+    return;
+  }
+  if (!/^https?:\/\//i.test(url)) {
+    url = "https://" + url.replace(/^\/+/, "");
+  }
+
+  const ua = navigator.userAgent || "";
+  const isAndroid = /Android/i.test(ua);
+  const isIOS = /iPhone|iPad|iPod/i.test(ua);
+
+  try {
+    if (isAndroid) {
+      const cleanUrl = url.replace(/^https?:\/\//i, "");
+      const intentUrl =
+        "intent://" + cleanUrl +
+        "#Intent;scheme=https;" +
+        "package=com.android.chrome;" +
+        "S.browser_fallback_url=" + encodeURIComponent(url) + ";" +
+        "end";
+      window.location.href = intentUrl;
+      setTimeout(() => {
+        try {
+          if (!document.hidden) window.location.href = url;
+        } catch (e) {}
+      }, 1200);
+      return;
+    }
+
+    if (isIOS) {
+      const chromeUrl = url.replace(/^https?:\/\//i, "googlechrome://");
+      const start = Date.now();
+      window.location.href = chromeUrl;
+      setTimeout(() => {
+        if (Date.now() - start < 1500 && !document.hidden) {
+          window.location.href = url;
+        }
+      }, 900);
+      return;
+    }
+
+    const w = window.open(url, "_blank", "noopener,noreferrer");
+    if (!w) window.location.href = url;
+  } catch (e) {
+    console.warn("openInChrome error:", e);
+    window.location.href = url;
+  }
+}
+
+function checkVersionAndApply() {
+  const cfg = state.appConfig;
+  if (!cfg) return;
+
+  const adminVersion = parseVersionCode(cfg);
+  const force = parseForceUpdate(cfg);
+  const versionName = parseVersionName(cfg);
+
+  console.log("[ArenaX] Version check:", {
+    current: CURRENT_VERSION_CODE,
+    admin: adminVersion,
+    force,
+    versionName,
+    downloadUrl: parseDownloadUrl(cfg)
+  });
+
+  if (adminVersion > CURRENT_VERSION_CODE) {
+    if (force) {
+      showForceUpdateScreen(cfg);
+      hideUpdateBanner();
+    } else {
+      hideForceUpdateScreen();
+      showUpdateBanner(cfg);
+    }
+  } else {
+    hideForceUpdateScreen();
+    hideUpdateBanner();
+  }
+}
+
+function showForceUpdateScreen(cfg) {
+  state.forceUpdateActive = true;
+  document.body.classList.add("force-update-locked");
+
+  const versionName = parseVersionName(cfg);
+  D.fuVersion.textContent = `v${versionName} available`;
+
+  const changelog = (cfg.changelog || cfg.whats_new || cfg.whatsNew || "").trim();
+  if (changelog) {
+    D.fuChangelog.style.display = "block";
+    D.fuChangelogText.textContent = changelog;
+  } else {
+    D.fuChangelog.style.display = "none";
+  }
+
+  D.fuUpdateBtn.onclick = (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    const url = parseDownloadUrl(state.appConfig);
+    openInChrome(url);
+  };
+
+  D.forceUpdateScreen.classList.add("show");
+  document.body.style.overflow = "hidden";
+
+  try { history.pushState({ fu: true }, "", location.href); } catch (e) {}
+}
+
+function hideForceUpdateScreen() {
+  state.forceUpdateActive = false;
+  document.body.classList.remove("force-update-locked");
+  D.forceUpdateScreen.classList.remove("show");
+  document.body.style.overflow = "";
+}
+
+function showUpdateBanner(cfg) {
+  if (state.bannerDismissed) return;
+  const versionName = parseVersionName(cfg);
+  D.ubVersionText.textContent = `v${versionName} is ready`;
+
+  D.ubUpdateBtn.onclick = (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    const url = parseDownloadUrl(state.appConfig);
+    openInChrome(url);
+  };
+
+  D.updateBanner.classList.add("show");
+}
+
+function hideUpdateBanner() {
+  D.updateBanner.classList.remove("show");
+}
+
+D.ubCloseBtn?.addEventListener("click", (e) => {
+  e.preventDefault();
+  e.stopPropagation();
+  state.bannerDismissed = true;
+  hideUpdateBanner();
+});
+
+function attachAppConfigListener() {
+  if (state.unsubs.appConfig) state.unsubs.appConfig();
+
+  const paths = [
+    ["app_config", "latest"],
+    ["app_config", "version"],
+    ["config", "app"],
+    ["settings", "app"]
+  ];
+
+  const seen = {};
+  const handlers = [];
+
+  paths.forEach(([col, docId]) => {
+    const key = col + "/" + docId;
+    if (seen[key]) return;
+    seen[key] = true;
+    const unsub = onSnapshot(doc(db, col, docId), (snap) => {
+      if (!snap.exists()) return;
+      const data = snap.data();
+      const incoming = parseVersionCode(data);
+      const existing = state.appConfig ? parseVersionCode(state.appConfig) : 0;
+      if (!state.appConfig || incoming > existing) {
+        state.appConfig = data;
+        console.log("[ArenaX] Config loaded from", key, data);
+      }
+      checkVersionAndApply();
+    }, (err) => {
+      // Silent — not all paths exist
+    });
+    handlers.push(unsub);
+  });
+
+  state.unsubs.appConfig = () => {
+    handlers.forEach(fn => { try { fn(); } catch (e) {} });
+  };
+}
+
 function showToast(msg, type = "") {
   D.toast.textContent = msg;
   D.toast.className = "show " + type;
@@ -937,7 +1315,7 @@ function showPrizePopup(title, amount) {
 }
 function setAuthMsg(msg, type = "") { D.authMsg.textContent = msg; D.authMsg.className = "auth-msg " + type; }
 function clearAuthMsg() { D.authMsg.textContent = ""; D.authMsg.className = "auth-msg"; }
-function fmtMoney(n) { return Number(n || 0).toLocaleString("en-IN", { minimumFractionDigits: 2, maximumFractionDigits: 2 }); }
+function fmtMoney(n) { const num = Number(n || 0); return num.toLocaleString("en-IN", { minimumFractionDigits: 2, maximumFractionDigits: 2 }); }
 function fmtDateTime(ts) {
   if (!ts) return "TBA";
   const d = ts?.toDate ? ts.toDate() : new Date(ts);
@@ -955,52 +1333,20 @@ function friendlyAuthError(code) {
     "auth/email-already-in-use": "This email is already registered. Please login instead.",
     "auth/weak-password": "Password must be at least 6 characters.",
     "auth/too-many-requests": "Too many attempts. Try again later.", "auth/network-request-failed": "Network error.",
-    "auth/popup-closed-by-user": "Sign-in cancelled."
+    "auth/requires-recent-login": "Please sign in again.", "auth/popup-closed-by-user": "Sign-in cancelled.",
+    "auth/operation-not-allowed": "Method disabled.", "auth/unauthorized-domain": "Domain not authorized.",
+    "auth/api-key-not-valid": "Invalid Firebase key."
   };
-  return map[code] || "Something went wrong.";
+  return map[code] || "Something went wrong. Please try again.";
 }
 function isBanned() { return state.profile?.banned === true; }
 
-/* ═══════════════════════════════════════════════════════════
-   NORMALIZERS
-═══════════════════════════════════════════════════════════ */
-function normalizeTeamSize(t) {
-  const c = [t.teamSize, t.team, t.teamType, t.type, t.matchType, t.category, t.mode];
-  for (const val of c) {
-    if (!val) continue;
-    const r = String(val).trim().toLowerCase();
-    if (r === "solo" || r === "1v1" || r === "single") return "Solo";
-    if (r === "duo" || r === "2v2" || r === "double") return "Duo";
-    if (r === "squad" || r === "4v4" || r === "team") return "Squad";
-  }
-  const title = String(t.title || "").toLowerCase();
-  if (title.includes("solo")) return "Solo";
-  if (title.includes("duo")) return "Duo";
-  if (title.includes("squad")) return "Squad";
-  return "UNKNOWN";
-}
-function displayTeamSize(t) { const n = normalizeTeamSize(t); return n === "UNKNOWN" ? "Solo" : n; }
-function normalizeMode(t) { return String(t.mode || t.category || "").trim() || "Battle Royale"; }
-
-function getBonusBalance(u) {
-  if (!u) return 0;
-  const c = [u.bonusBalance, u.bonus, u.bonusWallet, u.signupBonus, u.referralBonus, u.bonusAmount, u.walletBonus];
-  for (const v of c) { const n = Number(v); if (!isNaN(n) && n > 0) return n; }
-  return 0;
-}
-function getRealBalance(u) {
-  if (!u) return 0;
-  const c = [u.balance, u.realBalance, u.mainBalance, u.wallet, u.walletBalance];
-  for (const v of c) { const n = Number(v); if (!isNaN(n)) return n; }
-  return 0;
-}
-
-function getMatchStatus(m) {
-  if (!m) return { key: "upcoming", label: "UPCOMING" };
-  if (m.status === "CANCELLED") return { key: "cancelled", label: "CANCELLED" };
-  if (m.status === "COMPLETED" || m.completed === true) return { key: "completed", label: "COMPLETED" };
-  if (m.status === "STARTED" || m.started === true) return { key: "started", label: "● LIVE NOW" };
-  if (m.roomId && m.roomPassword) return { key: "room-ready", label: "ROOM READY" };
+function getMatchStatus(match) {
+  if (!match) return { key: "upcoming", label: "UPCOMING" };
+  if (match.status === "CANCELLED") return { key: "cancelled", label: "CANCELLED" };
+  if (match.status === "COMPLETED" || match.completed === true) return { key: "completed", label: "COMPLETED" };
+  if (match.status === "STARTED" || match.started === true) return { key: "started", label: "● LIVE NOW" };
+  if (match.roomId && match.roomPassword) return { key: "room-ready", label: "ROOM READY" };
   return { key: "upcoming", label: "UPCOMING" };
 }
 function statusPillHTML(k, l) {
@@ -1012,63 +1358,32 @@ function statusBannerHTML(k, l) {
   const ico = { "upcoming": "🗓", "room-ready": "🔑", "started": "🔴", "completed": "🏆", "cancelled": "🚫" };
   return `<div class="status-banner ${cls[k] || 'sb-upcoming'}"><span class="sb-dot"></span><span>${ico[k] || "•"} ${escHTML(l)}</span></div>`;
 }
-function catClass(mode) {
-  const m = String(mode || "").toLowerCase();
-  if (m.includes("clash")) return "cat-cs";
-  if (m.includes("tdm")) return "cat-tdm";
-  if (m.includes("battle royale") || m.includes("br")) return "cat-br";
-  if (m === "solo") return "cat-solo";
-  if (m === "duo") return "cat-duo";
-  if (m === "squad") return "cat-squad";
-  return "cat-br";
-}
-function teamClass(t) {
-  const s = String(t || "").toLowerCase();
-  if (s === "duo") return "team-duo";
-  if (s === "squad") return "team-squad";
-  return "team-solo";
-}
-function teamIcon(t) {
-  const s = String(t || "").toLowerCase();
-  if (s === "duo") return "👥";
-  if (s === "squad") return "👨‍👩‍👦";
-  return "👤";
-}
-function generateReferralCode(name) {
-  const base = String(name || "PLAYER").toUpperCase().replace(/[^A-Z0-9]/g, "").slice(0, 8);
-  return (base || "PLAYER") + Math.floor(1000 + Math.random() * 9000);
+
+function applyBannedUI(banned) {
+  let banner = document.getElementById("banBanner");
+  if (banned) {
+    if (!banner) {
+      banner = document.createElement("div");
+      banner.id = "banBanner";
+      banner.style.cssText = `position:fixed;top:0;left:0;right:0;z-index:250;background:linear-gradient(135deg,#ff2e51,#8b0000);color:#fff;padding:10px 16px;text-align:center;font-weight:700;font-size:13px;`;
+      banner.textContent = "🚫 ACCOUNT BANNED — Contact support.";
+      document.body.appendChild(banner);
+    }
+    D.appShell.style.paddingTop = "40px";
+    if (D.btnDeposit) { D.btnDeposit.disabled = true; D.btnDeposit.style.opacity = ".4"; }
+    if (D.btnWithdraw) { D.btnWithdraw.disabled = true; D.btnWithdraw.style.opacity = ".4"; }
+  } else {
+    if (banner) banner.remove();
+    D.appShell.style.paddingTop = "";
+    if (D.btnDeposit) { D.btnDeposit.disabled = false; D.btnDeposit.style.opacity = ""; }
+    if (D.btnWithdraw) { D.btnWithdraw.disabled = false; D.btnWithdraw.style.opacity = ""; }
+  }
 }
 
-/* ═══════════════════════════════════════════════════════════
-   MODE FILTER
-═══════════════════════════════════════════════════════════ */
-function renderModeFilter() {
-  const modes = GAME_MODES[state.activeGame] || [];
-  D.modeFilter.innerHTML = modes.map(m => 
-    `<button class="mode-btn ${m === state.activeMode ? 'active' : ''}" data-mode="${escHTML(m)}">${escHTML(m)}</button>`
-  ).join("");
-}
-D.modeFilter.addEventListener("click", (e) => {
-  const btn = e.target.closest("[data-mode]");
-  if (!btn) return;
-  state.activeMode = btn.dataset.mode;
-  renderModeFilter();
-  attachTournamentsListener();
-});
-D.teamFilter.addEventListener("click", (e) => {
-  const btn = e.target.closest("[data-team]");
-  if (!btn) return;
-  state.activeTeam = btn.dataset.team;
-  $$(".team-btn").forEach(b => b.classList.toggle("active", b === btn));
-  attachTournamentsListener();
-});
-
-/* ═══════════════════════════════════════════════════════════
-   AUTH VIEW
-═══════════════════════════════════════════════════════════ */
 function showAuthView(view) {
   D.loginForm.classList.toggle("hidden", view !== "login");
   D.signupForm.classList.toggle("hidden", view !== "signup");
+  D.forgotForm.classList.toggle("hidden", view !== "forgot");
   D.socialBlock.classList.toggle("hidden", view !== "login" && view !== "signup");
   D.tabLogin.classList.toggle("active", view === "login");
   D.tabSignup.classList.toggle("active", view === "signup");
@@ -1076,6 +1391,8 @@ function showAuthView(view) {
 }
 D.tabLogin.addEventListener("click", () => showAuthView("login"));
 D.tabSignup.addEventListener("click", () => showAuthView("signup"));
+D.forgotBtn.addEventListener("click", () => showAuthView("forgot"));
+D.backToLogin.addEventListener("click", () => showAuthView("login"));
 
 $$(".pw-toggle").forEach(btn => {
   btn.addEventListener("click", () => {
@@ -1087,9 +1404,72 @@ $$(".pw-toggle").forEach(btn => {
   });
 });
 
-/* ═══════════════════════════════════════════════════════════
-   SIGNUP
-═══════════════════════════════════════════════════════════ */
+async function creditSignupBonusClientSide(uid, name, email, referralCode) {
+  try {
+    const userRef = doc(db, "users", uid);
+    await new Promise(r => setTimeout(r, 1500));
+    const freshSnap = await getDoc(userRef);
+    if (!freshSnap.exists()) {
+      const myReferralCode = generateReferralCode(name);
+      await setDoc(userRef, {
+        uid, name, email, phone: "",
+        balance: 0, bonusBalance: SIGNUP_BONUS, signupBonus: SIGNUP_BONUS,
+        referralCode: myReferralCode,
+        referredBy: "", referredByName: "",
+        referralRewarded: false, firstDepositRewarded: false,
+        matchesPlayed: 0, totalWon: 0, banned: false,
+        createdAt: serverTimestamp()
+      });
+      await addDoc(collection(db, "wallet_transactions"), {
+        uid, amount: SIGNUP_BONUS, type: "credit",
+        category: "signup_bonus", description: "🎁 Signup bonus",
+        createdAt: serverTimestamp()
+      });
+      return { credited: true, amount: SIGNUP_BONUS };
+    }
+    const data = freshSnap.data();
+    const existingBonus = getBonusBalance(data);
+    if (existingBonus <= 0 && data.signupBonusCredited !== true) {
+      const updateData = { bonusBalance: SIGNUP_BONUS, signupBonus: SIGNUP_BONUS, signupBonusCredited: true };
+      if (typeof data.bonus !== "undefined") updateData.bonus = SIGNUP_BONUS;
+      if (typeof data.bonusWallet !== "undefined") updateData.bonusWallet = SIGNUP_BONUS;
+      await updateDoc(userRef, updateData);
+      await addDoc(collection(db, "wallet_transactions"), {
+        uid, amount: SIGNUP_BONUS, type: "credit",
+        category: "signup_bonus", description: "🎁 Signup bonus",
+        createdAt: serverTimestamp()
+      });
+      return { credited: true, amount: SIGNUP_BONUS };
+    }
+    return { credited: false, amount: existingBonus };
+  } catch (err) {
+    console.error("Client-side signup bonus failed:", err);
+    return { credited: false, amount: 0, error: err.message };
+  }
+}
+
+function generateReferralCode(name) {
+  const base = String(name || "PLAYER").toUpperCase().replace(/[^A-Z0-9]/g, "").slice(0, 8);
+  const num = Math.floor(1000 + Math.random() * 9000);
+  return (base || "PLAYER") + num;
+}
+
+async function linkReferralToReferrer(uid, referralCode) {
+  if (!referralCode) return;
+  try {
+    const q = query(collection(db, "users"), where("referralCode", "==", referralCode));
+    const snap = await getDocs(q);
+    if (snap.empty) { console.warn("Referral code not found:", referralCode); return; }
+    const referrerDoc = snap.docs[0];
+    const referrerData = referrerDoc.data();
+    await updateDoc(doc(db, "users", uid), {
+      referredBy: referrerDoc.id,
+      referredByName: referrerData.name || "Player",
+      referralCodeUsed: referralCode
+    });
+  } catch (err) { console.error("Link referral failed:", err); }
+}
+
 D.signupForm.addEventListener("submit", async (e) => {
   e.preventDefault(); clearAuthMsg();
   const name = D.signupName.value.trim();
@@ -1100,7 +1480,7 @@ D.signupForm.addEventListener("submit", async (e) => {
 
   if (name.length < 2) { setAuthMsg("Name too short.", "error"); return; }
   if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) { setAuthMsg("Invalid email.", "error"); return; }
-  if (pw.length < 6) { setAuthMsg("Min 6 characters.", "error"); return; }
+  if (pw.length < 6) { setAuthMsg("Password must be at least 6 characters.", "error"); return; }
   if (pw !== pw2) { setAuthMsg("Passwords don't match.", "error"); return; }
 
   D.signupSubmit.disabled = true;
@@ -1109,46 +1489,29 @@ D.signupForm.addEventListener("submit", async (e) => {
   try {
     const cred = await createUserWithEmailAndPassword(auth, email, pw);
     await updateProfile(cred.user, { displayName: name });
+    setAuthMsg("Account created!", "success");
+    showToast("Welcome to ArenaX 🎮", "success");
 
-    const myRefCode = generateReferralCode(name);
-    await setDoc(doc(db, "users", cred.user.uid), {
-      uid: cred.user.uid,
-      name, email, phone: "",
-      balance: 0,
-      bonusBalance: SIGNUP_BONUS,
-      referralCode: myRefCode,
-      referredBy: "",
-      referredByName: "",
-      referralCodeUsed: refInput || "",
-      referralRewarded: false,
-      firstDepositRewarded: false,
-      matchesPlayed: 0,
-      totalWon: 0,
-      banned: false,
-      createdAt: serverTimestamp()
-    });
+    let serverCredited = false;
+    try {
+      const resp = await fetch(SERVER_URL + "/create-user", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ uid: cred.user.uid, name, email, phone: "", referralCode: refInput || "" })
+      });
+      const result = await resp.json();
+      if (result.ok && result.signupBonus > 0) {
+        serverCredited = true;
+        showToast(`🎁 ₹${result.signupBonus} signup bonus received!`, "success");
+      }
+    } catch (err) { console.warn("Server create-user failed:", err); }
 
-    await addDoc(collection(db, "wallet_transactions"), {
-      uid: cred.user.uid, amount: SIGNUP_BONUS, type: "credit",
-      category: "signup_bonus", description: "🎁 Signup bonus",
-      createdAt: serverTimestamp()
-    });
-
-    if (refInput) {
-      try {
-        const q = query(collection(db, "users"), where("referralCode", "==", refInput));
-        const snap = await getDocs(q);
-        if (!snap.empty) {
-          const refDoc = snap.docs[0];
-          await updateDoc(doc(db, "users", cred.user.uid), {
-            referredBy: refDoc.id,
-            referredByName: refDoc.data().name || "Player"
-          });
-        }
-      } catch (err) { console.warn("Referral link failed:", err); }
+    if (!serverCredited) {
+      const bonusResult = await creditSignupBonusClientSide(cred.user.uid, name, email, refInput);
+      if (bonusResult.credited) showToast(`🎁 ₹${SIGNUP_BONUS} signup bonus credited!`, "success");
     }
 
-    showToast(`🎁 ₹${SIGNUP_BONUS} signup bonus credited!`, "success");
+    if (refInput) await linkReferralToReferrer(cred.user.uid, refInput);
   } catch (err) {
     setAuthMsg(friendlyAuthError(err.code), "error");
   } finally {
@@ -1157,9 +1520,6 @@ D.signupForm.addEventListener("submit", async (e) => {
   }
 });
 
-/* ═══════════════════════════════════════════════════════════
-   LOGIN
-═══════════════════════════════════════════════════════════ */
 D.loginForm.addEventListener("submit", async (e) => {
   e.preventDefault(); clearAuthMsg();
   const email = D.loginEmail.value.trim().toLowerCase();
@@ -1167,97 +1527,158 @@ D.loginForm.addEventListener("submit", async (e) => {
   if (!email || !pw) { setAuthMsg("Enter email and password.", "error"); return; }
   D.loginSubmit.disabled = true;
   D.loginSubmit.innerHTML = `<span class="spinner"></span>LOGGING IN...`;
-  try {
-    await signInWithEmailAndPassword(auth, email, pw);
-  } catch (err) {
-    setAuthMsg(friendlyAuthError(err.code), "error");
-  } finally {
-    D.loginSubmit.disabled = false;
-    D.loginSubmit.textContent = "LOGIN";
-  }
+  try { await signInWithEmailAndPassword(auth, email, pw); setAuthMsg("Login successful!", "success"); }
+  catch (err) { setAuthMsg(friendlyAuthError(err.code), "error"); }
+  finally { D.loginSubmit.disabled = false; D.loginSubmit.textContent = "LOGIN"; }
 });
 
-/* ═══════════════════════════════════════════════════════════
-   GOOGLE SIGN-IN
-═══════════════════════════════════════════════════════════ */
+D.forgotForm.addEventListener("submit", async (e) => {
+  e.preventDefault(); clearAuthMsg();
+  const email = D.forgotEmail.value.trim().toLowerCase();
+  if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) { setAuthMsg("Enter a valid email.", "error"); return; }
+  D.forgotSubmit.disabled = true;
+  D.forgotSubmit.innerHTML = `<span class="spinner"></span>SENDING...`;
+  try { await sendPasswordResetEmail(auth, email); setAuthMsg("Reset link sent!", "success"); D.forgotEmail.value = ""; }
+  catch (err) { setAuthMsg(friendlyAuthError(err.code), "error"); }
+  finally { D.forgotSubmit.disabled = false; D.forgotSubmit.textContent = "SEND RESET LINK"; }
+});
+
 D.btnGoogle.addEventListener("click", async () => {
   clearAuthMsg();
+  try { D.btnGoogle.disabled = true; await signInWithPopup(auth, googleProvider); }
+  catch (err) { if (err.code !== "auth/popup-closed-by-user") setAuthMsg(friendlyAuthError(err.code), "error"); }
+  finally { D.btnGoogle.disabled = false; }
+});
+
+let recaptchaVerifier = null;
+let confirmationResult = null;
+D.btnPhone.addEventListener("click", async () => {
+  clearAuthMsg();
+  const phone = prompt("Enter phone number with country code (e.g. +919876543210):");
+  if (!phone) return;
+  const cleanPhone = phone.replace(/[^\d+]/g, "");
+  if (!/^\+\d{10,15}$/.test(cleanPhone)) { setAuthMsg("Invalid phone format.", "error"); return; }
   try {
-    D.btnGoogle.disabled = true;
-    await signInWithPopup(auth, googleProvider);
+    D.btnPhone.disabled = true;
+    if (!recaptchaVerifier) {
+      let rc = document.getElementById("recaptcha-container");
+      if (!rc) { rc = document.createElement("div"); rc.id = "recaptcha-container"; document.body.appendChild(rc); }
+      recaptchaVerifier = new RecaptchaVerifier(auth, "recaptcha-container", { size: "invisible" });
+    }
+    confirmationResult = await signInWithPhoneNumber(auth, cleanPhone, recaptchaVerifier);
+    const code = prompt("Enter OTP:");
+    if (!code) return;
+    await confirmationResult.confirm(code.trim());
+    showToast("Phone verified successfully!", "success");
   } catch (err) {
-    if (err.code !== "auth/popup-closed-by-user") setAuthMsg(friendlyAuthError(err.code), "error");
-  } finally {
-    D.btnGoogle.disabled = false;
-  }
+    setAuthMsg(err.message || "Phone sign-in failed.", "error");
+    if (recaptchaVerifier) { try { recaptchaVerifier.clear(); } catch (e) {} recaptchaVerifier = null; }
+  } finally { D.btnPhone.disabled = false; }
 });
 
-/* ═══════════════════════════════════════════════════════════
-   AUTH STATE LISTENER
-═══════════════════════════════════════════════════════════ */
-onAuthStateChanged(auth, async (user) => {
-  Object.keys(state.unsubs).forEach(k => {
-    if (state.unsubs[k]) { state.unsubs[k](); state.unsubs[k] = null; }
+if (db) attachAppConfigListener();
+
+if (auth) {
+  onAuthStateChanged(auth, async (user) => {
+    Object.keys(state.unsubs).forEach(k => {
+      if (k === "appConfig") return;
+      if (state.unsubs[k]) { state.unsubs[k](); state.unsubs[k] = null; }
+    });
+    if (window.__hideBoot) window.__hideBoot();
+    if (!user) {
+      state.user = null; state.profile = null;
+      D.authGate.classList.remove("hidden");
+      D.appShell.classList.add("hidden");
+      showAuthView("login");
+      return;
+    }
+
+    const userRef = doc(db, "users", user.uid);
+    const [userSnap, adminSnap] = await Promise.all([
+      getDoc(userRef).catch(() => null),
+      getDoc(doc(db, "admins", user.uid)).catch(() => null)
+    ]);
+
+    if (adminSnap && adminSnap.exists()) {
+      await signOut(auth);
+      D.authGate.classList.remove("hidden");
+      D.appShell.classList.add("hidden");
+      showAuthView("login");
+      setAuthMsg("⛔ Admins must use the Admin Panel.", "error");
+      return;
+    }
+
+    state.user = user;
+
+    if (!userSnap || !userSnap.exists()) {
+      const fallbackName = user.displayName || (user.email ? user.email.split("@")[0] : "Player");
+      try {
+        const resp = await fetch(SERVER_URL + "/create-user", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ uid: user.uid, name: fallbackName, email: user.email || "", phone: user.phoneNumber || "", referralCode: "" })
+        });
+        const result = await resp.json();
+        if (!result.ok || !(result.signupBonus > 0)) {
+          await creditSignupBonusClientSide(user.uid, fallbackName, user.email || "", "");
+        }
+      } catch (err) {
+        await creditSignupBonusClientSide(user.uid, fallbackName, user.email || "", "");
+      }
+    }
+
+    D.authGate.classList.add("hidden");
+    D.appShell.classList.remove("hidden");
+    renderModeFilter();
+    attachProfileListener(user.uid);
+    attachTournamentsListener();
+    attachJoinedListener(user.uid);
+    attachTxListener(user.uid);
+    attachNotifListener(user.uid);
+    attachPendingDepositListener(user.uid);
+    attachReferralsListener(user.uid);
+    checkPaymentRedirect();
   });
+}
 
-  if (window.__hideBoot) window.__hideBoot();
-
-  if (!user) {
-    state.user = null; state.profile = null;
-    D.authGate.classList.remove("hidden");
-    D.appShell.classList.add("hidden");
-    showAuthView("login");
-    return;
-  }
-
-  const adminSnap = await getDoc(doc(db, "admins", user.uid)).catch(() => null);
-  if (adminSnap && adminSnap.exists()) {
-    await signOut(auth);
-    D.authGate.classList.remove("hidden");
-    D.appShell.classList.add("hidden");
-    showAuthView("login");
-    setAuthMsg("⛔ Admins must use the Admin Panel.", "error");
-    return;
-  }
-
-  state.user = user;
-
-  const userSnap = await getDoc(doc(db, "users", user.uid));
-  if (!userSnap.exists()) {
-    const fallbackName = user.displayName || user.email?.split("@")[0] || "Player";
-    const myRefCode = generateReferralCode(fallbackName);
-    await setDoc(doc(db, "users", user.uid), {
-      uid: user.uid, name: fallbackName,
-      email: user.email || "", phone: user.phoneNumber || "",
-      balance: 0, bonusBalance: SIGNUP_BONUS,
-      referralCode: myRefCode,
-      referredBy: "", referredByName: "",
-      referralRewarded: false, firstDepositRewarded: false,
-      matchesPlayed: 0, totalWon: 0, banned: false,
-      createdAt: serverTimestamp()
+function attachPendingDepositListener(uid) {
+  const q = query(collection(db, "pending_deposits"), where("uid", "==", uid));
+  let initialized = false;
+  state.unsubs.pendingDeposit = onSnapshot(q, (snap) => {
+    if (!initialized) { initialized = true; return; }
+    snap.docChanges().forEach((change) => {
+      const data = change.doc.data();
+      if (change.type === "modified" && data.status === "COMPLETED") {
+        stopDepositPolling();
+        showToast(`✅ ₹${fmtMoney(data.amount)} credited!`, "success");
+        D.utrStatusBox.className = "utr-status verified";
+        D.utrStatusBox.innerHTML = `✅ ₹${fmtMoney(data.amount)} credited!`;
+        setTimeout(() => { closeModal("depositModal"); resetDepositFlow(); }, 1500);
+      }
     });
-    await addDoc(collection(db, "wallet_transactions"), {
-      uid: user.uid, amount: SIGNUP_BONUS, type: "credit",
-      category: "signup_bonus", description: "🎁 Signup bonus",
-      createdAt: serverTimestamp()
-    });
-  }
+  }, (err) => console.warn("Pending deposit listener:", err));
+}
 
-  D.authGate.classList.add("hidden");
-  D.appShell.classList.remove("hidden");
-  renderModeFilter();
-  attachProfileListener(user.uid);
-  attachTournamentsListener();
-  attachJoinedListener(user.uid);
-  attachTxListener(user.uid);
-  attachNotifListener(user.uid);
-  attachReferralsListener(user.uid);
-  checkPaymentRedirect();
-});
+function attachReferralsListener(uid) {
+  const q = query(collection(db, "users"), where("referredBy", "==", uid));
+  state.unsubs.referrals = onSnapshot(q, (snap) => {
+    const items = [];
+    snap.forEach((d) => items.push({ id: d.id, ...d.data() }));
+    state.referrals = items;
+    renderReferralStats();
+  }, (err) => console.warn("Referrals listener:", err));
+}
 
-/* ═══════════════════════════════════════════════════════════
-   PROFILE LISTENER
-═══════════════════════════════════════════════════════════ */
+function renderReferralStats() {
+  if (!D.refCountJoined) return;
+  const total = state.referrals.length;
+  const rewarded = state.referrals.filter(r => r.referralRewarded === true).length;
+  const pending = total - rewarded;
+  D.refCountJoined.textContent = total;
+  D.refCountEarned.textContent = "₹" + (rewarded * REFERRER_BONUS);
+  D.refCountPending.textContent = pending;
+}
+
 function attachProfileListener(uid) {
   state.unsubs.profile = onSnapshot(doc(db, "users", uid), (snap) => {
     if (!snap.exists()) return;
@@ -1297,27 +1718,30 @@ function attachProfileListener(uid) {
 
     if (data.referralCode) D.refCode.textContent = data.referralCode;
 
+    applyBannedUI(banned);
     if (state.tournaments.length) renderTournaments(state.tournaments);
     if (state.joinedMatches.length) renderJoined(state.joinedMatches);
   }, (err) => console.error("Profile listener:", err));
 }
 
-/* ═══════════════════════════════════════════════════════════
-   TOURNAMENTS LISTENER
-═══════════════════════════════════════════════════════════ */
 function attachTournamentsListener() {
   if (state.unsubs.tournaments) state.unsubs.tournaments();
   D.tournamentsSkeleton.classList.remove("hidden");
   D.tournamentsList.innerHTML = "";
   D.tournamentsEmpty.classList.add("hidden");
-
   const q = query(collection(db, "tournaments"), where("game", "==", state.activeGame));
   state.unsubs.tournaments = onSnapshot(q, (snap) => {
     let items = [];
-    snap.forEach(d => items.push({ id: d.id, ...d.data() }));
-    items = items.filter(t => normalizeMode(t).toLowerCase() === state.activeMode.toLowerCase());
+    snap.forEach((d) => items.push({ id: d.id, ...d.data() }));
+    items = items.filter(t => {
+      const m = normalizeMode(t);
+      return m.toLowerCase() === state.activeMode.toLowerCase();
+    });
     if (state.activeTeam !== "ALL") {
-      items = items.filter(t => normalizeTeamSize(t).toLowerCase() === state.activeTeam.toLowerCase());
+      items = items.filter(t => {
+        const team = normalizeTeamSize(t);
+        return team.toLowerCase() === state.activeTeam.toLowerCase();
+      });
     }
     const visible = items.filter(t => t.status !== "CANCELLED");
     visible.sort((a, b) => (b.createdAt?.toMillis?.() || 0) - (a.createdAt?.toMillis?.() || 0));
@@ -1334,7 +1758,7 @@ function attachJoinedListener(uid) {
   const q = query(collection(db, "tournaments"), where("joinedUsers", "array-contains", uid));
   state.unsubs.joined = onSnapshot(q, (snap) => {
     const items = [];
-    snap.forEach(d => items.push({ id: d.id, ...d.data() }));
+    snap.forEach((d) => items.push({ id: d.id, ...d.data() }));
     items.sort((a, b) => (b.createdAt?.toMillis?.() || 0) - (a.createdAt?.toMillis?.() || 0));
     state.joinedMatches = items;
     renderJoined(items);
@@ -1346,11 +1770,10 @@ function attachTxListener(uid) {
   const q = query(collection(db, "wallet_transactions"), where("uid", "==", uid));
   state.unsubs.tx = onSnapshot(q, (snap) => {
     const items = [];
-    snap.forEach(d => items.push({ id: d.id, ...d.data() }));
+    snap.forEach((d) => items.push({ id: d.id, ...d.data() }));
     items.sort((a, b) => (b.createdAt?.toMillis?.() || 0) - (a.createdAt?.toMillis?.() || 0));
     state.transactions = items;
     renderTransactions(items);
-
     const latestPrize = items.find(tx => tx.type === "credit" && (tx.category === "prize" || (tx.description || "").toLowerCase().includes("prize")));
     if (latestPrize && latestPrize.id !== state.lastPrizeNotifId) {
       if (state.lastPrizeNotifId !== null) {
@@ -1366,62 +1789,66 @@ function attachNotifListener(uid) {
   const q = query(collection(db, "notifications"), where("uid", "==", uid));
   state.unsubs.notif = onSnapshot(q, (snap) => {
     const items = [];
-    snap.forEach(d => items.push({ id: d.id, ...d.data() }));
+    snap.forEach((d) => items.push({ id: d.id, ...d.data() }));
     items.sort((a, b) => (b.createdAt?.toMillis?.() || 0) - (a.createdAt?.toMillis?.() || 0));
+    const oldCount = state.notifications.length;
     state.notifications = items;
     renderNotifBadge();
     renderNotifList();
+    if (oldCount > 0 && items.length > 0) {
+      const newest = items[0];
+      if (!newest.read && newest.type === "prize" && newest.id !== state.lastPrizeNotifId) {
+        showPrizePopup(newest.title || "🏆 PRIZE CREDITED!", newest.amount || 0);
+        state.lastPrizeNotifId = newest.id;
+      }
+    }
   }, (err) => console.error("Notif listener:", err));
-}
-
-function attachReferralsListener(uid) {
-  const q = query(collection(db, "users"), where("referredBy", "==", uid));
-  state.unsubs.referrals = onSnapshot(q, (snap) => {
-    const items = [];
-    snap.forEach(d => items.push({ id: d.id, ...d.data() }));
-    state.referrals = items;
-    renderReferralStats();
-  }, (err) => console.warn("Referrals listener:", err));
-}
-
-/* ═══════════════════════════════════════════════════════════
-   RENDER FUNCTIONS
-═══════════════════════════════════════════════════════════ */
-function renderReferralStats() {
-  if (!D.refCountJoined) return;
-  const total = state.referrals.length;
-  const rewarded = state.referrals.filter(r => r.referralRewarded === true).length;
-  D.refCountJoined.textContent = total;
-  D.refCountEarned.textContent = "₹" + (rewarded * REFERRER_BONUS);
-  D.refCountPending.textContent = total - rewarded;
 }
 
 function renderNotifBadge() {
   const unread = state.notifications.filter(n => !n.read).length;
-  if (D.notifBadge) {
-    if (unread > 0) { D.notifBadge.textContent = unread > 9 ? "9+" : unread; D.notifBadge.style.display = "inline-flex"; }
-    else D.notifBadge.style.display = "none";
-  }
-  if (D.navNotifDot) {
-    if (unread > 0) { D.navNotifDot.textContent = unread > 9 ? "9+" : unread; D.navNotifDot.style.display = "inline-flex"; }
-    else D.navNotifDot.style.display = "none";
-  }
+  if (D.notifBadge) { if (unread > 0) { D.notifBadge.textContent = unread > 9 ? "9+" : unread; D.notifBadge.style.display = "inline-flex"; } else D.notifBadge.style.display = "none"; }
+  if (D.navNotifDot) { if (unread > 0) { D.navNotifDot.textContent = unread > 9 ? "9+" : unread; D.navNotifDot.style.display = "inline-flex"; } else D.navNotifDot.style.display = "none"; }
 }
 
 function renderNotifList() {
   if (!D.notifList) return;
-  if (!state.notifications.length) {
-    D.notifList.innerHTML = `<div class="empty-state" style="padding:32px 16px;"><p>No notifications yet.</p></div>`;
-    return;
-  }
+  if (!state.notifications.length) { D.notifList.innerHTML = `<div class="empty-state" style="padding:32px 16px;"><p>No notifications yet.</p></div>`; return; }
   D.notifList.innerHTML = state.notifications.slice(0, 50).map(n => {
-    const isPrize = n.type === "prize" || (n.title || "").includes("🏆");
-    return `<div class="notif-item ${n.read ? 'read' : 'unread'} ${isPrize ? 'prize' : ''}">
-      <div class="notif-head"><div class="notif-title">${escHTML(n.title || "Notification")}</div>${!n.read ? '<span class="notif-dot"></span>' : ''}</div>
-      <div class="notif-body">${escHTML(n.body || "")}</div>
-      <div class="notif-time">${escHTML(fmtDateTime(n.createdAt))}</div>
-    </div>`;
+    const isPrize = n.type === "prize" || (n.title || "").toLowerCase().includes("prize") || (n.title || "").includes("🏆");
+    return `
+      <div class="notif-item ${n.read ? 'read' : 'unread'} ${isPrize ? 'prize' : ''}">
+        <div class="notif-head"><div class="notif-title">${escHTML(n.title || "Notification")}</div>${!n.read ? '<span class="notif-dot"></span>' : ''}</div>
+        <div class="notif-body">${escHTML(n.body || "")}</div>
+        <div class="notif-time">${escHTML(fmtDateTime(n.createdAt))}</div>
+      </div>
+    `;
   }).join("");
+}
+
+function catClass(mode) {
+  const m = String(mode || "").toLowerCase();
+  if (m.includes("clash")) return "cat-cs";
+  if (m.includes("tdm")) return "cat-tdm";
+  if (m.includes("battle royale") || m.includes("br")) return "cat-br";
+  if (m === "solo") return "cat-solo";
+  if (m === "duo") return "cat-duo";
+  if (m === "squad") return "cat-squad";
+  return "cat-br";
+}
+
+function teamClass(team) {
+  const t = String(team || "").toLowerCase();
+  if (t === "duo") return "team-duo";
+  if (t === "squad") return "team-squad";
+  return "team-solo";
+}
+
+function teamIcon(team) {
+  const t = String(team || "").toLowerCase();
+  if (t === "duo") return "👥";
+  if (t === "squad") return "👨‍👩‍👦";
+  return "👤";
 }
 
 function tournamentCardHTML(t, idx, joinedIds) {
@@ -1436,14 +1863,16 @@ function tournamentCardHTML(t, idx, joinedIds) {
   const progressCls = pct >= 85 ? "progress-fill almost" : "progress-fill";
   const status = getMatchStatus(t);
   const pillHTML = statusPillHTML(status.key, status.label);
+
   const modeName = normalizeMode(t);
   const modeCls = catClass(modeName);
+  const mapName = t.map || "TBA";
   const teamSizeDisplay = displayTeamSize(t);
   const rawTeam = normalizeTeamSize(t);
   const teamCls = teamClass(rawTeam);
   const teamIco = teamIcon(rawTeam);
 
-  let btn = "JOIN NOW", disabled = "", extra = "", actionAttr = "";
+  let btn = "JOIN NOW"; let disabled = ""; let extra = ""; let actionAttr = "";
   if (banned) { btn = "🚫 ACCOUNT BANNED"; disabled = "disabled"; extra = "banned"; }
   else if (status.key === "cancelled") { btn = "🚫 MATCH CANCELLED"; disabled = "disabled"; extra = "cancelled"; }
   else if (status.key === "completed") { btn = "🏆 MATCH COMPLETED"; disabled = "disabled"; extra = "completed"; }
@@ -1454,60 +1883,54 @@ function tournamentCardHTML(t, idx, joinedIds) {
   else if (isJoined) { btn = "✓ JOINED — TAP FOR DETAILS"; extra = "joined"; actionAttr = `data-detail="${escHTML(t.id)}"`; }
   else if (full) { btn = "SLOTS FULL"; disabled = "disabled"; }
   else { actionAttr = `data-join="${escHTML(t.id)}"`; }
-
   const banner = t.bannerUrl
     ? `<img class="t-banner" src="${escHTML(t.bannerUrl)}" alt="" loading="lazy" onerror="this.style.display='none'"/>`
     : `<div class="t-banner-fallback">${escHTML(t.game || "MATCH")}</div>`;
   const cardCls = status.key === "cancelled" ? "status-cancelled" : status.key === "completed" ? "status-completed" : "";
-
-  return `<article class="t-card ${cardCls}" style="animation-delay:${idx * 40}ms" data-id="${escHTML(t.id)}">
-    ${banner}
-    <div class="t-body">
-      <div class="t-head">
-        <div class="t-head-left">
-          <div class="match-badges">
-            <span class="t-game-tag ${gameCls}">${escHTML(t.game || "MATCH")}</span>
-            <span class="t-cat-tag ${modeCls}">${escHTML(modeName)}</span>
-            <span class="team-tag ${teamCls}">${teamIco} ${escHTML(teamSizeDisplay)} Match</span>
-            <span class="t-map-tag">🗺️ ${escHTML(t.map || "TBA")}</span>
+  return `
+    <article class="t-card ${cardCls}" style="animation-delay:${idx * 40}ms" data-id="${escHTML(t.id)}">
+      ${banner}
+      <div class="t-body">
+        <div class="t-head">
+          <div class="t-head-left">
+            <div class="match-badges">
+              <span class="t-game-tag ${gameCls}">${escHTML(t.game || "MATCH")}</span>
+              <span class="t-cat-tag ${modeCls}">${escHTML(modeName)}</span>
+              <span class="team-tag ${teamCls}">${teamIco} ${escHTML(teamSizeDisplay)} Match</span>
+              <span class="t-map-tag">🗺️ ${escHTML(mapName)}</span>
+            </div>
+            <h3 class="t-title" style="margin-top:8px">
+              <span class="team-label">${escHTML(teamSizeDisplay)}</span> ${escHTML(t.title || "Untitled Match")}
+            </h3>
+            <div class="t-time">🗓 ${escHTML(fmtDateTime(t.matchTime))}</div>
           </div>
-          <h3 class="t-title" style="margin-top:8px"><span class="team-label">${escHTML(teamSizeDisplay)}</span> ${escHTML(t.title || "Untitled Match")}</h3>
-          <div class="t-time">🗓 ${escHTML(fmtDateTime(t.matchTime))}</div>
+          ${pillHTML}
         </div>
-        ${pillHTML}
+        <div class="t-stats">
+          <div class="stat"><span class="lbl">Prize</span><span class="val prize">₹${fmtMoney(t.prizePool)}</span></div>
+          <div class="stat"><span class="lbl">Per Kill</span><span class="val kill">₹${fmtMoney(t.perKill)}</span></div>
+          <div class="stat"><span class="lbl">Entry</span><span class="val fee ${fee > 0 ? 'paid' : ''}">${fee > 0 ? "₹" + fmtMoney(fee) : "FREE"}</span></div>
+        </div>
+        <div class="progress-wrap">
+          <div class="progress-meta"><span><strong>${jc}</strong> / ${max} slots filled</span><span>${pct}%</span></div>
+          <div class="progress-bar"><div class="${progressCls}" style="width:${pct}%"></div></div>
+        </div>
+        <button class="join-btn ${extra}" ${disabled} ${actionAttr}>${btn}</button>
       </div>
-      <div class="t-stats">
-        <div class="stat"><span class="lbl">Prize</span><span class="val prize">₹${fmtMoney(t.prizePool)}</span></div>
-        <div class="stat"><span class="lbl">Per Kill</span><span class="val kill">₹${fmtMoney(t.perKill)}</span></div>
-        <div class="stat"><span class="lbl">Entry</span><span class="val fee ${fee > 0 ? 'paid' : ''}">${fee > 0 ? "₹" + fmtMoney(fee) : "FREE"}</span></div>
-      </div>
-      <div class="progress-wrap">
-        <div class="progress-meta"><span><strong>${jc}</strong> / ${max} slots filled</span><span>${pct}%</span></div>
-        <div class="progress-bar"><div class="${progressCls}" style="width:${pct}%"></div></div>
-      </div>
-      <button class="join-btn ${extra}" ${disabled} ${actionAttr}>${btn}</button>
-    </div>
-  </article>`;
+    </article>
+  `;
 }
 
 function renderTournaments(items) {
   D.tournamentsSkeleton.classList.add("hidden");
-  if (!items || items.length === 0) {
-    D.tournamentsList.innerHTML = "";
-    D.tournamentsEmpty.classList.remove("hidden");
-    return;
-  }
+  if (!items || items.length === 0) { D.tournamentsList.innerHTML = ""; D.tournamentsEmpty.classList.remove("hidden"); return; }
   D.tournamentsEmpty.classList.add("hidden");
   const joinedIds = new Set(state.joinedMatches.map(m => m.id));
   D.tournamentsList.innerHTML = items.map((t, i) => tournamentCardHTML(t, i, joinedIds)).join("");
 }
 
 function renderJoined(items) {
-  if (!items || items.length === 0) {
-    D.joinedList.innerHTML = "";
-    D.joinedEmpty.classList.remove("hidden");
-    return;
-  }
+  if (!items || items.length === 0) { D.joinedList.innerHTML = ""; D.joinedEmpty.classList.remove("hidden"); return; }
   D.joinedEmpty.classList.add("hidden");
   D.joinedList.innerHTML = items.map((t, idx) => {
     const max = Number(t.maxSlots || 100);
@@ -1518,6 +1941,7 @@ function renderJoined(items) {
     const pillHTML = statusPillHTML(status.key, status.label);
     const modeName = normalizeMode(t);
     const modeCls = catClass(modeName);
+    const mapName = t.map || "TBA";
     const teamSizeDisplay = displayTeamSize(t);
     const rawTeam = normalizeTeamSize(t);
     const teamCls = teamClass(rawTeam);
@@ -1532,62 +1956,62 @@ function renderJoined(items) {
     else if (t.roomId && t.roomPassword) btnHTML = `<button class="join-btn joined" data-detail="${escHTML(t.id)}">🔑 ROOM READY</button>`;
     else btnHTML = `<button class="join-btn joined" data-detail="${escHTML(t.id)}">⏳ AWAITING ROOM</button>`;
     const cardCls = status.key === "cancelled" ? "status-cancelled" : status.key === "completed" ? "status-completed" : "";
-    return `<article class="t-card ${cardCls}" style="animation-delay:${idx * 40}ms">
-      ${banner}
-      <div class="t-body">
-        <div class="t-head">
-          <div class="t-head-left">
-            <div class="match-badges">
-              <span class="t-game-tag ${gameCls}">${escHTML(t.game || "MATCH")}</span>
-              <span class="t-cat-tag ${modeCls}">${escHTML(modeName)}</span>
-              <span class="team-tag ${teamCls}">${teamIco} ${escHTML(teamSizeDisplay)} Match</span>
-              <span class="t-map-tag">🗺️ ${escHTML(t.map || "TBA")}</span>
+    return `
+      <article class="t-card ${cardCls}" style="animation-delay:${idx * 40}ms">
+        ${banner}
+        <div class="t-body">
+          <div class="t-head">
+            <div class="t-head-left">
+              <div class="match-badges">
+                <span class="t-game-tag ${gameCls}">${escHTML(t.game || "MATCH")}</span>
+                <span class="t-cat-tag ${modeCls}">${escHTML(modeName)}</span>
+                <span class="team-tag ${teamCls}">${teamIco} ${escHTML(teamSizeDisplay)} Match</span>
+                <span class="t-map-tag">🗺️ ${escHTML(mapName)}</span>
+              </div>
+              <h3 class="t-title" style="margin-top:8px">
+                <span class="team-label">${escHTML(teamSizeDisplay)}</span> ${escHTML(t.title || "Match")}
+              </h3>
+              <div class="t-time">🗓 ${escHTML(fmtDateTime(t.matchTime))}</div>
             </div>
-            <h3 class="t-title" style="margin-top:8px"><span class="team-label">${escHTML(teamSizeDisplay)}</span> ${escHTML(t.title || "Match")}</h3>
-            <div class="t-time">🗓 ${escHTML(fmtDateTime(t.matchTime))}</div>
+            ${pillHTML}
           </div>
-          ${pillHTML}
+          <div class="t-stats">
+            <div class="stat"><span class="lbl">Prize</span><span class="val prize">₹${fmtMoney(t.prizePool)}</span></div>
+            <div class="stat"><span class="lbl">Per Kill</span><span class="val kill">₹${fmtMoney(t.perKill)}</span></div>
+            <div class="stat"><span class="lbl">Entry</span><span class="val fee">₹${fmtMoney(t.entryFee)}</span></div>
+          </div>
+          <div class="progress-wrap">
+            <div class="progress-meta"><span><strong>${jc}</strong> / ${max} slots filled</span><span>${pct}%</span></div>
+            <div class="progress-bar"><div class="progress-fill" style="width:${pct}%"></div></div>
+          </div>
+          ${btnHTML}
         </div>
-        <div class="t-stats">
-          <div class="stat"><span class="lbl">Prize</span><span class="val prize">₹${fmtMoney(t.prizePool)}</span></div>
-          <div class="stat"><span class="lbl">Per Kill</span><span class="val kill">₹${fmtMoney(t.perKill)}</span></div>
-          <div class="stat"><span class="lbl">Entry</span><span class="val fee">₹${fmtMoney(t.entryFee)}</span></div>
-        </div>
-        <div class="progress-wrap">
-          <div class="progress-meta"><span><strong>${jc}</strong> / ${max} slots filled</span><span>${pct}%</span></div>
-          <div class="progress-bar"><div class="progress-fill" style="width:${pct}%"></div></div>
-        </div>
-        ${btnHTML}
-      </div>
-    </article>`;
+      </article>
+    `;
   }).join("");
 }
 
 function renderTransactions(items) {
-  if (!items || items.length === 0) {
-    D.txList.innerHTML = "";
-    D.txEmpty.classList.remove("hidden");
-    return;
-  }
+  if (!items || items.length === 0) { D.txList.innerHTML = ""; D.txEmpty.classList.remove("hidden"); return; }
   D.txEmpty.classList.add("hidden");
   D.txList.innerHTML = items.slice(0, 40).map((tx, i) => {
     const amt = Number(tx.amount || 0);
     const credit = tx.type === "credit" || amt > 0;
     const sign = credit ? "+" : "−";
     const cls = credit ? "credit" : "debit";
-    return `<div class="tx-item" style="animation-delay:${i * 25}ms">
-      <div class="tx-left">
-        <div class="tx-title">${escHTML(tx.description || "Transaction")}</div>
-        <div class="tx-time">${escHTML(fmtDateTime(tx.createdAt))}</div>
+    const title = tx.description || tx.title || (credit ? "Wallet Credit" : "Wallet Debit");
+    return `
+      <div class="tx-item" style="animation-delay:${i * 25}ms">
+        <div class="tx-left">
+          <div class="tx-title">${escHTML(title)}</div>
+          <div class="tx-time">${escHTML(fmtDateTime(tx.createdAt))}</div>
+        </div>
+        <div class="tx-amt ${cls}">${sign}₹${fmtMoney(Math.abs(amt))}</div>
       </div>
-      <div class="tx-amt ${cls}">${sign}₹${fmtMoney(Math.abs(amt))}</div>
-    </div>`;
+    `;
   }).join("");
 }
 
-/* ═══════════════════════════════════════════════════════════
-   NAVIGATION
-═══════════════════════════════════════════════════════════ */
 function setNav(nav) {
   state.activeNav = nav;
   $$(".nav-btn").forEach(b => b.classList.toggle("active", b.dataset.nav === nav));
@@ -1597,18 +2021,17 @@ function setNav(nav) {
   window.scrollTo({ top: 0, behavior: "instant" });
 }
 $$(".nav-btn").forEach(b => b.addEventListener("click", () => setNav(b.dataset.nav)));
-
 $$(".gf-btn").forEach(b => {
   b.addEventListener("click", () => {
     if (state.activeGame === b.dataset.game) return;
     state.activeGame = b.dataset.game;
-    state.activeMode = (GAME_MODES[state.activeGame] || [])[0] || "Battle Royale";
+    const modes = GAME_MODES[state.activeGame] || [];
+    state.activeMode = modes[0] || "Battle Royale";
     $$(".gf-btn").forEach(x => x.classList.toggle("active", x === b));
     renderModeFilter();
     attachTournamentsListener();
   });
 });
-
 D.hdrWallet.addEventListener("click", () => setNav("wallet"));
 
 D.notifBtn?.addEventListener("click", async () => {
@@ -1616,7 +2039,8 @@ D.notifBtn?.addEventListener("click", async () => {
   renderNotifList();
   const unread = state.notifications.filter(n => !n.read);
   for (const n of unread) {
-    try { await updateDoc(doc(db, "notifications", n.id), { read: true }); } catch (e) {}
+    try { await updateDoc(doc(db, "notifications", n.id), { read: true }); }
+    catch (e) {}
   }
 });
 
@@ -1629,9 +2053,114 @@ document.addEventListener("keydown", (e) => {
   if (e.key === "Escape") $$(".modal-overlay.open").forEach(m => m.classList.remove("open"));
 });
 
-/* ═══════════════════════════════════════════════════════════
-   TOURNAMENT CARD CLICK — OPEN JOIN / DETAIL MODALS
-═══════════════════════════════════════════════════════════ */
+D.refCopyBtn?.addEventListener("click", async () => {
+  const code = D.refCode.textContent;
+  if (!code || code === "—") { showToast("Referral code not loaded yet.", "error"); return; }
+  const copyText = `🎮 Join ArenaX and win real cash!\n\n🎁 Use my referral code: ${code}\n\n📲 Download: ${DOWNLOAD_URL}`;
+  try { await navigator.clipboard.writeText(copyText); showToast("✅ Referral code + link copied!", "success"); }
+  catch (e) {
+    const ta = document.createElement("textarea");
+    ta.value = copyText; document.body.appendChild(ta); ta.select();
+    document.execCommand("copy"); ta.remove();
+    showToast("✅ Referral code + link copied!", "success");
+  }
+});
+
+D.refShareBtn?.addEventListener("click", async () => {
+  const code = D.refCode.textContent;
+  if (!code || code === "—") { showToast("Referral code not loaded yet.", "error"); return; }
+  const shareText = `🎮 Join ArenaX and win real cash!\n\n🎁 Use my referral code: ${code}\n\n💰 You get ₹5 sign-up bonus + ₹20 first-deposit bonus!\n🏆 Compete in BGMI & Free Fire tournaments\n\n📲 Download the app now:\n${DOWNLOAD_URL}\n\nStart winning today!`;
+  const shareTitle = "Join ArenaX — Win Real Cash!";
+  if (navigator.share) {
+    try { await navigator.share({ title: shareTitle, text: shareText, url: DOWNLOAD_URL }); return; }
+    catch (err) { if (err.name === "AbortError") return; console.warn("Native share failed:", err); }
+  }
+  showShareMenu(shareText, DOWNLOAD_URL, code);
+});
+
+function showShareMenu(text, url, code) {
+  const existing = document.getElementById("shareMenuOverlay");
+  if (existing) existing.remove();
+  const overlay = document.createElement("div");
+  overlay.id = "shareMenuOverlay";
+  overlay.className = "share-menu-overlay";
+  const menu = document.createElement("div");
+  menu.className = "share-menu";
+  menu.innerHTML = `
+    <div style="width:36px;height:4px;background:var(--stroke-2);border-radius:100px;margin:0 auto 16px;"></div>
+    <h3 style="font-family:var(--font-d);font-size:15px;letter-spacing:1.5px;color:var(--text);margin-bottom:16px;text-align:center;">📤 SHARE YOUR REFERRAL</h3>
+    <div style="background:var(--bg-2);border:1px dashed rgba(0,229,255,.4);border-radius:10px;padding:12px;margin-bottom:16px;text-align:center;">
+      <div style="font-size:10px;color:var(--mute);letter-spacing:2px;font-weight:700;margin-bottom:4px;">YOUR CODE</div>
+      <div style="font-family:var(--font-d);font-size:20px;font-weight:900;color:var(--cyan);letter-spacing:2px;">${escHTML(code)}</div>
+    </div>
+    <div class="share-grid">
+      <button class="share-opt" data-share="whatsapp"><span class="share-ico">💬</span><span class="share-name">WhatsApp</span></button>
+      <button class="share-opt" data-share="telegram"><span class="share-ico">✈️</span><span class="share-name">Telegram</span></button>
+      <button class="share-opt" data-share="facebook"><span class="share-ico">📘</span><span class="share-name">Facebook</span></button>
+      <button class="share-opt" data-share="twitter"><span class="share-ico">🐦</span><span class="share-name">Twitter</span></button>
+      <button class="share-opt" data-share="sms"><span class="share-ico">💌</span><span class="share-name">SMS</span></button>
+      <button class="share-opt" data-share="email"><span class="share-ico">📧</span><span class="share-name">Email</span></button>
+      <button class="share-opt" data-share="copy"><span class="share-ico">📋</span><span class="share-name">Copy Text</span></button>
+      <button class="share-opt" data-share="more"><span class="share-ico">⋯</span><span class="share-name">More</span></button>
+    </div>
+    <div style="background:var(--bg-2);border:1px solid var(--stroke);border-radius:10px;padding:12px;margin-bottom:16px;">
+      <div style="font-size:10px;color:var(--mute);letter-spacing:1.5px;font-weight:700;margin-bottom:6px;">📲 DOWNLOAD LINK</div>
+      <div style="font-size:11.5px;color:var(--cyan);word-break:break-all;font-family:var(--font-d);">${escHTML(url)}</div>
+      <button id="copyLinkBtn" style="margin-top:8px;padding:8px 14px;border-radius:8px;background:rgba(0,229,255,.15);border:1px solid rgba(0,229,255,.4);color:var(--cyan);font-weight:700;font-size:11px;letter-spacing:1px;">📋 COPY LINK</button>
+    </div>
+    <button id="closeShareMenu" class="btn-main" style="background:linear-gradient(135deg,#2a3860,#1a2238);box-shadow:none;">CLOSE</button>
+  `;
+  overlay.appendChild(menu);
+  document.body.appendChild(overlay);
+  overlay.addEventListener("click", (e) => { if (e.target === overlay) overlay.remove(); });
+  menu.querySelector("#closeShareMenu").addEventListener("click", () => overlay.remove());
+  menu.querySelector("#copyLinkBtn").addEventListener("click", async () => {
+    try { await navigator.clipboard.writeText(url); showToast("✅ Link copied!", "success"); }
+    catch (e) {
+      const ta = document.createElement("textarea");
+      ta.value = url; document.body.appendChild(ta); ta.select();
+      document.execCommand("copy"); ta.remove();
+      showToast("✅ Link copied!", "success");
+    }
+  });
+  menu.querySelectorAll(".share-opt").forEach(btn => {
+    btn.addEventListener("click", async () => {
+      const type = btn.dataset.share;
+      const encodedText = encodeURIComponent(text);
+      const encodedUrl = encodeURIComponent(url);
+      const encodedTitle = encodeURIComponent("Join ArenaX — Win Real Cash!");
+      let shareUrl = "";
+      switch (type) {
+        case "whatsapp": shareUrl = `https://wa.me/?text=${encodedText}`; break;
+        case "telegram": shareUrl = `https://t.me/share/url?url=${encodedUrl}&text=${encodedText}`; break;
+        case "facebook": shareUrl = `https://www.facebook.com/sharer/sharer.php?u=${encodedUrl}&quote=${encodedText}`; break;
+        case "twitter": shareUrl = `https://twitter.com/intent/tweet?text=${encodedText}`; break;
+        case "sms": shareUrl = `sms:?body=${encodedText}`; break;
+        case "email": shareUrl = `mailto:?subject=${encodedTitle}&body=${encodedText}`; break;
+        case "copy":
+          try { await navigator.clipboard.writeText(text); showToast("✅ Full message copied!", "success"); overlay.remove(); }
+          catch (e) {
+            const ta = document.createElement("textarea");
+            ta.value = text; document.body.appendChild(ta); ta.select();
+            document.execCommand("copy"); ta.remove();
+            showToast("✅ Full message copied!", "success"); overlay.remove();
+          }
+          return;
+        case "more":
+          if (navigator.share) {
+            try { await navigator.share({ title: "Join ArenaX", text: text, url: url }); overlay.remove(); }
+            catch (e) { if (e.name !== "AbortError") showToast("Share failed.", "error"); }
+          } else {
+            try { await navigator.clipboard.writeText(text); showToast("✅ Message copied!", "success"); }
+            catch (e) { showToast("Copy failed.", "error"); }
+          }
+          return;
+      }
+      if (shareUrl) window.open(shareUrl, "_blank");
+    });
+  });
+}
+
 D.tournamentsList.addEventListener("click", (e) => {
   if (state.forceUpdateActive) { e.preventDefault(); e.stopPropagation(); return; }
   const joinBtn = e.target.closest("[data-join]");
@@ -1656,9 +2185,6 @@ D.joinedList.addEventListener("click", (e) => {
   }
 });
 
-/* ═══════════════════════════════════════════════════════════
-   OPEN JOIN MODAL
-═══════════════════════════════════════════════════════════ */
 function openJoinModal(match) {
   if (state.forceUpdateActive) { showToast("Please update the app first.", "error"); return; }
   if (isBanned()) { showToast("🚫 Your account is banned.", "error"); return; }
@@ -1671,7 +2197,6 @@ function openJoinModal(match) {
   const teamSizeDisplay = displayTeamSize(match);
   const rawTeam = normalizeTeamSize(match);
   const teamIco = teamIcon(rawTeam);
-
   D.joinSummary.innerHTML = `
     <div class="ms-title">${escHTML(match.title || "Match")}</div>
     <div class="ms-row"><span>Game</span><strong>${escHTML(match.game || "")}</strong></div>
@@ -1684,56 +2209,84 @@ function openJoinModal(match) {
     ${bonus > 0 ? `<div class="ms-row"><span>Bonus</span><strong style="color:var(--green)">₹${fmtMoney(bonus)}</strong></div>` : ""}
     <div class="ms-row"><span>Total Available</span><strong>₹${fmtMoney(total)}</strong></div>
   `;
-
   D.joinForm.reset();
   D.joinErr.textContent = "";
   if (state.profile?.ign) D.joinIgn.value = state.profile.ign;
   if (state.profile?.gameUid) D.joinUid.value = state.profile.gameUid;
-  if (fee > total) {
-    D.joinErr.textContent = `Insufficient balance. Need ₹${fmtMoney(fee - total)} more.`;
-    D.joinSubmit.disabled = true;
-  } else {
-    D.joinSubmit.disabled = false;
-  }
+  if (fee > total) { D.joinErr.textContent = `Insufficient balance. Need ₹${fmtMoney(fee - total)} more.`; D.joinSubmit.disabled = true; }
+  else D.joinSubmit.disabled = false;
   openModal("joinModal");
 }
 
-/* ═══════════════════════════════════════════════════════════
-   JOIN FORM SUBMIT — POST /api/join-match
-═══════════════════════════════════════════════════════════ */
 D.joinForm.addEventListener("submit", async (e) => {
   e.preventDefault();
   if (!state.user || !state.selectedMatch) return;
   if (isBanned()) { D.joinErr.textContent = "Account banned."; return; }
-
   const match = state.selectedMatch;
   const ign = D.joinIgn.value.trim();
   const gameUid = D.joinUid.value.trim();
-
   if (ign.length < 2) { D.joinErr.textContent = "Enter a valid IGN."; return; }
   if (!/^[0-9]{6,15}$/.test(gameUid)) { D.joinErr.textContent = "Game UID must be 6-15 digits."; return; }
-
   D.joinSubmit.disabled = true;
   D.joinSubmit.innerHTML = `<span class="spinner"></span>PROCESSING...`;
   D.joinErr.textContent = "";
-
   try {
-    const idToken = await state.user.getIdToken();
-    const resp = await fetch("/api/join-match", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        "Authorization": "Bearer " + idToken
-      },
-      body: JSON.stringify({ matchId: match.id, ign, gameUid })
+    const userRef = doc(db, "users", state.user.uid);
+    const matchRef = doc(db, "tournaments", match.id);
+    await runTransaction(db, async (tx) => {
+      const userSnap = await tx.get(userRef);
+      const matchSnap = await tx.get(matchRef);
+      if (!userSnap.exists()) throw new Error("User profile missing.");
+      if (!matchSnap.exists()) throw new Error("Match no longer available.");
+      const uData = userSnap.data();
+      const mData = matchSnap.data();
+      if (uData.banned === true) throw new Error("Account banned.");
+      if (mData.status === "CANCELLED") throw new Error("Match cancelled.");
+      if (mData.status === "COMPLETED" || mData.completed === true) throw new Error("Already completed.");
+      if (mData.status === "STARTED" || mData.started === true) throw new Error("Already started.");
+      const balance = getRealBalance(uData);
+      const bonus = getBonusBalance(uData);
+      const total = balance + bonus;
+      const fee = Number(mData.entryFee || 0);
+      const joined = Number(mData.joinedCount || 0);
+      const max = Number(mData.maxSlots || 0);
+      const joinedUsers = Array.isArray(mData.joinedUsers) ? mData.joinedUsers : [];
+      if (joinedUsers.includes(state.user.uid)) throw new Error("Already joined.");
+      if (joined >= max) throw new Error("Match is full.");
+      if (total < fee) throw new Error("Insufficient balance.");
+      let newBonus = bonus;
+      let newBalance = balance;
+      if (bonus >= fee) {
+        newBonus = bonus - fee;
+      } else {
+        newBonus = 0;
+        newBalance = balance - (fee - bonus);
+      }
+      const updatePayload = {
+        balance: newBalance,
+        bonusBalance: newBonus,
+        ign, gameUid, matchesPlayed: increment(1)
+      };
+      if (typeof uData.bonus !== "undefined") updatePayload.bonus = newBonus;
+      if (typeof uData.bonusWallet !== "undefined") updatePayload.bonusWallet = newBonus;
+      if (typeof uData.signupBonus !== "undefined") updatePayload.signupBonus = newBonus;
+      if (typeof uData.referralBonus !== "undefined") updatePayload.referralBonus = newBonus;
+      if (typeof uData.realBalance !== "undefined") updatePayload.realBalance = newBalance;
+      if (typeof uData.mainBalance !== "undefined") updatePayload.mainBalance = newBalance;
+      tx.update(userRef, updatePayload);
+      tx.update(matchRef, { joinedCount: increment(1), joinedUsers: [...joinedUsers, state.user.uid] });
+      const partRef = doc(db, "tournaments", match.id, "participants", state.user.uid);
+      tx.set(partRef, { uid: state.user.uid, ign, gameUid, entryFeePaid: fee, joinedAt: serverTimestamp(), name: uData.name || "Player" });
     });
-    const result = await resp.json();
-    if (!resp.ok || !result.ok) throw new Error(result.error || "Failed to join match.");
-
+    if (Number(match.entryFee || 0) > 0) {
+      await addDoc(collection(db, "wallet_transactions"), {
+        uid: state.user.uid, amount: -Number(match.entryFee), type: "debit",
+        description: `Entry Fee — ${match.title || "Match"}`, matchId: match.id, createdAt: serverTimestamp()
+      });
+    }
     const newCount = (Number(state.profile?.matchesPlayed || 0) + 1);
     if (newCount >= MIN_MATCHES_FOR_WITHDRAW) showToast("🎉 Withdrawal unlocked! You can now withdraw funds.", "success");
     else showToast(`Match joined! ${newCount}/${MIN_MATCHES_FOR_WITHDRAW} matches played.`, "success");
-
     closeModal("joinModal");
   } catch (err) {
     D.joinErr.textContent = err.message || "Failed to join.";
@@ -1743,9 +2296,6 @@ D.joinForm.addEventListener("submit", async (e) => {
   }
 });
 
-/* ═══════════════════════════════════════════════════════════
-   OPEN DETAIL MODAL
-═══════════════════════════════════════════════════════════ */
 function openDetailModal(match) {
   if (state.forceUpdateActive) return;
   const isJoined = state.joinedMatches.some(m => m.id === match.id);
@@ -1760,7 +2310,6 @@ function openDetailModal(match) {
   const teamSizeDisplay = displayTeamSize(match);
   const rawTeam = normalizeTeamSize(match);
   const teamIco = teamIcon(rawTeam);
-
   let roomSection = "";
   if (!isJoined) roomSection = `<div class="room-box locked"><div class="room-locked-msg">🔒 Join this match to view room credentials.</div></div>`;
   else if (canSeeRoom) roomSection = `
@@ -1772,12 +2321,10 @@ function openDetailModal(match) {
   else if (status.key === "cancelled") roomSection = `<div class="room-box locked"><div class="room-locked-msg">🚫 Match cancelled. Refunded.</div></div>`;
   else if (status.key === "completed") roomSection = `<div class="room-box locked"><div class="room-locked-msg">🏆 Match completed.</div></div>`;
   else roomSection = `<div class="room-box locked"><div class="room-locked-msg">🔒 Room credentials will appear once admin publishes them.</div></div>`;
-
   let statusNote = "";
   if (status.key === "started") statusNote = `<p class="hint" style="color:var(--green);font-weight:700;">🔴 Match is LIVE!</p>`;
   else if (status.key === "completed") statusNote = `<p class="hint" style="color:var(--gold);font-weight:700;">🏆 Match ended. Check your wallet!</p>`;
   else if (status.key === "cancelled") statusNote = `<p class="hint" style="color:var(--red-2);font-weight:700;">🚫 Match cancelled. Refund processed.</p>`;
-
   D.detailBody.innerHTML = `
     ${bannerHTML}
     <div class="match-summary">
@@ -1787,8 +2334,8 @@ function openDetailModal(match) {
       <div class="ms-row"><span>Team</span><strong>${teamIco} ${escHTML(teamSizeDisplay)}</strong></div>
       <div class="ms-row"><span>Map</span><strong>${escHTML(match.map || "TBA")}</strong></div>
       <div class="ms-row"><span>Match Time</span><strong>${escHTML(fmtDateTime(match.matchTime))}</strong></div>
-      <div class="ms-row"><span>Prize Pool</span><strong style="color:var(--gold)">₹${fmtMoney(match.prizePool)}</strong></div>
-      <div class="ms-row"><span>Per Kill</span><strong style="color:var(--cyan)">₹${fmtMoney(match.perKill)}</strong></div>
+      <div class="ms-row"><span>Prize Pool</span><strong>₹${fmtMoney(match.prizePool)}</strong></div>
+      <div class="ms-row"><span>Per Kill</span><strong>₹${fmtMoney(match.perKill)}</strong></div>
       <div class="ms-row fee"><span>Entry Fee</span><strong>₹${fmtMoney(match.entryFee)}</strong></div>
     </div>
     ${statusNote}
@@ -1802,9 +2349,6 @@ function openDetailModal(match) {
   openModal("detailModal");
 }
 
-/* ═══════════════════════════════════════════════════════════
-   WITHDRAW
-═══════════════════════════════════════════════════════════ */
 D.btnWithdraw.addEventListener("click", () => {
   if (state.forceUpdateActive) { showToast("Please update the app first.", "error"); return; }
   if (isBanned()) { showToast("🚫 Banned accounts cannot withdraw.", "error"); return; }
@@ -1825,52 +2369,52 @@ D.withdrawForm.addEventListener("submit", async (e) => {
   e.preventDefault();
   if (!state.user) return;
   if (isBanned()) { D.wdErr.textContent = "Account banned."; return; }
-
   const matchesPlayed = Number(state.profile?.matchesPlayed || 0);
   if (matchesPlayed < MIN_MATCHES_FOR_WITHDRAW) {
     D.wdErr.textContent = `You must play at least ${MIN_MATCHES_FOR_WITHDRAW} matches. Currently: ${matchesPlayed}/${MIN_MATCHES_FOR_WITHDRAW}.`;
     return;
   }
-
   const upi = D.wdUpi.value.trim();
   const amt = Number(D.wdAmt.value);
   D.wdErr.textContent = "";
-
   if (!/^[\w.\-]{2,}@[\w.\-]{2,}$/.test(upi)) { D.wdErr.textContent = "Enter a valid UPI ID."; return; }
   if (!amt || amt < MIN_WITHDRAW) { D.wdErr.textContent = `Minimum withdrawal is ₹${MIN_WITHDRAW}.`; return; }
-
   const bal = getRealBalance(state.profile);
   if (amt > bal) { D.wdErr.textContent = "Insufficient balance. (Bonus cannot be withdrawn)"; return; }
-
   D.wdSubmit.disabled = true;
   D.wdSubmit.innerHTML = `<span class="spinner"></span>SUBMITTING...`;
-
   try {
-    const idToken = await state.user.getIdToken();
-    const resp = await fetch("/api/withdraw", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        "Authorization": "Bearer " + idToken
-      },
-      body: JSON.stringify({ upi, amount: amt })
+    const userRef = doc(db, "users", state.user.uid);
+    await runTransaction(db, async (tx) => {
+      const userSnap = await tx.get(userRef);
+      if (!userSnap.exists()) throw new Error("User not found.");
+      const uData = userSnap.data();
+      if (uData.banned === true) throw new Error("Account banned.");
+      if (Number(uData.matchesPlayed || 0) < MIN_MATCHES_FOR_WITHDRAW) throw new Error(`You must play at least ${MIN_MATCHES_FOR_WITHDRAW} matches.`);
+      const currentBal = getRealBalance(uData);
+      if (currentBal < amt) throw new Error("Insufficient balance.");
+      const withdrawPayload = { balance: increment(-amt) };
+      if (typeof uData.realBalance !== "undefined") withdrawPayload.realBalance = increment(-amt);
+      if (typeof uData.mainBalance !== "undefined") withdrawPayload.mainBalance = increment(-amt);
+      if (typeof uData.wallet !== "undefined") withdrawPayload.wallet = increment(-amt);
+      if (typeof uData.walletBalance !== "undefined") withdrawPayload.walletBalance = increment(-amt);
+      tx.update(userRef, withdrawPayload);
     });
-    const result = await resp.json();
-    if (!resp.ok || !result.ok) throw new Error(result.error || "Withdrawal failed.");
-
+    await addDoc(collection(db, "withdrawals"), {
+      uid: state.user.uid, name: state.profile?.name || "Player",
+      email: state.profile?.email || "", phone: state.profile?.phone || "",
+      upi, amount: amt, status: "PENDING", createdAt: serverTimestamp()
+    });
+    await addDoc(collection(db, "wallet_transactions"), {
+      uid: state.user.uid, amount: -amt, type: "debit",
+      description: `Withdrawal → ${upi}`, createdAt: serverTimestamp()
+    });
     closeModal("withdrawModal");
     showToast("Withdrawal request submitted successfully.", "success");
-  } catch (err) {
-    D.wdErr.textContent = err.message || "Withdrawal failed.";
-  } finally {
-    D.wdSubmit.disabled = false;
-    D.wdSubmit.textContent = "REQUEST WITHDRAWAL";
-  }
+  } catch (err) { D.wdErr.textContent = err.message || "Withdrawal failed."; }
+  finally { D.wdSubmit.disabled = false; D.wdSubmit.textContent = "REQUEST WITHDRAWAL"; }
 });
 
-/* ═══════════════════════════════════════════════════════════
-   DEPOSIT — POST /api/create-paypal-order
-═══════════════════════════════════════════════════════════ */
 function resetDepositFlow() {
   stopDepositPolling();
   state.deposit = { amount: 0, orderId: "", pollTimer: null };
@@ -1916,48 +2460,40 @@ function checkBonusHint(amt) {
 D.btnPayNow.addEventListener("click", async () => {
   if (state.forceUpdateActive) { showToast("Please update the app first.", "error"); return; }
   if (isBanned()) { showToast("🚫 Banned accounts cannot deposit.", "error"); return; }
-
   const amt = Number(D.depAmount.value);
   if (!amt || amt < MIN_DEPOSIT) { D.depErr.textContent = `Minimum deposit is ₹${MIN_DEPOSIT}.`; return; }
   if (!state.user) return;
-
   D.btnPayNow.disabled = true;
   D.btnPayNow.innerHTML = `<span class="spinner"></span>CREATING ORDER...`;
   D.depErr.textContent = "";
   D.utrStatusBox.className = "utr-status checking";
   D.utrStatusBox.innerHTML = `🔄 Creating PayPal order...`;
   D.utrStatusBox.classList.remove("hidden");
-
   try {
-    const idToken = await state.user.getIdToken();
-    const resp = await fetch("/api/create-paypal-order", {
+    const resp = await fetch(SERVER_URL + "/create-payment", {
       method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        "Authorization": "Bearer " + idToken
-      },
+      headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
-        amount: amt,
+        uid: state.user.uid, amount: amt,
         name: state.profile?.name || "Player",
-        email: state.profile?.email || "user@arenax.app"
+        email: state.profile?.email || "user@arenax.app",
+        phone: state.profile?.phone || "9999999999"
       })
     });
-    const result = await resp.json();
-    if (!resp.ok || !result.ok) throw new Error(result.error || "Failed to create PayPal order.");
-
+    const rawText = await resp.text();
+    let result;
+    try { result = JSON.parse(rawText); }
+    catch (parseErr) { throw new Error("Server returned invalid response."); }
+    if (!result.ok) throw new Error(result.error || "Payment create failed");
     state.deposit.orderId = result.orderId;
     state.deposit.amount = amt;
-
     D.utrStatusBox.className = "utr-status verified";
     D.utrStatusBox.innerHTML = `✅ Redirecting to PayPal...`;
     showToast("Redirecting to PayPal...", "success");
-
     startDepositPolling(result.orderId, amt);
-
-    let paymentUrl = result.approvalUrl;
+    let paymentUrl = result.paymentUrl;
     if (paymentUrl && paymentUrl.indexOf("?") === -1) paymentUrl += "?orderId=" + encodeURIComponent(result.orderId);
     else if (paymentUrl) paymentUrl += "&orderId=" + encodeURIComponent(result.orderId);
-
     window.location.href = paymentUrl;
   } catch (err) {
     D.utrStatusBox.className = "utr-status failed";
@@ -2007,9 +2543,6 @@ D.btnDeposit.addEventListener("click", () => {
   openModal("depositModal");
 });
 
-/* ═══════════════════════════════════════════════════════════
-   PROFILE UPDATE — Firebase Firestore
-═══════════════════════════════════════════════════════════ */
 D.btnEditProfile.addEventListener("click", () => {
   D.profileForm.reset();
   D.pfErr.textContent = "";
@@ -2026,101 +2559,65 @@ D.profileForm.addEventListener("submit", async (e) => {
   const uid = D.pfUid.value.trim();
   const ign = D.pfIgn.value.trim();
   D.pfErr.textContent = "";
-
   if (name.length < 2) { D.pfErr.textContent = "Name too short."; return; }
   if (uid && !/^[0-9]{6,15}$/.test(uid)) { D.pfErr.textContent = "Game UID must be 6-15 digits."; return; }
-
   D.pfSubmit.disabled = true;
   D.pfSubmit.innerHTML = `<span class="spinner"></span>SAVING...`;
-
   try {
-    await updateDoc(doc(db, "users", state.user.uid), {
-      name, gameUid: uid, ign, updatedAt: serverTimestamp()
-    });
+    await updateDoc(doc(db, "users", state.user.uid), { name, gameUid: uid, ign });
     try { await updateProfile(state.user, { displayName: name }); } catch (e) {}
     closeModal("profileModal");
     showToast("Profile updated successfully.", "success");
+  } catch (err) { D.pfErr.textContent = "Failed to save."; }
+  finally { D.pfSubmit.disabled = false; D.pfSubmit.textContent = "SAVE CHANGES"; }
+});
+
+D.btnChangePw.addEventListener("click", () => {
+  D.passwordForm.reset();
+  D.pwErr.textContent = "";
+  openModal("passwordModal");
+});
+
+D.passwordForm.addEventListener("submit", async (e) => {
+  e.preventDefault();
+  if (!state.user) return;
+  const cur = D.curPw.value, nw = D.newPw.value, nw2 = D.newPwConfirm.value;
+  D.pwErr.textContent = "";
+  if (!cur) { D.pwErr.textContent = "Enter current password."; return; }
+  if (nw.length < 6) { D.pwErr.textContent = "Minimum 6 characters required."; return; }
+  if (nw !== nw2) { D.pwErr.textContent = "Passwords don't match."; return; }
+  if (cur === nw) { D.pwErr.textContent = "New password must be different."; return; }
+  D.pwSubmit.disabled = true;
+  D.pwSubmit.innerHTML = `<span class="spinner"></span>UPDATING...`;
+  try {
+    const cred = EmailAuthProvider.credential(state.user.email, cur);
+    await reauthenticateWithCredential(state.user, cred);
+    await updatePassword(state.user, nw);
+    closeModal("passwordModal");
+    showToast("Password updated successfully ✅", "success");
   } catch (err) {
-    D.pfErr.textContent = "Failed to save. " + (err.message || "");
-  } finally {
-    D.pfSubmit.disabled = false;
-    D.pfSubmit.textContent = "SAVE CHANGES";
-  }
+    let msg = friendlyAuthError(err.code);
+    if (err.code === "auth/wrong-password" || err.code === "auth/invalid-credential") msg = "Current password is incorrect.";
+    D.pwErr.textContent = msg;
+  } finally { D.pwSubmit.disabled = false; D.pwSubmit.textContent = "UPDATE PASSWORD"; }
 });
 
-/* ═══════════════════════════════════════════════════════════
-   REFERRAL — COPY & SHARE
-═══════════════════════════════════════════════════════════ */
-D.refCopyBtn?.addEventListener("click", async () => {
-  const code = D.refCode.textContent;
-  if (!code || code === "—") { showToast("Referral code not loaded yet.", "error"); return; }
-  const copyText = `🎮 Join ArenaX and win real cash!\n\n🎁 Use my referral code: ${code}\n\n📲 Download: ${DOWNLOAD_URL}`;
-  try {
-    await navigator.clipboard.writeText(copyText);
-    showToast("✅ Referral code + link copied!", "success");
-  } catch (e) {
-    const ta = document.createElement("textarea");
-    ta.value = copyText;
-    document.body.appendChild(ta);
-    ta.select();
-    document.execCommand("copy");
-    ta.remove();
-    showToast("✅ Referral code + link copied!", "success");
-  }
-});
-
-D.refShareBtn?.addEventListener("click", async () => {
-  const code = D.refCode.textContent;
-  if (!code || code === "—") { showToast("Referral code not loaded yet.", "error"); return; }
-  const shareText = `🎮 Join ArenaX and win real cash!\n\n🎁 Use my referral code: ${code}\n\n💰 You get ₹5 sign-up bonus + ₹20 first-deposit bonus!\n🏆 Compete in BGMI & Free Fire tournaments\n\n📲 Download the app now:\n${DOWNLOAD_URL}\n\nStart winning today!`;
-  const shareTitle = "Join ArenaX — Win Real Cash!";
-  if (navigator.share) {
-    try {
-      await navigator.share({ title: shareTitle, text: shareText, url: DOWNLOAD_URL });
-      return;
-    } catch (err) {
-      if (err.name === "AbortError") return;
-    }
-  }
-  try {
-    await navigator.clipboard.writeText(shareText);
-    showToast("✅ Share text copied to clipboard!", "success");
-  } catch (e) {
-    showToast("Copy failed.", "error");
-  }
-});
-
-/* ═══════════════════════════════════════════════════════════
-   SIGN OUT
-═══════════════════════════════════════════════════════════ */
 D.btnSignOut.addEventListener("click", async () => {
   if (!confirm("Sign out of ArenaX?")) return;
   try {
     stopDepositPolling();
-    Object.keys(state.unsubs).forEach((k) => {
-      if (state.unsubs[k]) { state.unsubs[k](); state.unsubs[k] = null; }
-    });
-    state.user = null;
-    state.profile = null;
-    state.tournaments = [];
-    state.joinedMatches = [];
-    state.transactions = [];
-    state.notifications = [];
-    state.referrals = [];
+    Object.keys(state.unsubs).forEach((k) => { if (state.unsubs[k]) { state.unsubs[k](); state.unsubs[k] = null; } });
+    state.user = null; state.profile = null;
+    state.tournaments = []; state.joinedMatches = [];
+    state.transactions = []; state.notifications = []; state.referrals = [];
     state.appConfig = null;
     const banner = document.getElementById("banBanner");
     if (banner) banner.remove();
     await signOut(auth);
     showToast("Signed out successfully.", "success");
-  } catch (err) {
-    console.error("Sign out error:", err);
-    showToast("Sign out failed.", "error");
-  }
+  } catch (err) { console.error("Sign out error:", err); }
 });
 
-/* ═══════════════════════════════════════════════════════════
-   GLOBAL TOUCH HANDLER
-═══════════════════════════════════════════════════════════ */
 let lastTouch = 0;
 document.addEventListener("touchend", (e) => {
   const now = Date.now();
@@ -2128,11 +2625,83 @@ document.addEventListener("touchend", (e) => {
   lastTouch = now;
 }, { passive: false });
 
-console.log(
-  "%c ArenaX ",
-  "background:#00e5ff;color:#050810;font-weight:bold;padding:4px 8px;border-radius:4px",
-  "User App Loaded ✅"
-);
+/* ═══════════════════════════════════════════════════════════
+   🛡️ FORCE UPDATE GUARD — block everything except update button
+═══════════════════════════════════════════════════════════ */
+document.addEventListener("click", (e) => {
+  if (!state.forceUpdateActive) return;
+  if (e.target.closest("#fuUpdateBtn")) return;
+  e.preventDefault();
+  e.stopPropagation();
+  e.stopImmediatePropagation();
+}, true);
+
+document.addEventListener("touchstart", (e) => {
+  if (!state.forceUpdateActive) return;
+  if (e.target.closest("#fuUpdateBtn")) return;
+  e.preventDefault();
+  e.stopPropagation();
+}, { capture: true, passive: false });
+
+window.addEventListener("popstate", () => {
+  if (state.forceUpdateActive) {
+    try { history.pushState({ fu: true }, "", location.href); } catch (e) {}
+  }
+});
+
+/* ═══════════════════════════════════════════════════════════
+   🎧 FLOATING SUPPORT BUTTON — added feature
+   - Adjusts position when logged in vs logged out
+   - Opens support page on click
+   - Hides when force update is active
+═══════════════════════════════════════════════════════════ */
+(function initSupportFab() {
+  const fab = document.getElementById("supportFab");
+  if (!fab) return;
+
+  const SUPPORT_URL = "support.html";
+
+  fab.addEventListener("click", (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    if (state.forceUpdateActive) return;
+    try {
+      const w = window.open(SUPPORT_URL, "_blank", "noopener,noreferrer");
+      if (!w) window.location.href = SUPPORT_URL;
+    } catch (err) {
+      window.location.href = SUPPORT_URL;
+    }
+  });
+
+  function syncSupportFabPosition() {
+    const isLoggedIn = !!(state.user && state.profile) && !D.appShell.classList.contains("hidden");
+    fab.classList.toggle("support-logged-in", isLoggedIn);
+  }
+
+  const observer = new MutationObserver(syncSupportFabPosition);
+  if (D.appShell) observer.observe(D.appShell, { attributes: true, attributeFilter: ["class"] });
+  if (D.authGate) observer.observe(D.authGate, { attributes: true, attributeFilter: ["class"] });
+
+  if (auth) onAuthStateChanged(auth, () => setTimeout(syncSupportFabPosition, 50));
+  window.addEventListener("storage", syncSupportFabPosition);
+  window.addEventListener("focus", syncSupportFabPosition);
+
+  function syncForceUpdateLock() {
+    document.body.classList.toggle("force-update-locked", state.forceUpdateActive === true);
+  }
+
+  setInterval(() => {
+    syncSupportFabPosition();
+    syncForceUpdateLock();
+  }, 400);
+
+  syncSupportFabPosition();
+  syncForceUpdateLock();
+
+  console.log("[ArenaX] Support FAB initialized ✅");
+})();
+
+console.log("%c ArenaX ", "background:#00e5ff;color:#050810;font-weight:bold;padding:4px 8px;border-radius:4px", "User App Loaded ✅ (Chrome App Launcher + Support FAB)");
 </script>
 </body>
 </html>
