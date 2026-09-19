@@ -27,8 +27,7 @@ html,body{
 }
 
 /* ═══════════════════════════════════════════════════════════
-   🎬 ANIME GAMER GIRL VIDEO BACKGROUND
-   Fullscreen fixed looping video
+   🎬 FULLSCREEN VIDEO BACKGROUND (FIXED OPACITY)
 ═══════════════════════════════════════════════════════════ */
 #bgVideo{
   position:fixed;
@@ -39,12 +38,10 @@ html,body{
   z-index:-2;
   pointer-events:none;
   background:#070a16;
-  opacity:0;
-  transition:opacity 1.5s ease;
+  opacity:1 !important; /* Always visible immediately */
 }
-#bgVideo.loaded{opacity:1;}
 
-/* Hide any native video controls */
+/* Hide native video controls */
 #bgVideo::-webkit-media-controls,
 #bgVideo::-webkit-media-controls-enclosure,
 #bgVideo::-webkit-media-controls-panel,
@@ -57,14 +54,13 @@ html,body{
 
 /* ═══════════════════════════════════════════════════════════
    🌑 DARK TRANSLUCENT OVERLAY
-   Keeps text and inputs 100% readable over the video
 ═══════════════════════════════════════════════════════════ */
 #bgOverlay{
   position:fixed;
   inset:0;
-  background:rgba(7,10,22,0.70);
-  backdrop-filter:blur(2px);
-  -webkit-backdrop-filter:blur(2px);
+  background:rgba(7,10,22,0.68);
+  backdrop-filter:blur(3px);
+  -webkit-backdrop-filter:blur(3px);
   z-index:-1;
   pointer-events:none;
 }
@@ -134,9 +130,6 @@ html,body{
     0 0 40px rgba(157,0,255,0.6);
 }
 
-/* ═══════════════════════════════════════════════════════════
-   📝 ANIMATED PAGE TITLE — Cyan gradient shine
-═══════════════════════════════════════════════════════════ */
 .page-title{
   text-align:center;
   font-family:'Orbitron',sans-serif;
@@ -186,11 +179,10 @@ html,body{
 
 /* ═══════════════════════════════════════════════════════════
    🧊 GLASSMORPHISM FORM CONTAINER
-   Frosted glass with neon cyan glow
 ═══════════════════════════════════════════════════════════ */
 .glass-card{
   position:relative;
-  background:rgba(12,16,35,0.75);
+  background:rgba(12,16,35,0.78);
   backdrop-filter:blur(14px);
   -webkit-backdrop-filter:blur(14px);
   border:1px solid rgba(0,242,254,0.35);
@@ -284,7 +276,6 @@ html,body{
   color:#5b6382;
 }
 
-/* Focus glow */
 .field input:focus,
 .field select:focus,
 .field textarea:focus{
@@ -296,7 +287,6 @@ html,body{
     0 0 50px rgba(157,0,255,0.25);
 }
 
-/* Custom dropdown arrow */
 .field select{
   background-image:
     linear-gradient(45deg, transparent 50%, #00f2fe 50%),
@@ -317,7 +307,7 @@ html,body{
 }
 
 /* ═══════════════════════════════════════════════════════════
-   📎 FILE UPLOAD BOX — Neon dashed border
+   📎 FILE UPLOAD BOX
 ═══════════════════════════════════════════════════════════ */
 .file-box{
   position:relative;
@@ -410,7 +400,7 @@ html,body{
 }
 
 /* ═══════════════════════════════════════════════════════════
-   🚀 SUBMIT BUTTON — Gaming gradient with pulse
+   🚀 SUBMIT BUTTON
 ═══════════════════════════════════════════════════════════ */
 .submit-btn{
   position:relative;
@@ -455,7 +445,6 @@ html,body{
   }
 }
 
-/* Shimmer sweep */
 .submit-btn::after{
   content:"";
   position:absolute;
@@ -489,10 +478,6 @@ html,body{
     0 0 60px rgba(157,0,255,0.7);
 }
 
-.submit-btn:active:not(:disabled){
-  transform:translateY(-1px) scale(0.99);
-}
-
 .submit-btn:disabled{
   cursor:not-allowed;
   opacity:0.75;
@@ -506,9 +491,6 @@ html,body{
   z-index:2;
 }
 
-.btn-icon{font-size:16px;}
-
-/* Loading spinner */
 .spinner{
   display:inline-block;
   width:16px;
@@ -545,10 +527,7 @@ html,body{
   to{opacity:1; transform:translateY(0);}
 }
 
-.status .st-ico{
-  font-size:18px;
-  flex-shrink:0;
-}
+.status .st-ico{font-size:18px; flex-shrink:0;}
 
 .status.success{
   background:rgba(0,230,118,0.12);
@@ -589,9 +568,6 @@ html,body{
   text-shadow:0 0 10px rgba(0,242,254,0.6);
 }
 
-/* ═══════════════════════════════════════════════════════════
-   RESPONSIVE
-═══════════════════════════════════════════════════════════ */
 @media(min-width:640px){
   .wrap{padding:52px 24px 100px;}
   .glass-card{padding:34px 30px;}
@@ -599,31 +575,12 @@ html,body{
   .page-title{font-size:26px; letter-spacing:4.5px;}
   .submit-btn{padding:18px; font-size:15px;}
 }
-
-@media(max-width:380px){
-  .page-title{font-size:18px; letter-spacing:2.5px;}
-  .brand-name{font-size:20px; letter-spacing:4px;}
-}
-
-/* ═══════════════════════════════════════════════════════════
-   REDUCED MOTION — accessibility
-═══════════════════════════════════════════════════════════ */
-@media (prefers-reduced-motion: reduce){
-  *,*::before,*::after{
-    animation-duration:0.001ms !important;
-    animation-iteration-count:1 !important;
-    transition-duration:0.15s !important;
-  }
-  #bgVideo{display:none;}
-  .submit-btn::after{display:none;}
-}
 </style>
 </head>
 <body>
 
 <!-- ═══════════════════════════════════════════════════════════
-     🎬 ANIME GAMER GIRL VIDEO BACKGROUND
-     Futuristic anime video — looping fullscreen
+     🎬 MULTI-SOURCE BACKGROUND VIDEO (LOCAL + CDN FALLBACK)
 ═══════════════════════════════════════════════════════════ -->
 <video
   id="bgVideo"
@@ -631,22 +588,17 @@ html,body{
   loop
   muted
   playsinline
+  webkit-playsinline
   preload="auto"
-  disablepictureinpicture
-  controlslist="nodownload nofullscreen noremoteplayback"
 >
-  <!-- Direct local anime video file -->
+  <!-- 1. Aapki Local Video File (Root Directory में होनी चाहिए) -->
   <source src="gamer-bg.mp4" type="video/mp4" />
+  <!-- 2. High-speed Fallback CDN Video (Agar Vercel pe local file na mile) -->
+  <source src="https://assets.mixkit.co/videos/preview/mixkit-cyberpunk-city-street-with-neon-lights-41559-large.mp4" type="video/mp4" />
 </video>
 
-<!-- ═══════════════════════════════════════════════════════════
-     🌑 DARK TRANSLUCENT OVERLAY
-═══════════════════════════════════════════════════════════ -->
 <div id="bgOverlay" aria-hidden="true"></div>
 
-<!-- ═══════════════════════════════════════════════════════════
-     MAIN CONTENT
-═══════════════════════════════════════════════════════════ -->
 <main class="wrap">
 
   <a href="index.html" class="brand">
@@ -660,7 +612,6 @@ html,body{
     Our team responds within 24 hours.
   </p>
 
-  <!-- 🧊 GLASSMORPHISM FORM -->
   <div class="glass-card">
     <form id="supportForm" autocomplete="off" novalidate>
 
@@ -726,14 +677,8 @@ html,body{
 </main>
 
 <script>
-/* ═══════════════════════════════════════════════════════════
-   ⚙️  CONFIG — Google Apps Script Web App URL
-═══════════════════════════════════════════════════════════ */
 const scriptURL = 'https://script.google.com/macros/s/AKfycbycN2cy2bzEkRAx3Lp64f690Ye1aUD189-xNk4RATrAcyVTPQV8CPAD_4sfQEjMfTZf/exec';
 
-/* ═══════════════════════════════════════════════════════════
-   DOM REFERENCES
-═══════════════════════════════════════════════════════════ */
 const form         = document.getElementById('supportForm');
 const fileBox      = document.getElementById('fileBox');
 const fileInput    = document.getElementById('fileInput');
@@ -748,50 +693,29 @@ const statusText   = document.getElementById('statusText');
 
 let selectedFile = null;
 
-/* ═══════════════════════════════════════════════════════════
-   🎬 VIDEO BACKGROUND INITIALIZER
-═══════════════════════════════════════════════════════════ */
-(function initVideoBackground() {
+/* Autoplay bypass for Mobile Chrome */
+(function forceVideoPlay() {
   const vid = document.getElementById('bgVideo');
   if (!vid) return;
-
-  function markLoaded() {
-    vid.classList.add('loaded');
-  }
-
-  vid.addEventListener('loadeddata', markLoaded);
-  vid.addEventListener('playing', markLoaded);
-
-  vid.addEventListener('error', () => {
-    vid.style.display = 'none';
-  }, true);
-
-  const p = vid.play();
-  if (p && typeof p.catch === 'function') {
-    p.catch(() => {
-      const retry = () => {
+  const playPromise = vid.play();
+  if (playPromise !== undefined) {
+    playPromise.catch(() => {
+      const enablePlay = () => {
         vid.play().catch(() => {});
-        document.removeEventListener('click', retry);
-        document.removeEventListener('touchstart', retry);
+        document.removeEventListener('touchstart', enablePlay);
+        document.removeEventListener('click', enablePlay);
       };
-      document.addEventListener('click', retry, { once: true });
-      document.addEventListener('touchstart', retry, { once: true });
+      document.addEventListener('touchstart', enablePlay, { once: true });
+      document.addEventListener('click', enablePlay, { once: true });
     });
   }
 })();
 
-/* ═══════════════════════════════════════════════════════════
-   FILE HANDLING
-═══════════════════════════════════════════════════════════ */
 function humanSize(bytes){
   if (!bytes && bytes !== 0) return '';
   const units = ['B','KB','MB','GB'];
-  let i = 0;
-  let n = bytes;
-  while (n >= 1024 && i < units.length - 1){
-    n /= 1024;
-    i++;
-  }
+  let i = 0, n = bytes;
+  while (n >= 1024 && i < units.length - 1){ n /= 1024; i++; }
   return n.toFixed(n < 10 && i > 0 ? 1 : 0) + ' ' + units[i];
 }
 
@@ -812,8 +736,7 @@ function handleFile(file){
     return;
   }
 
-  const MAX = 5 * 1024 * 1024;
-  if (file.size > MAX){
+  if (file.size > 5 * 1024 * 1024){
     showStatus('error', '⚠️', 'File too large. Max 5 MB allowed.');
     fileInput.value = '';
     return;
@@ -832,34 +755,6 @@ fileInput.addEventListener('change', (e) => {
   handleFile(e.target.files && e.target.files[0]);
 });
 
-/* Drag & drop */
-['dragenter','dragover'].forEach(evt => {
-  fileBox.addEventListener(evt, (e) => {
-    e.preventDefault();
-    e.stopPropagation();
-    fileBox.classList.add('dragover');
-  });
-});
-
-['dragleave','drop'].forEach(evt => {
-  fileBox.addEventListener(evt, (e) => {
-    e.preventDefault();
-    e.stopPropagation();
-    fileBox.classList.remove('dragover');
-  });
-});
-
-fileBox.addEventListener('drop', (e) => {
-  const dt = e.dataTransfer;
-  if (dt && dt.files && dt.files[0]){
-    fileInput.files = dt.files;
-    handleFile(dt.files[0]);
-  }
-});
-
-/* ═══════════════════════════════════════════════════════════
-   STATUS HELPERS
-═══════════════════════════════════════════════════════════ */
 function showStatus(type, icon, text){
   statusBox.className = 'status show ' + type;
   statusIco.textContent = icon;
@@ -872,25 +767,19 @@ function clearStatus(){
   statusText.textContent = '';
 }
 
-/* ═══════════════════════════════════════════════════════════
-   FILE → BASE64
-═══════════════════════════════════════════════════════════ */
 function fileToBase64(file){
   return new Promise((resolve, reject) => {
     const reader = new FileReader();
     reader.onload = () => {
-      const result = String(reader.result || '');
-      const comma = result.indexOf(',');
-      resolve(comma >= 0 ? result.slice(comma + 1) : result);
+      const res = String(reader.result || '');
+      const idx = res.indexOf(',');
+      resolve(idx >= 0 ? res.slice(idx + 1) : res);
     };
-    reader.onerror = () => reject(new Error('File read failed.'));
+    reader.onerror = () => reject(new Error('File read failed'));
     reader.readAsDataURL(file);
   });
 }
 
-/* ═══════════════════════════════════════════════════════════
-   FORM SUBMIT
-═══════════════════════════════════════════════════════════ */
 form.addEventListener('submit', async (e) => {
   e.preventDefault();
   clearStatus();
@@ -916,10 +805,6 @@ form.addEventListener('submit', async (e) => {
     showStatus('error', '⚠️', 'Please describe your issue briefly.');
     return;
   }
-  if (!scriptURL || scriptURL === 'YOUR_GOOGLE_APPS_SCRIPT_URL'){
-    showStatus('error', '⚙️', 'Admin endpoint not configured. Please contact support directly.');
-    return;
-  }
 
   submitBtn.disabled = true;
   const originalLabel = submitLabel.textContent;
@@ -927,10 +812,7 @@ form.addEventListener('submit', async (e) => {
   showStatus('loading', '🔄', 'Uploading your request, please wait...');
 
   try {
-    let fileData = '';
-    let fileName = '';
-    let mimeType = '';
-
+    let fileData = '', fileName = '', mimeType = '';
     if (selectedFile){
       showStatus('loading', '🔄', 'Converting screenshot...');
       fileData = await fileToBase64(selectedFile);
@@ -939,13 +821,8 @@ form.addEventListener('submit', async (e) => {
     }
 
     const payload = {
-      playerName: playerName,
-      userContact: userContact,
-      issueType: issueType,
-      description: description,
-      fileName: fileName,
-      mimeType: mimeType,
-      fileData: fileData,
+      playerName, userContact, issueType, description,
+      fileName, mimeType, fileData,
       userAgent: navigator.userAgent,
       submittedAt: new Date().toISOString()
     };
@@ -958,27 +835,17 @@ form.addEventListener('submit', async (e) => {
       body: JSON.stringify(payload)
     });
 
-    if (!resp.ok){
-      throw new Error('Server responded with ' + resp.status);
-    }
+    if (!resp.ok) throw new Error('Server status ' + resp.status);
 
     showStatus('success', '✅', 'Request sent successfully! Admin will contact you within 24 hours.');
     form.reset();
     handleFile(null);
 
   } catch (err){
-    console.error('Submit error:', err);
-    showStatus('error', '❌', 'Failed to send: ' + (err.message || 'unknown error') + '. Please try again.');
+    showStatus('error', '❌', 'Failed to send: ' + (err.message || 'Error') + '. Try again.');
   } finally {
     submitBtn.disabled = false;
     submitLabel.textContent = originalLabel;
-  }
-});
-
-/* Prevent accidental Enter submissions inside single-line inputs */
-form.addEventListener('keydown', (e) => {
-  if (e.key === 'Enter' && e.target.tagName === 'INPUT' && e.target.type !== 'file'){
-    e.preventDefault();
   }
 });
 </script>
