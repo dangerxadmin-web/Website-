@@ -12,15 +12,13 @@
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent;}
 :root{
   --bg-0:#090a16;
-  --bg-1:#0d1024;
-  --glass:rgba(10,14,30,.75);
+  --glass:rgba(10,14,30,.78);
   --text:#e8ecf5;
   --dim:#8b93b0;
   --mute:#5b6382;
   --cyan:#00f2fe;
   --cyan-2:#4facfe;
   --purple:#9d00ff;
-  --purple-2:#c471ff;
   --pink:#ff2e88;
   --green:#00e676;
   --red:#ff2e51;
@@ -38,59 +36,124 @@ html,body{
   line-height:1.6;
   -webkit-font-smoothing:antialiased;
   overflow-x:hidden;
-  position:relative;
 }
 
 /* ═══════════════════════════════════════════════════════════
-   🎬 ANIMATED IMAGE BACKGROUND (video-like effect)
-   Uses your anime gamer girl image with Ken Burns + RGB glow
+   🎬 ANIMATED CSS BACKGROUND — CYBERPUNK / ANIME VIBE
+   No image needed — pure CSS animation
 ═══════════════════════════════════════════════════════════ */
-#bgVideo{
+#bgArena{
   position:fixed;
   inset:0;
   z-index:-3;
   overflow:hidden;
   pointer-events:none;
-  background:#090a16;
-}
-#bgVideo::before{
-  content:"";
-  position:absolute;
-  inset:-8%;
-  background-image:url('gamer-bg.jpg');
-  background-size:cover;
-  background-position:center;
-  background-repeat:no-repeat;
-  will-change:transform,filter;
-  animation:kenBurns 24s ease-in-out infinite alternate;
-  filter:saturate(1.15) brightness(.75) contrast(1.1);
-}
-@keyframes kenBurns{
-  0%   {transform:scale(1.08) translate3d(-1.5%, -1%, 0);}
-  50%  {transform:scale(1.15) translate3d(1.5%, 1%, 0);}
-  100% {transform:scale(1.10) translate3d(-1%, 1.5%, 0);}
-}
-
-/* RGB neon glow pulsing overlay */
-#bgVideo::after{
-  content:"";
-  position:absolute;
-  inset:0;
   background:
-    radial-gradient(circle at 20% 30%, rgba(0,242,254,.25), transparent 45%),
-    radial-gradient(circle at 80% 70%, rgba(157,0,255,.28), transparent 45%),
-    radial-gradient(circle at 50% 50%, rgba(255,46,136,.15), transparent 60%);
-  mix-blend-mode:screen;
-  animation:rgbPulse 8s ease-in-out infinite;
-  pointer-events:none;
-}
-@keyframes rgbPulse{
-  0%,100%{opacity:.55;transform:scale(1);}
-  50%    {opacity:1;transform:scale(1.06);}
+    radial-gradient(circle at 20% 20%, rgba(0,242,254,.15) 0%, transparent 45%),
+    radial-gradient(circle at 80% 80%, rgba(157,0,255,.18) 0%, transparent 45%),
+    radial-gradient(circle at 50% 50%, rgba(255,46,136,.08) 0%, transparent 60%),
+    linear-gradient(180deg, #0a0820 0%, #090a16 50%, #10061f 100%);
 }
 
-/* Scanline sweep effect (subtle) */
-.scanline{
+/* Animated grid floor (retro-wave / cyberpunk) */
+#bgArena::before{
+  content:"";
+  position:absolute;
+  inset:-20% -20% -40% -20%;
+  background-image:
+    linear-gradient(rgba(0,242,254,.18) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(0,242,254,.18) 1px, transparent 1px);
+  background-size: 60px 60px, 60px 60px;
+  transform:perspective(500px) rotateX(65deg) translateZ(-100px);
+  transform-origin:center bottom;
+  animation:gridMove 8s linear infinite;
+  will-change:transform;
+  mask-image:linear-gradient(180deg, transparent 0%, black 30%, black 80%, transparent 100%);
+  -webkit-mask-image:linear-gradient(180deg, transparent 0%, black 30%, black 80%, transparent 100%);
+}
+@keyframes gridMove{
+  0%  {background-position: 0 0, 0 0;}
+  100%{background-position: 0 60px, 60px 0;}
+}
+
+/* Big pulsing nebula glow (RGB sweep) */
+#bgArena::after{
+  content:"";
+  position:absolute;
+  top:-20%;
+  left:-20%;
+  width:140%;
+  height:140%;
+  background:
+    radial-gradient(circle at 30% 40%, rgba(0,242,254,.35), transparent 30%),
+    radial-gradient(circle at 70% 60%, rgba(157,0,255,.4), transparent 30%),
+    radial-gradient(circle at 50% 80%, rgba(255,46,136,.25), transparent 35%);
+  filter:blur(60px);
+  animation:nebulaFloat 18s ease-in-out infinite alternate;
+  will-change:transform;
+}
+@keyframes nebulaFloat{
+  0%  {transform:translate3d(-3%, -2%, 0) rotate(0deg);}
+  50% {transform:translate3d(4%, 3%, 0) rotate(4deg);}
+  100%{transform:translate3d(-2%, 4%, 0) rotate(-3deg);}
+}
+
+/* Floating neon particles (tiny dots drifting) */
+#bgArena .particle{
+  position:absolute;
+  border-radius:50%;
+  pointer-events:none;
+  will-change:transform,opacity;
+  opacity:0;
+  filter:blur(1px);
+}
+#bgArena .particle.p1{
+  width:6px;height:6px;background:#00f2fe;top:20%;left:10%;
+  box-shadow:0 0 12px #00f2fe;
+  animation:particleDrift1 12s ease-in-out infinite;
+}
+#bgArena .particle.p2{
+  width:4px;height:4px;background:#9d00ff;top:60%;left:80%;
+  box-shadow:0 0 12px #9d00ff;
+  animation:particleDrift2 15s ease-in-out infinite;
+}
+#bgArena .particle.p3{
+  width:5px;height:5px;background:#ff2e88;top:40%;left:30%;
+  box-shadow:0 0 12px #ff2e88;
+  animation:particleDrift3 10s ease-in-out infinite;
+}
+#bgArena .particle.p4{
+  width:4px;height:4px;background:#00f2fe;top:75%;left:20%;
+  box-shadow:0 0 12px #00f2fe;
+  animation:particleDrift1 14s ease-in-out infinite reverse;
+}
+#bgArena .particle.p5{
+  width:5px;height:5px;background:#c471ff;top:15%;left:70%;
+  box-shadow:0 0 12px #c471ff;
+  animation:particleDrift2 13s ease-in-out infinite reverse;
+}
+@keyframes particleDrift1{
+  0%   {transform:translate3d(0,0,0) scale(0.6);opacity:0;}
+  20%  {opacity:.9;}
+  50%  {transform:translate3d(60px,-80px,0) scale(1.2);opacity:1;}
+  80%  {opacity:.6;}
+  100% {transform:translate3d(-30px,-160px,0) scale(0.7);opacity:0;}
+}
+@keyframes particleDrift2{
+  0%   {transform:translate3d(0,0,0) scale(0.5);opacity:0;}
+  30%  {opacity:.85;}
+  60%  {transform:translate3d(-80px,-60px,0) scale(1.1);opacity:1;}
+  100% {transform:translate3d(-40px,-140px,0) scale(0.6);opacity:0;}
+}
+@keyframes particleDrift3{
+  0%   {transform:translate3d(0,0,0) scale(0.7);opacity:0;}
+  25%  {opacity:1;}
+  55%  {transform:translate3d(40px,-100px,0) scale(1.15);opacity:.9;}
+  100% {transform:translate3d(-20px,-180px,0) scale(0.6);opacity:0;}
+}
+
+/* Scanlines overlay */
+.scanlines{
   position:fixed;
   inset:0;
   z-index:-2;
@@ -99,70 +162,25 @@ html,body{
     0deg,
     transparent 0px,
     transparent 2px,
-    rgba(0,242,254,.03) 3px,
+    rgba(0,242,254,.035) 3px,
     transparent 4px
   );
-  animation:scanMove 12s linear infinite;
-  opacity:.6;
+  animation:scanMove 10s linear infinite;
+  opacity:.7;
 }
 @keyframes scanMove{
   0%  {transform:translateY(0);}
   100%{transform:translateY(40px);}
 }
 
-/* Dark overlay for readability */
+/* Dark readability overlay */
 #bgOverlay{
   position:fixed;
   inset:0;
   z-index:-1;
   pointer-events:none;
   background:
-    linear-gradient(180deg, rgba(5,8,20,.72) 0%, rgba(5,8,20,.55) 50%, rgba(5,8,20,.78) 100%);
-}
-
-/* ═══════════════════════════════════════════════════════════
-   FLOATING NEON ORBS
-═══════════════════════════════════════════════════════════ */
-.orb{
-  position:fixed;
-  border-radius:50%;
-  pointer-events:none;
-  z-index:0;
-  filter:blur(80px);
-  opacity:.45;
-  will-change:transform,opacity;
-  mix-blend-mode:screen;
-}
-.orb.c1{
-  width:340px;height:340px;
-  background:radial-gradient(circle, rgba(0,242,254,.9), rgba(0,242,254,0) 70%);
-  top:-60px;left:-80px;
-  animation:orbFloat1 16s ease-in-out infinite;
-}
-.orb.c2{
-  width:400px;height:400px;
-  background:radial-gradient(circle, rgba(157,0,255,.85), rgba(157,0,255,0) 70%);
-  top:35%;right:-120px;
-  animation:orbFloat2 20s ease-in-out infinite;
-}
-.orb.c3{
-  width:280px;height:280px;
-  background:radial-gradient(circle, rgba(255,46,136,.7), rgba(255,46,136,0) 70%);
-  bottom:-100px;left:25%;
-  animation:orbFloat3 22s ease-in-out infinite;
-}
-@keyframes orbFloat1{
-  0%,100%{transform:translate3d(0,0,0) scale(1);opacity:.45;}
-  33%   {transform:translate3d(60px,-40px,0) scale(1.12);opacity:.7;}
-  66%   {transform:translate3d(-30px,30px,0) scale(1.05);opacity:.55;}
-}
-@keyframes orbFloat2{
-  0%,100%{transform:translate3d(0,0,0) scale(1);opacity:.5;}
-  50%   {transform:translate3d(-70px,-50px,0) scale(1.15);opacity:.75;}
-}
-@keyframes orbFloat3{
-  0%,100%{transform:translate3d(0,0,0) scale(1);opacity:.4;}
-  50%   {transform:translate3d(50px,-60px,0) scale(1.18);opacity:.65;}
+    linear-gradient(180deg, rgba(5,8,20,.55) 0%, rgba(5,8,20,.4) 50%, rgba(5,8,20,.6) 100%);
 }
 
 /* ═══════════════════════════════════════════════════════════
@@ -176,27 +194,17 @@ html,body{
   padding:36px 18px 60px;
 }
 
-/* ═══════════════════════════════════════════════════════════
-   HEADER
-═══════════════════════════════════════════════════════════ */
+/* HEADER */
 .brand{
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  gap:10px;
-  margin-bottom:6px;
-  text-decoration:none;
+  display:flex;align-items:center;justify-content:center;
+  gap:10px;margin-bottom:6px;text-decoration:none;
 }
 .brand-mark{
-  width:36px;height:36px;
-  border-radius:10px;
+  width:36px;height:36px;border-radius:10px;
   display:flex;align-items:center;justify-content:center;
   background:linear-gradient(135deg,var(--cyan),var(--purple));
   box-shadow:0 0 20px rgba(0,242,254,.45), 0 0 40px rgba(157,0,255,.3);
-  font-family:var(--font-d);
-  font-weight:900;
-  font-size:18px;
-  color:#05070d;
+  font-family:var(--font-d);font-weight:900;font-size:18px;color:#05070d;
   animation:markPulse 3s ease-in-out infinite;
 }
 @keyframes markPulse{
@@ -204,15 +212,10 @@ html,body{
   50%   {box-shadow:0 0 30px rgba(0,242,254,.8), 0 0 60px rgba(157,0,255,.55);}
 }
 .brand-name{
-  font-family:var(--font-d);
-  font-size:24px;
-  font-weight:900;
-  letter-spacing:5px;
+  font-family:var(--font-d);font-size:24px;font-weight:900;letter-spacing:5px;
   background:linear-gradient(120deg,#ffffff 0%,var(--cyan) 30%,var(--purple) 60%,#ffffff 90%);
   background-size:200% auto;
-  -webkit-background-clip:text;
-  background-clip:text;
-  -webkit-text-fill-color:transparent;
+  -webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;
   animation:shineText 5s linear infinite;
 }
 @keyframes shineText{
@@ -220,38 +223,22 @@ html,body{
   100%{background-position:200% 50%;}
 }
 .page-title{
-  text-align:center;
-  font-family:var(--font-d);
-  font-size:20px;
-  font-weight:800;
-  letter-spacing:3px;
-  text-transform:uppercase;
-  margin-bottom:8px;
+  text-align:center;font-family:var(--font-d);font-size:20px;font-weight:800;
+  letter-spacing:3px;text-transform:uppercase;margin-bottom:8px;
   background:linear-gradient(120deg,#ffffff 0%,var(--cyan) 40%,var(--purple) 70%,#ffffff 100%);
   background-size:220% auto;
-  -webkit-background-clip:text;
-  background-clip:text;
-  -webkit-text-fill-color:transparent;
+  -webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;
   animation:shineText 6s linear infinite;
 }
 .page-sub{
-  text-align:center;
-  color:var(--dim);
-  font-size:13.5px;
-  font-weight:400;
-  letter-spacing:.3px;
-  margin-bottom:28px;
-  max-width:440px;
-  margin-left:auto;
-  margin-right:auto;
-  line-height:1.65;
+  text-align:center;color:var(--dim);font-size:13.5px;font-weight:400;
+  letter-spacing:.3px;margin-bottom:28px;max-width:440px;
+  margin-left:auto;margin-right:auto;line-height:1.65;
   text-shadow:0 2px 12px rgba(0,0,0,.9);
 }
 .page-sub b{color:var(--cyan);font-weight:600;}
 
-/* ═══════════════════════════════════════════════════════════
-   GLASSMORPHISM CARD
-═══════════════════════════════════════════════════════════ */
+/* GLASS CARD */
 .glass-card{
   position:relative;
   background:rgba(10,14,30,.78);
@@ -263,169 +250,86 @@ html,body{
   box-shadow:
     0 0 25px rgba(0,242,254,.2),
     0 20px 60px rgba(0,0,0,.7),
-    0 0 40px rgba(0,242,254,.08) inset,
-    0 0 60px rgba(157,0,255,.06) inset;
+    0 0 40px rgba(0,242,254,.08) inset;
   overflow:hidden;
   animation:cardBreath 5s ease-in-out infinite;
 }
 @keyframes cardBreath{
-  0%,100%{
-    box-shadow:
-      0 0 25px rgba(0,242,254,.2),
-      0 20px 60px rgba(0,0,0,.7),
-      0 0 40px rgba(0,242,254,.08) inset;
-  }
-  50%{
-    box-shadow:
-      0 0 35px rgba(0,242,254,.35),
-      0 20px 60px rgba(0,0,0,.7),
-      0 0 60px rgba(157,0,255,.15) inset;
-  }
+  0%,100%{box-shadow:0 0 25px rgba(0,242,254,.2),0 20px 60px rgba(0,0,0,.7),0 0 40px rgba(0,242,254,.08) inset;}
+  50%    {box-shadow:0 0 35px rgba(0,242,254,.35),0 20px 60px rgba(0,0,0,.7),0 0 60px rgba(157,0,255,.15) inset;}
 }
 .glass-card::before{
-  content:"";
-  position:absolute;
-  inset:0;
-  border-radius:var(--r);
-  padding:1px;
+  content:"";position:absolute;inset:0;border-radius:var(--r);padding:1px;
   background:linear-gradient(135deg, rgba(0,242,254,.65), rgba(157,0,255,.45) 50%, rgba(0,242,254,.2));
   -webkit-mask:linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
-  -webkit-mask-composite:xor;
-  mask-composite:exclude;
-  pointer-events:none;
-  opacity:.9;
-}
-.glass-card::after{
-  content:"";
-  position:absolute;
-  top:-50%;left:-50%;
-  width:200%;height:60%;
-  background:radial-gradient(ellipse at center, rgba(0,242,254,.12), transparent 60%);
-  pointer-events:none;
-  animation:cardGlow 8s ease-in-out infinite;
-}
-@keyframes cardGlow{
-  0%,100%{transform:translate3d(0,0,0);opacity:.6;}
-  50%   {transform:translate3d(0,40px,0);opacity:.95;}
+  -webkit-mask-composite:xor;mask-composite:exclude;
+  pointer-events:none;opacity:.9;
 }
 .glass-card > *{position:relative;z-index:1;}
 
-/* ═══════════════════════════════════════════════════════════
-   FORM FIELDS
-═══════════════════════════════════════════════════════════ */
+/* FORM FIELDS */
 .field{margin-bottom:16px;}
 .field label{
-  display:block;
-  font-family:var(--font-b);
-  font-size:11.5px;
-  font-weight:600;
-  color:var(--dim);
-  text-transform:uppercase;
-  letter-spacing:1.4px;
-  margin-bottom:8px;
+  display:block;font-family:var(--font-b);font-size:11.5px;font-weight:600;
+  color:var(--dim);text-transform:uppercase;letter-spacing:1.4px;margin-bottom:8px;
 }
 .field label .req{color:var(--pink);margin-left:3px;}
 .field input[type="text"],
 .field input[type="email"],
 .field select,
 .field textarea{
-  width:100%;
-  font-family:var(--font-b);
-  font-size:14.5px;
-  font-weight:400;
-  color:var(--text);
-  background:rgba(5,8,20,.72);
-  border:1px solid rgba(0,242,254,.28);
-  border-radius:var(--r-sm);
-  padding:13px 15px;
-  outline:none;
-  transition:all .3s ease;
-  -webkit-appearance:none;
-  appearance:none;
+  width:100%;font-family:var(--font-b);font-size:14.5px;font-weight:400;
+  color:var(--text);background:rgba(5,8,20,.72);
+  border:1px solid rgba(0,242,254,.28);border-radius:var(--r-sm);
+  padding:13px 15px;outline:none;
+  transition:all .3s ease;-webkit-appearance:none;appearance:none;
 }
 .field textarea{min-height:96px;resize:vertical;line-height:1.55;}
-.field input::placeholder,
-.field textarea::placeholder{color:var(--mute);font-weight:400;}
-
-.field input:focus,
-.field select:focus,
-.field textarea:focus{
-  border-color:var(--cyan);
-  background:rgba(5,8,20,.9);
-  box-shadow:
-    0 0 0 3px rgba(0,242,254,.18),
-    0 0 24px rgba(0,242,254,.5),
-    0 0 50px rgba(157,0,255,.25);
+.field input::placeholder,.field textarea::placeholder{color:var(--mute);font-weight:400;}
+.field input:focus,.field select:focus,.field textarea:focus{
+  border-color:var(--cyan);background:rgba(5,8,20,.9);
+  box-shadow:0 0 0 3px rgba(0,242,254,.18),0 0 24px rgba(0,242,254,.5),0 0 50px rgba(157,0,255,.25);
   transform:translateY(-1px);
 }
-
 .field select{
   background-image:
     linear-gradient(45deg, transparent 50%, var(--cyan) 50%),
     linear-gradient(135deg, var(--cyan) 50%, transparent 50%);
-  background-position:
-    calc(100% - 20px) calc(50% - 3px),
-    calc(100% - 15px) calc(50% - 3px);
-  background-size:5px 5px, 5px 5px;
-  background-repeat:no-repeat;
-  padding-right:42px;
-  cursor:pointer;
+  background-position:calc(100% - 20px) calc(50% - 3px),calc(100% - 15px) calc(50% - 3px);
+  background-size:5px 5px, 5px 5px;background-repeat:no-repeat;
+  padding-right:42px;cursor:pointer;
 }
 .field select option{background:#0d1024;color:var(--text);padding:10px;}
 
-/* ═══════════════════════════════════════════════════════════
-   FILE UPLOAD BOX
-═══════════════════════════════════════════════════════════ */
+/* FILE BOX */
 .file-box{
-  position:relative;
-  display:flex;
-  flex-direction:column;
-  align-items:center;
-  justify-content:center;
-  gap:8px;
-  padding:22px 16px;
-  text-align:center;
-  background:rgba(5,8,20,.6);
-  border:1.5px dashed rgba(0,242,254,.4);
-  border-radius:var(--r-sm);
-  cursor:pointer;
-  transition:all .3s ease;
-  overflow:hidden;
+  position:relative;display:flex;flex-direction:column;align-items:center;justify-content:center;
+  gap:8px;padding:22px 16px;text-align:center;
+  background:rgba(5,8,20,.6);border:1.5px dashed rgba(0,242,254,.4);
+  border-radius:var(--r-sm);cursor:pointer;transition:all .3s ease;overflow:hidden;
 }
-.file-box:hover{
-  border-color:var(--cyan);
-  background:rgba(0,242,254,.06);
-  box-shadow:0 0 26px rgba(0,242,254,.3);
-}
+.file-box:hover{border-color:var(--cyan);background:rgba(0,242,254,.06);box-shadow:0 0 26px rgba(0,242,254,.3);}
 .file-box.dragover{
-  border-color:var(--cyan);
-  background:rgba(0,242,254,.12);
+  border-color:var(--cyan);background:rgba(0,242,254,.12);
   box-shadow:0 0 34px rgba(0,242,254,.5), inset 0 0 30px rgba(0,242,254,.1);
   transform:scale(1.01);
 }
 .file-box.has-file{
-  border-style:solid;
-  border-color:var(--green);
-  background:rgba(0,230,118,.08);
+  border-style:solid;border-color:var(--green);background:rgba(0,230,118,.08);
   box-shadow:0 0 26px rgba(0,230,118,.3);
 }
-.file-box input[type="file"]{
-  position:absolute;inset:0;opacity:0;cursor:pointer;width:100%;height:100%;
-}
+.file-box input[type="file"]{position:absolute;inset:0;opacity:0;cursor:pointer;width:100%;height:100%;}
 .file-icon{
   width:44px;height:44px;border-radius:12px;
-  display:flex;align-items:center;justify-content:center;
-  font-size:22px;
+  display:flex;align-items:center;justify-content:center;font-size:22px;
   background:linear-gradient(135deg, rgba(0,242,254,.2), rgba(157,0,255,.2));
-  border:1px solid rgba(0,242,254,.4);
-  box-shadow:0 0 22px rgba(0,242,254,.28);
+  border:1px solid rgba(0,242,254,.4);box-shadow:0 0 22px rgba(0,242,254,.28);
   transition:transform .3s ease;
 }
 .file-box:hover .file-icon{transform:translateY(-3px) rotate(-4deg);}
 .file-box.has-file .file-icon{
   background:linear-gradient(135deg, rgba(0,230,118,.25), rgba(0,242,254,.2));
-  border-color:rgba(0,230,118,.55);
-  box-shadow:0 0 26px rgba(0,230,118,.4);
+  border-color:rgba(0,230,118,.55);box-shadow:0 0 26px rgba(0,230,118,.4);
 }
 .file-text{font-family:var(--font-b);font-size:13.5px;font-weight:500;color:var(--dim);line-height:1.45;}
 .file-text b{color:var(--cyan);font-weight:600;}
@@ -438,49 +342,25 @@ html,body{
 .file-name.show{display:inline-block;}
 .file-size{font-family:var(--font-b);font-size:11px;color:var(--mute);margin-top:2px;}
 
-/* ═══════════════════════════════════════════════════════════
-   SUBMIT BUTTON
-═══════════════════════════════════════════════════════════ */
+/* SUBMIT BUTTON */
 .submit-btn{
-  position:relative;
-  display:flex;align-items:center;justify-content:center;gap:10px;
-  width:100%;padding:16px 20px;margin-top:22px;
-  border:none;border-radius:var(--r-sm);
-  font-family:var(--font-d);font-size:14px;font-weight:800;
-  letter-spacing:2px;text-transform:uppercase;
-  color:#05070d;cursor:pointer;overflow:hidden;isolation:isolate;
+  position:relative;display:flex;align-items:center;justify-content:center;gap:10px;
+  width:100%;padding:16px 20px;margin-top:22px;border:none;border-radius:var(--r-sm);
+  font-family:var(--font-d);font-size:14px;font-weight:800;letter-spacing:2px;
+  text-transform:uppercase;color:#05070d;cursor:pointer;overflow:hidden;isolation:isolate;
   background:linear-gradient(135deg, var(--cyan) 0%, var(--cyan-2) 40%, var(--purple) 100%);
   background-size:200% auto;
-  box-shadow:
-    0 10px 30px rgba(0,242,254,.4),
-    0 0 0 1px rgba(0,242,254,.5) inset,
-    0 0 40px rgba(157,0,255,.35);
+  box-shadow:0 10px 30px rgba(0,242,254,.4),0 0 0 1px rgba(0,242,254,.5) inset,0 0 40px rgba(157,0,255,.35);
   transition:all .3s ease;
-  will-change:transform,box-shadow;
   animation:btnPulse 2.6s ease-in-out infinite;
 }
 @keyframes btnPulse{
-  0%,100%{
-    box-shadow:
-      0 10px 30px rgba(0,242,254,.4),
-      0 0 0 1px rgba(0,242,254,.5) inset,
-      0 0 0 0 rgba(0,242,254,.5);
-  }
-  50%{
-    box-shadow:
-      0 14px 40px rgba(0,242,254,.6),
-      0 0 0 1px rgba(0,242,254,.7) inset,
-      0 0 0 14px rgba(0,242,254,0);
-  }
+  0%,100%{box-shadow:0 10px 30px rgba(0,242,254,.4),0 0 0 1px rgba(0,242,254,.5) inset,0 0 0 0 rgba(0,242,254,.5);}
+  50%    {box-shadow:0 14px 40px rgba(0,242,254,.6),0 0 0 1px rgba(0,242,254,.7) inset,0 0 0 14px rgba(0,242,254,0);}
 }
 .submit-btn::after{
-  content:"";
-  position:absolute;top:-50%;left:-60%;
-  width:60%;height:200%;
-  background:linear-gradient(115deg,
-    transparent 0%, rgba(255,255,255,0) 40%,
-    rgba(255,255,255,.55) 50%, rgba(255,255,255,0) 60%,
-    transparent 100%);
+  content:"";position:absolute;top:-50%;left:-60%;width:60%;height:200%;
+  background:linear-gradient(115deg,transparent 0%,rgba(255,255,255,0) 40%,rgba(255,255,255,.55) 50%,rgba(255,255,255,0) 60%,transparent 100%);
   transform:translateX(-100%) skewX(-18deg);
   animation:btnShimmer 4.5s ease-in-out infinite;
   pointer-events:none;z-index:1;
@@ -491,12 +371,8 @@ html,body{
   100% {transform:translateX(150%) skewX(-18deg);}
 }
 .submit-btn:hover:not(:disabled){
-  transform:translateY(-3px);
-  background-position:100% 50%;
-  box-shadow:
-    0 18px 46px rgba(0,242,254,.7),
-    0 0 0 1px rgba(0,242,254,.9) inset,
-    0 0 50px rgba(157,0,255,.6);
+  transform:translateY(-3px);background-position:100% 50%;
+  box-shadow:0 18px 46px rgba(0,242,254,.7),0 0 0 1px rgba(0,242,254,.9) inset,0 0 50px rgba(157,0,255,.6);
 }
 .submit-btn:active:not(:disabled){transform:translateY(-1px) scale(.99);}
 .submit-btn:disabled{cursor:not-allowed;opacity:.75;animation:none;}
@@ -504,89 +380,44 @@ html,body{
 .submit-btn > *{position:relative;z-index:2;}
 .submit-btn .btn-icon{font-size:16px;}
 
-.ripple{
-  position:absolute;border-radius:50%;
-  background:rgba(255,255,255,.55);
-  transform:scale(0);
-  animation:rippleAnim .6s ease-out;
-  pointer-events:none;z-index:1;
-}
+.ripple{position:absolute;border-radius:50%;background:rgba(255,255,255,.55);transform:scale(0);animation:rippleAnim .6s ease-out;pointer-events:none;z-index:1;}
 @keyframes rippleAnim{to{transform:scale(4);opacity:0;}}
-
-.spinner{
-  display:inline-block;width:16px;height:16px;
-  border:2px solid rgba(5,7,13,.3);border-top-color:#05070d;
-  border-radius:50%;animation:spin .7s linear infinite;
-  vertical-align:middle;
-}
+.spinner{display:inline-block;width:16px;height:16px;border:2px solid rgba(5,7,13,.3);border-top-color:#05070d;border-radius:50%;animation:spin .7s linear infinite;vertical-align:middle;}
 @keyframes spin{to{transform:rotate(360deg);}}
 
-/* ═══════════════════════════════════════════════════════════
-   STATUS MESSAGE
-═══════════════════════════════════════════════════════════ */
+/* STATUS */
 .status{
-  display:none;margin-top:16px;padding:13px 16px;
-  border-radius:var(--r-sm);font-family:var(--font-b);
-  font-size:13.5px;font-weight:500;line-height:1.55;
-  align-items:center;gap:10px;
-  animation:statusIn .35s ease;
+  display:none;margin-top:16px;padding:13px 16px;border-radius:var(--r-sm);
+  font-family:var(--font-b);font-size:13.5px;font-weight:500;line-height:1.55;
+  align-items:center;gap:10px;animation:statusIn .35s ease;
 }
 .status.show{display:flex;}
-@keyframes statusIn{
-  from{opacity:0;transform:translateY(-8px);}
-  to{opacity:1;transform:translateY(0);}
-}
+@keyframes statusIn{from{opacity:0;transform:translateY(-8px);}to{opacity:1;transform:translateY(0);}}
 .status .st-ico{font-size:18px;flex-shrink:0;}
-.status.success{
-  background:rgba(0,230,118,.12);border:1px solid rgba(0,230,118,.55);
-  color:#9aebbc;box-shadow:0 0 24px rgba(0,230,118,.3);
-}
+.status.success{background:rgba(0,230,118,.12);border:1px solid rgba(0,230,118,.55);color:#9aebbc;box-shadow:0 0 24px rgba(0,230,118,.3);}
 .status.success .st-ico{color:var(--green);}
-.status.error{
-  background:rgba(255,46,81,.12);border:1px solid rgba(255,46,81,.55);
-  color:#ffb0bd;box-shadow:0 0 24px rgba(255,46,81,.3);
-}
+.status.error{background:rgba(255,46,81,.12);border:1px solid rgba(255,46,81,.55);color:#ffb0bd;box-shadow:0 0 24px rgba(255,46,81,.3);}
 .status.error .st-ico{color:var(--red);}
-.status.loading{
-  background:rgba(0,242,254,.1);border:1px solid rgba(0,242,254,.5);
-  color:#a6eaff;box-shadow:0 0 24px rgba(0,242,254,.3);
-}
+.status.loading{background:rgba(0,242,254,.1);border:1px solid rgba(0,242,254,.5);color:#a6eaff;box-shadow:0 0 24px rgba(0,242,254,.3);}
 
-/* ═══════════════════════════════════════════════════════════
-   FOOTER
-═══════════════════════════════════════════════════════════ */
+/* FOOTER */
 .foot-note{
-  text-align:center;margin-top:26px;
-  font-family:var(--font-b);font-size:12px;
+  text-align:center;margin-top:26px;font-family:var(--font-b);font-size:12px;
   color:var(--dim);line-height:1.7;letter-spacing:.3px;
   text-shadow:0 2px 12px rgba(0,0,0,.9);
 }
 .foot-note b{color:var(--cyan);font-weight:600;}
 
-/* ═══════════════════════════════════════════════════════════
-   🎵 MUSIC TOGGLE BUTTON
-═══════════════════════════════════════════════════════════ */
+/* MUSIC BUTTON */
 #musicToggle{
-  position:fixed;
-  bottom:20px;
-  right:20px;
-  z-index:9999;
-  width:56px;
-  height:56px;
-  border-radius:50%;
+  position:fixed;bottom:20px;right:20px;z-index:9999;
+  width:56px;height:56px;border-radius:50%;
   background:linear-gradient(135deg, rgba(0,242,254,.35), rgba(157,0,255,.35));
   border:2px solid rgba(0,242,254,.75);
-  color:#00f2fe;
-  font-size:22px;
-  cursor:pointer;
-  backdrop-filter:blur(12px);
-  -webkit-backdrop-filter:blur(12px);
-  box-shadow:
-    0 0 22px rgba(0,242,254,.6),
-    0 0 45px rgba(157,0,255,.4);
-  display:flex;
-  align-items:center;
-  justify-content:center;
+  color:#00f2fe;font-size:22px;cursor:pointer;
+  backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);
+  box-shadow:0 0 22px rgba(0,242,254,.6),0 0 45px rgba(157,0,255,.4);
+  display:flex;align-items:center;justify-content:center;
   transition:transform .3s ease,box-shadow .3s ease,background .3s ease;
   animation:musicPulse 2.4s ease-in-out infinite;
   -webkit-tap-highlight-color:transparent;
@@ -595,40 +426,17 @@ html,body{
   0%,100%{box-shadow:0 0 22px rgba(0,242,254,.6),0 0 45px rgba(157,0,255,.4);transform:scale(1);}
   50%    {box-shadow:0 0 34px rgba(0,242,254,.95),0 0 70px rgba(157,0,255,.65);transform:scale(1.05);}
 }
-#musicToggle:hover{
-  transform:scale(1.15);
-  box-shadow:0 0 44px rgba(0,242,254,1),0 0 90px rgba(157,0,255,.75);
-}
+#musicToggle:hover{transform:scale(1.15);box-shadow:0 0 44px rgba(0,242,254,1),0 0 90px rgba(157,0,255,.75);}
 #musicToggle.playing{
   background:linear-gradient(135deg, rgba(0,230,118,.4), rgba(0,242,254,.4));
-  border-color:rgba(0,230,118,.9);
-  color:#00e676;
-}
-#musicToggle.playing::before{
-  content:"";
-  position:absolute;
-  inset:-4px;
-  border-radius:50%;
-  border:2px solid rgba(0,230,118,.6);
-  animation:musicRing 1.6s ease-out infinite;
-}
-@keyframes musicRing{
-  0%  {transform:scale(1);opacity:1;}
-  100%{transform:scale(1.5);opacity:0;}
+  border-color:rgba(0,230,118,.9);color:#00e676;
 }
 
-/* ═══════════════════════════════════════════════════════════
-   RESPONSIVE
-═══════════════════════════════════════════════════════════ */
 @media(min-width:640px){
   .wrap{padding:52px 24px 70px;}
   .glass-card{padding:34px 30px 34px;}
   .brand-name{font-size:26px;letter-spacing:6px;}
   .page-title{font-size:22px;letter-spacing:4px;}
-  .field input[type="text"],
-  .field input[type="email"],
-  .field select,
-  .field textarea{padding:14px 16px;font-size:15px;}
   .submit-btn{padding:18px;font-size:15px;}
   .file-box{padding:28px 20px;}
 }
@@ -638,55 +446,38 @@ html,body{
 }
 
 @media (prefers-reduced-motion: reduce){
-  *,*::before,*::after{
-    animation-duration:.001ms !important;
-    animation-iteration-count:1 !important;
-    transition-duration:.15s !important;
-  }
-  #bgVideo::before{animation:none;}
+  *,*::before,*::after{animation-duration:.001ms !important;animation-iteration-count:1 !important;transition-duration:.15s !important;}
   .submit-btn::after{display:none;}
 }
 </style>
 </head>
 <body>
 
-<!-- 🎬 ANIMATED IMAGE BACKGROUND (video-like) -->
-<div id="bgVideo" aria-hidden="true"></div>
+<!-- 🎬 ANIMATED CSS BACKGROUND (pure CSS, no image needed) -->
+<div id="bgArena" aria-hidden="true">
+  <span class="particle p1"></span>
+  <span class="particle p2"></span>
+  <span class="particle p3"></span>
+  <span class="particle p4"></span>
+  <span class="particle p5"></span>
+</div>
 
-<!-- 📺 Scanline sweep -->
-<div class="scanline" aria-hidden="true"></div>
+<!-- 📺 Scanlines overlay -->
+<div class="scanlines" aria-hidden="true"></div>
 
-<!-- 🌑 DARK OVERLAY -->
+<!-- 🌑 Dark overlay -->
 <div id="bgOverlay" aria-hidden="true"></div>
 
-<!-- 🎵 BACKGROUND MUSIC (auto-generated tone if audio files fail) -->
-<audio
-  id="bgMusic"
-  loop
-  preload="auto"
-  crossorigin="anonymous"
->
-  <!-- Phonk / background music sources — put your own phonk.mp3 in same folder -->
+<!-- 🎵 BACKGROUND MUSIC -->
+<audio id="bgMusic" loop preload="auto">
   <source src="phonk.mp3" type="audio/mpeg" />
   <source src="music.mp3" type="audio/mpeg" />
-  <source src="bg-music.mp3" type="audio/mpeg" />
-  <source src="https://cdn.pixabay.com/download/audio/2022/05/27/audio_1808fbf07a.mp3" type="audio/mpeg" />
 </audio>
 
-<!-- 🎵 Music Toggle Button -->
-<button
-  id="musicToggle"
-  aria-label="Toggle background music"
-  title="Play Music"
-  type="button"
->
+<!-- 🎵 Music Toggle -->
+<button id="musicToggle" aria-label="Toggle background music" title="Play Music" type="button">
   <span id="musicIcon">🔇</span>
 </button>
-
-<!-- 🎨 Ambient neon orbs -->
-<div class="orb c1" aria-hidden="true"></div>
-<div class="orb c2" aria-hidden="true"></div>
-<div class="orb c3" aria-hidden="true"></div>
 
 <main class="wrap">
 
@@ -767,13 +558,11 @@ html,body{
 
 <script>
 /* ═══════════════════════════════════════════════════════════
-   ⚙️  CONFIG — Paste your Google Apps Script Web App URL here
+   ⚙️  CONFIG
 ═══════════════════════════════════════════════════════════ */
 const scriptURL = 'https://script.google.com/macros/s/AKfycbycN2cy2bzEkRAx3Lp64f690Ye1aUD189-xNk4RATrAcyVTPQV8CPAD_4sfQEjMfTZf/exec';
 
-/* ═══════════════════════════════════════════════════════════
-   DOM REFS
-═══════════════════════════════════════════════════════════ */
+/* DOM REFS */
 const form         = document.getElementById('supportForm');
 const fileBox      = document.getElementById('fileBox');
 const fileInput    = document.getElementById('fileInput');
@@ -789,8 +578,7 @@ const statusText   = document.getElementById('statusText');
 let selectedFile = null;
 
 /* ═══════════════════════════════════════════════════════════
-   🎵 MUSIC — SYNTHESIZED PHONK FALLBACK
-   If audio file fails to load, generate phonk beat via Web Audio API
+   🎵 MUSIC — NATIVE MP3 + SYNTHESIZED PHONK FALLBACK
 ═══════════════════════════════════════════════════════════ */
 (function initMusic() {
   const music = document.getElementById('bgMusic');
@@ -800,7 +588,7 @@ let selectedFile = null;
 
   let isPlaying = false;
   let audioCtx = null;
-  let synthNodes = [];
+  let synthStop = null;
   let usingSynth = false;
 
   function updateUI() {
@@ -815,8 +603,7 @@ let selectedFile = null;
     }
   }
 
-  /* 🎹 SYNTHESIZED PHONK BEAT (fallback)
-     Creates a dark bass + kick + hat loop in real time */
+  /* 🎹 SYNTHESIZED PHONK BEAT */
   function startSynthPhonk() {
     if (!audioCtx) {
       const AC = window.AudioContext || window.webkitAudioContext;
@@ -826,10 +613,9 @@ let selectedFile = null;
     if (audioCtx.state === 'suspended') audioCtx.resume();
 
     const masterGain = audioCtx.createGain();
-    masterGain.gain.value = 0.18;
+    masterGain.gain.value = 0.15;
     masterGain.connect(audioCtx.destination);
 
-    // Reverb-ish delay
     const delay = audioCtx.createDelay();
     delay.delayTime.value = 0.28;
     const feedback = audioCtx.createGain();
@@ -839,7 +625,7 @@ let selectedFile = null;
     delay.connect(masterGain);
 
     const bpm = 140;
-    const stepDur = 60 / bpm / 4; // 16th notes
+    const stepDur = 60 / bpm / 4;
     let step = 0;
     let stopped = false;
 
@@ -858,12 +644,13 @@ let selectedFile = null;
       const g = audioCtx.createGain();
       osc.type = 'sawtooth';
       osc.frequency.value = freq;
-      g.gain.setValueAtTime(0.35, t);
+      g.gain.setValueAtTime(0.32, t);
       g.gain.exponentialRampToValueAtTime(0.001, t + len);
       const filter = audioCtx.createBiquadFilter();
       filter.type = 'lowpass';
       filter.frequency.value = 280;
-      osc.connect(filter); filter.connect(g); g.connect(masterGain); g.connect(delay);
+      osc.connect(filter); filter.connect(g);
+      g.connect(masterGain); g.connect(delay);
       osc.start(t); osc.stop(t + len);
     }
     function playHat(t) {
@@ -883,24 +670,18 @@ let selectedFile = null;
       src.start(t); src.stop(t + 0.05);
     }
 
-    // Bass note pattern (A minor phonk)
     const bassNotes = [55, 55, 82.4, 55, 65.4, 55, 73.4, 55];
-
     let nextTime = audioCtx.currentTime + 0.1;
+
     function schedule() {
       if (stopped) return;
       while (nextTime < audioCtx.currentTime + 0.2) {
         const t = nextTime;
-        // Kick on 1, 5, 9, 13 (every beat)
         if (step % 4 === 0) playKick(t);
-        // Hat every 16th, softer on off-beats
         if (step % 2 === 0) playHat(t);
         else if (Math.random() > 0.4) playHat(t);
-        // Bass every 4 steps
         if (step % 8 === 0) playBass(bassNotes[(step / 8) % bassNotes.length], t, stepDur * 6);
-        // Occasional 808 slide
         if (step % 16 === 12) playBass(41.2, t, stepDur * 4);
-
         step++;
         nextTime += stepDur;
       }
@@ -908,24 +689,20 @@ let selectedFile = null;
     }
     schedule();
 
-    synthNodes.push({ stop: () => { stopped = true; } });
+    synthStop = () => { stopped = true; };
     usingSynth = true;
     return true;
   }
 
   function stopSynth() {
-    synthNodes.forEach(n => { try { n.stop(); } catch (e) {} });
-    synthNodes = [];
-    if (audioCtx) {
-      try { audioCtx.suspend(); } catch (e) {}
-    }
+    if (synthStop) { try { synthStop(); } catch (e) {} synthStop = null; }
+    if (audioCtx) { try { audioCtx.suspend(); } catch (e) {} }
     usingSynth = false;
   }
 
-  /* 🎧 TRY NATIVE AUDIO FIRST */
-  function tryNativeAudio() {
+  function tryNative() {
     return new Promise((resolve, reject) => {
-      if (!music) return reject('no audio el');
+      if (!music) return reject('no audio');
       const p = music.play();
       if (p && typeof p.then === 'function') {
         p.then(() => resolve('native')).catch(() => reject('native-failed'));
@@ -936,11 +713,10 @@ let selectedFile = null;
   }
 
   function tryPlay() {
-    tryNativeAudio().then(() => {
+    tryNative().then(() => {
       isPlaying = true;
       updateUI();
     }).catch(() => {
-      // Native audio failed → use synthesized phonk
       if (startSynthPhonk()) {
         isPlaying = true;
         updateUI();
@@ -959,7 +735,6 @@ let selectedFile = null;
     updateUI();
   }
 
-  // Auto-play on first user interaction
   function onFirstInteraction() {
     if (!isPlaying) tryPlay();
     document.removeEventListener('click', onFirstInteraction);
@@ -967,33 +742,24 @@ let selectedFile = null;
     document.removeEventListener('keydown', onFirstInteraction);
   }
 
-  // Try immediate (may be blocked)
   setTimeout(() => { tryPlay(); }, 300);
 
-  // Wait for first tap
   document.addEventListener('click', onFirstInteraction, { once: true });
   document.addEventListener('touchstart', onFirstInteraction, { once: true });
   document.addEventListener('keydown', onFirstInteraction, { once: true });
 
-  // Toggle button
   toggle.addEventListener('click', (e) => {
     e.stopPropagation();
-    if (isPlaying) {
-      stopPlay();
-    } else {
-      tryPlay();
-    }
+    if (isPlaying) stopPlay();
+    else tryPlay();
   });
 
-  // Safety: keep button always visible even if audio fails
   music.addEventListener('error', () => {
     console.warn('🎵 Native audio failed — synthesized fallback will be used');
   }, true);
 })();
 
-/* ═══════════════════════════════════════════════════════════
-   FILE SELECTION
-═══════════════════════════════════════════════════════════ */
+/* FILE HANDLING */
 function humanSize(bytes){
   if (!bytes && bytes !== 0) return '';
   const units = ['B','KB','MB','GB'];
@@ -1001,7 +767,6 @@ function humanSize(bytes){
   while (n >= 1024 && i < units.length - 1){ n /= 1024; i++; }
   return n.toFixed(n < 10 && i > 0 ? 1 : 0) + ' ' + units[i];
 }
-
 function handleFile(file){
   if (!file){
     selectedFile = null;
@@ -1031,34 +796,19 @@ function handleFile(file){
   fileSizeEl.textContent = humanSize(file.size);
   clearStatus();
 }
-
-fileInput.addEventListener('change', (e) => {
-  handleFile(e.target.files && e.target.files[0]);
-});
-
+fileInput.addEventListener('change', (e) => handleFile(e.target.files && e.target.files[0]));
 ['dragenter','dragover'].forEach(evt => {
-  fileBox.addEventListener(evt, (e) => {
-    e.preventDefault(); e.stopPropagation();
-    fileBox.classList.add('dragover');
-  });
+  fileBox.addEventListener(evt, (e) => { e.preventDefault(); e.stopPropagation(); fileBox.classList.add('dragover'); });
 });
 ['dragleave','drop'].forEach(evt => {
-  fileBox.addEventListener(evt, (e) => {
-    e.preventDefault(); e.stopPropagation();
-    fileBox.classList.remove('dragover');
-  });
+  fileBox.addEventListener(evt, (e) => { e.preventDefault(); e.stopPropagation(); fileBox.classList.remove('dragover'); });
 });
 fileBox.addEventListener('drop', (e) => {
   const dt = e.dataTransfer;
-  if (dt && dt.files && dt.files[0]){
-    fileInput.files = dt.files;
-    handleFile(dt.files[0]);
-  }
+  if (dt && dt.files && dt.files[0]){ fileInput.files = dt.files; handleFile(dt.files[0]); }
 });
 
-/* ═══════════════════════════════════════════════════════════
-   STATUS
-═══════════════════════════════════════════════════════════ */
+/* STATUS */
 function showStatus(type, icon, text){
   statusBox.className = 'status show ' + type;
   statusIco.textContent = icon;
@@ -1070,9 +820,7 @@ function clearStatus(){
   statusText.textContent = '';
 }
 
-/* ═══════════════════════════════════════════════════════════
-   RIPPLE
-═══════════════════════════════════════════════════════════ */
+/* RIPPLE */
 submitBtn.addEventListener('click', function(e){
   if (this.disabled) return;
   const rect = this.getBoundingClientRect();
@@ -1088,9 +836,7 @@ submitBtn.addEventListener('click', function(e){
   setTimeout(() => ripple.remove(), 650);
 });
 
-/* ═══════════════════════════════════════════════════════════
-   FILE → BASE64
-═══════════════════════════════════════════════════════════ */
+/* FILE → BASE64 */
 function fileToBase64(file){
   return new Promise((resolve, reject) => {
     const reader = new FileReader();
@@ -1104,9 +850,7 @@ function fileToBase64(file){
   });
 }
 
-/* ═══════════════════════════════════════════════════════════
-   FORM SUBMIT
-═══════════════════════════════════════════════════════════ */
+/* SUBMIT */
 form.addEventListener('submit', async (e) => {
   e.preventDefault();
   clearStatus();
@@ -1116,27 +860,11 @@ form.addEventListener('submit', async (e) => {
   const issueType   = document.getElementById('issueType').value;
   const description = document.getElementById('description').value.trim();
 
-  if (!playerName || playerName.length < 2){
-    showStatus('error', '⚠️', 'Please enter a valid Player Name / In-Game ID.');
-    return;
-  }
-  if (!userContact || userContact.length < 5){
-    showStatus('error', '⚠️', 'Please enter a valid WhatsApp number or email.');
-    return;
-  }
-  if (!issueType){
-    showStatus('error', '⚠️', 'Please select an issue category.');
-    return;
-  }
-  if (!description || description.length < 5){
-    showStatus('error', '⚠️', 'Please describe your issue briefly.');
-    return;
-  }
-  if (!scriptURL || scriptURL === 'YOUR_GOOGLE_APPS_SCRIPT_URL'){
-    showStatus('error', '⚙️', 'Admin endpoint not configured. Please contact support directly.');
-    console.error('❌ scriptURL is not set.');
-    return;
-  }
+  if (!playerName || playerName.length < 2){ showStatus('error', '⚠️', 'Please enter a valid Player Name / In-Game ID.'); return; }
+  if (!userContact || userContact.length < 5){ showStatus('error', '⚠️', 'Please enter a valid WhatsApp number or email.'); return; }
+  if (!issueType){ showStatus('error', '⚠️', 'Please select an issue category.'); return; }
+  if (!description || description.length < 5){ showStatus('error', '⚠️', 'Please describe your issue briefly.'); return; }
+  if (!scriptURL || scriptURL === 'YOUR_GOOGLE_APPS_SCRIPT_URL'){ showStatus('error', '⚙️', 'Admin endpoint not configured.'); return; }
 
   submitBtn.disabled = true;
   const originalLabel = submitLabel.textContent;
@@ -1144,45 +872,29 @@ form.addEventListener('submit', async (e) => {
   showStatus('loading', '🔄', 'Uploading your request, please wait...');
 
   try {
-    let fileData = '';
-    let fileName = '';
-    let mimeType = '';
-
+    let fileData = '', fileName = '', mimeType = '';
     if (selectedFile){
       showStatus('loading', '🔄', 'Converting screenshot...');
       fileData = await fileToBase64(selectedFile);
       fileName = selectedFile.name;
       mimeType = selectedFile.type;
     }
-
     const payload = {
-      playerName,
-      userContact,
-      issueType,
-      description,
-      fileName,
-      mimeType,
-      fileData,
+      playerName, userContact, issueType, description,
+      fileName, mimeType, fileData,
       userAgent: navigator.userAgent,
       submittedAt: new Date().toISOString()
     };
-
     showStatus('loading', '🔄', 'Sending to admin...');
-
     const resp = await fetch(scriptURL, {
       method: 'POST',
       headers: { 'Content-Type': 'text/plain;charset=utf-8' },
       body: JSON.stringify(payload)
     });
-
-    if (!resp.ok){
-      throw new Error('Server responded with ' + resp.status);
-    }
-
+    if (!resp.ok) throw new Error('Server responded with ' + resp.status);
     showStatus('success', '✅', 'Request sent successfully! Admin will contact you within 24 hours.');
     form.reset();
     handleFile(null);
-
   } catch (err){
     console.error('Support submit error:', err);
     showStatus('error', '❌', 'Failed to send: ' + (err.message || 'unknown error') + '. Please try again.');
