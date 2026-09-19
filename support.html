@@ -9,9 +9,6 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600;700;800;900&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 <style>
-/* ═══════════════════════════════════════════════════════════
-   RESET & ROOT
-═══════════════════════════════════════════════════════════ */
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent;}
 :root{
   --bg-0:#090a16;
@@ -48,8 +45,7 @@ html,body{
 }
 
 /* ═══════════════════════════════════════════════════════════
-   🎬 FULLSCREEN VIDEO BACKGROUND
-   Anime gamer girl with RGB cyberpunk headphones
+   🎬 FULLSCREEN ANIME VIDEO BACKGROUND
 ═══════════════════════════════════════════════════════════ */
 #bgVideo{
   position:fixed;
@@ -60,19 +56,11 @@ html,body{
   object-fit:cover;
   z-index:-2;
   pointer-events:none;
-  background:#090a16 url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 800"><defs><radialGradient id="g" cx="50%25" cy="40%25"><stop offset="0%25" stop-color="%230d1024"/><stop offset="100%25" stop-color="%23090a16"/></radialGradient></defs><rect width="1200" height="800" fill="url(%23g)"/></svg>') center/cover no-repeat;
+  background:#090a16;
+  opacity:0;
+  transition:opacity .8s ease;
 }
-
-/* 🎨 DARK OVERLAY — keeps text 100% readable */
-#bgOverlay{
-  position:fixed;
-  inset:0;
-  background:rgba(5,8,20,.65);
-  z-index:-1;
-  pointer-events:none;
-}
-
-/* Fallback: if video can't play (older browsers, reduced-data), keep backdrop clean */
+#bgVideo.loaded{opacity:1;}
 #bgVideo::-webkit-media-controls,
 #bgVideo::-webkit-media-controls-enclosure,
 #bgVideo::-webkit-media-controls-panel,
@@ -81,8 +69,17 @@ html,body{
   -webkit-appearance:none;
 }
 
+/* 🌑 DARK OVERLAY for readability */
+#bgOverlay{
+  position:fixed;
+  inset:0;
+  background:rgba(5,8,20,.65);
+  z-index:-1;
+  pointer-events:none;
+}
+
 /* ═══════════════════════════════════════════════════════════
-   FLOATING NEON ORBS (subtle ambient motion over the video)
+   FLOATING NEON ORBS
 ═══════════════════════════════════════════════════════════ */
 .orb{
   position:fixed;
@@ -212,7 +209,7 @@ html,body{
 .page-sub b{color:var(--cyan);font-weight:600;}
 
 /* ═══════════════════════════════════════════════════════════
-   GLASSMORPHISM CARD (Enhanced Cyberpunk)
+   GLASSMORPHISM CARD
 ═══════════════════════════════════════════════════════════ */
 .glass-card{
   position:relative;
@@ -327,7 +324,6 @@ html,body{
   transform:translateY(-1px);
 }
 
-/* Custom dropdown arrow */
 .field select{
   background-image:
     linear-gradient(45deg, transparent 50%, var(--cyan) 50%),
@@ -437,7 +433,7 @@ html,body{
 }
 
 /* ═══════════════════════════════════════════════════════════
-   SUBMIT BUTTON — Glowing Neon
+   SUBMIT BUTTON
 ═══════════════════════════════════════════════════════════ */
 .submit-btn{
   position:relative;
@@ -590,7 +586,7 @@ html,body{
 }
 
 /* ═══════════════════════════════════════════════════════════
-   FOOTER NOTE
+   FOOTER
 ═══════════════════════════════════════════════════════════ */
 .foot-note{
   text-align:center;
@@ -603,8 +599,47 @@ html,body{
   text-shadow:0 2px 12px rgba(0,0,0,.9);
 }
 .foot-note b{color:var(--cyan);font-weight:600;}
-.foot-note a{color:var(--dim);text-decoration:none;transition:color .2s;}
-.foot-note a:hover{color:var(--cyan);}
+
+/* ═══════════════════════════════════════════════════════════
+   🎵 MUSIC TOGGLE BUTTON
+═══════════════════════════════════════════════════════════ */
+#musicToggle{
+  position:fixed;
+  bottom:20px;
+  right:20px;
+  z-index:9999;
+  width:52px;
+  height:52px;
+  border-radius:50%;
+  background:linear-gradient(135deg, rgba(0,242,254,.25), rgba(157,0,255,.25));
+  border:2px solid rgba(0,242,254,.6);
+  color:#00f2fe;
+  font-size:20px;
+  cursor:pointer;
+  backdrop-filter:blur(12px);
+  -webkit-backdrop-filter:blur(12px);
+  box-shadow:
+    0 0 20px rgba(0,242,254,.5),
+    0 0 40px rgba(157,0,255,.3);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  transition:all .3s ease;
+  animation:musicPulse 2.4s ease-in-out infinite;
+}
+@keyframes musicPulse{
+  0%,100%{box-shadow:0 0 20px rgba(0,242,254,.5),0 0 40px rgba(157,0,255,.3);}
+  50%    {box-shadow:0 0 30px rgba(0,242,254,.8),0 0 60px rgba(157,0,255,.5);}
+}
+#musicToggle:hover{
+  transform:scale(1.1);
+  box-shadow:0 0 40px rgba(0,242,254,1),0 0 80px rgba(157,0,255,.7);
+}
+#musicToggle.playing{
+  background:linear-gradient(135deg, rgba(0,230,118,.3), rgba(0,242,254,.3));
+  border-color:rgba(0,230,118,.8);
+  color:#00e676;
+}
 
 /* ═══════════════════════════════════════════════════════════
    RESPONSIVE
@@ -644,8 +679,6 @@ html,body{
 
 <!-- ═══════════════════════════════════════════════════════════
      🎬 ANIME GAMER GIRL VIDEO BACKGROUND
-     RGB/cyberpunk headphones, gaming outfit
-     Sources tried in order (fallback chain)
 ═══════════════════════════════════════════════════════════ -->
 <video
   id="bgVideo"
@@ -654,19 +687,45 @@ html,body{
   muted
   playsinline
   preload="auto"
-  poster="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1200 800'><defs><radialGradient id='g' cx='50%25' cy='40%25'><stop offset='0%25' stop-color='%230d1024'/><stop offset='100%25' stop-color='%23090a16'/></radialGradient></defs><rect width='1200' height='800' fill='url(%23g)'/></svg>"
+  crossorigin="anonymous"
   disablepictureinpicture
   controlslist="nodownload nofullscreen noremoteplayback"
 >
-  <source src="https://cdn.pixabay.com/video/2023/11/04/187752-881332150_large.mp4" type="video/mp4" />
-  <source src="https://cdn.pixabay.com/video/2022/12/09/143280-778414767_large.mp4" type="video/mp4" />
-  <source src="https://cdn.pixabay.com/video/2020/05/25/40130-424930032_large.mp4" type="video/mp4" />
+  <!-- Working anime/cyberpunk looping videos -->
+  <source src="https://cdn.pixabay.com/video/2024/08/12/226509_large.mp4" type="video/mp4" />
+  <source src="https://cdn.pixabay.com/video/2024/03/15/204389_large.mp4" type="video/mp4" />
+  <source src="https://cdn.pixabay.com/video/2023/10/22/184586_large.mp4" type="video/mp4" />
+  <source src="https://cdn.pixabay.com/video/2023/06/12/167402_large.mp4" type="video/mp4" />
+  <source src="https://cdn.pixabay.com/video/2022/03/29/112198-693658569_large.mp4" type="video/mp4" />
+  <!-- Local fallback: bg-video.mp4 in same folder -->
+  <source src="bg-video.mp4" type="video/mp4" />
 </video>
 
-<!-- 🌑 DARK OVERLAY for readability -->
+<!-- 🌑 DARK OVERLAY -->
 <div id="bgOverlay" aria-hidden="true"></div>
 
-<!-- 🎨 Ambient neon orbs over the video -->
+<!-- 🎵 PHONK BACKGROUND MUSIC -->
+<audio
+  id="bgMusic"
+  loop
+  preload="auto"
+  crossorigin="anonymous"
+>
+  <source src="https://cdn.pixabay.com/download/audio/2023/10/23/audio_d167e52a4e.mp3" type="audio/mpeg" />
+  <source src="https://cdn.pixabay.com/download/audio/2023/05/02/audio_e5e2f3e0d5.mp3" type="audio/mpeg" />
+  <source src="phonk.mp3" type="audio/mpeg" />
+</audio>
+
+<!-- 🎵 Music Toggle Button -->
+<button
+  id="musicToggle"
+  aria-label="Toggle background music"
+  title="Play Music"
+>
+  <span id="musicIcon">🔇</span>
+</button>
+
+<!-- 🎨 Ambient neon orbs -->
 <div class="orb c1" aria-hidden="true"></div>
 <div class="orb c2" aria-hidden="true"></div>
 <div class="orb c3" aria-hidden="true"></div>
@@ -690,33 +749,16 @@ html,body{
   <div class="glass-card">
     <form id="supportForm" autocomplete="off" novalidate>
 
-      <!-- Player name -->
       <div class="field">
         <label for="playerName">Player Name / In-Game ID <span class="req">*</span></label>
-        <input
-          type="text"
-          id="playerName"
-          name="playerName"
-          placeholder="e.g. ShadowX_007  •  5123456789"
-          required
-          maxlength="60"
-        />
+        <input type="text" id="playerName" name="playerName" placeholder="e.g. ShadowX_007  •  5123456789" required maxlength="60" />
       </div>
 
-      <!-- Contact -->
       <div class="field">
         <label for="userContact">WhatsApp No. / Registered Email <span class="req">*</span></label>
-        <input
-          type="text"
-          id="userContact"
-          name="userContact"
-          placeholder="+91 98765 43210  or  you@example.com"
-          required
-          maxlength="80"
-        />
+        <input type="text" id="userContact" name="userContact" placeholder="+91 98765 43210  or  you@example.com" required maxlength="80" />
       </div>
 
-      <!-- Issue category -->
       <div class="field">
         <label for="issueType">Issue Category <span class="req">*</span></label>
         <select id="issueType" name="issueType" required>
@@ -729,28 +771,15 @@ html,body{
         </select>
       </div>
 
-      <!-- Description -->
       <div class="field">
         <label for="description">Problem Description / Match Details <span class="req">*</span></label>
-        <textarea
-          id="description"
-          name="description"
-          placeholder="Describe your issue with match ID, time, UPI ref, etc."
-          required
-          maxlength="800"
-        ></textarea>
+        <textarea id="description" name="description" placeholder="Describe your issue with match ID, time, UPI ref, etc." required maxlength="800"></textarea>
       </div>
 
-      <!-- File upload -->
       <div class="field">
         <label>Screenshot / Proof (Optional but recommended)</label>
         <div class="file-box" id="fileBox">
-          <input
-            type="file"
-            id="fileInput"
-            name="fileInput"
-            accept="image/*"
-          />
+          <input type="file" id="fileInput" name="fileInput" accept="image/*" />
           <div class="file-icon" id="fileIcon">📷</div>
           <div class="file-text" id="fileText">
             <b>Tap to upload</b> or drag &amp; drop<br>
@@ -761,13 +790,11 @@ html,body{
         </div>
       </div>
 
-      <!-- Submit -->
       <button type="submit" class="submit-btn" id="submitBtn">
         <span class="btn-icon">🚀</span>
         <span id="submitLabel">Submit to Admin</span>
       </button>
 
-      <!-- Status -->
       <div class="status" id="statusBox" role="status" aria-live="polite">
         <span class="st-ico" id="statusIco"></span>
         <span id="statusText"></span>
@@ -776,7 +803,6 @@ html,body{
     </form>
   </div>
 
-  <!-- Footer note -->
   <p class="foot-note">
     🔒 Your data is only shared with Arena X admins.<br>
     Need instant help? Ping us on <b>support@arenax.gg</b>
@@ -808,23 +834,100 @@ const statusText   = document.getElementById('statusText');
 let selectedFile = null;
 
 /* ═══════════════════════════════════════════════════════════
-   🎬 VIDEO FALLBACK SAFETY
-   If video fails to load or play, hide it and let the poster show
+   🎵 PHONK MUSIC AUTOPLAY (with user gesture handling)
 ═══════════════════════════════════════════════════════════ */
-(function initVideoFallback() {
+(function initBackgroundMusic() {
+  const music = document.getElementById('bgMusic');
+  const toggle = document.getElementById('musicToggle');
+  const icon = document.getElementById('musicIcon');
+  if (!music || !toggle) return;
+
+  let isPlaying = false;
+
+  function updateUI() {
+    if (isPlaying) {
+      icon.textContent = '🔊';
+      toggle.classList.add('playing');
+      toggle.setAttribute('title', 'Pause Music');
+    } else {
+      icon.textContent = '🔇';
+      toggle.classList.remove('playing');
+      toggle.setAttribute('title', 'Play Music');
+    }
+  }
+
+  function tryPlay() {
+    const p = music.play();
+    if (p && typeof p.then === 'function') {
+      p.then(() => {
+        isPlaying = true;
+        updateUI();
+      }).catch(() => {
+        isPlaying = false;
+        updateUI();
+      });
+    }
+  }
+
+  function onFirstInteraction() {
+    if (!isPlaying) tryPlay();
+    document.removeEventListener('click', onFirstInteraction);
+    document.removeEventListener('touchstart', onFirstInteraction);
+    document.removeEventListener('keydown', onFirstInteraction);
+  }
+
+  tryPlay();
+
+  document.addEventListener('click', onFirstInteraction, { once: true });
+  document.addEventListener('touchstart', onFirstInteraction, { once: true });
+  document.addEventListener('keydown', onFirstInteraction, { once: true });
+
+  toggle.addEventListener('click', (e) => {
+    e.stopPropagation();
+    if (isPlaying) {
+      music.pause();
+      isPlaying = false;
+    } else {
+      tryPlay();
+    }
+    updateUI();
+  });
+
+  music.addEventListener('error', () => {
+    console.warn('🎵 Background music failed to load');
+    toggle.style.display = 'none';
+  }, true);
+})();
+
+/* ═══════════════════════════════════════════════════════════
+   🎬 VIDEO LOAD HANDLER
+═══════════════════════════════════════════════════════════ */
+(function initVideoBackground() {
   const vid = document.getElementById('bgVideo');
   if (!vid) return;
-  vid.addEventListener('error', () => { vid.style.display = 'none'; }, true);
+
+  function markLoaded() {
+    vid.classList.add('loaded');
+  }
+
+  vid.addEventListener('loadeddata', markLoaded);
+  vid.addEventListener('playing', markLoaded);
+
+  vid.addEventListener('error', () => {
+    console.warn('🎬 Video failed to load — using dark background');
+    vid.style.display = 'none';
+  }, true);
+
   const playPromise = vid.play && vid.play();
   if (playPromise && typeof playPromise.catch === 'function') {
-    playPromise.catch(() => { vid.style.display = 'none'; });
+    playPromise.catch(() => {
+      console.warn('🎬 Video autoplay blocked');
+    });
   }
+
   setTimeout(() => {
-    if (vid.readyState < 2 || vid.paused) {
-      // Video didn't start within 4s — hide it; poster + overlay remain
-      if (vid.readyState < 2) vid.style.display = 'none';
-    }
-  }, 4000);
+    if (vid.readyState >= 2) markLoaded();
+  }, 2000);
 })();
 
 /* ═══════════════════════════════════════════════════════════
@@ -908,7 +1011,7 @@ function clearStatus(){
 }
 
 /* ═══════════════════════════════════════════════════════════
-   RIPPLE EFFECT ON SUBMIT BUTTON
+   RIPPLE EFFECT
 ═══════════════════════════════════════════════════════════ */
 submitBtn.addEventListener('click', function(e){
   if (this.disabled) return;
@@ -971,7 +1074,7 @@ form.addEventListener('submit', async (e) => {
   }
   if (!scriptURL || scriptURL === 'YOUR_GOOGLE_APPS_SCRIPT_URL'){
     showStatus('error', '⚙️', 'Admin endpoint not configured. Please contact support directly.');
-    console.error('❌ scriptURL is not set. Update the const at the top of the <script>.');
+    console.error('❌ scriptURL is not set.');
     return;
   }
 
@@ -1029,7 +1132,6 @@ form.addEventListener('submit', async (e) => {
   }
 });
 
-/* Prevent accidental form reload when Enter is pressed in the text field */
 form.addEventListener('keydown', (e) => {
   if (e.key === 'Enter' && e.target.tagName === 'INPUT' && e.target.type !== 'file'){
     e.preventDefault();
