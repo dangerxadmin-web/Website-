@@ -3,487 +3,655 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width,initial-scale=1.0,viewport-fit=cover" />
-<meta name="theme-color" content="#090a16" />
+<meta name="theme-color" content="#070a16" />
 <title>Arena X — Support</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600;700;800;900&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 <style>
+/* ═══════════════════════════════════════════════════════════
+   RESET & BASE
+═══════════════════════════════════════════════════════════ */
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent;}
-:root{
-  --bg-0:#090a16;
-  --glass:rgba(10,14,30,.78);
-  --text:#e8ecf5;
-  --dim:#8b93b0;
-  --mute:#5b6382;
-  --cyan:#00f2fe;
-  --cyan-2:#4facfe;
-  --purple:#9d00ff;
-  --pink:#ff2e88;
-  --green:#00e676;
-  --red:#ff2e51;
-  --font-d:'Orbitron',sans-serif;
-  --font-b:'Poppins',system-ui,sans-serif;
-  --r:18px;
-  --r-sm:12px;
-}
+
 html,body{
   min-height:100%;
-  background:var(--bg-0);
-  color:var(--text);
-  font-family:var(--font-b);
+  background:#070a16;
+  color:#e8ecf5;
+  font-family:'Poppins',system-ui,sans-serif;
   font-size:15px;
   line-height:1.6;
   -webkit-font-smoothing:antialiased;
   overflow-x:hidden;
+  position:relative;
 }
 
 /* ═══════════════════════════════════════════════════════════
-   🎬 ANIMATED CSS BACKGROUND — CYBERPUNK / ANIME VIBE
-   No image needed — pure CSS animation
+   🎬 ANIME GAMER GIRL VIDEO BACKGROUND
+   Fullscreen fixed looping video
 ═══════════════════════════════════════════════════════════ */
-#bgArena{
+#bgVideo{
   position:fixed;
   inset:0;
-  z-index:-3;
-  overflow:hidden;
-  pointer-events:none;
-  background:
-    radial-gradient(circle at 20% 20%, rgba(0,242,254,.15) 0%, transparent 45%),
-    radial-gradient(circle at 80% 80%, rgba(157,0,255,.18) 0%, transparent 45%),
-    radial-gradient(circle at 50% 50%, rgba(255,46,136,.08) 0%, transparent 60%),
-    linear-gradient(180deg, #0a0820 0%, #090a16 50%, #10061f 100%);
-}
-
-/* Animated grid floor (retro-wave / cyberpunk) */
-#bgArena::before{
-  content:"";
-  position:absolute;
-  inset:-20% -20% -40% -20%;
-  background-image:
-    linear-gradient(rgba(0,242,254,.18) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(0,242,254,.18) 1px, transparent 1px);
-  background-size: 60px 60px, 60px 60px;
-  transform:perspective(500px) rotateX(65deg) translateZ(-100px);
-  transform-origin:center bottom;
-  animation:gridMove 8s linear infinite;
-  will-change:transform;
-  mask-image:linear-gradient(180deg, transparent 0%, black 30%, black 80%, transparent 100%);
-  -webkit-mask-image:linear-gradient(180deg, transparent 0%, black 30%, black 80%, transparent 100%);
-}
-@keyframes gridMove{
-  0%  {background-position: 0 0, 0 0;}
-  100%{background-position: 0 60px, 60px 0;}
-}
-
-/* Big pulsing nebula glow (RGB sweep) */
-#bgArena::after{
-  content:"";
-  position:absolute;
-  top:-20%;
-  left:-20%;
-  width:140%;
-  height:140%;
-  background:
-    radial-gradient(circle at 30% 40%, rgba(0,242,254,.35), transparent 30%),
-    radial-gradient(circle at 70% 60%, rgba(157,0,255,.4), transparent 30%),
-    radial-gradient(circle at 50% 80%, rgba(255,46,136,.25), transparent 35%);
-  filter:blur(60px);
-  animation:nebulaFloat 18s ease-in-out infinite alternate;
-  will-change:transform;
-}
-@keyframes nebulaFloat{
-  0%  {transform:translate3d(-3%, -2%, 0) rotate(0deg);}
-  50% {transform:translate3d(4%, 3%, 0) rotate(4deg);}
-  100%{transform:translate3d(-2%, 4%, 0) rotate(-3deg);}
-}
-
-/* Floating neon particles (tiny dots drifting) */
-#bgArena .particle{
-  position:absolute;
-  border-radius:50%;
-  pointer-events:none;
-  will-change:transform,opacity;
-  opacity:0;
-  filter:blur(1px);
-}
-#bgArena .particle.p1{
-  width:6px;height:6px;background:#00f2fe;top:20%;left:10%;
-  box-shadow:0 0 12px #00f2fe;
-  animation:particleDrift1 12s ease-in-out infinite;
-}
-#bgArena .particle.p2{
-  width:4px;height:4px;background:#9d00ff;top:60%;left:80%;
-  box-shadow:0 0 12px #9d00ff;
-  animation:particleDrift2 15s ease-in-out infinite;
-}
-#bgArena .particle.p3{
-  width:5px;height:5px;background:#ff2e88;top:40%;left:30%;
-  box-shadow:0 0 12px #ff2e88;
-  animation:particleDrift3 10s ease-in-out infinite;
-}
-#bgArena .particle.p4{
-  width:4px;height:4px;background:#00f2fe;top:75%;left:20%;
-  box-shadow:0 0 12px #00f2fe;
-  animation:particleDrift1 14s ease-in-out infinite reverse;
-}
-#bgArena .particle.p5{
-  width:5px;height:5px;background:#c471ff;top:15%;left:70%;
-  box-shadow:0 0 12px #c471ff;
-  animation:particleDrift2 13s ease-in-out infinite reverse;
-}
-@keyframes particleDrift1{
-  0%   {transform:translate3d(0,0,0) scale(0.6);opacity:0;}
-  20%  {opacity:.9;}
-  50%  {transform:translate3d(60px,-80px,0) scale(1.2);opacity:1;}
-  80%  {opacity:.6;}
-  100% {transform:translate3d(-30px,-160px,0) scale(0.7);opacity:0;}
-}
-@keyframes particleDrift2{
-  0%   {transform:translate3d(0,0,0) scale(0.5);opacity:0;}
-  30%  {opacity:.85;}
-  60%  {transform:translate3d(-80px,-60px,0) scale(1.1);opacity:1;}
-  100% {transform:translate3d(-40px,-140px,0) scale(0.6);opacity:0;}
-}
-@keyframes particleDrift3{
-  0%   {transform:translate3d(0,0,0) scale(0.7);opacity:0;}
-  25%  {opacity:1;}
-  55%  {transform:translate3d(40px,-100px,0) scale(1.15);opacity:.9;}
-  100% {transform:translate3d(-20px,-180px,0) scale(0.6);opacity:0;}
-}
-
-/* Scanlines overlay */
-.scanlines{
-  position:fixed;
-  inset:0;
+  width:100vw;
+  height:100vh;
+  object-fit:cover;
   z-index:-2;
   pointer-events:none;
-  background:repeating-linear-gradient(
-    0deg,
-    transparent 0px,
-    transparent 2px,
-    rgba(0,242,254,.035) 3px,
-    transparent 4px
-  );
-  animation:scanMove 10s linear infinite;
-  opacity:.7;
+  background:#070a16;
+  opacity:0;
+  transition:opacity 1.5s ease;
 }
-@keyframes scanMove{
-  0%  {transform:translateY(0);}
-  100%{transform:translateY(40px);}
+#bgVideo.loaded{opacity:1;}
+
+/* Hide any native video controls */
+#bgVideo::-webkit-media-controls,
+#bgVideo::-webkit-media-controls-enclosure,
+#bgVideo::-webkit-media-controls-panel,
+#bgVideo::-webkit-media-controls-start-playback-button,
+#bgVideo::-webkit-media-controls-overlay-play-button{
+  display:none !important;
+  -webkit-appearance:none;
+  opacity:0;
 }
 
-/* Dark readability overlay */
+/* ═══════════════════════════════════════════════════════════
+   🌑 DARK TRANSLUCENT OVERLAY
+   Keeps text and inputs 100% readable over the video
+═══════════════════════════════════════════════════════════ */
 #bgOverlay{
   position:fixed;
   inset:0;
+  background:rgba(7,10,22,0.70);
+  backdrop-filter:blur(2px);
+  -webkit-backdrop-filter:blur(2px);
   z-index:-1;
   pointer-events:none;
-  background:
-    linear-gradient(180deg, rgba(5,8,20,.55) 0%, rgba(5,8,20,.4) 50%, rgba(5,8,20,.6) 100%);
 }
 
 /* ═══════════════════════════════════════════════════════════
-   LAYOUT
+   📱 LAYOUT
 ═══════════════════════════════════════════════════════════ */
 .wrap{
   position:relative;
-  z-index:2;
+  z-index:5;
   max-width:680px;
   margin:0 auto;
-  padding:36px 18px 60px;
+  padding:36px 18px 100px;
 }
 
-/* HEADER */
+/* ═══════════════════════════════════════════════════════════
+   HEADER / BRANDING
+═══════════════════════════════════════════════════════════ */
 .brand{
-  display:flex;align-items:center;justify-content:center;
-  gap:10px;margin-bottom:6px;text-decoration:none;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap:10px;
+  margin-bottom:6px;
+  text-decoration:none;
 }
+
 .brand-mark{
-  width:36px;height:36px;border-radius:10px;
-  display:flex;align-items:center;justify-content:center;
-  background:linear-gradient(135deg,var(--cyan),var(--purple));
-  box-shadow:0 0 20px rgba(0,242,254,.45), 0 0 40px rgba(157,0,255,.3);
-  font-family:var(--font-d);font-weight:900;font-size:18px;color:#05070d;
+  width:38px;
+  height:38px;
+  border-radius:10px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  background:linear-gradient(135deg, #00f2fe, #9d00ff);
+  box-shadow:
+    0 0 20px rgba(0,242,254,0.7),
+    0 0 40px rgba(157,0,255,0.5);
+  font-family:'Orbitron',sans-serif;
+  font-weight:900;
+  font-size:19px;
+  color:#070a16;
   animation:markPulse 3s ease-in-out infinite;
 }
+
 @keyframes markPulse{
-  0%,100%{box-shadow:0 0 20px rgba(0,242,254,.45), 0 0 40px rgba(157,0,255,.3);}
-  50%   {box-shadow:0 0 30px rgba(0,242,254,.8), 0 0 60px rgba(157,0,255,.55);}
+  0%,100%{
+    box-shadow:
+      0 0 20px rgba(0,242,254,0.7),
+      0 0 40px rgba(157,0,255,0.5);
+  }
+  50%{
+    box-shadow:
+      0 0 35px rgba(0,242,254,1),
+      0 0 70px rgba(157,0,255,0.8);
+  }
 }
+
 .brand-name{
-  font-family:var(--font-d);font-size:24px;font-weight:900;letter-spacing:5px;
-  background:linear-gradient(120deg,#ffffff 0%,var(--cyan) 30%,var(--purple) 60%,#ffffff 90%);
-  background-size:200% auto;
-  -webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;
-  animation:shineText 5s linear infinite;
+  font-family:'Orbitron',sans-serif;
+  font-size:24px;
+  font-weight:900;
+  letter-spacing:5px;
+  color:#00f2fe;
+  text-shadow:
+    0 0 20px rgba(0,242,254,0.9),
+    0 0 40px rgba(157,0,255,0.6);
 }
-@keyframes shineText{
+
+/* ═══════════════════════════════════════════════════════════
+   📝 ANIMATED PAGE TITLE — Cyan gradient shine
+═══════════════════════════════════════════════════════════ */
+.page-title{
+  text-align:center;
+  font-family:'Orbitron',sans-serif;
+  font-size:22px;
+  font-weight:900;
+  letter-spacing:3.5px;
+  text-transform:uppercase;
+  margin:6px 0 8px;
+  background:linear-gradient(
+    120deg,
+    #ffffff 0%,
+    #00f2fe 25%,
+    #9d00ff 50%,
+    #00f2fe 75%,
+    #ffffff 100%
+  );
+  background-size:220% auto;
+  -webkit-background-clip:text;
+  background-clip:text;
+  -webkit-text-fill-color:transparent;
+  animation:titleShine 5s linear infinite;
+  filter:drop-shadow(0 0 12px rgba(0,242,254,0.5));
+}
+
+@keyframes titleShine{
   0%  {background-position:0% 50%;}
   100%{background-position:200% 50%;}
 }
-.page-title{
-  text-align:center;font-family:var(--font-d);font-size:20px;font-weight:800;
-  letter-spacing:3px;text-transform:uppercase;margin-bottom:8px;
-  background:linear-gradient(120deg,#ffffff 0%,var(--cyan) 40%,var(--purple) 70%,#ffffff 100%);
-  background-size:220% auto;
-  -webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;
-  animation:shineText 6s linear infinite;
-}
-.page-sub{
-  text-align:center;color:var(--dim);font-size:13.5px;font-weight:400;
-  letter-spacing:.3px;margin-bottom:28px;max-width:440px;
-  margin-left:auto;margin-right:auto;line-height:1.65;
-  text-shadow:0 2px 12px rgba(0,0,0,.9);
-}
-.page-sub b{color:var(--cyan);font-weight:600;}
 
-/* GLASS CARD */
+.page-sub{
+  text-align:center;
+  color:#b8c0d8;
+  font-size:13.5px;
+  margin-bottom:28px;
+  max-width:440px;
+  margin-left:auto;
+  margin-right:auto;
+  line-height:1.65;
+  text-shadow:0 2px 8px rgba(0,0,0,0.8);
+}
+
+.page-sub b{
+  color:#00f2fe;
+  font-weight:600;
+  text-shadow:0 0 10px rgba(0,242,254,0.6);
+}
+
+/* ═══════════════════════════════════════════════════════════
+   🧊 GLASSMORPHISM FORM CONTAINER
+   Frosted glass with neon cyan glow
+═══════════════════════════════════════════════════════════ */
 .glass-card{
   position:relative;
-  background:rgba(10,14,30,.78);
-  backdrop-filter:blur(16px) saturate(140%);
-  -webkit-backdrop-filter:blur(16px) saturate(140%);
-  border:1px solid rgba(0,242,254,.4);
-  border-radius:var(--r);
-  padding:26px 22px 28px;
+  background:rgba(12,16,35,0.75);
+  backdrop-filter:blur(14px);
+  -webkit-backdrop-filter:blur(14px);
+  border:1px solid rgba(0,242,254,0.35);
   box-shadow:
-    0 0 25px rgba(0,242,254,.2),
-    0 20px 60px rgba(0,0,0,.7),
-    0 0 40px rgba(0,242,254,.08) inset;
-  overflow:hidden;
-  animation:cardBreath 5s ease-in-out infinite;
+    0 0 30px rgba(0,242,254,0.2),
+    0 20px 60px rgba(0,0,0,0.7),
+    0 0 40px rgba(0,242,254,0.05) inset;
+  border-radius:18px;
+  padding:26px 22px 28px;
+  animation:cardGlow 4s ease-in-out infinite;
 }
-@keyframes cardBreath{
-  0%,100%{box-shadow:0 0 25px rgba(0,242,254,.2),0 20px 60px rgba(0,0,0,.7),0 0 40px rgba(0,242,254,.08) inset;}
-  50%    {box-shadow:0 0 35px rgba(0,242,254,.35),0 20px 60px rgba(0,0,0,.7),0 0 60px rgba(157,0,255,.15) inset;}
-}
-.glass-card::before{
-  content:"";position:absolute;inset:0;border-radius:var(--r);padding:1px;
-  background:linear-gradient(135deg, rgba(0,242,254,.65), rgba(157,0,255,.45) 50%, rgba(0,242,254,.2));
-  -webkit-mask:linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
-  -webkit-mask-composite:xor;mask-composite:exclude;
-  pointer-events:none;opacity:.9;
-}
-.glass-card > *{position:relative;z-index:1;}
 
-/* FORM FIELDS */
-.field{margin-bottom:16px;}
-.field label{
-  display:block;font-family:var(--font-b);font-size:11.5px;font-weight:600;
-  color:var(--dim);text-transform:uppercase;letter-spacing:1.4px;margin-bottom:8px;
+@keyframes cardGlow{
+  0%,100%{
+    box-shadow:
+      0 0 30px rgba(0,242,254,0.2),
+      0 20px 60px rgba(0,0,0,0.7),
+      0 0 40px rgba(0,242,254,0.05) inset;
+  }
+  50%{
+    box-shadow:
+      0 0 50px rgba(0,242,254,0.4),
+      0 20px 60px rgba(0,0,0,0.7),
+      0 0 60px rgba(157,0,255,0.15) inset;
+  }
 }
-.field label .req{color:var(--pink);margin-left:3px;}
+
+.glass-card::before{
+  content:"";
+  position:absolute;
+  top:0;
+  left:0;
+  right:0;
+  height:3px;
+  background:linear-gradient(90deg, #00f2fe, #9d00ff, #ff2e88, #00f2fe);
+  background-size:200% auto;
+  border-radius:18px 18px 0 0;
+  box-shadow:0 0 22px rgba(0,242,254,0.8);
+  animation:topBarShine 3s linear infinite;
+}
+
+@keyframes topBarShine{
+  0%  {background-position:0% 50%;}
+  100%{background-position:200% 50%;}
+}
+
+/* ═══════════════════════════════════════════════════════════
+   FORM FIELDS
+═══════════════════════════════════════════════════════════ */
+.field{margin-bottom:16px;}
+
+.field label{
+  display:block;
+  font-size:11.5px;
+  font-weight:600;
+  color:#8b93b0;
+  text-transform:uppercase;
+  letter-spacing:1.4px;
+  margin-bottom:8px;
+  text-shadow:0 1px 4px rgba(0,0,0,0.6);
+}
+
+.field label .req{color:#ff2e88; margin-left:3px;}
+
 .field input[type="text"],
 .field input[type="email"],
 .field select,
 .field textarea{
-  width:100%;font-family:var(--font-b);font-size:14.5px;font-weight:400;
-  color:var(--text);background:rgba(5,8,20,.72);
-  border:1px solid rgba(0,242,254,.28);border-radius:var(--r-sm);
-  padding:13px 15px;outline:none;
-  transition:all .3s ease;-webkit-appearance:none;appearance:none;
+  width:100%;
+  font-family:'Poppins',sans-serif;
+  font-size:14.5px;
+  color:#e8ecf5;
+  background:rgba(5,8,20,0.8);
+  border:1px solid rgba(0,242,254,0.35);
+  border-radius:12px;
+  padding:13px 15px;
+  outline:none;
+  transition:border-color 0.3s, box-shadow 0.3s, background 0.3s;
+  -webkit-appearance:none;
+  appearance:none;
 }
-.field textarea{min-height:96px;resize:vertical;line-height:1.55;}
-.field input::placeholder,.field textarea::placeholder{color:var(--mute);font-weight:400;}
-.field input:focus,.field select:focus,.field textarea:focus{
-  border-color:var(--cyan);background:rgba(5,8,20,.9);
-  box-shadow:0 0 0 3px rgba(0,242,254,.18),0 0 24px rgba(0,242,254,.5),0 0 50px rgba(157,0,255,.25);
-  transform:translateY(-1px);
+
+.field textarea{
+  min-height:96px;
+  resize:vertical;
+  line-height:1.55;
 }
+
+.field input::placeholder,
+.field textarea::placeholder{
+  color:#5b6382;
+}
+
+/* Focus glow */
+.field input:focus,
+.field select:focus,
+.field textarea:focus{
+  border-color:#00f2fe;
+  background:rgba(5,8,20,0.95);
+  box-shadow:
+    0 0 0 3px rgba(0,242,254,0.2),
+    0 0 24px rgba(0,242,254,0.55),
+    0 0 50px rgba(157,0,255,0.25);
+}
+
+/* Custom dropdown arrow */
 .field select{
   background-image:
-    linear-gradient(45deg, transparent 50%, var(--cyan) 50%),
-    linear-gradient(135deg, var(--cyan) 50%, transparent 50%);
-  background-position:calc(100% - 20px) calc(50% - 3px),calc(100% - 15px) calc(50% - 3px);
-  background-size:5px 5px, 5px 5px;background-repeat:no-repeat;
-  padding-right:42px;cursor:pointer;
+    linear-gradient(45deg, transparent 50%, #00f2fe 50%),
+    linear-gradient(135deg, #00f2fe 50%, transparent 50%);
+  background-position:
+    calc(100% - 20px) calc(50% - 3px),
+    calc(100% - 15px) calc(50% - 3px);
+  background-size:5px 5px;
+  background-repeat:no-repeat;
+  padding-right:42px;
+  cursor:pointer;
 }
-.field select option{background:#0d1024;color:var(--text);padding:10px;}
 
-/* FILE BOX */
+.field select option{
+  background:#0d1024;
+  color:#e8ecf5;
+  padding:10px;
+}
+
+/* ═══════════════════════════════════════════════════════════
+   📎 FILE UPLOAD BOX — Neon dashed border
+═══════════════════════════════════════════════════════════ */
 .file-box{
-  position:relative;display:flex;flex-direction:column;align-items:center;justify-content:center;
-  gap:8px;padding:22px 16px;text-align:center;
-  background:rgba(5,8,20,.6);border:1.5px dashed rgba(0,242,254,.4);
-  border-radius:var(--r-sm);cursor:pointer;transition:all .3s ease;overflow:hidden;
+  position:relative;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  gap:8px;
+  padding:22px 16px;
+  text-align:center;
+  background:rgba(5,8,20,0.7);
+  border:2px dashed rgba(0,242,254,0.5);
+  border-radius:12px;
+  cursor:pointer;
+  transition:border-color 0.3s, background 0.3s, box-shadow 0.3s;
 }
-.file-box:hover{border-color:var(--cyan);background:rgba(0,242,254,.06);box-shadow:0 0 26px rgba(0,242,254,.3);}
+
+.file-box:hover,
 .file-box.dragover{
-  border-color:var(--cyan);background:rgba(0,242,254,.12);
-  box-shadow:0 0 34px rgba(0,242,254,.5), inset 0 0 30px rgba(0,242,254,.1);
-  transform:scale(1.01);
+  border-color:#00f2fe;
+  background:rgba(0,242,254,0.08);
+  box-shadow:0 0 30px rgba(0,242,254,0.3);
 }
+
 .file-box.has-file{
-  border-style:solid;border-color:var(--green);background:rgba(0,230,118,.08);
-  box-shadow:0 0 26px rgba(0,230,118,.3);
+  border-style:solid;
+  border-color:#00e676;
+  background:rgba(0,230,118,0.08);
+  box-shadow:0 0 30px rgba(0,230,118,0.25);
 }
-.file-box input[type="file"]{position:absolute;inset:0;opacity:0;cursor:pointer;width:100%;height:100%;}
+
+.file-box input[type="file"]{
+  position:absolute;
+  top:0;
+  left:0;
+  width:100%;
+  height:100%;
+  opacity:0;
+  cursor:pointer;
+}
+
 .file-icon{
-  width:44px;height:44px;border-radius:12px;
-  display:flex;align-items:center;justify-content:center;font-size:22px;
-  background:linear-gradient(135deg, rgba(0,242,254,.2), rgba(157,0,255,.2));
-  border:1px solid rgba(0,242,254,.4);box-shadow:0 0 22px rgba(0,242,254,.28);
-  transition:transform .3s ease;
+  width:44px;
+  height:44px;
+  border-radius:12px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:22px;
+  background:linear-gradient(135deg, rgba(0,242,254,0.25), rgba(157,0,255,0.25));
+  border:1px solid rgba(0,242,254,0.5);
+  transition:transform 0.3s ease;
 }
-.file-box:hover .file-icon{transform:translateY(-3px) rotate(-4deg);}
-.file-box.has-file .file-icon{
-  background:linear-gradient(135deg, rgba(0,230,118,.25), rgba(0,242,254,.2));
-  border-color:rgba(0,230,118,.55);box-shadow:0 0 26px rgba(0,230,118,.4);
+
+.file-box:hover .file-icon{
+  transform:translateY(-3px) rotate(-4deg);
 }
-.file-text{font-family:var(--font-b);font-size:13.5px;font-weight:500;color:var(--dim);line-height:1.45;}
-.file-text b{color:var(--cyan);font-weight:600;}
+
+.file-text{
+  font-size:13.5px;
+  color:#b8c0d8;
+  line-height:1.45;
+}
+
+.file-text b{
+  color:#00f2fe;
+  font-weight:600;
+}
+
 .file-name{
-  font-family:var(--font-b);font-size:12.5px;color:var(--green);font-weight:600;
-  max-width:100%;word-break:break-all;padding:4px 10px;border-radius:6px;
-  background:rgba(0,230,118,.12);border:1px solid rgba(0,230,118,.35);
-  display:none;margin-top:2px;
+  font-size:12.5px;
+  color:#00e676;
+  font-weight:600;
+  max-width:100%;
+  word-break:break-all;
+  padding:4px 10px;
+  border-radius:6px;
+  background:rgba(0,230,118,0.12);
+  border:1px solid rgba(0,230,118,0.4);
+  display:none;
+  margin-top:2px;
 }
+
 .file-name.show{display:inline-block;}
-.file-size{font-family:var(--font-b);font-size:11px;color:var(--mute);margin-top:2px;}
 
-/* SUBMIT BUTTON */
+.file-size{
+  font-size:11px;
+  color:#5b6382;
+  margin-top:2px;
+}
+
+/* ═══════════════════════════════════════════════════════════
+   🚀 SUBMIT BUTTON — Gaming gradient with pulse
+═══════════════════════════════════════════════════════════ */
 .submit-btn{
-  position:relative;display:flex;align-items:center;justify-content:center;gap:10px;
-  width:100%;padding:16px 20px;margin-top:22px;border:none;border-radius:var(--r-sm);
-  font-family:var(--font-d);font-size:14px;font-weight:800;letter-spacing:2px;
-  text-transform:uppercase;color:#05070d;cursor:pointer;overflow:hidden;isolation:isolate;
-  background:linear-gradient(135deg, var(--cyan) 0%, var(--cyan-2) 40%, var(--purple) 100%);
+  position:relative;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap:10px;
+  width:100%;
+  padding:16px 20px;
+  margin-top:22px;
+  border:none;
+  border-radius:12px;
+  font-family:'Orbitron',sans-serif;
+  font-size:14px;
+  font-weight:800;
+  letter-spacing:2px;
+  text-transform:uppercase;
+  color:#070a16;
+  cursor:pointer;
+  overflow:hidden;
+  background:linear-gradient(135deg, #00f2fe 0%, #4facfe 40%, #9d00ff 100%);
   background-size:200% auto;
-  box-shadow:0 10px 30px rgba(0,242,254,.4),0 0 0 1px rgba(0,242,254,.5) inset,0 0 40px rgba(157,0,255,.35);
-  transition:all .3s ease;
-  animation:btnPulse 2.6s ease-in-out infinite;
+  box-shadow:
+    0 10px 30px rgba(0,242,254,0.5),
+    0 0 0 1px rgba(0,242,254,0.6) inset;
+  transition:transform 0.3s, box-shadow 0.3s, background-position 0.3s;
+  animation:btnGlow 2.6s ease-in-out infinite;
 }
-@keyframes btnPulse{
-  0%,100%{box-shadow:0 10px 30px rgba(0,242,254,.4),0 0 0 1px rgba(0,242,254,.5) inset,0 0 0 0 rgba(0,242,254,.5);}
-  50%    {box-shadow:0 14px 40px rgba(0,242,254,.6),0 0 0 1px rgba(0,242,254,.7) inset,0 0 0 14px rgba(0,242,254,0);}
-}
-.submit-btn::after{
-  content:"";position:absolute;top:-50%;left:-60%;width:60%;height:200%;
-  background:linear-gradient(115deg,transparent 0%,rgba(255,255,255,0) 40%,rgba(255,255,255,.55) 50%,rgba(255,255,255,0) 60%,transparent 100%);
-  transform:translateX(-100%) skewX(-18deg);
-  animation:btnShimmer 4.5s ease-in-out infinite;
-  pointer-events:none;z-index:1;
-}
-@keyframes btnShimmer{
-  0%   {transform:translateX(-150%) skewX(-18deg);}
-  45%  {transform:translateX(150%) skewX(-18deg);}
-  100% {transform:translateX(150%) skewX(-18deg);}
-}
-.submit-btn:hover:not(:disabled){
-  transform:translateY(-3px);background-position:100% 50%;
-  box-shadow:0 18px 46px rgba(0,242,254,.7),0 0 0 1px rgba(0,242,254,.9) inset,0 0 50px rgba(157,0,255,.6);
-}
-.submit-btn:active:not(:disabled){transform:translateY(-1px) scale(.99);}
-.submit-btn:disabled{cursor:not-allowed;opacity:.75;animation:none;}
-.submit-btn:disabled::after{display:none;}
-.submit-btn > *{position:relative;z-index:2;}
-.submit-btn .btn-icon{font-size:16px;}
 
-.ripple{position:absolute;border-radius:50%;background:rgba(255,255,255,.55);transform:scale(0);animation:rippleAnim .6s ease-out;pointer-events:none;z-index:1;}
-@keyframes rippleAnim{to{transform:scale(4);opacity:0;}}
-.spinner{display:inline-block;width:16px;height:16px;border:2px solid rgba(5,7,13,.3);border-top-color:#05070d;border-radius:50%;animation:spin .7s linear infinite;vertical-align:middle;}
+@keyframes btnGlow{
+  0%,100%{
+    box-shadow:
+      0 10px 30px rgba(0,242,254,0.5),
+      0 0 0 1px rgba(0,242,254,0.6) inset,
+      0 0 0 0 rgba(0,242,254,0.5);
+  }
+  50%{
+    box-shadow:
+      0 14px 45px rgba(0,242,254,0.85),
+      0 0 0 1px rgba(0,242,254,0.9) inset,
+      0 0 0 14px rgba(0,242,254,0);
+  }
+}
+
+/* Shimmer sweep */
+.submit-btn::after{
+  content:"";
+  position:absolute;
+  top:0;
+  left:-60%;
+  width:40%;
+  height:100%;
+  background:linear-gradient(
+    115deg,
+    transparent 0%,
+    rgba(255,255,255,0.7) 50%,
+    transparent 100%
+  );
+  transform:skewX(-18deg);
+  animation:btnShimmer 3s ease-in-out infinite;
+  pointer-events:none;
+}
+
+@keyframes btnShimmer{
+  0%   {left:-60%;}
+  50%  {left:120%;}
+  100% {left:120%;}
+}
+
+.submit-btn:hover:not(:disabled){
+  transform:translateY(-3px);
+  background-position:100% 50%;
+  box-shadow:
+    0 18px 50px rgba(0,242,254,0.9),
+    0 0 0 1px rgba(0,242,254,1) inset,
+    0 0 60px rgba(157,0,255,0.7);
+}
+
+.submit-btn:active:not(:disabled){
+  transform:translateY(-1px) scale(0.99);
+}
+
+.submit-btn:disabled{
+  cursor:not-allowed;
+  opacity:0.75;
+  animation:none;
+}
+
+.submit-btn:disabled::after{display:none;}
+
+.submit-btn > *{
+  position:relative;
+  z-index:2;
+}
+
+.btn-icon{font-size:16px;}
+
+/* Loading spinner */
+.spinner{
+  display:inline-block;
+  width:16px;
+  height:16px;
+  border:2px solid rgba(7,10,22,0.3);
+  border-top-color:#070a16;
+  border-radius:50%;
+  animation:spin 0.7s linear infinite;
+  vertical-align:middle;
+}
+
 @keyframes spin{to{transform:rotate(360deg);}}
 
-/* STATUS */
+/* ═══════════════════════════════════════════════════════════
+   STATUS MESSAGE
+═══════════════════════════════════════════════════════════ */
 .status{
-  display:none;margin-top:16px;padding:13px 16px;border-radius:var(--r-sm);
-  font-family:var(--font-b);font-size:13.5px;font-weight:500;line-height:1.55;
-  align-items:center;gap:10px;animation:statusIn .35s ease;
+  display:none;
+  margin-top:16px;
+  padding:13px 16px;
+  border-radius:12px;
+  font-size:13.5px;
+  font-weight:500;
+  line-height:1.55;
+  align-items:center;
+  gap:10px;
+  animation:statusIn 0.35s ease;
 }
+
 .status.show{display:flex;}
-@keyframes statusIn{from{opacity:0;transform:translateY(-8px);}to{opacity:1;transform:translateY(0);}}
-.status .st-ico{font-size:18px;flex-shrink:0;}
-.status.success{background:rgba(0,230,118,.12);border:1px solid rgba(0,230,118,.55);color:#9aebbc;box-shadow:0 0 24px rgba(0,230,118,.3);}
-.status.success .st-ico{color:var(--green);}
-.status.error{background:rgba(255,46,81,.12);border:1px solid rgba(255,46,81,.55);color:#ffb0bd;box-shadow:0 0 24px rgba(255,46,81,.3);}
-.status.error .st-ico{color:var(--red);}
-.status.loading{background:rgba(0,242,254,.1);border:1px solid rgba(0,242,254,.5);color:#a6eaff;box-shadow:0 0 24px rgba(0,242,254,.3);}
 
-/* FOOTER */
+@keyframes statusIn{
+  from{opacity:0; transform:translateY(-8px);}
+  to{opacity:1; transform:translateY(0);}
+}
+
+.status .st-ico{
+  font-size:18px;
+  flex-shrink:0;
+}
+
+.status.success{
+  background:rgba(0,230,118,0.12);
+  border:1px solid rgba(0,230,118,0.6);
+  color:#9aebbc;
+  box-shadow:0 0 30px rgba(0,230,118,0.3);
+}
+
+.status.error{
+  background:rgba(255,46,81,0.12);
+  border:1px solid rgba(255,46,81,0.6);
+  color:#ffb0bd;
+  box-shadow:0 0 30px rgba(255,46,81,0.3);
+}
+
+.status.loading{
+  background:rgba(0,242,254,0.1);
+  border:1px solid rgba(0,242,254,0.6);
+  color:#a6eaff;
+  box-shadow:0 0 30px rgba(0,242,254,0.3);
+}
+
+/* ═══════════════════════════════════════════════════════════
+   FOOTER NOTE
+═══════════════════════════════════════════════════════════ */
 .foot-note{
-  text-align:center;margin-top:26px;font-family:var(--font-b);font-size:12px;
-  color:var(--dim);line-height:1.7;letter-spacing:.3px;
-  text-shadow:0 2px 12px rgba(0,0,0,.9);
-}
-.foot-note b{color:var(--cyan);font-weight:600;}
-
-/* MUSIC BUTTON */
-#musicToggle{
-  position:fixed;bottom:20px;right:20px;z-index:9999;
-  width:56px;height:56px;border-radius:50%;
-  background:linear-gradient(135deg, rgba(0,242,254,.35), rgba(157,0,255,.35));
-  border:2px solid rgba(0,242,254,.75);
-  color:#00f2fe;font-size:22px;cursor:pointer;
-  backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);
-  box-shadow:0 0 22px rgba(0,242,254,.6),0 0 45px rgba(157,0,255,.4);
-  display:flex;align-items:center;justify-content:center;
-  transition:transform .3s ease,box-shadow .3s ease,background .3s ease;
-  animation:musicPulse 2.4s ease-in-out infinite;
-  -webkit-tap-highlight-color:transparent;
-}
-@keyframes musicPulse{
-  0%,100%{box-shadow:0 0 22px rgba(0,242,254,.6),0 0 45px rgba(157,0,255,.4);transform:scale(1);}
-  50%    {box-shadow:0 0 34px rgba(0,242,254,.95),0 0 70px rgba(157,0,255,.65);transform:scale(1.05);}
-}
-#musicToggle:hover{transform:scale(1.15);box-shadow:0 0 44px rgba(0,242,254,1),0 0 90px rgba(157,0,255,.75);}
-#musicToggle.playing{
-  background:linear-gradient(135deg, rgba(0,230,118,.4), rgba(0,242,254,.4));
-  border-color:rgba(0,230,118,.9);color:#00e676;
+  text-align:center;
+  margin-top:26px;
+  font-size:12px;
+  color:#b8c0d8;
+  line-height:1.7;
+  text-shadow:0 2px 8px rgba(0,0,0,0.9);
 }
 
+.foot-note b{
+  color:#00f2fe;
+  font-weight:600;
+  text-shadow:0 0 10px rgba(0,242,254,0.6);
+}
+
+/* ═══════════════════════════════════════════════════════════
+   RESPONSIVE
+═══════════════════════════════════════════════════════════ */
 @media(min-width:640px){
-  .wrap{padding:52px 24px 70px;}
-  .glass-card{padding:34px 30px 34px;}
-  .brand-name{font-size:26px;letter-spacing:6px;}
-  .page-title{font-size:22px;letter-spacing:4px;}
-  .submit-btn{padding:18px;font-size:15px;}
-  .file-box{padding:28px 20px;}
-}
-@media(max-width:380px){
-  .page-title{font-size:17px;letter-spacing:2px;}
-  .brand-name{font-size:20px;letter-spacing:3px;}
+  .wrap{padding:52px 24px 100px;}
+  .glass-card{padding:34px 30px;}
+  .brand-name{font-size:26px; letter-spacing:6px;}
+  .page-title{font-size:26px; letter-spacing:4.5px;}
+  .submit-btn{padding:18px; font-size:15px;}
 }
 
+@media(max-width:380px){
+  .page-title{font-size:18px; letter-spacing:2.5px;}
+  .brand-name{font-size:20px; letter-spacing:4px;}
+}
+
+/* ═══════════════════════════════════════════════════════════
+   REDUCED MOTION — accessibility
+═══════════════════════════════════════════════════════════ */
 @media (prefers-reduced-motion: reduce){
-  *,*::before,*::after{animation-duration:.001ms !important;animation-iteration-count:1 !important;transition-duration:.15s !important;}
+  *,*::before,*::after{
+    animation-duration:0.001ms !important;
+    animation-iteration-count:1 !important;
+    transition-duration:0.15s !important;
+  }
+  #bgVideo{display:none;}
   .submit-btn::after{display:none;}
 }
 </style>
 </head>
 <body>
 
-<!-- 🎬 ANIMATED CSS BACKGROUND (pure CSS, no image needed) -->
-<div id="bgArena" aria-hidden="true">
-  <span class="particle p1"></span>
-  <span class="particle p2"></span>
-  <span class="particle p3"></span>
-  <span class="particle p4"></span>
-  <span class="particle p5"></span>
-</div>
+<!-- ═══════════════════════════════════════════════════════════
+     🎬 ANIME GAMER GIRL VIDEO BACKGROUND
+     Futuristic anime video — looping fullscreen
+═══════════════════════════════════════════════════════════ -->
+<video
+  id="bgVideo"
+  autoplay
+  loop
+  muted
+  playsinline
+  preload="auto"
+  disablepictureinpicture
+  controlslist="nodownload nofullscreen noremoteplayback"
+>
+  <!-- Direct local anime video file -->
+  <source src="gamer-bg.mp4" type="video/mp4" />
+</video>
 
-<!-- 📺 Scanlines overlay -->
-<div class="scanlines" aria-hidden="true"></div>
-
-<!-- 🌑 Dark overlay -->
+<!-- ═══════════════════════════════════════════════════════════
+     🌑 DARK TRANSLUCENT OVERLAY
+═══════════════════════════════════════════════════════════ -->
 <div id="bgOverlay" aria-hidden="true"></div>
 
-<!-- 🎵 BACKGROUND MUSIC -->
-<audio id="bgMusic" loop preload="auto">
-  <source src="phonk.mp3" type="audio/mpeg" />
-  <source src="music.mp3" type="audio/mpeg" />
-</audio>
-
-<!-- 🎵 Music Toggle -->
-<button id="musicToggle" aria-label="Toggle background music" title="Play Music" type="button">
-  <span id="musicIcon">🔇</span>
-</button>
-
+<!-- ═══════════════════════════════════════════════════════════
+     MAIN CONTENT
+═══════════════════════════════════════════════════════════ -->
 <main class="wrap">
 
   <a href="index.html" class="brand">
     <div class="brand-mark">A</div>
-    <div class="brand-name">ARENA&nbsp;X</div>
+    <div class="brand-name">ARENA X</div>
   </a>
 
   <h1 class="page-title">Arena X Support</h1>
@@ -492,6 +660,7 @@ html,body{
     Our team responds within 24 hours.
   </p>
 
+  <!-- 🧊 GLASSMORPHISM FORM -->
   <div class="glass-card">
     <form id="supportForm" autocomplete="off" novalidate>
 
@@ -558,11 +727,13 @@ html,body{
 
 <script>
 /* ═══════════════════════════════════════════════════════════
-   ⚙️  CONFIG
+   ⚙️  CONFIG — Google Apps Script Web App URL
 ═══════════════════════════════════════════════════════════ */
 const scriptURL = 'https://script.google.com/macros/s/AKfycbycN2cy2bzEkRAx3Lp64f690Ye1aUD189-xNk4RATrAcyVTPQV8CPAD_4sfQEjMfTZf/exec';
 
-/* DOM REFS */
+/* ═══════════════════════════════════════════════════════════
+   DOM REFERENCES
+═══════════════════════════════════════════════════════════ */
 const form         = document.getElementById('supportForm');
 const fileBox      = document.getElementById('fileBox');
 const fileInput    = document.getElementById('fileInput');
@@ -578,195 +749,52 @@ const statusText   = document.getElementById('statusText');
 let selectedFile = null;
 
 /* ═══════════════════════════════════════════════════════════
-   🎵 MUSIC — NATIVE MP3 + SYNTHESIZED PHONK FALLBACK
+   🎬 VIDEO BACKGROUND INITIALIZER
 ═══════════════════════════════════════════════════════════ */
-(function initMusic() {
-  const music = document.getElementById('bgMusic');
-  const toggle = document.getElementById('musicToggle');
-  const icon = document.getElementById('musicIcon');
-  if (!toggle || !icon) return;
+(function initVideoBackground() {
+  const vid = document.getElementById('bgVideo');
+  if (!vid) return;
 
-  let isPlaying = false;
-  let audioCtx = null;
-  let synthStop = null;
-  let usingSynth = false;
-
-  function updateUI() {
-    if (isPlaying) {
-      icon.textContent = '🔊';
-      toggle.classList.add('playing');
-      toggle.setAttribute('title', 'Pause Music');
-    } else {
-      icon.textContent = '🔇';
-      toggle.classList.remove('playing');
-      toggle.setAttribute('title', 'Play Music');
-    }
+  function markLoaded() {
+    vid.classList.add('loaded');
   }
 
-  /* 🎹 SYNTHESIZED PHONK BEAT */
-  function startSynthPhonk() {
-    if (!audioCtx) {
-      const AC = window.AudioContext || window.webkitAudioContext;
-      if (!AC) return false;
-      audioCtx = new AC();
-    }
-    if (audioCtx.state === 'suspended') audioCtx.resume();
+  vid.addEventListener('loadeddata', markLoaded);
+  vid.addEventListener('playing', markLoaded);
 
-    const masterGain = audioCtx.createGain();
-    masterGain.gain.value = 0.15;
-    masterGain.connect(audioCtx.destination);
-
-    const delay = audioCtx.createDelay();
-    delay.delayTime.value = 0.28;
-    const feedback = audioCtx.createGain();
-    feedback.gain.value = 0.25;
-    delay.connect(feedback);
-    feedback.connect(delay);
-    delay.connect(masterGain);
-
-    const bpm = 140;
-    const stepDur = 60 / bpm / 4;
-    let step = 0;
-    let stopped = false;
-
-    function playKick(t) {
-      const osc = audioCtx.createOscillator();
-      const g = audioCtx.createGain();
-      osc.frequency.setValueAtTime(140, t);
-      osc.frequency.exponentialRampToValueAtTime(40, t + 0.15);
-      g.gain.setValueAtTime(0.9, t);
-      g.gain.exponentialRampToValueAtTime(0.001, t + 0.22);
-      osc.connect(g); g.connect(masterGain);
-      osc.start(t); osc.stop(t + 0.25);
-    }
-    function playBass(freq, t, len) {
-      const osc = audioCtx.createOscillator();
-      const g = audioCtx.createGain();
-      osc.type = 'sawtooth';
-      osc.frequency.value = freq;
-      g.gain.setValueAtTime(0.32, t);
-      g.gain.exponentialRampToValueAtTime(0.001, t + len);
-      const filter = audioCtx.createBiquadFilter();
-      filter.type = 'lowpass';
-      filter.frequency.value = 280;
-      osc.connect(filter); filter.connect(g);
-      g.connect(masterGain); g.connect(delay);
-      osc.start(t); osc.stop(t + len);
-    }
-    function playHat(t) {
-      const bufferSize = audioCtx.sampleRate * 0.05;
-      const buffer = audioCtx.createBuffer(1, bufferSize, audioCtx.sampleRate);
-      const data = buffer.getChannelData(0);
-      for (let i = 0; i < bufferSize; i++) data[i] = Math.random() * 2 - 1;
-      const src = audioCtx.createBufferSource();
-      src.buffer = buffer;
-      const g = audioCtx.createGain();
-      g.gain.setValueAtTime(0.15, t);
-      g.gain.exponentialRampToValueAtTime(0.001, t + 0.04);
-      const hp = audioCtx.createBiquadFilter();
-      hp.type = 'highpass';
-      hp.frequency.value = 7000;
-      src.connect(hp); hp.connect(g); g.connect(masterGain);
-      src.start(t); src.stop(t + 0.05);
-    }
-
-    const bassNotes = [55, 55, 82.4, 55, 65.4, 55, 73.4, 55];
-    let nextTime = audioCtx.currentTime + 0.1;
-
-    function schedule() {
-      if (stopped) return;
-      while (nextTime < audioCtx.currentTime + 0.2) {
-        const t = nextTime;
-        if (step % 4 === 0) playKick(t);
-        if (step % 2 === 0) playHat(t);
-        else if (Math.random() > 0.4) playHat(t);
-        if (step % 8 === 0) playBass(bassNotes[(step / 8) % bassNotes.length], t, stepDur * 6);
-        if (step % 16 === 12) playBass(41.2, t, stepDur * 4);
-        step++;
-        nextTime += stepDur;
-      }
-      requestAnimationFrame(schedule);
-    }
-    schedule();
-
-    synthStop = () => { stopped = true; };
-    usingSynth = true;
-    return true;
-  }
-
-  function stopSynth() {
-    if (synthStop) { try { synthStop(); } catch (e) {} synthStop = null; }
-    if (audioCtx) { try { audioCtx.suspend(); } catch (e) {} }
-    usingSynth = false;
-  }
-
-  function tryNative() {
-    return new Promise((resolve, reject) => {
-      if (!music) return reject('no audio');
-      const p = music.play();
-      if (p && typeof p.then === 'function') {
-        p.then(() => resolve('native')).catch(() => reject('native-failed'));
-      } else {
-        resolve('native');
-      }
-    });
-  }
-
-  function tryPlay() {
-    tryNative().then(() => {
-      isPlaying = true;
-      updateUI();
-    }).catch(() => {
-      if (startSynthPhonk()) {
-        isPlaying = true;
-        updateUI();
-        console.log('🎵 Using synthesized phonk beat');
-      } else {
-        isPlaying = false;
-        updateUI();
-      }
-    });
-  }
-
-  function stopPlay() {
-    try { music.pause(); } catch (e) {}
-    if (usingSynth) stopSynth();
-    isPlaying = false;
-    updateUI();
-  }
-
-  function onFirstInteraction() {
-    if (!isPlaying) tryPlay();
-    document.removeEventListener('click', onFirstInteraction);
-    document.removeEventListener('touchstart', onFirstInteraction);
-    document.removeEventListener('keydown', onFirstInteraction);
-  }
-
-  setTimeout(() => { tryPlay(); }, 300);
-
-  document.addEventListener('click', onFirstInteraction, { once: true });
-  document.addEventListener('touchstart', onFirstInteraction, { once: true });
-  document.addEventListener('keydown', onFirstInteraction, { once: true });
-
-  toggle.addEventListener('click', (e) => {
-    e.stopPropagation();
-    if (isPlaying) stopPlay();
-    else tryPlay();
-  });
-
-  music.addEventListener('error', () => {
-    console.warn('🎵 Native audio failed — synthesized fallback will be used');
+  vid.addEventListener('error', () => {
+    vid.style.display = 'none';
   }, true);
+
+  const p = vid.play();
+  if (p && typeof p.catch === 'function') {
+    p.catch(() => {
+      const retry = () => {
+        vid.play().catch(() => {});
+        document.removeEventListener('click', retry);
+        document.removeEventListener('touchstart', retry);
+      };
+      document.addEventListener('click', retry, { once: true });
+      document.addEventListener('touchstart', retry, { once: true });
+    });
+  }
 })();
 
-/* FILE HANDLING */
+/* ═══════════════════════════════════════════════════════════
+   FILE HANDLING
+═══════════════════════════════════════════════════════════ */
 function humanSize(bytes){
   if (!bytes && bytes !== 0) return '';
   const units = ['B','KB','MB','GB'];
-  let i = 0, n = bytes;
-  while (n >= 1024 && i < units.length - 1){ n /= 1024; i++; }
+  let i = 0;
+  let n = bytes;
+  while (n >= 1024 && i < units.length - 1){
+    n /= 1024;
+    i++;
+  }
   return n.toFixed(n < 10 && i > 0 ? 1 : 0) + ' ' + units[i];
 }
+
 function handleFile(file){
   if (!file){
     selectedFile = null;
@@ -777,17 +805,20 @@ function handleFile(file){
     fileTextEl.style.display = '';
     return;
   }
+
   if (!file.type.startsWith('image/')){
     showStatus('error', '⚠️', 'Only image files (JPG, PNG) are allowed.');
     fileInput.value = '';
     return;
   }
+
   const MAX = 5 * 1024 * 1024;
   if (file.size > MAX){
     showStatus('error', '⚠️', 'File too large. Max 5 MB allowed.');
     fileInput.value = '';
     return;
   }
+
   selectedFile = file;
   fileBox.classList.add('has-file');
   fileTextEl.style.display = 'none';
@@ -796,53 +827,60 @@ function handleFile(file){
   fileSizeEl.textContent = humanSize(file.size);
   clearStatus();
 }
-fileInput.addEventListener('change', (e) => handleFile(e.target.files && e.target.files[0]));
-['dragenter','dragover'].forEach(evt => {
-  fileBox.addEventListener(evt, (e) => { e.preventDefault(); e.stopPropagation(); fileBox.classList.add('dragover'); });
-});
-['dragleave','drop'].forEach(evt => {
-  fileBox.addEventListener(evt, (e) => { e.preventDefault(); e.stopPropagation(); fileBox.classList.remove('dragover'); });
-});
-fileBox.addEventListener('drop', (e) => {
-  const dt = e.dataTransfer;
-  if (dt && dt.files && dt.files[0]){ fileInput.files = dt.files; handleFile(dt.files[0]); }
+
+fileInput.addEventListener('change', (e) => {
+  handleFile(e.target.files && e.target.files[0]);
 });
 
-/* STATUS */
+/* Drag & drop */
+['dragenter','dragover'].forEach(evt => {
+  fileBox.addEventListener(evt, (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    fileBox.classList.add('dragover');
+  });
+});
+
+['dragleave','drop'].forEach(evt => {
+  fileBox.addEventListener(evt, (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    fileBox.classList.remove('dragover');
+  });
+});
+
+fileBox.addEventListener('drop', (e) => {
+  const dt = e.dataTransfer;
+  if (dt && dt.files && dt.files[0]){
+    fileInput.files = dt.files;
+    handleFile(dt.files[0]);
+  }
+});
+
+/* ═══════════════════════════════════════════════════════════
+   STATUS HELPERS
+═══════════════════════════════════════════════════════════ */
 function showStatus(type, icon, text){
   statusBox.className = 'status show ' + type;
   statusIco.textContent = icon;
   statusText.textContent = text;
 }
+
 function clearStatus(){
   statusBox.className = 'status';
   statusIco.textContent = '';
   statusText.textContent = '';
 }
 
-/* RIPPLE */
-submitBtn.addEventListener('click', function(e){
-  if (this.disabled) return;
-  const rect = this.getBoundingClientRect();
-  const size = Math.max(rect.width, rect.height);
-  const x = e.clientX - rect.left - size / 2;
-  const y = e.clientY - rect.top - size / 2;
-  const ripple = document.createElement('span');
-  ripple.className = 'ripple';
-  ripple.style.width = ripple.style.height = size + 'px';
-  ripple.style.left = x + 'px';
-  ripple.style.top  = y + 'px';
-  this.appendChild(ripple);
-  setTimeout(() => ripple.remove(), 650);
-});
-
-/* FILE → BASE64 */
+/* ═══════════════════════════════════════════════════════════
+   FILE → BASE64
+═══════════════════════════════════════════════════════════ */
 function fileToBase64(file){
   return new Promise((resolve, reject) => {
     const reader = new FileReader();
-    reader.onload  = () => {
+    reader.onload = () => {
       const result = String(reader.result || '');
-      const comma  = result.indexOf(',');
+      const comma = result.indexOf(',');
       resolve(comma >= 0 ? result.slice(comma + 1) : result);
     };
     reader.onerror = () => reject(new Error('File read failed.'));
@@ -850,7 +888,9 @@ function fileToBase64(file){
   });
 }
 
-/* SUBMIT */
+/* ═══════════════════════════════════════════════════════════
+   FORM SUBMIT
+═══════════════════════════════════════════════════════════ */
 form.addEventListener('submit', async (e) => {
   e.preventDefault();
   clearStatus();
@@ -860,11 +900,26 @@ form.addEventListener('submit', async (e) => {
   const issueType   = document.getElementById('issueType').value;
   const description = document.getElementById('description').value.trim();
 
-  if (!playerName || playerName.length < 2){ showStatus('error', '⚠️', 'Please enter a valid Player Name / In-Game ID.'); return; }
-  if (!userContact || userContact.length < 5){ showStatus('error', '⚠️', 'Please enter a valid WhatsApp number or email.'); return; }
-  if (!issueType){ showStatus('error', '⚠️', 'Please select an issue category.'); return; }
-  if (!description || description.length < 5){ showStatus('error', '⚠️', 'Please describe your issue briefly.'); return; }
-  if (!scriptURL || scriptURL === 'YOUR_GOOGLE_APPS_SCRIPT_URL'){ showStatus('error', '⚙️', 'Admin endpoint not configured.'); return; }
+  if (!playerName || playerName.length < 2){
+    showStatus('error', '⚠️', 'Please enter a valid Player Name / In-Game ID.');
+    return;
+  }
+  if (!userContact || userContact.length < 5){
+    showStatus('error', '⚠️', 'Please enter a valid WhatsApp number or email.');
+    return;
+  }
+  if (!issueType){
+    showStatus('error', '⚠️', 'Please select an issue category.');
+    return;
+  }
+  if (!description || description.length < 5){
+    showStatus('error', '⚠️', 'Please describe your issue briefly.');
+    return;
+  }
+  if (!scriptURL || scriptURL === 'YOUR_GOOGLE_APPS_SCRIPT_URL'){
+    showStatus('error', '⚙️', 'Admin endpoint not configured. Please contact support directly.');
+    return;
+  }
 
   submitBtn.disabled = true;
   const originalLabel = submitLabel.textContent;
@@ -872,31 +927,47 @@ form.addEventListener('submit', async (e) => {
   showStatus('loading', '🔄', 'Uploading your request, please wait...');
 
   try {
-    let fileData = '', fileName = '', mimeType = '';
+    let fileData = '';
+    let fileName = '';
+    let mimeType = '';
+
     if (selectedFile){
       showStatus('loading', '🔄', 'Converting screenshot...');
       fileData = await fileToBase64(selectedFile);
       fileName = selectedFile.name;
       mimeType = selectedFile.type;
     }
+
     const payload = {
-      playerName, userContact, issueType, description,
-      fileName, mimeType, fileData,
+      playerName: playerName,
+      userContact: userContact,
+      issueType: issueType,
+      description: description,
+      fileName: fileName,
+      mimeType: mimeType,
+      fileData: fileData,
       userAgent: navigator.userAgent,
       submittedAt: new Date().toISOString()
     };
+
     showStatus('loading', '🔄', 'Sending to admin...');
+
     const resp = await fetch(scriptURL, {
       method: 'POST',
       headers: { 'Content-Type': 'text/plain;charset=utf-8' },
       body: JSON.stringify(payload)
     });
-    if (!resp.ok) throw new Error('Server responded with ' + resp.status);
+
+    if (!resp.ok){
+      throw new Error('Server responded with ' + resp.status);
+    }
+
     showStatus('success', '✅', 'Request sent successfully! Admin will contact you within 24 hours.');
     form.reset();
     handleFile(null);
+
   } catch (err){
-    console.error('Support submit error:', err);
+    console.error('Submit error:', err);
     showStatus('error', '❌', 'Failed to send: ' + (err.message || 'unknown error') + '. Please try again.');
   } finally {
     submitBtn.disabled = false;
@@ -904,6 +975,7 @@ form.addEventListener('submit', async (e) => {
   }
 });
 
+/* Prevent accidental Enter submissions inside single-line inputs */
 form.addEventListener('keydown', (e) => {
   if (e.key === 'Enter' && e.target.tagName === 'INPUT' && e.target.type !== 'file'){
     e.preventDefault();
