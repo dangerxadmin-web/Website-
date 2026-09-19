@@ -17,10 +17,8 @@
   --bg-0:#090a16;
   --bg-1:#0d1024;
   --bg-2:#131730;
-  --glass:rgba(19,23,48,.55);
-  --glass-2:rgba(25,30,60,.42);
-  --stroke:rgba(0,242,254,.22);
-  --stroke-2:rgba(157,0,255,.28);
+  --glass:rgba(10,14,30,.75);
+  --stroke:rgba(0,242,254,.4);
   --text:#e8ecf5;
   --dim:#8b93b0;
   --mute:#5b6382;
@@ -50,29 +48,41 @@ html,body{
 }
 
 /* ═══════════════════════════════════════════════════════════
-   ANIME / GAMING DARK BACKDROP OVERLAY
+   🎬 FULLSCREEN VIDEO BACKGROUND
+   Anime gamer girl with RGB cyberpunk headphones
 ═══════════════════════════════════════════════════════════ */
-body::before{
-  content:"";
+#bgVideo{
+  position:fixed;
+  top:0;
+  left:0;
+  width:100vw;
+  height:100vh;
+  object-fit:cover;
+  z-index:-2;
+  pointer-events:none;
+  background:#090a16 url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 800"><defs><radialGradient id="g" cx="50%25" cy="40%25"><stop offset="0%25" stop-color="%230d1024"/><stop offset="100%25" stop-color="%23090a16"/></radialGradient></defs><rect width="1200" height="800" fill="url(%23g)"/></svg>') center/cover no-repeat;
+}
+
+/* 🎨 DARK OVERLAY — keeps text 100% readable */
+#bgOverlay{
   position:fixed;
   inset:0;
-  z-index:0;
+  background:rgba(5,8,20,.65);
+  z-index:-1;
   pointer-events:none;
-  background:
-    /* dark vignette */
-    radial-gradient(ellipse at 50% 0%, rgba(0,242,254,.05), transparent 55%),
-    radial-gradient(ellipse at 50% 100%, rgba(157,0,255,.06), transparent 55%),
-    /* subtle grid lines */
-    linear-gradient(rgba(0,242,254,.035) 1px, transparent 1px) 0 0 / 44px 44px,
-    linear-gradient(90deg, rgba(157,0,255,.035) 1px, transparent 1px) 0 0 / 44px 44px,
-    /* base */
-    linear-gradient(180deg, #090a16 0%, #0a0c1e 55%, #090a16 100%);
-  mask-image:radial-gradient(ellipse at 50% 40%, #000 40%, transparent 100%);
-  -webkit-mask-image:radial-gradient(ellipse at 50% 40%, #000 40%, transparent 100%);
+}
+
+/* Fallback: if video can't play (older browsers, reduced-data), keep backdrop clean */
+#bgVideo::-webkit-media-controls,
+#bgVideo::-webkit-media-controls-enclosure,
+#bgVideo::-webkit-media-controls-panel,
+#bgVideo::-webkit-media-controls-start-playback-button{
+  display:none !important;
+  -webkit-appearance:none;
 }
 
 /* ═══════════════════════════════════════════════════════════
-   FLOATING NEON ORBS
+   FLOATING NEON ORBS (subtle ambient motion over the video)
 ═══════════════════════════════════════════════════════════ */
 .orb{
   position:fixed;
@@ -80,8 +90,9 @@ body::before{
   pointer-events:none;
   z-index:0;
   filter:blur(70px);
-  opacity:.55;
+  opacity:.5;
   will-change:transform,opacity;
+  mix-blend-mode:screen;
 }
 .orb.c1{
   width:340px;height:340px;
@@ -100,12 +111,6 @@ body::before{
   background:radial-gradient(circle, rgba(255,46,136,.7), rgba(255,46,136,0) 70%);
   bottom:-100px;left:25%;
   animation:orbFloat3 22s ease-in-out infinite;
-}
-.orb.c4{
-  width:220px;height:220px;
-  background:radial-gradient(circle, rgba(0,242,254,.7), rgba(0,242,254,0) 70%);
-  top:60%;left:8%;
-  animation:orbFloat1 18s ease-in-out infinite reverse;
 }
 @keyframes orbFloat1{
   0%,100%{transform:translate3d(0,0,0) scale(1);opacity:.5;}
@@ -202,25 +207,42 @@ body::before{
   margin-left:auto;
   margin-right:auto;
   line-height:1.65;
+  text-shadow:0 2px 12px rgba(0,0,0,.8);
 }
 .page-sub b{color:var(--cyan);font-weight:600;}
 
 /* ═══════════════════════════════════════════════════════════
-   GLASSMORPHISM CARD
+   GLASSMORPHISM CARD (Enhanced Cyberpunk)
 ═══════════════════════════════════════════════════════════ */
 .glass-card{
   position:relative;
-  background:linear-gradient(160deg, var(--glass), var(--glass-2));
-  backdrop-filter:blur(22px) saturate(140%);
-  -webkit-backdrop-filter:blur(22px) saturate(140%);
+  background:rgba(10,14,30,.75);
+  backdrop-filter:blur(14px) saturate(140%);
+  -webkit-backdrop-filter:blur(14px) saturate(140%);
+  border:1px solid rgba(0,242,254,.4);
   border-radius:var(--r);
   padding:26px 22px 28px;
   box-shadow:
-    0 20px 60px rgba(0,0,0,.6),
-    0 0 0 1px rgba(0,242,254,.18),
-    0 0 40px rgba(0,242,254,.06) inset,
-    0 0 60px rgba(157,0,255,.08) inset;
+    0 0 25px rgba(0,242,254,.2),
+    0 20px 60px rgba(0,0,0,.7),
+    0 0 40px rgba(0,242,254,.08) inset,
+    0 0 60px rgba(157,0,255,.06) inset;
   overflow:hidden;
+  animation:cardBreath 5s ease-in-out infinite;
+}
+@keyframes cardBreath{
+  0%,100%{
+    box-shadow:
+      0 0 25px rgba(0,242,254,.2),
+      0 20px 60px rgba(0,0,0,.7),
+      0 0 40px rgba(0,242,254,.08) inset;
+  }
+  50%{
+    box-shadow:
+      0 0 35px rgba(0,242,254,.35),
+      0 20px 60px rgba(0,0,0,.7),
+      0 0 60px rgba(157,0,255,.15) inset;
+  }
 }
 .glass-card::before{
   content:"";
@@ -228,19 +250,19 @@ body::before{
   inset:0;
   border-radius:var(--r);
   padding:1px;
-  background:linear-gradient(135deg, rgba(0,242,254,.55), rgba(157,0,255,.35) 50%, rgba(0,242,254,.15));
+  background:linear-gradient(135deg, rgba(0,242,254,.65), rgba(157,0,255,.45) 50%, rgba(0,242,254,.2));
   -webkit-mask:linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
   -webkit-mask-composite:xor;
   mask-composite:exclude;
   pointer-events:none;
-  opacity:.85;
+  opacity:.9;
 }
 .glass-card::after{
   content:"";
   position:absolute;
   top:-50%;left:-50%;
   width:200%;height:60%;
-  background:radial-gradient(ellipse at center, rgba(0,242,254,.1), transparent 60%);
+  background:radial-gradient(ellipse at center, rgba(0,242,254,.12), transparent 60%);
   pointer-events:none;
   animation:cardGlow 8s ease-in-out infinite;
 }
@@ -275,14 +297,15 @@ body::before{
   font-size:14.5px;
   font-weight:400;
   color:var(--text);
-  background:rgba(9,10,22,.6);
-  border:1px solid rgba(0,242,254,.16);
+  background:rgba(5,8,20,.72);
+  border:1px solid rgba(0,242,254,.28);
   border-radius:var(--r-sm);
   padding:13px 15px;
   outline:none;
   transition:all .3s ease;
   -webkit-appearance:none;
   appearance:none;
+  box-shadow:0 0 0 0 rgba(0,242,254,0);
 }
 .field textarea{
   min-height:96px;
@@ -296,8 +319,12 @@ body::before{
 .field select:focus,
 .field textarea:focus{
   border-color:var(--cyan);
-  background:rgba(9,10,22,.85);
-  box-shadow:0 0 0 3px rgba(0,242,254,.13), 0 0 22px rgba(0,242,254,.28);
+  background:rgba(5,8,20,.9);
+  box-shadow:
+    0 0 0 3px rgba(0,242,254,.18),
+    0 0 24px rgba(0,242,254,.5),
+    0 0 50px rgba(157,0,255,.25);
+  transform:translateY(-1px);
 }
 
 /* Custom dropdown arrow */
@@ -331,8 +358,8 @@ body::before{
   gap:8px;
   padding:22px 16px;
   text-align:center;
-  background:rgba(9,10,22,.55);
-  border:1.5px dashed rgba(0,242,254,.35);
+  background:rgba(5,8,20,.6);
+  border:1.5px dashed rgba(0,242,254,.4);
   border-radius:var(--r-sm);
   cursor:pointer;
   transition:all .3s ease;
@@ -340,20 +367,20 @@ body::before{
 }
 .file-box:hover{
   border-color:var(--cyan);
-  background:rgba(0,242,254,.05);
-  box-shadow:0 0 24px rgba(0,242,254,.18);
+  background:rgba(0,242,254,.06);
+  box-shadow:0 0 26px rgba(0,242,254,.3);
 }
 .file-box.dragover{
   border-color:var(--cyan);
-  background:rgba(0,242,254,.1);
-  box-shadow:0 0 30px rgba(0,242,254,.35), inset 0 0 30px rgba(0,242,254,.1);
+  background:rgba(0,242,254,.12);
+  box-shadow:0 0 34px rgba(0,242,254,.5), inset 0 0 30px rgba(0,242,254,.1);
   transform:scale(1.01);
 }
 .file-box.has-file{
   border-style:solid;
   border-color:var(--green);
-  background:rgba(0,230,118,.06);
-  box-shadow:0 0 22px rgba(0,230,118,.22);
+  background:rgba(0,230,118,.08);
+  box-shadow:0 0 26px rgba(0,230,118,.3);
 }
 .file-box input[type="file"]{
   position:absolute;
@@ -368,16 +395,16 @@ body::before{
   border-radius:12px;
   display:flex;align-items:center;justify-content:center;
   font-size:22px;
-  background:linear-gradient(135deg, rgba(0,242,254,.18), rgba(157,0,255,.18));
-  border:1px solid rgba(0,242,254,.3);
-  box-shadow:0 0 20px rgba(0,242,254,.2);
+  background:linear-gradient(135deg, rgba(0,242,254,.2), rgba(157,0,255,.2));
+  border:1px solid rgba(0,242,254,.4);
+  box-shadow:0 0 22px rgba(0,242,254,.28);
   transition:transform .3s ease;
 }
 .file-box:hover .file-icon{transform:translateY(-3px) rotate(-4deg);}
 .file-box.has-file .file-icon{
-  background:linear-gradient(135deg, rgba(0,230,118,.22), rgba(0,242,254,.18));
-  border-color:rgba(0,230,118,.5);
-  box-shadow:0 0 22px rgba(0,230,118,.35);
+  background:linear-gradient(135deg, rgba(0,230,118,.25), rgba(0,242,254,.2));
+  border-color:rgba(0,230,118,.55);
+  box-shadow:0 0 26px rgba(0,230,118,.4);
 }
 .file-text{
   font-family:var(--font-b);
@@ -396,8 +423,8 @@ body::before{
   word-break:break-all;
   padding:4px 10px;
   border-radius:6px;
-  background:rgba(0,230,118,.1);
-  border:1px solid rgba(0,230,118,.28);
+  background:rgba(0,230,118,.12);
+  border:1px solid rgba(0,230,118,.35);
   display:none;
   margin-top:2px;
 }
@@ -410,7 +437,7 @@ body::before{
 }
 
 /* ═══════════════════════════════════════════════════════════
-   SUBMIT BUTTON
+   SUBMIT BUTTON — Glowing Neon
 ═══════════════════════════════════════════════════════════ */
 .submit-btn{
   position:relative;
@@ -435,9 +462,9 @@ body::before{
   background:linear-gradient(135deg, var(--cyan) 0%, var(--cyan-2) 40%, var(--purple) 100%);
   background-size:200% auto;
   box-shadow:
-    0 10px 30px rgba(0,242,254,.35),
+    0 10px 30px rgba(0,242,254,.4),
     0 0 0 1px rgba(0,242,254,.5) inset,
-    0 0 40px rgba(157,0,255,.3);
+    0 0 40px rgba(157,0,255,.35);
   transition:all .3s ease;
   will-change:transform,box-shadow;
   animation:btnPulse 2.6s ease-in-out infinite;
@@ -445,13 +472,13 @@ body::before{
 @keyframes btnPulse{
   0%,100%{
     box-shadow:
-      0 10px 30px rgba(0,242,254,.35),
+      0 10px 30px rgba(0,242,254,.4),
       0 0 0 1px rgba(0,242,254,.5) inset,
       0 0 0 0 rgba(0,242,254,.5);
   }
   50%{
     box-shadow:
-      0 14px 40px rgba(0,242,254,.55),
+      0 14px 40px rgba(0,242,254,.6),
       0 0 0 1px rgba(0,242,254,.7) inset,
       0 0 0 14px rgba(0,242,254,0);
   }
@@ -481,9 +508,9 @@ body::before{
   transform:translateY(-3px);
   background-position:100% 50%;
   box-shadow:
-    0 18px 46px rgba(0,242,254,.65),
+    0 18px 46px rgba(0,242,254,.7),
     0 0 0 1px rgba(0,242,254,.9) inset,
-    0 0 50px rgba(157,0,255,.55);
+    0 0 50px rgba(157,0,255,.6);
 }
 .submit-btn:active:not(:disabled){transform:translateY(-1px) scale(.99);}
 .submit-btn:disabled{
@@ -495,7 +522,6 @@ body::before{
 .submit-btn > *{position:relative;z-index:2;}
 .submit-btn .btn-icon{font-size:16px;}
 
-/* Ripple effect */
 .ripple{
   position:absolute;
   border-radius:50%;
@@ -509,7 +535,6 @@ body::before{
   to{transform:scale(4);opacity:0;}
 }
 
-/* Loading spinner */
 .spinner{
   display:inline-block;
   width:16px;height:16px;
@@ -544,24 +569,24 @@ body::before{
 }
 .status .st-ico{font-size:18px;flex-shrink:0;}
 .status.success{
-  background:rgba(0,230,118,.1);
-  border:1px solid rgba(0,230,118,.5);
+  background:rgba(0,230,118,.12);
+  border:1px solid rgba(0,230,118,.55);
   color:#9aebbc;
-  box-shadow:0 0 24px rgba(0,230,118,.25);
+  box-shadow:0 0 24px rgba(0,230,118,.3);
 }
 .status.success .st-ico{color:var(--green);}
 .status.error{
-  background:rgba(255,46,81,.1);
-  border:1px solid rgba(255,46,81,.5);
+  background:rgba(255,46,81,.12);
+  border:1px solid rgba(255,46,81,.55);
   color:#ffb0bd;
-  box-shadow:0 0 24px rgba(255,46,81,.25);
+  box-shadow:0 0 24px rgba(255,46,81,.3);
 }
 .status.error .st-ico{color:var(--red);}
 .status.loading{
-  background:rgba(0,242,254,.08);
-  border:1px solid rgba(0,242,254,.45);
+  background:rgba(0,242,254,.1);
+  border:1px solid rgba(0,242,254,.5);
   color:#a6eaff;
-  box-shadow:0 0 24px rgba(0,242,254,.25);
+  box-shadow:0 0 24px rgba(0,242,254,.3);
 }
 
 /* ═══════════════════════════════════════════════════════════
@@ -572,9 +597,10 @@ body::before{
   margin-top:26px;
   font-family:var(--font-b);
   font-size:12px;
-  color:var(--mute);
+  color:var(--dim);
   line-height:1.7;
   letter-spacing:.3px;
+  text-shadow:0 2px 12px rgba(0,0,0,.9);
 }
 .foot-note b{color:var(--cyan);font-weight:600;}
 .foot-note a{color:var(--dim);text-decoration:none;transition:color .2s;}
@@ -610,16 +636,40 @@ body::before{
     transition-duration:.15s !important;
   }
   .submit-btn::after{display:none;}
+  #bgVideo{display:none;}
 }
 </style>
 </head>
 <body>
 
-<!-- Floating neon orbs -->
+<!-- ═══════════════════════════════════════════════════════════
+     🎬 ANIME GAMER GIRL VIDEO BACKGROUND
+     RGB/cyberpunk headphones, gaming outfit
+     Sources tried in order (fallback chain)
+═══════════════════════════════════════════════════════════ -->
+<video
+  id="bgVideo"
+  autoplay
+  loop
+  muted
+  playsinline
+  preload="auto"
+  poster="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1200 800'><defs><radialGradient id='g' cx='50%25' cy='40%25'><stop offset='0%25' stop-color='%230d1024'/><stop offset='100%25' stop-color='%23090a16'/></radialGradient></defs><rect width='1200' height='800' fill='url(%23g)'/></svg>"
+  disablepictureinpicture
+  controlslist="nodownload nofullscreen noremoteplayback"
+>
+  <source src="https://cdn.pixabay.com/video/2023/11/04/187752-881332150_large.mp4" type="video/mp4" />
+  <source src="https://cdn.pixabay.com/video/2022/12/09/143280-778414767_large.mp4" type="video/mp4" />
+  <source src="https://cdn.pixabay.com/video/2020/05/25/40130-424930032_large.mp4" type="video/mp4" />
+</video>
+
+<!-- 🌑 DARK OVERLAY for readability -->
+<div id="bgOverlay" aria-hidden="true"></div>
+
+<!-- 🎨 Ambient neon orbs over the video -->
 <div class="orb c1" aria-hidden="true"></div>
 <div class="orb c2" aria-hidden="true"></div>
 <div class="orb c3" aria-hidden="true"></div>
-<div class="orb c4" aria-hidden="true"></div>
 
 <main class="wrap">
 
@@ -738,7 +788,7 @@ body::before{
 /* ═══════════════════════════════════════════════════════════
    ⚙️  CONFIG — Paste your Google Apps Script Web App URL here
 ═══════════════════════════════════════════════════════════ */
-const scriptURL = 'https://script.google.com/macros/s/AKfycbwjCre4OKDbtkk0ZXYdCphP1rev9WPVoiXLM1OBHw9mTkE_JmkZyT8eiuWnNI9FiZ1e/exec';
+const scriptURL = 'https://script.google.com/macros/s/AKfycbycN2cy2bzEkRAx3Lp64f690Ye1aUD189-xNk4RATrAcyVTPQV8CPAD_4sfQEjMfTZf/exec';
 
 /* ═══════════════════════════════════════════════════════════
    DOM REFS
@@ -756,6 +806,26 @@ const statusIco    = document.getElementById('statusIco');
 const statusText   = document.getElementById('statusText');
 
 let selectedFile = null;
+
+/* ═══════════════════════════════════════════════════════════
+   🎬 VIDEO FALLBACK SAFETY
+   If video fails to load or play, hide it and let the poster show
+═══════════════════════════════════════════════════════════ */
+(function initVideoFallback() {
+  const vid = document.getElementById('bgVideo');
+  if (!vid) return;
+  vid.addEventListener('error', () => { vid.style.display = 'none'; }, true);
+  const playPromise = vid.play && vid.play();
+  if (playPromise && typeof playPromise.catch === 'function') {
+    playPromise.catch(() => { vid.style.display = 'none'; });
+  }
+  setTimeout(() => {
+    if (vid.readyState < 2 || vid.paused) {
+      // Video didn't start within 4s — hide it; poster + overlay remain
+      if (vid.readyState < 2) vid.style.display = 'none';
+    }
+  }, 4000);
+})();
 
 /* ═══════════════════════════════════════════════════════════
    FILE SELECTION HANDLING
@@ -778,13 +848,11 @@ function handleFile(file){
     fileTextEl.style.display = '';
     return;
   }
-  // Validate type
   if (!file.type.startsWith('image/')){
     showStatus('error', '⚠️', 'Only image files (JPG, PNG) are allowed.');
     fileInput.value = '';
     return;
   }
-  // Validate size (5 MB)
   const MAX = 5 * 1024 * 1024;
   if (file.size > MAX){
     showStatus('error', '⚠️', 'File too large. Max 5 MB allowed.');
@@ -805,7 +873,6 @@ fileInput.addEventListener('change', (e) => {
   handleFile(e.target.files && e.target.files[0]);
 });
 
-/* Drag & drop */
 ['dragenter','dragover'].forEach(evt => {
   fileBox.addEventListener(evt, (e) => {
     e.preventDefault(); e.stopPropagation();
@@ -865,7 +932,6 @@ function fileToBase64(file){
   return new Promise((resolve, reject) => {
     const reader = new FileReader();
     reader.onload  = () => {
-      // Strip "data:<mime>;base64," prefix
       const result = String(reader.result || '');
       const comma  = result.indexOf(',');
       resolve(comma >= 0 ? result.slice(comma + 1) : result);
@@ -882,7 +948,6 @@ form.addEventListener('submit', async (e) => {
   e.preventDefault();
   clearStatus();
 
-  // Basic manual validation
   const playerName  = document.getElementById('playerName').value.trim();
   const userContact = document.getElementById('userContact').value.trim();
   const issueType   = document.getElementById('issueType').value;
@@ -904,15 +969,12 @@ form.addEventListener('submit', async (e) => {
     showStatus('error', '⚠️', 'Please describe your issue briefly.');
     return;
   }
-
-  // Check scriptURL is configured
   if (!scriptURL || scriptURL === 'YOUR_GOOGLE_APPS_SCRIPT_URL'){
     showStatus('error', '⚙️', 'Admin endpoint not configured. Please contact support directly.');
     console.error('❌ scriptURL is not set. Update the const at the top of the <script>.');
     return;
   }
 
-  // Lock the button
   submitBtn.disabled = true;
   const originalLabel = submitLabel.textContent;
   submitLabel.innerHTML = '<span class="spinner"></span> Sending...';
@@ -937,7 +999,7 @@ form.addEventListener('submit', async (e) => {
       description,
       fileName,
       mimeType,
-      fileData,       // base64 string (empty if no file)
+      fileData,
       userAgent: navigator.userAgent,
       submittedAt: new Date().toISOString()
     };
@@ -946,8 +1008,6 @@ form.addEventListener('submit', async (e) => {
 
     const resp = await fetch(scriptURL, {
       method: 'POST',
-      // Using text/plain avoids CORS preflight issues with Apps Script.
-      // Apps Script still receives the body as a JSON string.
       headers: { 'Content-Type': 'text/plain;charset=utf-8' },
       body: JSON.stringify(payload)
     });
@@ -973,7 +1033,6 @@ form.addEventListener('submit', async (e) => {
 form.addEventListener('keydown', (e) => {
   if (e.key === 'Enter' && e.target.tagName === 'INPUT' && e.target.type !== 'file'){
     e.preventDefault();
-    // Optionally, could submit here. For now, just prevent reload.
   }
 });
 </script>
