@@ -1,0 +1,982 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1.0,viewport-fit=cover" />
+<meta name="theme-color" content="#090a16" />
+<title>Arena X — Support</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600;700;800;900&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+/* ═══════════════════════════════════════════════════════════
+   RESET & ROOT
+═══════════════════════════════════════════════════════════ */
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent;}
+:root{
+  --bg-0:#090a16;
+  --bg-1:#0d1024;
+  --bg-2:#131730;
+  --glass:rgba(19,23,48,.55);
+  --glass-2:rgba(25,30,60,.42);
+  --stroke:rgba(0,242,254,.22);
+  --stroke-2:rgba(157,0,255,.28);
+  --text:#e8ecf5;
+  --dim:#8b93b0;
+  --mute:#5b6382;
+  --cyan:#00f2fe;
+  --cyan-2:#4facfe;
+  --purple:#9d00ff;
+  --purple-2:#c471ff;
+  --pink:#ff2e88;
+  --green:#00e676;
+  --red:#ff2e51;
+  --gold:#ffb300;
+  --font-d:'Orbitron',sans-serif;
+  --font-b:'Poppins',system-ui,sans-serif;
+  --r:18px;
+  --r-sm:12px;
+}
+html,body{
+  min-height:100%;
+  background:var(--bg-0);
+  color:var(--text);
+  font-family:var(--font-b);
+  font-size:15px;
+  line-height:1.6;
+  -webkit-font-smoothing:antialiased;
+  overflow-x:hidden;
+  position:relative;
+}
+
+/* ═══════════════════════════════════════════════════════════
+   ANIME / GAMING DARK BACKDROP OVERLAY
+═══════════════════════════════════════════════════════════ */
+body::before{
+  content:"";
+  position:fixed;
+  inset:0;
+  z-index:0;
+  pointer-events:none;
+  background:
+    /* dark vignette */
+    radial-gradient(ellipse at 50% 0%, rgba(0,242,254,.05), transparent 55%),
+    radial-gradient(ellipse at 50% 100%, rgba(157,0,255,.06), transparent 55%),
+    /* subtle grid lines */
+    linear-gradient(rgba(0,242,254,.035) 1px, transparent 1px) 0 0 / 44px 44px,
+    linear-gradient(90deg, rgba(157,0,255,.035) 1px, transparent 1px) 0 0 / 44px 44px,
+    /* base */
+    linear-gradient(180deg, #090a16 0%, #0a0c1e 55%, #090a16 100%);
+  mask-image:radial-gradient(ellipse at 50% 40%, #000 40%, transparent 100%);
+  -webkit-mask-image:radial-gradient(ellipse at 50% 40%, #000 40%, transparent 100%);
+}
+
+/* ═══════════════════════════════════════════════════════════
+   FLOATING NEON ORBS
+═══════════════════════════════════════════════════════════ */
+.orb{
+  position:fixed;
+  border-radius:50%;
+  pointer-events:none;
+  z-index:0;
+  filter:blur(70px);
+  opacity:.55;
+  will-change:transform,opacity;
+}
+.orb.c1{
+  width:340px;height:340px;
+  background:radial-gradient(circle, rgba(0,242,254,.9), rgba(0,242,254,0) 70%);
+  top:-60px;left:-80px;
+  animation:orbFloat1 16s ease-in-out infinite;
+}
+.orb.c2{
+  width:400px;height:400px;
+  background:radial-gradient(circle, rgba(157,0,255,.85), rgba(157,0,255,0) 70%);
+  top:35%;right:-120px;
+  animation:orbFloat2 20s ease-in-out infinite;
+}
+.orb.c3{
+  width:280px;height:280px;
+  background:radial-gradient(circle, rgba(255,46,136,.7), rgba(255,46,136,0) 70%);
+  bottom:-100px;left:25%;
+  animation:orbFloat3 22s ease-in-out infinite;
+}
+.orb.c4{
+  width:220px;height:220px;
+  background:radial-gradient(circle, rgba(0,242,254,.7), rgba(0,242,254,0) 70%);
+  top:60%;left:8%;
+  animation:orbFloat1 18s ease-in-out infinite reverse;
+}
+@keyframes orbFloat1{
+  0%,100%{transform:translate3d(0,0,0) scale(1);opacity:.5;}
+  33%   {transform:translate3d(60px,-40px,0) scale(1.12);opacity:.75;}
+  66%   {transform:translate3d(-30px,30px,0) scale(1.05);opacity:.6;}
+}
+@keyframes orbFloat2{
+  0%,100%{transform:translate3d(0,0,0) scale(1);opacity:.55;}
+  50%   {transform:translate3d(-70px,-50px,0) scale(1.15);opacity:.8;}
+}
+@keyframes orbFloat3{
+  0%,100%{transform:translate3d(0,0,0) scale(1);opacity:.45;}
+  50%   {transform:translate3d(50px,-60px,0) scale(1.18);opacity:.7;}
+}
+
+/* ═══════════════════════════════════════════════════════════
+   LAYOUT
+═══════════════════════════════════════════════════════════ */
+.wrap{
+  position:relative;
+  z-index:2;
+  max-width:680px;
+  margin:0 auto;
+  padding:36px 18px 60px;
+}
+
+/* ═══════════════════════════════════════════════════════════
+   HEADER
+═══════════════════════════════════════════════════════════ */
+.brand{
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap:10px;
+  margin-bottom:6px;
+  text-decoration:none;
+}
+.brand-mark{
+  width:36px;height:36px;
+  border-radius:10px;
+  display:flex;align-items:center;justify-content:center;
+  background:linear-gradient(135deg,var(--cyan),var(--purple));
+  box-shadow:0 0 20px rgba(0,242,254,.45), 0 0 40px rgba(157,0,255,.3);
+  font-family:var(--font-d);
+  font-weight:900;
+  font-size:18px;
+  color:#05070d;
+  animation:markPulse 3s ease-in-out infinite;
+}
+@keyframes markPulse{
+  0%,100%{box-shadow:0 0 20px rgba(0,242,254,.45), 0 0 40px rgba(157,0,255,.3);}
+  50%   {box-shadow:0 0 30px rgba(0,242,254,.8), 0 0 60px rgba(157,0,255,.55);}
+}
+.brand-name{
+  font-family:var(--font-d);
+  font-size:24px;
+  font-weight:900;
+  letter-spacing:5px;
+  background:linear-gradient(120deg,#ffffff 0%,var(--cyan) 30%,var(--purple) 60%,#ffffff 90%);
+  background-size:200% auto;
+  -webkit-background-clip:text;
+  background-clip:text;
+  -webkit-text-fill-color:transparent;
+  animation:shineText 5s linear infinite;
+}
+@keyframes shineText{
+  0%  {background-position:0% 50%;}
+  100%{background-position:200% 50%;}
+}
+
+.page-title{
+  text-align:center;
+  font-family:var(--font-d);
+  font-size:20px;
+  font-weight:800;
+  letter-spacing:3px;
+  text-transform:uppercase;
+  margin-bottom:8px;
+  background:linear-gradient(120deg,#ffffff 0%,var(--cyan) 40%,var(--purple) 70%,#ffffff 100%);
+  background-size:220% auto;
+  -webkit-background-clip:text;
+  background-clip:text;
+  -webkit-text-fill-color:transparent;
+  animation:shineText 6s linear infinite;
+}
+.page-sub{
+  text-align:center;
+  color:var(--dim);
+  font-size:13.5px;
+  font-weight:400;
+  letter-spacing:.3px;
+  margin-bottom:28px;
+  max-width:440px;
+  margin-left:auto;
+  margin-right:auto;
+  line-height:1.65;
+}
+.page-sub b{color:var(--cyan);font-weight:600;}
+
+/* ═══════════════════════════════════════════════════════════
+   GLASSMORPHISM CARD
+═══════════════════════════════════════════════════════════ */
+.glass-card{
+  position:relative;
+  background:linear-gradient(160deg, var(--glass), var(--glass-2));
+  backdrop-filter:blur(22px) saturate(140%);
+  -webkit-backdrop-filter:blur(22px) saturate(140%);
+  border-radius:var(--r);
+  padding:26px 22px 28px;
+  box-shadow:
+    0 20px 60px rgba(0,0,0,.6),
+    0 0 0 1px rgba(0,242,254,.18),
+    0 0 40px rgba(0,242,254,.06) inset,
+    0 0 60px rgba(157,0,255,.08) inset;
+  overflow:hidden;
+}
+.glass-card::before{
+  content:"";
+  position:absolute;
+  inset:0;
+  border-radius:var(--r);
+  padding:1px;
+  background:linear-gradient(135deg, rgba(0,242,254,.55), rgba(157,0,255,.35) 50%, rgba(0,242,254,.15));
+  -webkit-mask:linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  -webkit-mask-composite:xor;
+  mask-composite:exclude;
+  pointer-events:none;
+  opacity:.85;
+}
+.glass-card::after{
+  content:"";
+  position:absolute;
+  top:-50%;left:-50%;
+  width:200%;height:60%;
+  background:radial-gradient(ellipse at center, rgba(0,242,254,.1), transparent 60%);
+  pointer-events:none;
+  animation:cardGlow 8s ease-in-out infinite;
+}
+@keyframes cardGlow{
+  0%,100%{transform:translate3d(0,0,0);opacity:.6;}
+  50%   {transform:translate3d(0,40px,0);opacity:.95;}
+}
+.glass-card > *{position:relative;z-index:1;}
+
+/* ═══════════════════════════════════════════════════════════
+   FORM FIELDS
+═══════════════════════════════════════════════════════════ */
+.field{margin-bottom:16px;}
+.field label{
+  display:block;
+  font-family:var(--font-b);
+  font-size:11.5px;
+  font-weight:600;
+  color:var(--dim);
+  text-transform:uppercase;
+  letter-spacing:1.4px;
+  margin-bottom:8px;
+}
+.field label .req{color:var(--pink);margin-left:3px;}
+
+.field input[type="text"],
+.field input[type="email"],
+.field select,
+.field textarea{
+  width:100%;
+  font-family:var(--font-b);
+  font-size:14.5px;
+  font-weight:400;
+  color:var(--text);
+  background:rgba(9,10,22,.6);
+  border:1px solid rgba(0,242,254,.16);
+  border-radius:var(--r-sm);
+  padding:13px 15px;
+  outline:none;
+  transition:all .3s ease;
+  -webkit-appearance:none;
+  appearance:none;
+}
+.field textarea{
+  min-height:96px;
+  resize:vertical;
+  line-height:1.55;
+}
+.field input::placeholder,
+.field textarea::placeholder{color:var(--mute);font-weight:400;}
+
+.field input:focus,
+.field select:focus,
+.field textarea:focus{
+  border-color:var(--cyan);
+  background:rgba(9,10,22,.85);
+  box-shadow:0 0 0 3px rgba(0,242,254,.13), 0 0 22px rgba(0,242,254,.28);
+}
+
+/* Custom dropdown arrow */
+.field select{
+  background-image:
+    linear-gradient(45deg, transparent 50%, var(--cyan) 50%),
+    linear-gradient(135deg, var(--cyan) 50%, transparent 50%);
+  background-position:
+    calc(100% - 20px) calc(50% - 3px),
+    calc(100% - 15px) calc(50% - 3px);
+  background-size:5px 5px, 5px 5px;
+  background-repeat:no-repeat;
+  padding-right:42px;
+  cursor:pointer;
+}
+.field select option{
+  background:#0d1024;
+  color:var(--text);
+  padding:10px;
+}
+
+/* ═══════════════════════════════════════════════════════════
+   FILE UPLOAD BOX
+═══════════════════════════════════════════════════════════ */
+.file-box{
+  position:relative;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  gap:8px;
+  padding:22px 16px;
+  text-align:center;
+  background:rgba(9,10,22,.55);
+  border:1.5px dashed rgba(0,242,254,.35);
+  border-radius:var(--r-sm);
+  cursor:pointer;
+  transition:all .3s ease;
+  overflow:hidden;
+}
+.file-box:hover{
+  border-color:var(--cyan);
+  background:rgba(0,242,254,.05);
+  box-shadow:0 0 24px rgba(0,242,254,.18);
+}
+.file-box.dragover{
+  border-color:var(--cyan);
+  background:rgba(0,242,254,.1);
+  box-shadow:0 0 30px rgba(0,242,254,.35), inset 0 0 30px rgba(0,242,254,.1);
+  transform:scale(1.01);
+}
+.file-box.has-file{
+  border-style:solid;
+  border-color:var(--green);
+  background:rgba(0,230,118,.06);
+  box-shadow:0 0 22px rgba(0,230,118,.22);
+}
+.file-box input[type="file"]{
+  position:absolute;
+  inset:0;
+  opacity:0;
+  cursor:pointer;
+  width:100%;
+  height:100%;
+}
+.file-icon{
+  width:44px;height:44px;
+  border-radius:12px;
+  display:flex;align-items:center;justify-content:center;
+  font-size:22px;
+  background:linear-gradient(135deg, rgba(0,242,254,.18), rgba(157,0,255,.18));
+  border:1px solid rgba(0,242,254,.3);
+  box-shadow:0 0 20px rgba(0,242,254,.2);
+  transition:transform .3s ease;
+}
+.file-box:hover .file-icon{transform:translateY(-3px) rotate(-4deg);}
+.file-box.has-file .file-icon{
+  background:linear-gradient(135deg, rgba(0,230,118,.22), rgba(0,242,254,.18));
+  border-color:rgba(0,230,118,.5);
+  box-shadow:0 0 22px rgba(0,230,118,.35);
+}
+.file-text{
+  font-family:var(--font-b);
+  font-size:13.5px;
+  font-weight:500;
+  color:var(--dim);
+  line-height:1.45;
+}
+.file-text b{color:var(--cyan);font-weight:600;}
+.file-name{
+  font-family:var(--font-b);
+  font-size:12.5px;
+  color:var(--green);
+  font-weight:600;
+  max-width:100%;
+  word-break:break-all;
+  padding:4px 10px;
+  border-radius:6px;
+  background:rgba(0,230,118,.1);
+  border:1px solid rgba(0,230,118,.28);
+  display:none;
+  margin-top:2px;
+}
+.file-name.show{display:inline-block;}
+.file-size{
+  font-family:var(--font-b);
+  font-size:11px;
+  color:var(--mute);
+  margin-top:2px;
+}
+
+/* ═══════════════════════════════════════════════════════════
+   SUBMIT BUTTON
+═══════════════════════════════════════════════════════════ */
+.submit-btn{
+  position:relative;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap:10px;
+  width:100%;
+  padding:16px 20px;
+  margin-top:22px;
+  border:none;
+  border-radius:var(--r-sm);
+  font-family:var(--font-d);
+  font-size:14px;
+  font-weight:800;
+  letter-spacing:2px;
+  text-transform:uppercase;
+  color:#05070d;
+  cursor:pointer;
+  overflow:hidden;
+  isolation:isolate;
+  background:linear-gradient(135deg, var(--cyan) 0%, var(--cyan-2) 40%, var(--purple) 100%);
+  background-size:200% auto;
+  box-shadow:
+    0 10px 30px rgba(0,242,254,.35),
+    0 0 0 1px rgba(0,242,254,.5) inset,
+    0 0 40px rgba(157,0,255,.3);
+  transition:all .3s ease;
+  will-change:transform,box-shadow;
+  animation:btnPulse 2.6s ease-in-out infinite;
+}
+@keyframes btnPulse{
+  0%,100%{
+    box-shadow:
+      0 10px 30px rgba(0,242,254,.35),
+      0 0 0 1px rgba(0,242,254,.5) inset,
+      0 0 0 0 rgba(0,242,254,.5);
+  }
+  50%{
+    box-shadow:
+      0 14px 40px rgba(0,242,254,.55),
+      0 0 0 1px rgba(0,242,254,.7) inset,
+      0 0 0 14px rgba(0,242,254,0);
+  }
+}
+.submit-btn::after{
+  content:"";
+  position:absolute;
+  top:-50%;left:-60%;
+  width:60%;height:200%;
+  background:linear-gradient(115deg,
+    transparent 0%,
+    rgba(255,255,255,0) 40%,
+    rgba(255,255,255,.55) 50%,
+    rgba(255,255,255,0) 60%,
+    transparent 100%);
+  transform:translateX(-100%) skewX(-18deg);
+  animation:btnShimmer 4.5s ease-in-out infinite;
+  pointer-events:none;
+  z-index:1;
+}
+@keyframes btnShimmer{
+  0%   {transform:translateX(-150%) skewX(-18deg);}
+  45%  {transform:translateX(150%) skewX(-18deg);}
+  100% {transform:translateX(150%) skewX(-18deg);}
+}
+.submit-btn:hover:not(:disabled){
+  transform:translateY(-3px);
+  background-position:100% 50%;
+  box-shadow:
+    0 18px 46px rgba(0,242,254,.65),
+    0 0 0 1px rgba(0,242,254,.9) inset,
+    0 0 50px rgba(157,0,255,.55);
+}
+.submit-btn:active:not(:disabled){transform:translateY(-1px) scale(.99);}
+.submit-btn:disabled{
+  cursor:not-allowed;
+  opacity:.75;
+  animation:none;
+}
+.submit-btn:disabled::after{display:none;}
+.submit-btn > *{position:relative;z-index:2;}
+.submit-btn .btn-icon{font-size:16px;}
+
+/* Ripple effect */
+.ripple{
+  position:absolute;
+  border-radius:50%;
+  background:rgba(255,255,255,.55);
+  transform:scale(0);
+  animation:rippleAnim .6s ease-out;
+  pointer-events:none;
+  z-index:1;
+}
+@keyframes rippleAnim{
+  to{transform:scale(4);opacity:0;}
+}
+
+/* Loading spinner */
+.spinner{
+  display:inline-block;
+  width:16px;height:16px;
+  border:2px solid rgba(5,7,13,.3);
+  border-top-color:#05070d;
+  border-radius:50%;
+  animation:spin .7s linear infinite;
+  vertical-align:middle;
+}
+@keyframes spin{to{transform:rotate(360deg);}}
+
+/* ═══════════════════════════════════════════════════════════
+   STATUS MESSAGE
+═══════════════════════════════════════════════════════════ */
+.status{
+  display:none;
+  margin-top:16px;
+  padding:13px 16px;
+  border-radius:var(--r-sm);
+  font-family:var(--font-b);
+  font-size:13.5px;
+  font-weight:500;
+  line-height:1.55;
+  align-items:center;
+  gap:10px;
+  animation:statusIn .35s ease;
+}
+.status.show{display:flex;}
+@keyframes statusIn{
+  from{opacity:0;transform:translateY(-8px);}
+  to{opacity:1;transform:translateY(0);}
+}
+.status .st-ico{font-size:18px;flex-shrink:0;}
+.status.success{
+  background:rgba(0,230,118,.1);
+  border:1px solid rgba(0,230,118,.5);
+  color:#9aebbc;
+  box-shadow:0 0 24px rgba(0,230,118,.25);
+}
+.status.success .st-ico{color:var(--green);}
+.status.error{
+  background:rgba(255,46,81,.1);
+  border:1px solid rgba(255,46,81,.5);
+  color:#ffb0bd;
+  box-shadow:0 0 24px rgba(255,46,81,.25);
+}
+.status.error .st-ico{color:var(--red);}
+.status.loading{
+  background:rgba(0,242,254,.08);
+  border:1px solid rgba(0,242,254,.45);
+  color:#a6eaff;
+  box-shadow:0 0 24px rgba(0,242,254,.25);
+}
+
+/* ═══════════════════════════════════════════════════════════
+   FOOTER NOTE
+═══════════════════════════════════════════════════════════ */
+.foot-note{
+  text-align:center;
+  margin-top:26px;
+  font-family:var(--font-b);
+  font-size:12px;
+  color:var(--mute);
+  line-height:1.7;
+  letter-spacing:.3px;
+}
+.foot-note b{color:var(--cyan);font-weight:600;}
+.foot-note a{color:var(--dim);text-decoration:none;transition:color .2s;}
+.foot-note a:hover{color:var(--cyan);}
+
+/* ═══════════════════════════════════════════════════════════
+   RESPONSIVE
+═══════════════════════════════════════════════════════════ */
+@media(min-width:640px){
+  .wrap{padding:52px 24px 70px;}
+  .glass-card{padding:34px 30px 34px;}
+  .brand-name{font-size:26px;letter-spacing:6px;}
+  .page-title{font-size:22px;letter-spacing:4px;}
+  .field input[type="text"],
+  .field input[type="email"],
+  .field select,
+  .field textarea{padding:14px 16px;font-size:15px;}
+  .submit-btn{padding:18px;font-size:15px;}
+  .file-box{padding:28px 20px;}
+}
+@media(max-width:380px){
+  .page-title{font-size:17px;letter-spacing:2px;}
+  .brand-name{font-size:20px;letter-spacing:3px;}
+}
+
+/* ═══════════════════════════════════════════════════════════
+   REDUCED MOTION
+═══════════════════════════════════════════════════════════ */
+@media (prefers-reduced-motion: reduce){
+  *,*::before,*::after{
+    animation-duration:.001ms !important;
+    animation-iteration-count:1 !important;
+    transition-duration:.15s !important;
+  }
+  .submit-btn::after{display:none;}
+}
+</style>
+</head>
+<body>
+
+<!-- Floating neon orbs -->
+<div class="orb c1" aria-hidden="true"></div>
+<div class="orb c2" aria-hidden="true"></div>
+<div class="orb c3" aria-hidden="true"></div>
+<div class="orb c4" aria-hidden="true"></div>
+
+<main class="wrap">
+
+  <!-- Brand -->
+  <a href="index.html" class="brand">
+    <div class="brand-mark">A</div>
+    <div class="brand-name">ARENA&nbsp;X</div>
+  </a>
+
+  <!-- Page header -->
+  <h1 class="page-title">Arena X Support</h1>
+  <p class="page-sub">
+    Submit your <b>payment proof</b> or <b>match results</b> to Admin.<br>
+    Our team responds within 24 hours.
+  </p>
+
+  <!-- Glassmorphism card -->
+  <div class="glass-card">
+    <form id="supportForm" autocomplete="off" novalidate>
+
+      <!-- Player name -->
+      <div class="field">
+        <label for="playerName">Player Name / In-Game ID <span class="req">*</span></label>
+        <input
+          type="text"
+          id="playerName"
+          name="playerName"
+          placeholder="e.g. ShadowX_007  •  5123456789"
+          required
+          maxlength="60"
+        />
+      </div>
+
+      <!-- Contact -->
+      <div class="field">
+        <label for="userContact">WhatsApp No. / Registered Email <span class="req">*</span></label>
+        <input
+          type="text"
+          id="userContact"
+          name="userContact"
+          placeholder="+91 98765 43210  or  you@example.com"
+          required
+          maxlength="80"
+        />
+      </div>
+
+      <!-- Issue category -->
+      <div class="field">
+        <label for="issueType">Issue Category <span class="req">*</span></label>
+        <select id="issueType" name="issueType" required>
+          <option value="" disabled selected>-- Select a category --</option>
+          <option value="Match Result Screenshot">🏆 Match Result Screenshot</option>
+          <option value="Payment Deposit Issue">💳 Payment Deposit Issue</option>
+          <option value="Withdrawal Inquiry">💸 Withdrawal Inquiry</option>
+          <option value="App Bug">🐞 App Bug</option>
+          <option value="Other Query">💬 Other Query</option>
+        </select>
+      </div>
+
+      <!-- Description -->
+      <div class="field">
+        <label for="description">Problem Description / Match Details <span class="req">*</span></label>
+        <textarea
+          id="description"
+          name="description"
+          placeholder="Describe your issue with match ID, time, UPI ref, etc."
+          required
+          maxlength="800"
+        ></textarea>
+      </div>
+
+      <!-- File upload -->
+      <div class="field">
+        <label>Screenshot / Proof (Optional but recommended)</label>
+        <div class="file-box" id="fileBox">
+          <input
+            type="file"
+            id="fileInput"
+            name="fileInput"
+            accept="image/*"
+          />
+          <div class="file-icon" id="fileIcon">📷</div>
+          <div class="file-text" id="fileText">
+            <b>Tap to upload</b> or drag &amp; drop<br>
+            JPG, PNG • Max 5 MB
+          </div>
+          <div class="file-name" id="fileName"></div>
+          <div class="file-size" id="fileSize"></div>
+        </div>
+      </div>
+
+      <!-- Submit -->
+      <button type="submit" class="submit-btn" id="submitBtn">
+        <span class="btn-icon">🚀</span>
+        <span id="submitLabel">Submit to Admin</span>
+      </button>
+
+      <!-- Status -->
+      <div class="status" id="statusBox" role="status" aria-live="polite">
+        <span class="st-ico" id="statusIco"></span>
+        <span id="statusText"></span>
+      </div>
+
+    </form>
+  </div>
+
+  <!-- Footer note -->
+  <p class="foot-note">
+    🔒 Your data is only shared with Arena X admins.<br>
+    Need instant help? Ping us on <b>support@arenax.gg</b>
+  </p>
+
+</main>
+
+<script>
+/* ═══════════════════════════════════════════════════════════
+   ⚙️  CONFIG — Paste your Google Apps Script Web App URL here
+═══════════════════════════════════════════════════════════ */
+const scriptURL = 'https://script.google.com/macros/s/AKfycbwjCre4OKDbtkk0ZXYdCphP1rev9WPVoiXLM1OBHw9mTkE_JmkZyT8eiuWnNI9FiZ1e/exec';
+
+/* ═══════════════════════════════════════════════════════════
+   DOM REFS
+═══════════════════════════════════════════════════════════ */
+const form         = document.getElementById('supportForm');
+const fileBox      = document.getElementById('fileBox');
+const fileInput    = document.getElementById('fileInput');
+const fileNameEl   = document.getElementById('fileName');
+const fileSizeEl   = document.getElementById('fileSize');
+const fileTextEl   = document.getElementById('fileText');
+const submitBtn    = document.getElementById('submitBtn');
+const submitLabel  = document.getElementById('submitLabel');
+const statusBox    = document.getElementById('statusBox');
+const statusIco    = document.getElementById('statusIco');
+const statusText   = document.getElementById('statusText');
+
+let selectedFile = null;
+
+/* ═══════════════════════════════════════════════════════════
+   FILE SELECTION HANDLING
+═══════════════════════════════════════════════════════════ */
+function humanSize(bytes){
+  if (!bytes && bytes !== 0) return '';
+  const units = ['B','KB','MB','GB'];
+  let i = 0, n = bytes;
+  while (n >= 1024 && i < units.length - 1){ n /= 1024; i++; }
+  return n.toFixed(n < 10 && i > 0 ? 1 : 0) + ' ' + units[i];
+}
+
+function handleFile(file){
+  if (!file){
+    selectedFile = null;
+    fileBox.classList.remove('has-file');
+    fileNameEl.classList.remove('show');
+    fileNameEl.textContent = '';
+    fileSizeEl.textContent = '';
+    fileTextEl.style.display = '';
+    return;
+  }
+  // Validate type
+  if (!file.type.startsWith('image/')){
+    showStatus('error', '⚠️', 'Only image files (JPG, PNG) are allowed.');
+    fileInput.value = '';
+    return;
+  }
+  // Validate size (5 MB)
+  const MAX = 5 * 1024 * 1024;
+  if (file.size > MAX){
+    showStatus('error', '⚠️', 'File too large. Max 5 MB allowed.');
+    fileInput.value = '';
+    return;
+  }
+
+  selectedFile = file;
+  fileBox.classList.add('has-file');
+  fileTextEl.style.display = 'none';
+  fileNameEl.textContent = '📎 ' + file.name;
+  fileNameEl.classList.add('show');
+  fileSizeEl.textContent = humanSize(file.size);
+  clearStatus();
+}
+
+fileInput.addEventListener('change', (e) => {
+  handleFile(e.target.files && e.target.files[0]);
+});
+
+/* Drag & drop */
+['dragenter','dragover'].forEach(evt => {
+  fileBox.addEventListener(evt, (e) => {
+    e.preventDefault(); e.stopPropagation();
+    fileBox.classList.add('dragover');
+  });
+});
+['dragleave','drop'].forEach(evt => {
+  fileBox.addEventListener(evt, (e) => {
+    e.preventDefault(); e.stopPropagation();
+    fileBox.classList.remove('dragover');
+  });
+});
+fileBox.addEventListener('drop', (e) => {
+  const dt = e.dataTransfer;
+  if (dt && dt.files && dt.files[0]){
+    fileInput.files = dt.files;
+    handleFile(dt.files[0]);
+  }
+});
+
+/* ═══════════════════════════════════════════════════════════
+   STATUS HELPERS
+═══════════════════════════════════════════════════════════ */
+function showStatus(type, icon, text){
+  statusBox.className = 'status show ' + type;
+  statusIco.textContent = icon;
+  statusText.textContent = text;
+}
+function clearStatus(){
+  statusBox.className = 'status';
+  statusIco.textContent = '';
+  statusText.textContent = '';
+}
+
+/* ═══════════════════════════════════════════════════════════
+   RIPPLE EFFECT ON SUBMIT BUTTON
+═══════════════════════════════════════════════════════════ */
+submitBtn.addEventListener('click', function(e){
+  if (this.disabled) return;
+  const rect = this.getBoundingClientRect();
+  const size = Math.max(rect.width, rect.height);
+  const x = e.clientX - rect.left - size / 2;
+  const y = e.clientY - rect.top - size / 2;
+  const ripple = document.createElement('span');
+  ripple.className = 'ripple';
+  ripple.style.width = ripple.style.height = size + 'px';
+  ripple.style.left = x + 'px';
+  ripple.style.top  = y + 'px';
+  this.appendChild(ripple);
+  setTimeout(() => ripple.remove(), 650);
+});
+
+/* ═══════════════════════════════════════════════════════════
+   FILE → BASE64
+═══════════════════════════════════════════════════════════ */
+function fileToBase64(file){
+  return new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.onload  = () => {
+      // Strip "data:<mime>;base64," prefix
+      const result = String(reader.result || '');
+      const comma  = result.indexOf(',');
+      resolve(comma >= 0 ? result.slice(comma + 1) : result);
+    };
+    reader.onerror = () => reject(new Error('File read failed.'));
+    reader.readAsDataURL(file);
+  });
+}
+
+/* ═══════════════════════════════════════════════════════════
+   FORM SUBMIT
+═══════════════════════════════════════════════════════════ */
+form.addEventListener('submit', async (e) => {
+  e.preventDefault();
+  clearStatus();
+
+  // Basic manual validation
+  const playerName  = document.getElementById('playerName').value.trim();
+  const userContact = document.getElementById('userContact').value.trim();
+  const issueType   = document.getElementById('issueType').value;
+  const description = document.getElementById('description').value.trim();
+
+  if (!playerName || playerName.length < 2){
+    showStatus('error', '⚠️', 'Please enter a valid Player Name / In-Game ID.');
+    return;
+  }
+  if (!userContact || userContact.length < 5){
+    showStatus('error', '⚠️', 'Please enter a valid WhatsApp number or email.');
+    return;
+  }
+  if (!issueType){
+    showStatus('error', '⚠️', 'Please select an issue category.');
+    return;
+  }
+  if (!description || description.length < 5){
+    showStatus('error', '⚠️', 'Please describe your issue briefly.');
+    return;
+  }
+
+  // Check scriptURL is configured
+  if (!scriptURL || scriptURL === 'YOUR_GOOGLE_APPS_SCRIPT_URL'){
+    showStatus('error', '⚙️', 'Admin endpoint not configured. Please contact support directly.');
+    console.error('❌ scriptURL is not set. Update the const at the top of the <script>.');
+    return;
+  }
+
+  // Lock the button
+  submitBtn.disabled = true;
+  const originalLabel = submitLabel.textContent;
+  submitLabel.innerHTML = '<span class="spinner"></span> Sending...';
+  showStatus('loading', '🔄', 'Uploading your request, please wait...');
+
+  try {
+    let fileData = '';
+    let fileName = '';
+    let mimeType = '';
+
+    if (selectedFile){
+      showStatus('loading', '🔄', 'Converting screenshot...');
+      fileData = await fileToBase64(selectedFile);
+      fileName = selectedFile.name;
+      mimeType = selectedFile.type;
+    }
+
+    const payload = {
+      playerName,
+      userContact,
+      issueType,
+      description,
+      fileName,
+      mimeType,
+      fileData,       // base64 string (empty if no file)
+      userAgent: navigator.userAgent,
+      submittedAt: new Date().toISOString()
+    };
+
+    showStatus('loading', '🔄', 'Sending to admin...');
+
+    const resp = await fetch(scriptURL, {
+      method: 'POST',
+      // Using text/plain avoids CORS preflight issues with Apps Script.
+      // Apps Script still receives the body as a JSON string.
+      headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+      body: JSON.stringify(payload)
+    });
+
+    if (!resp.ok){
+      throw new Error('Server responded with ' + resp.status);
+    }
+
+    showStatus('success', '✅', 'Request sent successfully! Admin will contact you within 24 hours.');
+    form.reset();
+    handleFile(null);
+
+  } catch (err){
+    console.error('Support submit error:', err);
+    showStatus('error', '❌', 'Failed to send: ' + (err.message || 'unknown error') + '. Please try again.');
+  } finally {
+    submitBtn.disabled = false;
+    submitLabel.textContent = originalLabel;
+  }
+});
+
+/* Prevent accidental form reload when Enter is pressed in the text field */
+form.addEventListener('keydown', (e) => {
+  if (e.key === 'Enter' && e.target.tagName === 'INPUT' && e.target.type !== 'file'){
+    e.preventDefault();
+    // Optionally, could submit here. For now, just prevent reload.
+  }
+});
+</script>
+
+</body>
+</html>
