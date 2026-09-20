@@ -3,33 +3,85 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width,initial-scale=1.0,viewport-fit=cover" />
+<meta name="theme-color" content="#05070d" />
 <title>ArenaX — Secure Sign In</title>
 <style>
-  *{box-sizing:border-box;margin:0;padding:0}
-  body{min-height:100vh;background:radial-gradient(circle at 50% 30%,#0d1424,#03050a 85%);color:#eef2ff;font-family:'Rajdhani',system-ui,sans-serif;display:flex;align-items:center;justify-content:center;padding:22px}
-  .card{width:100%;max-width:400px;background:linear-gradient(160deg,#10162a,#0a0e1a);border:1px solid #1f2a4a;border-radius:22px;padding:32px 24px 26px;text-align:center;box-shadow:0 10px 30px rgba(0,0,0,.6)}
-  .emblem{font-size:48px;margin-bottom:12px}
-  .brand{font-family:'Orbitron',sans-serif;font-size:28px;font-weight:900;letter-spacing:5px}
-  .brand span{color:#00e5ff;text-shadow:0 0 22px rgba(0,229,255,.4)}
-  .tag{color:#8892b0;margin:6px 0 22px;font-size:13px;letter-spacing:1.5px}
-  .btn{display:flex;align-items:center;justify-content:center;gap:10px;width:100%;padding:14px;border-radius:10px;font-weight:700;font-size:15px;margin-top:10px;cursor:pointer;border:none;font-family:inherit}
-  .btn.google{background:#fff;color:#1a1a1a}
-  .btn.phone{background:#1a2238;color:#eef2ff;border:1px solid #2a3860}
-  .btn:disabled{opacity:.55;cursor:not-allowed}
-  .field{text-align:left;margin-bottom:12px}
-  .field label{display:block;font-size:11px;color:#8892b0;font-weight:700;letter-spacing:1.2px;text-transform:uppercase;margin-bottom:6px}
-  .field input{width:100%;padding:13px 14px;background:#0a0e1a;border:1px solid #1f2a4a;border-radius:10px;color:#eef2ff;font-size:15px;outline:none}
-  .field input:focus{border-color:#00e5ff;box-shadow:0 0 0 3px rgba(0,229,255,.13)}
-  .divider{display:flex;align-items:center;gap:10px;margin:18px 0 12px;color:#5c6784;font-size:11px;text-transform:uppercase;letter-spacing:1.5px}
-  .divider::before,.divider::after{content:"";flex:1;height:1px;background:#1f2a4a}
-  .msg{font-size:13px;margin-top:14px;min-height:18px;font-weight:600}
-  .msg.err{color:#ff5c73}
-  .msg.ok{color:#00e676}
-  .status{margin-top:16px;padding:12px 14px;border-radius:10px;font-size:13px;line-height:1.5}
-  .status.info{background:rgba(0,229,255,.08);border:1px solid rgba(0,229,255,.3);color:#00e5ff}
-  .status.ok{background:rgba(0,230,118,.1);border:1px solid rgba(0,230,118,.4);color:#00e676}
-  .status.err{background:rgba(255,46,81,.1);border:1px solid rgba(255,46,81,.4);color:#ff5c73}
-  .hidden{display:none!important}
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent;}
+  body{
+    min-height:100vh;
+    background:radial-gradient(circle at 50% 30%,#0d1424,#03050a 85%);
+    color:#eef2ff;
+    font-family:'Rajdhani','Segoe UI',system-ui,sans-serif;
+    display:flex;align-items:center;justify-content:center;
+    padding:22px;overflow-x:hidden;
+  }
+  .card{
+    width:100%;max-width:400px;
+    background:linear-gradient(160deg,#10162a,#0a0e1a);
+    border:1px solid #1f2a4a;
+    border-radius:22px;
+    padding:32px 24px 26px;
+    text-align:center;
+    box-shadow:0 10px 30px rgba(0,0,0,.6);
+  }
+  .emblem{font-size:48px;line-height:1;margin-bottom:12px;}
+  .brand{
+    font-family:'Orbitron','Rajdhani',sans-serif;
+    font-size:28px;font-weight:900;letter-spacing:5px;
+  }
+  .brand span{color:#00e5ff;text-shadow:0 0 22px rgba(0,229,255,.4);}
+  .tag{color:#8892b0;margin:6px 0 22px;font-size:13px;letter-spacing:1.5px;}
+  .btn{
+    display:flex;align-items:center;justify-content:center;gap:10px;
+    width:100%;padding:14px;border-radius:10px;
+    font-weight:700;font-size:15px;margin-top:10px;
+    cursor:pointer;border:none;font-family:inherit;
+    transition:opacity .2s;
+  }
+  .btn:disabled{opacity:.55;cursor:not-allowed;}
+  .btn.google{background:#fff;color:#1a1a1a;}
+  .btn.phone{background:#1a2238;color:#eef2ff;border:1px solid #2a3860;}
+  .field{text-align:left;margin-bottom:12px;}
+  .field label{
+    display:block;font-size:11px;color:#8892b0;
+    font-weight:700;letter-spacing:1.2px;
+    text-transform:uppercase;margin-bottom:6px;
+  }
+  .field input{
+    width:100%;padding:13px 14px;
+    background:#0a0e1a;border:1px solid #1f2a4a;
+    border-radius:10px;color:#eef2ff;font-size:15px;
+    outline:none;font-family:inherit;
+  }
+  .field input:focus{
+    border-color:#00e5ff;
+    box-shadow:0 0 0 3px rgba(0,229,255,.13);
+  }
+  .divider{
+    display:flex;align-items:center;gap:10px;
+    margin:18px 0 12px;color:#5c6784;
+    font-size:11px;text-transform:uppercase;letter-spacing:1.5px;
+  }
+  .divider::before,.divider::after{
+    content:"";flex:1;height:1px;background:#1f2a4a;
+  }
+  .msg{font-size:13px;margin-top:14px;min-height:18px;font-weight:600;}
+  .msg.err{color:#ff5c73;}
+  .msg.ok{color:#00e676;}
+  .status{
+    margin-top:16px;padding:12px 14px;border-radius:10px;
+    font-size:13px;line-height:1.5;text-align:left;
+  }
+  .status.info{background:rgba(0,229,255,.08);border:1px solid rgba(0,229,255,.3);color:#00e5ff;}
+  .status.ok{background:rgba(0,230,118,.1);border:1px solid rgba(0,230,118,.4);color:#00e676;}
+  .status.err{background:rgba(255,46,81,.1);border:1px solid rgba(255,46,81,.4);color:#ff5c73;}
+  .hidden{display:none!important;}
+  #openAppBtn{
+    display:none;margin-top:12px;text-decoration:none;
+    background:linear-gradient(135deg,#00e5ff,#7c4dff);
+    color:#04121a;font-weight:800;
+  }
+  #openAppBtn.show{display:flex;}
 </style>
 </head>
 <body>
@@ -39,42 +91,67 @@
   <p class="tag">SECURE SIGN-IN</p>
 
   <div id="providerBtns">
-    <button class="btn google" id="googleBtn" type="button">🔵 Sign in with Google</button>
+    <button class="btn google" id="googleBtn" type="button">
+      <svg width="20" height="20" viewBox="0 0 48 48" aria-hidden="true">
+        <path fill="#FFC107" d="M43.6 20.5H42V20H24v8h11.3C33.7 32.6 29.3 36 24 36c-6.6 0-12-5.4-12-12s5.4-12 12-12c3.1 0 5.9 1.2 8 3.1l5.7-5.7C34.5 6.5 29.5 4 24 4 12.9 4 4 12.9 4 24s8.9 20 20 20 20-8.9 20-20c0-1.3-.1-2.3-.4-3.5z"/>
+        <path fill="#FF3D00" d="M6.3 14.7l6.6 4.8C14.7 15.1 19 12 24 12c3.1 0 5.9 1.2 8 3.1l5.7-5.7C34.5 6.5 29.5 4 24 4 16.3 4 9.7 8.3 6.3 14.7z"/>
+        <path fill="#4CAF50" d="M24 44c5.4 0 10.3-2 14-5.3l-6.5-5.5C29.5 34.6 26.9 36 24 36c-5.2 0-9.6-3.3-11.3-7.9l-6.5 5C9.6 39.6 16.2 44 24 44z"/>
+        <path fill="#1976D2" d="M43.6 20.5H42V20H24v8h11.3c-.8 2.3-2.3 4.2-4.2 5.5l6.5 5.5c-.5.4 6.4-4.7 6.4-15 0-1.3-.1-2.3-.4-3.5z"/>
+      </svg>
+      Sign in with Google
+    </button>
     <button class="btn phone" id="phoneBtn" type="button">📱 Sign in with Phone OTP</button>
   </div>
 
+  <!-- Phone number input -->
   <div id="phoneForm" class="hidden">
     <div class="field">
       <label for="phoneInput">Phone Number (with country code)</label>
-      <input id="phoneInput" type="tel" placeholder="+919876543210" autocomplete="tel" />
+      <input id="phoneInput" type="tel" placeholder="+919876543210" autocomplete="tel" inputmode="tel" />
     </div>
     <button class="btn phone" id="sendOtpBtn" type="button">SEND OTP</button>
-    <button class="btn phone" id="backBtn" type="button" style="background:transparent;border:none;color:#8892b0;font-size:13px;margin-top:6px">← Back</button>
+    <button class="btn" id="backBtn" type="button" style="background:transparent;color:#8892b0;font-size:13px;margin-top:6px">← Back</button>
   </div>
 
+  <!-- OTP input -->
   <div id="otpForm" class="hidden">
     <div class="field">
       <label for="otpInput">Enter 6-digit OTP</label>
-      <input id="otpInput" type="text" inputmode="numeric" maxlength="6" placeholder="123456" />
+      <input id="otpInput" type="text" inputmode="numeric" maxlength="6" placeholder="123456" autocomplete="one-time-code" />
     </div>
-    <button class="btn phone" id="verifyOtpBtn" type="button">VERIFY & CONTINUE</button>
+    <button class="btn phone" id="verifyOtpBtn" type="button">VERIFY &amp; CONTINUE</button>
+    <button class="btn" id="backToPhoneBtn" type="button" style="background:transparent;color:#8892b0;font-size:13px;margin-top:6px">← Change number</button>
   </div>
 
   <div id="statusBox" class="status info hidden"></div>
   <p class="msg" id="msg"></p>
+
+  <!-- Manual deep-link fallback (shown if window.location.href = arenax:// doesn't fire) -->
+  <a id="openAppBtn" class="btn" href="#">↗ OPEN ARENAX APP</a>
+
+  <!-- Invisible reCAPTCHA container for phone auth -->
   <div id="recaptcha-container"></div>
 </div>
 
 <script type="module">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
 import {
-  getAuth, GoogleAuthProvider, signInWithPopup,
-  RecaptchaVerifier, signInWithPhoneNumber
+  getAuth,
+  GoogleAuthProvider,
+  signInWithPopup,
+  signInWithRedirect,
+  getRedirectResult,
+  RecaptchaVerifier,
+  signInWithPhoneNumber
 } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
 
+/* ═══════════════════════════════════════════════════════════
+   🔥 FIREBASE CONFIG
+   IMPORTANT: authDomain MUST be the Vercel domain (proxied)
+═══════════════════════════════════════════════════════════ */
 const firebaseConfig = {
   apiKey: "AIzaSyDEquBta5rSGYGbFe1EhzC7vSIjrWqSIkk",
-  authDomain: "arenax-beige.vercel.app",   // ← SIRF YE LINE CHANGE KI
+  authDomain: "arenax-beige.vercel.app",       // ← custom domain with proxy
   databaseURL: "https://tournament-b2771-default-rtdb.firebaseio.com",
   projectId: "tournament-b2771",
   storageBucket: "tournament-b2771.firebasestorage.app",
@@ -82,64 +159,124 @@ const firebaseConfig = {
   appId: "1:219838143541:web:ebd560a0d3b9dab572257c"
 };
 
-/* 🔗 MUST match the server endpoint on your Render webhook */
+/* ═══════════════════════════════════════════════════════════
+   🌐 ARENAX BACKEND
+═══════════════════════════════════════════════════════════ */
 const SERVER_URL = "https://arenax-webhook.onrender.com";
 
-const app  = initializeApp(firebaseConfig);
+/* ═══════════════════════════════════════════════════════════
+   🚀 DEEP-LINK TARGET — read from query string (?redirect=...)
+   Default: arenax://auth-success
+═══════════════════════════════════════════════════════════ */
+const params = new URLSearchParams(location.search);
+const REDIRECT_TARGET = params.get("redirect") || "arenax://auth-success";
+
+/* ═══════════════════════════════════════════════════════════
+   🔧 FIREBASE INIT
+═══════════════════════════════════════════════════════════ */
+const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 const googleProvider = new GoogleAuthProvider();
 googleProvider.setCustomParameters({ prompt: "select_account" });
 
-/* 📥 Read the deep-link redirect target from query params */
-const params = new URLSearchParams(location.search);
-const REDIRECT_TARGET = params.get("redirect") || "arenax://auth-success";
-
+/* ═══════════════════════════════════════════════════════════
+   🧰 DOM HELPERS
+═══════════════════════════════════════════════════════════ */
 const $ = (id) => document.getElementById(id);
 const statusBox = $("statusBox");
 const msg = $("msg");
+const openAppBtn = $("openAppBtn");
 
-function setMsg(t, type="") { msg.textContent = t; msg.className = "msg " + type; }
-function setStatus(t, type="info") {
+function setMsg(t, type = "") {
+  msg.textContent = t;
+  msg.className = "msg " + type;
+}
+function setStatus(t, type = "info") {
   statusBox.textContent = t;
   statusBox.className = "status " + type;
   statusBox.classList.remove("hidden");
 }
 
-/* ─────────────────────────────────────────────────────────────
-   1️⃣ Google Sign-In → create one-time token → deep link back
-   ───────────────────────────────────────────────────────────── */
+/* ═══════════════════════════════════════════════════════════
+   🔁 PAGE LOAD — HANDLE REDIRECT RESULT
+   This is THE critical piece. Without it, redirect flow ends
+   on a blank /__/auth/handler page.
+═══════════════════════════════════════════════════════════ */
+getRedirectResult(auth)
+  .then(async (result) => {
+    if (result && result.user) {
+      console.log("✅ Redirect result received:", result.user.email || result.user.phoneNumber);
+      await finishLogin(result.user, "google");
+    } else {
+      console.log("ℹ️ No redirect result — normal page load");
+    }
+  })
+  .catch((err) => {
+    console.error("❌ getRedirectResult error:", err);
+    if (err.code !== "auth/no-auth-event") {
+      setStatus("❌ " + (err.message || "Sign-in failed. Please try again."), "err");
+    }
+  });
+
+/* ═══════════════════════════════════════════════════════════
+   🔵 GOOGLE SIGN-IN
+   - Mobile  → signInWithRedirect (popup often blocked in WebView/Chrome)
+   - Desktop → signInWithPopup    (smoother UX)
+═══════════════════════════════════════════════════════════ */
 $("googleBtn").addEventListener("click", async () => {
   setMsg("");
+  const isMobile = /Android|iPhone|iPad|iPod|Mobile/i.test(navigator.userAgent);
+
   try {
     $("googleBtn").disabled = true;
     setStatus("Opening Google sign-in…", "info");
-    const result = await signInWithPopup(auth, googleProvider);
-    await finishLogin(result.user, "google");
-  } catch (err) {
-    console.error("Google error:", err);
-    if (err.code !== "auth/popup-closed-by-user" && err.code !== "auth/cancelled-popup-request") {
-      setStatus("❌ " + (err.message || "Sign-in failed."), "err");
+
+    if (isMobile) {
+      /* 📱 Redirect flow */
+      await signInWithRedirect(auth, googleProvider);
+      /* Page navigates away. getRedirectResult() above handles the return. */
     } else {
+      /* 🖥 Popup flow */
+      const result = await signInWithPopup(auth, googleProvider);
+      await finishLogin(result.user, "google");
+    }
+  } catch (err) {
+    console.error("❌ Google sign-in error:", err);
+    if (err.code === "auth/popup-closed-by-user" || err.code === "auth/cancelled-popup-request") {
       setStatus("Sign-in cancelled.", "err");
+    } else if (err.code === "auth/popup-blocked") {
+      setStatus("Popup blocked. Please allow popups, or try again.", "err");
+    } else if (err.code === "auth/unauthorized-domain") {
+      setStatus("Domain not authorized. Please contact support.", "err");
+    } else {
+      setStatus("❌ " + (err.message || "Sign-in failed."), "err");
     }
     $("googleBtn").disabled = false;
   }
 });
 
-/* ─────────────────────────────────────────────────────────────
-   2️⃣ Phone OTP Sign-In
-   ───────────────────────────────────────────────────────────── */
+/* ═══════════════════════════════════════════════════════════
+   📱 PHONE OTP SIGN-IN
+═══════════════════════════════════════════════════════════ */
 let recaptchaVerifier = null;
 let confirmationResult = null;
 
 $("phoneBtn").addEventListener("click", () => {
+  setMsg("");
+  statusBox.classList.add("hidden");
   $("providerBtns").classList.add("hidden");
   $("phoneForm").classList.remove("hidden");
 });
+
 $("backBtn").addEventListener("click", () => {
   $("phoneForm").classList.add("hidden");
   $("otpForm").classList.add("hidden");
   $("providerBtns").classList.remove("hidden");
+});
+
+$("backToPhoneBtn").addEventListener("click", () => {
+  $("otpForm").classList.add("hidden");
+  $("phoneForm").classList.remove("hidden");
 });
 
 $("sendOtpBtn").addEventListener("click", async () => {
@@ -163,13 +300,23 @@ $("sendOtpBtn").addEventListener("click", async () => {
     }
 
     confirmationResult = await signInWithPhoneNumber(auth, phone, recaptchaVerifier);
+
     $("phoneForm").classList.add("hidden");
     $("otpForm").classList.remove("hidden");
     setStatus("✅ OTP sent. Check your SMS.", "ok");
   } catch (err) {
-    console.error("OTP send error:", err);
-    setStatus("❌ " + (err.message || "Failed to send OTP."), "err");
-    if (recaptchaVerifier) { try { recaptchaVerifier.clear(); } catch(e){} recaptchaVerifier = null; }
+    console.error("❌ OTP send error:", err);
+    if (err.code === "auth/invalid-phone-number") {
+      setStatus("❌ Invalid phone number format.", "err");
+    } else if (err.code === "auth/too-many-requests") {
+      setStatus("❌ Too many attempts. Try again later.", "err");
+    } else {
+      setStatus("❌ " + (err.message || "Failed to send OTP."), "err");
+    }
+    if (recaptchaVerifier) {
+      try { recaptchaVerifier.clear(); } catch (e) {}
+      recaptchaVerifier = null;
+    }
   } finally {
     $("sendOtpBtn").disabled = false;
   }
@@ -189,21 +336,33 @@ $("verifyOtpBtn").addEventListener("click", async () => {
     const result = await confirmationResult.confirm(code);
     await finishLogin(result.user, "phone");
   } catch (err) {
-    console.error("OTP verify error:", err);
-    setStatus("❌ " + (err.message || "Incorrect OTP."), "err");
+    console.error("❌ OTP verify error:", err);
+    if (err.code === "auth/invalid-verification-code") {
+      setStatus("❌ Incorrect OTP. Please try again.", "err");
+    } else if (err.code === "auth/code-expired") {
+      setStatus("❌ OTP expired. Please request a new one.", "err");
+    } else {
+      setStatus("❌ " + (err.message || "Verification failed."), "err");
+    }
     $("verifyOtpBtn").disabled = false;
   }
 });
 
-/* ─────────────────────────────────────────────────────────────
-   3️⃣ Get one-time bridge token from server → deep link back
-   ───────────────────────────────────────────────────────────── */
+/* ═══════════════════════════════════════════════════════════
+   🚀 FINISH LOGIN
+   1. Get Firebase ID token
+   2. Ask server to mint a one-time bridge code
+   3. Fire deep-link back into the Android app
+═══════════════════════════════════════════════════════════ */
 async function finishLogin(user, provider) {
   try {
-    setStatus("✅ Signed in as " + (user.displayName || user.email || user.phoneNumber || "user") + ". Returning to app…", "ok");
+    const displayName = user.displayName || user.email || user.phoneNumber || "user";
+    setStatus("✅ Signed in as " + displayName + ". Returning to app…", "ok");
 
-    /* Ask server to mint a one-time code tied to this Firebase UID */
+    /* 1️⃣ Grab Firebase ID token */
     const idToken = await user.getIdToken(true);
+
+    /* 2️⃣ Create one-time bridge code */
     const resp = await fetch(SERVER_URL + "/auth-bridge/create", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -218,41 +377,50 @@ async function finishLogin(user, provider) {
       throw new Error(data.error || "Server could not create bridge token.");
     }
 
-    /* 🚀 Deep-link back into the app */
-    const target = REDIRECT_TARGET +
+    /* 3️⃣ Build the deep-link URL */
+    const target =
+      REDIRECT_TARGET +
       (REDIRECT_TARGET.indexOf("?") === -1 ? "?" : "&") +
       "token=" + encodeURIComponent(data.token) +
       "&provider=" + encodeURIComponent(provider) +
       "&status=success";
 
+    console.log("🔗 Deep link target:", target);
     setStatus("🚀 Opening ArenaX app…", "ok");
 
-    /* Give the user a moment to read, then fire the deep link */
+    /* 4️⃣ Fire the deep link after a tiny delay (let UI paint) */
     setTimeout(() => {
-      window.location.href = target;
+      try {
+        window.location.href = target;
+      } catch (e) {
+        console.warn("location.href assignment failed:", e);
+      }
 
-      /* Fallback for browsers that block custom schemes: show a manual button */
+      /* 5️⃣ Show manual fallback if the app doesn't launch */
       setTimeout(() => {
         if (!document.hidden) {
-          setStatus("If the app didn't open, tap below:", "info");
-          const a = document.createElement("a");
-          a.href = target;
-          a.textContent = "↗ OPEN ARENAX APP";
-          a.className = "btn phone";
-          a.style.display = "flex";
-          a.style.textDecoration = "none";
-          document.querySelector(".card").appendChild(a);
+          setStatus("If the app didn't open automatically, tap the button below:", "info");
+          openAppBtn.href = target;
+          openAppBtn.classList.add("show");
         }
-      }, 2000);
-    }, 700);
+      }, 1500);
+    }, 500);
 
   } catch (err) {
-    console.error("finishLogin error:", err);
+    console.error("❌ finishLogin error:", err);
     setStatus("❌ " + (err.message || "Could not complete sign-in."), "err");
+    /* Re-enable buttons so user can try again */
     $("googleBtn").disabled = false;
     $("verifyOtpBtn").disabled = false;
   }
 }
+
+/* ═══════════════════════════════════════════════════════════
+   🧪 LOG — helps with debugging in Chrome DevTools
+═══════════════════════════════════════════════════════════ */
+console.log("[ArenaX Auth] Loaded ✅");
+console.log("[ArenaX Auth] Redirect target:", REDIRECT_TARGET);
+console.log("[ArenaX Auth] authDomain:", firebaseConfig.authDomain);
 </script>
 </body>
 </html>
