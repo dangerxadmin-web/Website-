@@ -401,6 +401,57 @@ a{color:inherit;text-decoration:none;}
 .player-stat-handle { font-family: var(--font-d); font-size: 14px; font-weight: 700; color: var(--text); margin-bottom: 2px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 .player-stat-sub { font-size: 11px; color: var(--mute); font-weight: 600; }
 .player-stat-badge { font-family: var(--font-d); font-size: 10px; font-weight: 800; letter-spacing: 1px; padding: 5px 12px; border-radius: 100px; background: rgba(255,179,0,.15); color: var(--gold); border: 1px solid rgba(255,179,0,.4); flex-shrink: 0; }
+
+/* ═══════════════════════════════════════════════════════════
+   🎧 FLOATING SUPPORT BUTTON (FAB)
+═══════════════════════════════════════════════════════════ */
+#supportFab {
+  position: fixed; right: 20px; bottom: 20px; z-index: 999;
+  width: 58px; height: 58px; border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  cursor: pointer;
+  background: radial-gradient(circle at 30% 30%, #1a0f3a, #05060d 85%);
+  border: 2px solid #00f2fe;
+  box-shadow: 0 0 12px rgba(0, 242, 254, 0.55), 0 0 26px rgba(157, 0, 255, 0.35), 0 6px 20px rgba(0, 0, 0, 0.55);
+  transition: transform .25s cubic-bezier(.34,1.56,.64,1), box-shadow .25s ease, bottom .25s ease;
+  animation: supportPulse 2.6s ease-in-out infinite;
+  color: #00f2fe; -webkit-tap-highlight-color: transparent; outline: none; padding: 0;
+}
+#supportFab svg { width: 26px; height: 26px; display: block; filter: drop-shadow(0 0 6px rgba(0, 242, 254, 0.75)); transition: transform .25s ease; }
+#supportFab:hover, #supportFab:focus-visible { transform: scale(1.12); border-color: #9d00ff; color: #9d00ff; box-shadow: 0 0 20px rgba(0, 242, 254, 0.75), 0 0 40px rgba(157, 0, 255, 0.6), 0 8px 26px rgba(0, 0, 0, 0.6); }
+#supportFab:hover svg { transform: rotate(-8deg) scale(1.06); }
+#supportFab:active { transform: scale(0.96); }
+#supportFab.support-logged-in { bottom: 90px; }
+@keyframes supportPulse {
+  0%, 100% { box-shadow: 0 0 10px rgba(0, 242, 254, 0.45), 0 0 22px rgba(157, 0, 255, 0.28), 0 6px 20px rgba(0, 0, 0, 0.5); }
+  50% { box-shadow: 0 0 22px rgba(0, 242, 254, 0.85), 0 0 44px rgba(157, 0, 255, 0.55), 0 6px 22px rgba(0, 0, 0, 0.55); }
+}
+#supportFab .support-tooltip {
+  position: absolute; right: 74px; top: 50%;
+  transform: translateY(-50%) translateX(8px);
+  background: linear-gradient(135deg, rgba(10,14,26,.98), rgba(16,22,42,.98));
+  color: #eef2ff; font-family: var(--font-d, 'Orbitron', system-ui, sans-serif);
+  font-size: 11.5px; font-weight: 700; letter-spacing: 1px;
+  padding: 9px 14px; border-radius: 10px; border: 1px solid #00f2fe;
+  box-shadow: 0 0 14px rgba(0, 242, 254, 0.5), 0 0 28px rgba(157, 0, 255, 0.3);
+  white-space: nowrap; opacity: 0; pointer-events: none;
+  transition: opacity .22s ease, transform .22s ease;
+}
+#supportFab .support-tooltip::after {
+  content: ""; position: absolute; right: -6px; top: 50%;
+  transform: translateY(-50%) rotate(45deg);
+  width: 10px; height: 10px; background: rgba(16,22,42,.98);
+  border-right: 1px solid #00f2fe; border-top: 1px solid #00f2fe;
+}
+#supportFab:hover .support-tooltip, #supportFab:focus-visible .support-tooltip { opacity: 1; transform: translateY(-50%) translateX(0); }
+@media (max-width: 480px) {
+  #supportFab { width: 54px; height: 54px; right: 16px; bottom: 16px; }
+  #supportFab.support-logged-in { bottom: 84px; }
+  #supportFab svg { width: 24px; height: 24px; }
+  #supportFab .support-tooltip { font-size: 10.5px; padding: 8px 12px; right: 68px; }
+}
+#forceUpdateScreen.show ~ #supportFab,
+body.force-update-locked #supportFab { display: none !important; }
 </style>
 </head>
 <body>
@@ -703,6 +754,15 @@ a{color:inherit;text-decoration:none;}
   </nav>
 </div>
 
+<!-- 🎧 FLOATING SUPPORT BUTTON -->
+<button id="supportFab" type="button" aria-label="Need Help? Contact Support" title="Need Help? Contact Support">
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+    <path d="M3 18v-6a9 9 0 0 1 18 0v6"/>
+    <path d="M21 19a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2h3zM3 19a2 2 0 0 0 2 2h1a2 2 0 0 0 2-2v-3a2 2 0 0 0-2-2H3z"/>
+  </svg>
+  <span class="support-tooltip">Need Help? Contact Support</span>
+</button>
+
 <div class="modal-overlay" id="joinModal">
   <div class="modal">
     <div class="modal-hd"><h3>JOIN MATCH</h3><button class="modal-x" data-close="joinModal">✕</button></div>
@@ -819,9 +879,6 @@ import {
   serverTimestamp, increment
 } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
 
-/* ═══════════════════════════════════════════════════════════
-   CONFIG
-═══════════════════════════════════════════════════════════ */
 const firebaseConfig = {
   apiKey: "AIzaSyDEquBta5rSGYGbFe1EhzC7vSIjrWqSIkk",
   authDomain: "tournament-b2771.firebaseapp.com",
@@ -833,6 +890,7 @@ const firebaseConfig = {
 };
 
 const DOWNLOAD_URL = "https://sites.google.com/view/arenaxofficial";
+const SUPPORT_URL = "https://arenax-beige.vercel.app/support.html";
 const MIN_WITHDRAW = 50;
 const MIN_DEPOSIT = 10;
 const MIN_MATCHES_FOR_WITHDRAW = 3;
@@ -857,9 +915,6 @@ let PRIMARY_GAMES = {
   "Free Fire": { ...DEFAULT_PRIMARY_GAMES["Free Fire"], icon: "🔥" }
 };
 
-/* ═══════════════════════════════════════════════════════════
-   FIREBASE INIT — with error handling
-═══════════════════════════════════════════════════════════ */
 let app, auth, db, googleProvider;
 try {
   app = initializeApp(firebaseConfig);
@@ -876,29 +931,21 @@ try {
   if (window.__hideBoot) window.__hideBoot();
 }
 
-/* ═══════════════════════════════════════════════════════════
-   STATE
-═══════════════════════════════════════════════════════════ */
 const state = {
   user: null, profile: null,
   activeGame: "BGMI", activeMode: "Battle Royale", activeTeam: "ALL",
-  activeNav: "home",
-  currentScreen: "home",
+  activeNav: "home", currentScreen: "home",
   tournaments: [], joinedMatches: [], transactions: [], notifications: [],
   appConfig: null, forceUpdateActive: false, bannerDismissed: false,
   selectedMatch: null, referrals: [],
   promotions: [], gameStats: {}, adminLobbyItems: null,
   gameCards: {}, homeMatchIds: null, homeMatchMode: "include",
-  promoIndex: 0, promoTimer: null,
-  lastLobbyItems: [],
+  promoIndex: 0, promoTimer: null, lastLobbyItems: [],
   unsubs: {},
   deposit: { amount: 0, orderId: "", pollTimer: null },
   lastPrizeNotifId: null
 };
 
-/* ═══════════════════════════════════════════════════════════
-   DOM HELPERS
-═══════════════════════════════════════════════════════════ */
 const $ = (s) => document.querySelector(s);
 const $$ = (s) => document.querySelectorAll(s);
 
@@ -932,8 +979,7 @@ const D = {
   btnDeposit: $("#btnDeposit"), btnWithdraw: $("#btnWithdraw"),
   profileModal: $("#profileModal"), profileForm: $("#profileForm"),
   pfName: $("#pfName"), pfUid: $("#pfUid"), pfIgn: $("#pfIgn"), pfErr: $("#pfErr"), pfSubmit: $("#pfSubmit"),
-  btnEditProfile: $("#btnEditProfile"),
-  btnSignOut: $("#btnSignOut"),
+  btnEditProfile: $("#btnEditProfile"), btnSignOut: $("#btnSignOut"),
   notifModal: $("#notifModal"), notifList: $("#notifList"),
   prizePopup: $("#prizePopup"), pnpTitle: $("#pnpTitle"), pnpAmt: $("#pnpAmt"),
   toast: $("#toast"),
@@ -943,13 +989,14 @@ const D = {
   matchesNotifBtn: $("#matchesNotifBtn"), matchesNotifBadge: $("#matchesNotifBadge"),
   matchesAvatar: $("#matchesAvatar"), matchesHandle: $("#matchesHandle"), matchesStats: $("#matchesStats"), matchesBalance: $("#matchesBalance"),
   matchesModeFilter: $("#matchesModeFilter"), matchesTeamFilter: $("#matchesTeamFilter"),
-  matchesList: $("#matchesList"), matchesEmpty: $("#matchesEmpty")
+  matchesList: $("#matchesList"), matchesEmpty: $("#matchesEmpty"),
+  supportFab: $("#supportFab")
 };
 
 if (D.profVersion) D.profVersion.textContent = "v" + CURRENT_VERSION_NAME;
 
 /* ═══════════════════════════════════════════════════════════
-   UTILITIES — defined first
+   UTILITIES
 ═══════════════════════════════════════════════════════════ */
 function showToast(msg, type) {
   if (!D.toast) return;
@@ -1139,10 +1186,6 @@ function teamIcon(t) {
   if (s === "squad") return "👨‍👩‍👦";
   return "👤";
 }
-
-/* ═══════════════════════════════════════════════════════════
-   BANNER FALLBACK
-═══════════════════════════════════════════════════════════ */
 function fallbackBannerHTML(t) {
   var gameKey = String(t.game || "").trim();
   var asset = PRIMARY_GAMES[gameKey];
@@ -1175,9 +1218,6 @@ function renderMatchesModeFilter() {
   }).join("");
 }
 
-/* ═══════════════════════════════════════════════════════════
-   AUTH VIEW
-═══════════════════════════════════════════════════════════ */
 function showAuthView(view) {
   if (!D.loginForm || !D.signupForm) return;
   D.loginForm.classList.toggle("hidden", view !== "login");
@@ -1189,14 +1229,36 @@ function showAuthView(view) {
 }
 
 /* ═══════════════════════════════════════════════════════════
-   EVENT LISTENERS — Setup after DOM ready
+   SUPPORT FAB — attach listener
+═══════════════════════════════════════════════════════════ */
+function initSupportFab() {
+  if (!D.supportFab) return;
+  D.supportFab.addEventListener("click", function(e) {
+    e.preventDefault();
+    e.stopPropagation();
+    if (state.forceUpdateActive) return;
+    try {
+      var w = window.open(SUPPORT_URL, "_blank", "noopener,noreferrer");
+      if (!w) window.location.href = SUPPORT_URL;
+    } catch (err) {
+      window.location.href = SUPPORT_URL;
+    }
+  });
+  syncSupportFabPosition();
+}
+function syncSupportFabPosition() {
+  if (!D.supportFab) return;
+  var isLoggedIn = !!(state.user && state.profile) && !D.appShell.classList.contains("hidden");
+  D.supportFab.classList.toggle("support-logged-in", isLoggedIn);
+}
+
+/* ═══════════════════════════════════════════════════════════
+   SETUP EVENT LISTENERS
 ═══════════════════════════════════════════════════════════ */
 function setupEventListeners() {
-  // Auth tabs
   if (D.tabLogin) D.tabLogin.addEventListener("click", function() { showAuthView("login"); });
   if (D.tabSignup) D.tabSignup.addEventListener("click", function() { showAuthView("signup"); });
 
-  // Password toggles
   $$(".pw-toggle").forEach(function(btn) {
     btn.addEventListener("click", function() {
       var t = document.getElementById(btn.dataset.target);
@@ -1207,7 +1269,6 @@ function setupEventListeners() {
     });
   });
 
-  // Mode filter (home)
   if (D.modeFilter) D.modeFilter.addEventListener("click", function(e) {
     var btn = e.target.closest("[data-mode]");
     if (!btn) return;
@@ -1216,7 +1277,6 @@ function setupEventListeners() {
     attachTournamentsListener();
   });
 
-  // Team filter (home)
   if (D.teamFilter) D.teamFilter.addEventListener("click", function(e) {
     var btn = e.target.closest("[data-team]");
     if (!btn) return;
@@ -1225,7 +1285,6 @@ function setupEventListeners() {
     attachTournamentsListener();
   });
 
-  // Matches mode filter
   if (D.matchesModeFilter) D.matchesModeFilter.addEventListener("click", function(e) {
     var btn = e.target.closest("[data-mode]");
     if (!btn) return;
@@ -1234,7 +1293,6 @@ function setupEventListeners() {
     attachTournamentsListener();
   });
 
-  // Matches team filter
   if (D.matchesTeamFilter) D.matchesTeamFilter.addEventListener("click", function(e) {
     var btn = e.target.closest("[data-team]");
     if (!btn) return;
@@ -1243,15 +1301,12 @@ function setupEventListeners() {
     attachTournamentsListener();
   });
 
-  // Bottom nav
   $$(".nav-btn").forEach(function(b) {
     b.addEventListener("click", function() { setNav(b.dataset.nav); });
   });
 
-  // Wallet button
   if (D.hdrWallet) D.hdrWallet.addEventListener("click", function() { setNav("wallet"); });
 
-  // Notification button
   if (D.notifBtn) D.notifBtn.addEventListener("click", async function() {
     openModal("notifModal");
     renderNotifList();
@@ -1264,7 +1319,6 @@ function setupEventListeners() {
     if (D.notifBtn) D.notifBtn.click();
   });
 
-  // Modal close buttons
   document.addEventListener("click", function(e) {
     var closeBtn = e.target.closest("[data-close]");
     if (closeBtn) { closeModal(closeBtn.dataset.close); return; }
@@ -1274,27 +1328,18 @@ function setupEventListeners() {
     if (e.key === "Escape") $$(".modal-overlay.open").forEach(function(m) { m.classList.remove("open"); });
   });
 
-  // Matches back button
   if (D.matchesBackBtn) D.matchesBackBtn.addEventListener("click", function() {
     state.currentScreen = "home";
     setNav("home");
   });
 
-  // Signup form
   if (D.signupForm) D.signupForm.addEventListener("submit", handleSignup);
-  // Login form
   if (D.loginForm) D.loginForm.addEventListener("submit", handleLogin);
-  // Google
   if (D.btnGoogle) D.btnGoogle.addEventListener("click", handleGoogleSignIn);
-  // Join form
   if (D.joinForm) D.joinForm.addEventListener("submit", handleJoinSubmit);
-  // Withdraw form
   if (D.withdrawForm) D.withdrawForm.addEventListener("submit", handleWithdrawSubmit);
-  // Profile form
   if (D.profileForm) D.profileForm.addEventListener("submit", handleProfileSubmit);
-  // Sign out
   if (D.btnSignOut) D.btnSignOut.addEventListener("click", handleSignOut);
-  // Edit profile
   if (D.btnEditProfile) D.btnEditProfile.addEventListener("click", function() {
     if (!D.profileForm) return;
     D.profileForm.reset();
@@ -1304,14 +1349,12 @@ function setupEventListeners() {
     if (D.pfIgn) D.pfIgn.value = (state.profile && state.profile.ign) || "";
     openModal("profileModal");
   });
-  // Deposit
   if (D.btnDeposit) D.btnDeposit.addEventListener("click", function() {
     if (state.forceUpdateActive) { showToast("Please update the app first.", "error"); return; }
     if (isBanned()) { showToast("🚫 Banned accounts cannot deposit.", "error"); return; }
     resetDepositFlow();
     openModal("depositModal");
   });
-  // Withdraw open
   if (D.btnWithdraw) D.btnWithdraw.addEventListener("click", function() {
     if (state.forceUpdateActive) { showToast("Please update the app first.", "error"); return; }
     if (isBanned()) { showToast("🚫 Banned accounts cannot withdraw.", "error"); return; }
@@ -1330,7 +1373,6 @@ function setupEventListeners() {
     }
     openModal("withdrawModal");
   });
-  // Amount chips
   $$(".amt-chip").forEach(function(chip) {
     chip.addEventListener("click", function() {
       $$(".amt-chip").forEach(function(c) { c.classList.remove("active"); });
@@ -1340,19 +1382,14 @@ function setupEventListeners() {
       checkBonusHint(Number(chip.dataset.amt));
     });
   });
-  // Custom deposit amount
   if (D.depAmount) D.depAmount.addEventListener("input", function() {
     var v = Number(D.depAmount.value);
     $$(".amt-chip").forEach(function(c) { c.classList.remove("active"); });
     if (v > 0) { state.deposit.amount = v; checkBonusHint(v); }
   });
-  // Pay now
   if (D.btnPayNow) D.btnPayNow.addEventListener("click", handlePayNow);
-  // Copy referral
   if (D.refCopyBtn) D.refCopyBtn.addEventListener("click", handleRefCopy);
-  // Share referral
   if (D.refShareBtn) D.refShareBtn.addEventListener("click", handleRefShare);
-  // Tournament list click handlers
   if (D.tournamentsList) D.tournamentsList.addEventListener("click", handleListClick);
   if (D.matchesList) D.matchesList.addEventListener("click", handleListClick);
   if (D.joinedList) D.joinedList.addEventListener("click", function(e) {
@@ -1364,13 +1401,14 @@ function setupEventListeners() {
       if (match) openDetailModal(match);
     }
   });
-  // Home game grid click (delegated)
   if (D.primaryGameGrid) D.primaryGameGrid.addEventListener("click", function(e) {
     var card = e.target.closest(".primary-game-card");
     if (!card) return;
     var game = card.dataset.game;
     if (game) openMatchesScreen(game);
   });
+
+  initSupportFab();
 }
 
 /* ═══════════════════════════════════════════════════════════
@@ -1731,9 +1769,6 @@ function checkPaymentRedirect() {
   }
 }
 
-/* ═══════════════════════════════════════════════════════════
-   NAVIGATION
-═══════════════════════════════════════════════════════════ */
 function setNav(nav) {
   state.activeNav = nav;
   state.currentScreen = nav === "home" ? "home" : nav;
@@ -1743,11 +1778,9 @@ function setNav(nav) {
   var el = document.getElementById(map[nav]);
   if (el) el.classList.add("active");
   window.scrollTo({ top: 0, behavior: "instant" });
+  syncSupportFabPosition();
 }
 
-/* ═══════════════════════════════════════════════════════════
-   MATCHES SCREEN
-═══════════════════════════════════════════════════════════ */
 function openMatchesScreen(game) {
   state.activeGame = game;
   var modes = GAME_MODES[game] || [];
@@ -1840,7 +1873,7 @@ function attachTournamentsListener() {
       items = items.filter(function(t) { return normalizeTeamSize(t).toLowerCase() === state.activeTeam.toLowerCase(); });
     }
     var visible = items.filter(function(t) { return t.status !== "CANCELLED"; });
-    visible.sort(function(a, b) { return (b.createdAt && b.createdAt.toMillis && b.createdAt.toMillis() || 0) - (a.createdAt && a.createdAt.toMillis && a.createdAt.toMillis() || 0); });
+    visible.sort(function(a, b) { return ((b.createdAt && b.createdAt.toMillis && b.createdAt.toMillis()) || 0) - ((a.createdAt && a.createdAt.toMillis && a.createdAt.toMillis()) || 0); });
     state.tournaments = visible;
     renderTournaments(visible);
     renderMatchesList(visible);
@@ -1857,7 +1890,7 @@ function attachJoinedListener(uid) {
   state.unsubs.joined = onSnapshot(q, function(snap) {
     var items = [];
     snap.forEach(function(d) { items.push(Object.assign({ id: d.id }, d.data())); });
-    items.sort(function(a, b) { return (b.createdAt && b.createdAt.toMillis && b.createdAt.toMillis() || 0) - (a.createdAt && a.createdAt.toMillis && a.createdAt.toMillis() || 0); });
+    items.sort(function(a, b) { return ((b.createdAt && b.createdAt.toMillis && b.createdAt.toMillis()) || 0) - ((a.createdAt && a.createdAt.toMillis && a.createdAt.toMillis()) || 0); });
     state.joinedMatches = items;
     renderJoined(items);
     if (state.tournaments.length) renderTournaments(state.tournaments);
@@ -1870,7 +1903,7 @@ function attachTxListener(uid) {
   state.unsubs.tx = onSnapshot(q, function(snap) {
     var items = [];
     snap.forEach(function(d) { items.push(Object.assign({ id: d.id }, d.data())); });
-    items.sort(function(a, b) { return (b.createdAt && b.createdAt.toMillis && b.createdAt.toMillis() || 0) - (a.createdAt && a.createdAt.toMillis && a.createdAt.toMillis() || 0); });
+    items.sort(function(a, b) { return ((b.createdAt && b.createdAt.toMillis && b.createdAt.toMillis()) || 0) - ((a.createdAt && a.createdAt.toMillis && a.createdAt.toMillis()) || 0); });
     state.transactions = items;
     renderTransactions(items);
     var latestPrize = items.find(function(tx) { return tx.type === "credit" && (tx.category === "prize" || (tx.description || "").toLowerCase().indexOf("prize") !== -1); });
@@ -1890,7 +1923,7 @@ function attachNotifListener(uid) {
   state.unsubs.notif = onSnapshot(q, function(snap) {
     var items = [];
     snap.forEach(function(d) { items.push(Object.assign({ id: d.id }, d.data())); });
-    items.sort(function(a, b) { return (b.createdAt && b.createdAt.toMillis && b.createdAt.toMillis() || 0) - (a.createdAt && a.createdAt.toMillis && a.createdAt.toMillis() || 0); });
+    items.sort(function(a, b) { return ((b.createdAt && b.createdAt.toMillis && b.createdAt.toMillis()) || 0) - ((a.createdAt && a.createdAt.toMillis && a.createdAt.toMillis()) || 0); });
     state.notifications = items;
     renderNotifBadge();
     renderNotifList();
@@ -2434,9 +2467,6 @@ function renderLobbyInfo(items) {
   });
 }
 
-/* ═══════════════════════════════════════════════════════════
-   MODALS — JOIN + DETAIL
-═══════════════════════════════════════════════════════════ */
 function openJoinModal(match) {
   if (state.forceUpdateActive) { showToast("Please update the app first.", "error"); return; }
   if (isBanned()) { showToast("🚫 Your account is banned.", "error"); return; }
@@ -2524,9 +2554,6 @@ function openDetailModal(match) {
   openModal("detailModal");
 }
 
-/* ═══════════════════════════════════════════════════════════
-   VERSION CHECK
-═══════════════════════════════════════════════════════════ */
 function parseVersionCode(cfg) {
   if (!cfg) return 0;
   var c = [cfg.versionCode, cfg.version_code, cfg.version, cfg.appVersionCode, cfg.app_version_code, cfg.latestVersionCode, cfg.latest_version_code];
@@ -2609,6 +2636,7 @@ if (auth) {
       D.authGate.classList.remove("hidden");
       D.appShell.classList.add("hidden");
       showAuthView("login");
+      syncSupportFabPosition();
       return;
     }
     try {
@@ -2619,6 +2647,7 @@ if (auth) {
         D.appShell.classList.add("hidden");
         showAuthView("login");
         setAuthMsg("⛔ Admins must use the Admin Panel.", "error");
+        syncSupportFabPosition();
         return;
       }
       state.user = user;
@@ -2658,12 +2687,14 @@ if (auth) {
       attachAdminLobbyListener();
       attachHomeMatchFilterListener();
       checkPaymentRedirect();
+      syncSupportFabPosition();
     } catch (err) {
       console.error("Auth state handler error:", err);
       D.authGate.classList.remove("hidden");
       D.appShell.classList.add("hidden");
       showAuthView("login");
       setAuthMsg("Error loading profile: " + (err.message || "unknown"), "error");
+      syncSupportFabPosition();
     }
   });
 }
@@ -2677,7 +2708,6 @@ if (document.readyState === "loading") {
   setupEventListeners();
 }
 
-/* Touch handler */
 var lastTouch = 0;
 document.addEventListener("touchend", function(e) {
   var now = Date.now();
@@ -2685,7 +2715,7 @@ document.addEventListener("touchend", function(e) {
   lastTouch = now;
 }, { passive: false });
 
-console.log("%c ArenaX ", "background:#00e5ff;color:#050810;font-weight:bold;padding:4px 8px;border-radius:4px", "User App Loaded ✅");
+console.log("%c ArenaX ", "background:#00e5ff;color:#050810;font-weight:bold;padding:4px 8px;border-radius:4px", "User App Loaded ✅ Support FAB added");
 </script>
 </body>
 </html>
