@@ -36,9 +36,11 @@
     width:100%;padding:14px;border-radius:10px;
     font-weight:700;font-size:15px;margin-top:10px;
     cursor:pointer;border:none;font-family:inherit;
-    transition:opacity .2s;
+    transition:opacity .2s, transform .15s;
+    text-decoration:none;
   }
   .btn:disabled{opacity:.55;cursor:not-allowed;}
+  .btn:active{transform:scale(.98);}
   .btn.google{background:#fff;color:#1a1a1a;}
   .btn.phone{background:#1a2238;color:#eef2ff;border:1px solid #2a3860;}
   .field{text-align:left;margin-bottom:12px;}
@@ -77,11 +79,17 @@
   .status.err{background:rgba(255,46,81,.1);border:1px solid rgba(255,46,81,.4);color:#ff5c73;}
   .hidden{display:none!important;}
   #openAppBtn{
-    display:none;margin-top:12px;text-decoration:none;
+    display:none;margin-top:12px;
     background:linear-gradient(135deg,#00e5ff,#7c4dff);
-    color:#04121a;font-weight:800;
+    color:#04121a;font-weight:800;font-size:16px;
+    padding:16px 14px;cursor:pointer;
+    animation:pulse 1.5s ease-in-out infinite;
   }
   #openAppBtn.show{display:flex;}
+  @keyframes pulse{
+    0%,100%{box-shadow:0 0 0 0 rgba(0,229,255,.6);}
+    50%{box-shadow:0 0 0 12px rgba(0,229,255,0);}
+  }
 </style>
 </head>
 <body>
@@ -126,10 +134,10 @@
   <div id="statusBox" class="status info hidden"></div>
   <p class="msg" id="msg"></p>
 
-  <!-- Manual deep-link fallback (shown if window.location.href = arenax:// doesn't fire) -->
+  <!-- Manual deep-link fallback -->
   <a id="openAppBtn" class="btn" href="#">↗ OPEN ARENAX APP</a>
 
-  <!-- Invisible reCAPTCHA container for phone auth -->
+  <!-- Invisible reCAPTCHA container -->
   <div id="recaptcha-container"></div>
 </div>
 
@@ -147,11 +155,11 @@ import {
 
 /* ═══════════════════════════════════════════════════════════
    🔥 FIREBASE CONFIG
-   IMPORTANT: authDomain MUST be the Vercel domain (proxied)
+   authDomain MUST be the Vercel domain (proxied to Firebase)
 ═══════════════════════════════════════════════════════════ */
 const firebaseConfig = {
   apiKey: "AIzaSyDEquBta5rSGYGbFe1EhzC7vSIjrWqSIkk",
-  authDomain: "arenax-beige.vercel.app",       // ← custom domain with proxy
+  authDomain: "arenax-beige.vercel.app",
   databaseURL: "https://tournament-b2771-default-rtdb.firebaseio.com",
   projectId: "tournament-b2771",
   storageBucket: "tournament-b2771.firebasestorage.app",
@@ -165,8 +173,14 @@ const firebaseConfig = {
 const SERVER_URL = "https://arenax-webhook.onrender.com";
 
 /* ═══════════════════════════════════════════════════════════
-   🚀 DEEP-LINK TARGET — read from query string (?redirect=...)
-   Default: arenax://auth-success
+   🎯 PACKAGE NAME — VERY IMPORTANT
+   Apne Android app ka actual applicationId yahan daal.
+   Android Studio → app/build.gradle → applicationId dekho.
+═══════════════════════════════════════════════════════════ */
+const ANDROID_PACKAGE = "com.arenax.app";   // ⚠️ CHANGE THIS
+
+/* ═══════════════════════════════════════════════════════════
+   🚀 DEEP-LINK TARGET — from query string
 ═══════════════════════════════════════════════════════════ */
 const params = new URLSearchParams(location.search);
 const REDIRECT_TARGET = params.get("redirect") || "arenax://auth-success";
@@ -199,13 +213,12 @@ function setStatus(t, type = "info") {
 
 /* ═══════════════════════════════════════════════════════════
    🔁 PAGE LOAD — HANDLE REDIRECT RESULT
-   This is THE critical piece. Without it, redirect flow ends
-   on a blank /__/auth/handler page.
+   THE critical piece for redirect flow (mobile Google sign-in).
 ═══════════════════════════════════════════════════════════ */
 getRedirectResult(auth)
   .then(async (result) => {
     if (result && result.user) {
-      console.log("✅ Redirect result received:", result.user.email || result.user.phoneNumber);
+      console.log("✅ Redirect result:", result.user.email || result.user.phoneNumber);
       await finishLogin(result.user, "google");
     } else {
       console.log("ℹ️ No redirect result — normal page load");
@@ -220,8 +233,8 @@ getRedirectResult(auth)
 
 /* ═══════════════════════════════════════════════════════════
    🔵 GOOGLE SIGN-IN
-   - Mobile  → signInWithRedirect (popup often blocked in WebView/Chrome)
-   - Desktop → signInWithPopup    (smoother UX)
+   Mobile  → signInWithRedirect  (popup often blocked)
+   Desktop → signInWithPopup     (smoother UX)
 ═══════════════════════════════════════════════════════════ */
 $("googleBtn").addEventListener("click", async () => {
   setMsg("");
@@ -232,11 +245,9 @@ $("googleBtn").addEventListener("click", async () => {
     setStatus("Opening Google sign-in…", "info");
 
     if (isMobile) {
-      /* 📱 Redirect flow */
       await signInWithRedirect(auth, googleProvider);
-      /* Page navigates away. getRedirectResult() above handles the return. */
+      /* Page navigates away. getRedirectResult() will handle the return. */
     } else {
-      /* 🖥 Popup flow */
       const result = await signInWithPopup(auth, googleProvider);
       await finishLogin(result.user, "google");
     }
@@ -300,7 +311,6 @@ $("sendOtpBtn").addEventListener("click", async () => {
     }
 
     confirmationResult = await signInWithPhoneNumber(auth, phone, recaptchaVerifier);
-
     $("phoneForm").classList.add("hidden");
     $("otpForm").classList.remove("hidden");
     setStatus("✅ OTP sent. Check your SMS.", "ok");
@@ -351,7 +361,7 @@ $("verifyOtpBtn").addEventListener("click", async () => {
 /* ═══════════════════════════════════════════════════════════
    🚀 FINISH LOGIN
    1. Get Firebase ID token
-   2. Ask server to mint a one-time bridge code
+   2. Ask server for one-time bridge code
    3. Fire deep-link back into the Android app
 ═══════════════════════════════════════════════════════════ */
 async function finishLogin(user, provider) {
@@ -359,10 +369,10 @@ async function finishLogin(user, provider) {
     const displayName = user.displayName || user.email || user.phoneNumber || "user";
     setStatus("✅ Signed in as " + displayName + ". Returning to app…", "ok");
 
-    /* 1️⃣ Grab Firebase ID token */
+    /* 1️⃣ Firebase ID token */
     const idToken = await user.getIdToken(true);
 
-    /* 2️⃣ Create one-time bridge code */
+    /* 2️⃣ Bridge code from server */
     const resp = await fetch(SERVER_URL + "/auth-bridge/create", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -377,7 +387,7 @@ async function finishLogin(user, provider) {
       throw new Error(data.error || "Server could not create bridge token.");
     }
 
-    /* 3️⃣ Build the deep-link URL */
+    /* 3️⃣ Build deep-link URL */
     const target =
       REDIRECT_TARGET +
       (REDIRECT_TARGET.indexOf("?") === -1 ? "?" : "&") +
@@ -388,39 +398,134 @@ async function finishLogin(user, provider) {
     console.log("🔗 Deep link target:", target);
     setStatus("🚀 Opening ArenaX app…", "ok");
 
-    /* 4️⃣ Fire the deep link after a tiny delay (let UI paint) */
-    setTimeout(() => {
-      try {
-        window.location.href = target;
-      } catch (e) {
-        console.warn("location.href assignment failed:", e);
-      }
+    /* 4️⃣ Wire manual fallback button */
+    openAppBtn.href = target;
+    openAppBtn.classList.add("show");
+    openAppBtn.onclick = (e) => {
+      e.preventDefault();
+      launchApp(target);
+    };
 
-      /* 5️⃣ Show manual fallback if the app doesn't launch */
-      setTimeout(() => {
-        if (!document.hidden) {
-          setStatus("If the app didn't open automatically, tap the button below:", "info");
-          openAppBtn.href = target;
-          openAppBtn.classList.add("show");
-        }
-      }, 1500);
-    }, 500);
+    /* 5️⃣ Auto-launch attempt */
+    setTimeout(() => tryAutoLaunch(target), 400);
 
   } catch (err) {
     console.error("❌ finishLogin error:", err);
     setStatus("❌ " + (err.message || "Could not complete sign-in."), "err");
-    /* Re-enable buttons so user can try again */
     $("googleBtn").disabled = false;
     $("verifyOtpBtn").disabled = false;
   }
 }
 
 /* ═══════════════════════════════════════════════════════════
-   🧪 LOG — helps with debugging in Chrome DevTools
+   🚀 LAUNCH APP
+   Tries every known reliable method:
+   - Android: intent:// URL (best) then fallback to scheme
+   - iOS:     raw scheme
+   - Others:  window.open
+═══════════════════════════════════════════════════════════ */
+function launchApp(deepLinkUrl) {
+  console.log("🚀 Launching app:", deepLinkUrl);
+
+  const ua = navigator.userAgent || "";
+  const isAndroid = /Android/i.test(ua);
+  const isIOS = /iPhone|iPad|iPod/i.test(ua);
+
+  /* Build Android intent URL — the most reliable method */
+  let intentUrl = deepLinkUrl;
+  if (isAndroid) {
+    try {
+      const parsed = new URL(deepLinkUrl);
+      const scheme = parsed.protocol.replace(":", "");   // "arenax"
+      const host   = parsed.hostname;                     // "auth-success"
+      const query  = parsed.search.startsWith("?") ? parsed.search.slice(1) : "";
+      intentUrl =
+        "intent://" + host + (query ? "?" + query : "") +
+        "#Intent;scheme=" + scheme + ";" +
+        "package=" + ANDROID_PACKAGE + ";" +
+        "S.browser_fallback_url=" + encodeURIComponent(deepLinkUrl) + ";" +
+        "end";
+    } catch (e) {
+      console.warn("Intent URL build failed:", e);
+    }
+  }
+
+  /* Attempt 1: hidden iframe (WebView-friendly) */
+  try {
+    const iframe = document.createElement("iframe");
+    iframe.style.cssText = "display:none;width:0;height:0;border:0;";
+    iframe.src = intentUrl;
+    document.body.appendChild(iframe);
+    setTimeout(() => { try { iframe.remove(); } catch (e) {} }, 2500);
+  } catch (e) {
+    console.warn("iframe launch failed:", e);
+  }
+
+  /* Attempt 2: direct location assignment */
+  try {
+    window.location.href = intentUrl;
+  } catch (e) {
+    console.warn("location.href launch failed:", e);
+  }
+
+  /* Attempt 3: window.open _system (some WebViews need this) */
+  setTimeout(() => {
+    if (!document.hidden) {
+      try {
+        const w = window.open(intentUrl, "_system");
+        if (!w) window.open(intentUrl, "_blank");
+      } catch (e) {
+        console.warn("window.open launch failed:", e);
+      }
+    }
+  }, 300);
+
+  /* Attempt 4: raw scheme as last resort (iOS mostly) */
+  if (isIOS) {
+    setTimeout(() => {
+      if (!document.hidden) {
+        try { window.location.href = deepLinkUrl; } catch (e) {}
+      }
+    }, 600);
+  }
+}
+
+/* ═══════════════════════════════════════════════════════════
+   🔎 AUTO-LAUNCH WITH DETECTION
+   If page becomes hidden/blurred after launch, app opened ✅
+═══════════════════════════════════════════════════════════ */
+function tryAutoLaunch(deepLinkUrl) {
+  let appOpened = false;
+
+  const markOpened = () => {
+    appOpened = true;
+    console.log("✅ App launch detected");
+  };
+
+  document.addEventListener("visibilitychange", () => {
+    if (document.hidden) markOpened();
+  }, { once: true });
+  window.addEventListener("blur", markOpened, { once: true });
+  window.addEventListener("pagehide", markOpened, { once: true });
+
+  launchApp(deepLinkUrl);
+
+  /* If after 2.5s still visible, nudge user to tap the button */
+  setTimeout(() => {
+    if (!appOpened && !document.hidden) {
+      setStatus("App didn't open automatically. Tap the button below 👇", "info");
+      openAppBtn.classList.add("show");
+    }
+  }, 2500);
+}
+
+/* ═══════════════════════════════════════════════════════════
+   🧪 DEBUG LOGS
 ═══════════════════════════════════════════════════════════ */
 console.log("[ArenaX Auth] Loaded ✅");
 console.log("[ArenaX Auth] Redirect target:", REDIRECT_TARGET);
 console.log("[ArenaX Auth] authDomain:", firebaseConfig.authDomain);
+console.log("[ArenaX Auth] Android package:", ANDROID_PACKAGE);
 </script>
 </body>
 </html>
