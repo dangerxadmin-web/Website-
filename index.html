@@ -19,6 +19,7 @@
   --glow:0 0 22px rgba(0,229,255,.4);
   --font-d:'Orbitron','Rajdhani',system-ui,sans-serif;
   --font-b:'Rajdhani','Segoe UI',system-ui,sans-serif;
+  --max-w: 680px;
 }
 html,body{height:100%;background:var(--bg-0);color:var(--text);font-family:var(--font-b);font-size:15px;overflow-x:hidden;overscroll-behavior-y:contain;-webkit-font-smoothing:antialiased;}
 body::before{content:"";position:fixed;inset:0;pointer-events:none;z-index:0;background:radial-gradient(700px 500px at -10% -20%,rgba(124,77,255,.18),transparent 60%),radial-gradient(700px 500px at 110% 5%,rgba(0,229,255,.14),transparent 60%),radial-gradient(500px 400px at 50% 110%,rgba(255,46,81,.12),transparent 60%);}
@@ -106,10 +107,12 @@ a{color:inherit;text-decoration:none;}
 .mode-filter{display:flex;gap:8px;padding:6px 14px 10px;overflow-x:auto;scrollbar-width:none;}
 .mode-filter::-webkit-scrollbar{display:none;}
 .mode-btn{flex-shrink:0;padding:7px 15px;border-radius:100px;background:rgba(255,255,255,.03);border:1px solid var(--stroke);color:var(--mute);font-weight:600;font-size:12px;transition:all .2s;white-space:nowrap;}
+.mode-btn:hover{border-color:var(--stroke-2);color:var(--dim);}
 .mode-btn.active{background:rgba(0,229,255,.1);color:var(--cyan);border-color:rgba(0,229,255,.45);}
 .team-filter{display:flex;gap:8px;padding:0 14px 10px;overflow-x:auto;scrollbar-width:none;}
 .team-filter::-webkit-scrollbar{display:none;}
 .team-btn{flex-shrink:0;padding:6px 14px;border-radius:100px;background:rgba(255,255,255,.03);border:1px solid var(--stroke);color:var(--mute);font-weight:600;font-size:11.5px;transition:all .2s;white-space:nowrap;}
+.team-btn:hover{border-color:var(--stroke-2);color:var(--dim);}
 .team-btn.active{background:rgba(0,230,118,.1);color:var(--green);border-color:rgba(0,230,118,.45);}
 .view-container{padding:0 14px 0;position:relative;z-index:1;}
 .view{display:none;}
@@ -119,12 +122,14 @@ a{color:inherit;text-decoration:none;}
 .sec-title{font-family:var(--font-d);font-size:12px;letter-spacing:2.5px;color:var(--dim);text-transform:uppercase;margin:20px 4px 12px;display:flex;align-items:center;gap:8px;}
 .sec-title::before{content:"";width:3px;height:14px;border-radius:3px;background:linear-gradient(180deg,var(--cyan),var(--cyan-2));box-shadow:0 0 10px var(--cyan);}
 .card-list{display:flex;flex-direction:column;gap:14px;}
-.t-card{position:relative;background:linear-gradient(160deg,var(--bg-2),var(--bg-1));border:1px solid var(--stroke);border-radius:var(--r);overflow:hidden;box-shadow:0 6px 22px rgba(0,0,0,.45);animation:slideUp .35s ease backwards;}
+.t-card{position:relative;background:linear-gradient(160deg,var(--bg-2),var(--bg-1));border:1px solid var(--stroke);border-radius:var(--r);overflow:hidden;box-shadow:0 6px 22px rgba(0,0,0,.45);animation:slideUp .35s ease backwards;transition:transform .2s ease, box-shadow .2s ease, border-color .2s ease;}
+.t-card:hover{border-color:var(--stroke-2);transform:translateY(-2px);box-shadow:0 10px 30px rgba(0,0,0,.55);}
 .t-card::before{content:"";position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--cyan),var(--cyan-2),var(--red));z-index:2;}
 .t-card.status-completed::before{background:linear-gradient(90deg,var(--green),#00b894);}
 .t-card.status-cancelled::before{background:linear-gradient(90deg,var(--red),#8b0000);}
 .t-card.status-cancelled{opacity:.72;}
-.t-banner{width:100%;height:110px;object-fit:cover;display:block;}
+.t-banner{width:100%;height:110px;object-fit:cover;display:block;transition:transform .5s ease;}
+.t-card:hover .t-banner{transform:scale(1.03);}
 .t-banner-fallback{width:100%;height:110px;background:linear-gradient(135deg,#131a2e,#0a0e1a);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;}
 .t-banner-fallback .tb-icon{font-size:32px;line-height:1;filter:drop-shadow(0 0 8px rgba(0,229,255,.5));}
 .t-banner-fallback .tb-label{font-family:var(--font-d);font-size:14px;letter-spacing:2px;color:var(--stroke-2);}
@@ -170,7 +175,8 @@ a{color:inherit;text-decoration:none;}
 .progress-bar{height:7px;border-radius:100px;background:rgba(255,255,255,.08);overflow:hidden;}
 .progress-fill{height:100%;border-radius:100px;background:linear-gradient(90deg,var(--cyan),var(--cyan-2));transition:width .5s;}
 .progress-fill.almost{background:linear-gradient(90deg,var(--gold),var(--red));}
-.join-btn{width:100%;padding:12px;border-radius:var(--r-sm);font-family:var(--font-d);font-weight:700;font-size:13px;letter-spacing:1.5px;color:#fff;background:linear-gradient(135deg,var(--red),var(--red-2));box-shadow:0 4px 18px rgba(255,46,81,.35);}
+.join-btn{width:100%;padding:12px;border-radius:var(--r-sm);font-family:var(--font-d);font-weight:700;font-size:13px;letter-spacing:1.5px;color:#fff;background:linear-gradient(135deg,var(--red),var(--red-2));box-shadow:0 4px 18px rgba(255,46,81,.35);transition:transform .15s ease, box-shadow .2s ease;}
+.join-btn:hover:not(:disabled){transform:translateY(-1px);box-shadow:0 6px 22px rgba(255,46,81,.5);}
 .join-btn:disabled{background:var(--bg-3);color:var(--mute);box-shadow:none;cursor:not-allowed;}
 .join-btn.joined{background:rgba(0,230,118,.15);color:var(--green);border:1px solid rgba(0,230,118,.4);box-shadow:none;}
 .join-btn.started{background:linear-gradient(135deg,var(--green),#00b894);color:#04121a;}
@@ -188,7 +194,8 @@ a{color:inherit;text-decoration:none;}
 .wallet-hero .bal{font-family:var(--font-d);font-size:42px;font-weight:900;color:var(--gold);margin:8px 0 6px;text-shadow:0 0 24px rgba(255,179,0,.45);}
 .wallet-hero .bonus{font-size:13px;color:var(--green);margin-bottom:18px;font-weight:700;}
 .wallet-actions{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
-.wbtn{padding:12px;border-radius:var(--r-sm);font-family:var(--font-d);font-weight:700;font-size:12px;}
+.wbtn{padding:12px;border-radius:var(--r-sm);font-family:var(--font-d);font-weight:700;font-size:12px;transition:transform .15s ease, box-shadow .2s ease;}
+.wbtn:hover:not(:disabled){transform:translateY(-1px);}
 .wbtn:disabled{opacity:.4;cursor:not-allowed;}
 .wbtn.deposit{background:linear-gradient(135deg,var(--cyan),var(--cyan-2));color:#04121a;}
 .wbtn.withdraw{background:linear-gradient(135deg,var(--red),var(--red-2));color:#fff;}
@@ -234,7 +241,8 @@ a{color:inherit;text-decoration:none;}
 @keyframes sheetUp{from{transform:translateY(100%);}to{transform:translateY(0);}}
 .modal-hd{position:sticky;top:0;z-index:2;display:flex;justify-content:space-between;align-items:center;padding:18px 20px 12px;border-bottom:1px solid var(--stroke);background:var(--bg-1);}
 .modal-hd h3{font-family:var(--font-d);font-size:15px;letter-spacing:1.5px;}
-.modal-x{width:32px;height:32px;border-radius:50%;display:flex;align-items:center;justify-content:center;color:var(--dim);font-size:18px;}
+.modal-x{width:32px;height:32px;border-radius:50%;display:flex;align-items:center;justify-content:center;color:var(--dim);font-size:18px;transition:background .2s;}
+.modal-x:hover{background:var(--bg-3);color:var(--text);}
 .modal-bd{padding:18px 20px 26px;}
 .match-summary{background:var(--bg-2);border:1px solid var(--stroke);border-radius:var(--r-sm);padding:14px;margin-bottom:16px;}
 .ms-title{font-weight:700;font-size:15px;margin-bottom:8px;}
@@ -245,7 +253,8 @@ a{color:inherit;text-decoration:none;}
 .field .lbl{display:block;font-size:11px;font-weight:600;color:var(--dim);text-transform:uppercase;letter-spacing:1.2px;margin-bottom:6px;}
 .field input{width:100%;padding:13px 14px;background:var(--bg-2);border:1px solid var(--stroke);border-radius:var(--r-sm);color:var(--text);font-size:15px;font-weight:500;outline:none;}
 .field input:focus{border-color:var(--cyan);box-shadow:0 0 0 3px rgba(0,229,255,.13);}
-.btn-main{width:100%;padding:14px;border-radius:var(--r-sm);font-family:var(--font-d);font-weight:700;font-size:14px;letter-spacing:1.5px;color:#fff;background:linear-gradient(135deg,var(--red),var(--red-2));box-shadow:0 6px 22px rgba(255,46,81,.35);}
+.btn-main{width:100%;padding:14px;border-radius:var(--r-sm);font-family:var(--font-d);font-weight:700;font-size:14px;letter-spacing:1.5px;color:#fff;background:linear-gradient(135deg,var(--red),var(--red-2));box-shadow:0 6px 22px rgba(255,46,81,.35);transition:transform .15s ease, box-shadow .2s ease;}
+.btn-main:hover:not(:disabled){transform:translateY(-1px);box-shadow:0 8px 26px rgba(255,46,81,.5);}
 .btn-main:disabled{opacity:.5;cursor:not-allowed;}
 .btn-cyan{background:linear-gradient(135deg,var(--cyan),var(--cyan-2));color:#04121a;}
 .btn-green{background:linear-gradient(135deg,var(--green),#00b894);color:#04121a;}
@@ -277,6 +286,7 @@ a{color:inherit;text-decoration:none;}
 .bottom-nav{position:fixed;bottom:0;left:0;right:0;z-index:40;display:flex;justify-content:space-around;align-items:center;padding:8px 0 calc(8px + env(safe-area-inset-bottom,0px));background:rgba(10,14,26,.96);backdrop-filter:blur(16px);border-top:1px solid var(--stroke);max-width:680px;margin:0 auto;}
 .nav-btn{flex:1;display:flex;flex-direction:column;align-items:center;gap:3px;padding:6px 4px;color:var(--mute);transition:color .2s;font-size:10px;font-weight:600;letter-spacing:.5px;font-family:var(--font-d);}
 .nav-btn .ico{font-size:20px;line-height:1;position:relative;}
+.nav-btn:hover{color:var(--dim);}
 .nav-btn.active{color:var(--cyan);}
 .nav-btn.active .ico{transform:translateY(-2px);}
 .nav-dot{position:absolute;top:-2px;right:-6px;min-width:14px;height:14px;padding:0 3px;background:var(--red);color:#fff;border-radius:100px;font-size:9px;font-weight:700;display:none;align-items:center;justify-content:center;border:2px solid var(--bg-1);}
@@ -285,10 +295,10 @@ a{color:inherit;text-decoration:none;}
 #toast.success{border-color:rgba(0,230,118,.55);color:var(--green);}
 #toast.error{border-color:rgba(255,46,81,.55);color:var(--red-2);}
 #toast.prize{border-color:rgba(255,179,0,.7);color:var(--gold);background:linear-gradient(135deg,rgba(255,179,0,.15),var(--bg-3));font-weight:800;font-size:14.5px;box-shadow:0 0 30px rgba(255,179,0,.5);}
-@media(min-width:640px){.modal-overlay{align-items:center;padding:24px;}.modal{border-radius:20px;border-bottom:1px solid var(--stroke-2);}}
 .spinner{display:inline-block;width:16px;height:16px;border:2px solid rgba(255,255,255,.3);border-top-color:#fff;border-radius:50%;animation:spin .7s linear infinite;vertical-align:middle;margin-right:8px;}
 .amount-chips{display:flex;gap:8px;margin-bottom:14px;flex-wrap:wrap;}
 .amt-chip{padding:10px 18px;border-radius:100px;background:var(--bg-2);border:1px solid var(--stroke);color:var(--dim);font-weight:700;font-size:13px;transition:all .2s;}
+.amt-chip:hover{border-color:var(--stroke-2);color:var(--text);}
 .amt-chip.active{background:linear-gradient(135deg,var(--cyan),var(--cyan-2));color:#050810;border-color:transparent;}
 .deposit-step{display:flex;gap:14px;padding:14px 0;position:relative;}
 .step-num{width:34px;height:34px;border-radius:50%;background:var(--bg-3);border:2px solid var(--stroke);display:flex;align-items:center;justify-content:center;font-family:var(--font-d);font-weight:700;font-size:14px;color:var(--mute);flex-shrink:0;transition:all .3s;}
@@ -315,7 +325,6 @@ a{color:inherit;text-decoration:none;}
 .legal-links a { padding: 8px 14px; border-radius: 100px; background: rgba(255,255,255,.04); border: 1px solid var(--stroke); color: var(--dim); font-size: 12px; font-weight: 600; text-decoration: none; transition: all .2s; white-space: nowrap; }
 .legal-links a:hover, .legal-links a:focus-visible { color: var(--cyan); border-color: rgba(0,229,255,.45); background: rgba(0,229,255,.08); outline: none; }
 .legal-footer .lf-copy { margin-top: 14px; font-size: 11px; color: var(--mute); line-height: 1.6; }
-@media (max-width: 400px) { .legal-links a { padding: 7px 11px; font-size: 11px; } }
 
 .hdr-brand { display: flex; align-items: center; justify-content: center; gap: 8px; padding: 6px 0 4px; position: relative; overflow: hidden; }
 .hdr-brand-text { font-family: var(--font-d); font-size: 18px; font-weight: 900; letter-spacing: 5px; color: #f5f9ff; position: relative; z-index: 2; text-shadow: 0 0 10px rgba(0,229,255,.9), 0 0 24px rgba(0,229,255,.55), 0 0 40px rgba(124,77,255,.35); animation: brandFloat 3.6s ease-in-out infinite, brandGlow 2.4s ease-in-out infinite; }
@@ -339,8 +348,9 @@ a{color:inherit;text-decoration:none;}
 .promo-title { font-family: var(--font-d); font-size: 18px; font-weight: 900; letter-spacing: 1px; color: #fff; margin-bottom: 4px; text-shadow: 0 2px 8px rgba(0,0,0,.5); position: relative; z-index: 1; }
 .promo-desc { font-size: 12px; color: rgba(255,255,255,.9); font-weight: 600; margin-bottom: 12px; text-shadow: 0 1px 4px rgba(0,0,0,.4); position: relative; z-index: 1; }
 .promo-cta { display: inline-flex; align-items: center; gap: 6px; padding: 9px 18px; border-radius: 100px; background: rgba(255,255,255,.95); color: #1a1200; font-family: var(--font-d); font-weight: 800; font-size: 11px; letter-spacing: 1px; text-transform: uppercase; box-shadow: 0 4px 14px rgba(0,0,0,.3); position: relative; z-index: 1; align-self: flex-start; }
+.promo-cta:hover{transform:translateY(-1px);box-shadow:0 6px 18px rgba(0,0,0,.4);}
 .promo-dots { position: absolute; bottom: 10px; right: 14px; display: flex; gap: 6px; z-index: 2; }
-.promo-dot { width: 6px; height: 6px; border-radius: 50%; background: rgba(255,255,255,.4); transition: all .3s; }
+.promo-dot { width: 6px; height: 6px; border-radius: 50%; background: rgba(255,255,255,.4); transition: all .3s; cursor:pointer;}
 .promo-dot.active { background: #fff; width: 18px; border-radius: 100px; }
 
 .primary-game-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 14px; padding: 0 14px; margin-bottom: 6px; }
@@ -367,8 +377,8 @@ a{color:inherit;text-decoration:none;}
 .primary-game-badge.hot { background: linear-gradient(135deg, #ff2e51, #ff5c73); color: #fff; box-shadow: 0 4px 12px rgba(255,46,81,.5); }
 .primary-game-badge.new { background: linear-gradient(135deg, #00e676, #00b894); color: #04121a; box-shadow: 0 4px 12px rgba(0,230,118,.5); }
 
-.lobby-card { display: flex; gap: 12px; padding: 12px; background: linear-gradient(160deg, var(--bg-2), var(--bg-1)); border: 1px solid var(--stroke); border-radius: 14px; margin-bottom: 12px; overflow: hidden; position: relative; transition: border-color .2s; cursor: pointer; }
-.lobby-card:active { border-color: var(--stroke-2); }
+.lobby-card { display: flex; gap: 12px; padding: 12px; background: linear-gradient(160deg, var(--bg-2), var(--bg-1)); border: 1px solid var(--stroke); border-radius: 14px; margin-bottom: 12px; overflow: hidden; position: relative; transition: border-color .2s, transform .2s; cursor: pointer; }
+.lobby-card:hover { border-color: var(--stroke-2); transform: translateY(-1px); }
 .lobby-card::after { content: ""; position: absolute; top: 0; left: 0; width: 3px; height: 100%; border-radius: 3px; }
 .lobby-card.live::after { background: linear-gradient(180deg, #00e676, #00b894); box-shadow: 0 0 10px #00e676; }
 .lobby-card.ready::after { background: linear-gradient(180deg, var(--cyan), var(--cyan-2)); box-shadow: 0 0 10px var(--cyan); }
@@ -389,7 +399,8 @@ a{color:inherit;text-decoration:none;}
 
 .matches-header { display: flex; align-items: center; gap: 12px; padding: 14px 16px; background: rgba(10,14,26,.92); backdrop-filter: blur(14px); border-bottom: 1px solid var(--stroke); position: sticky; top: 0; z-index: 30; }
 .back-btn { width: 40px; height: 40px; border-radius: 50%; background: var(--bg-2); border: 1px solid var(--stroke); display: flex; align-items: center; justify-content: center; color: var(--text); font-size: 18px; flex-shrink: 0; transition: all .2s; }
-.back-btn:active { transform: scale(.92); background: var(--bg-3); }
+.back-btn:hover{background:var(--bg-3);}
+.back-btn:active { transform: scale(.92); }
 .matches-title { flex: 1; min-width: 0; }
 .matches-title h2 { font-family: var(--font-d); font-size: 16px; font-weight: 900; letter-spacing: 1.5px; color: var(--text); margin: 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 .matches-title p { font-size: 11px; color: var(--mute); margin: 2px 0 0; font-weight: 600; }
@@ -444,14 +455,198 @@ a{color:inherit;text-decoration:none;}
   border-right: 1px solid #00f2fe; border-top: 1px solid #00f2fe;
 }
 #supportFab:hover .support-tooltip, #supportFab:focus-visible .support-tooltip { opacity: 1; transform: translateY(-50%) translateX(0); }
-@media (max-width: 480px) {
-  #supportFab { width: 54px; height: 54px; right: 16px; bottom: 16px; }
-  #supportFab.support-logged-in { bottom: 84px; }
-  #supportFab svg { width: 24px; height: 24px; }
-  #supportFab .support-tooltip { font-size: 10.5px; padding: 8px 12px; right: 68px; }
-}
 #forceUpdateScreen.show ~ #supportFab,
 body.force-update-locked #supportFab { display: none !important; }
+
+/* ═══════════════════════════════════════════════════════════
+   🖥️  DESKTOP OPTIMIZATIONS (min-width: 900px)
+═══════════════════════════════════════════════════════════ */
+@media (min-width: 900px) {
+  html, body { font-size: 16px; }
+
+  /* Shell expands to full width */
+  #appShell {
+    max-width: 1200px;
+    padding-bottom: 40px;
+    padding-left: 24px;
+    padding-right: 24px;
+  }
+
+  /* Header */
+  .app-header-stack { border-radius: 0 0 16px 16px; }
+  .hdr-brand { padding: 10px 0 8px; }
+  .hdr-brand-text { font-size: 22px; letter-spacing: 7px; }
+  .hdr-brand-trophy { font-size: 20px; }
+  .hdr-welcome-row { padding: 12px 24px 16px; }
+  .hdr-avatar { width: 48px; height: 48px; font-size: 20px; }
+  .hdr-name { font-size: 17px; max-width: 200px; }
+  .hdr-hi { font-size: 11px; }
+  .hdr-wallet { font-size: 15px; padding: 9px 16px; }
+  .hdr-notif { width: 46px; height: 46px; font-size: 20px; }
+  .hdr-dl-btn { font-size: 12px; padding: 9px 16px; }
+
+  /* Container */
+  .view-container { padding: 0 24px; }
+  .sec-title { font-size: 14px; letter-spacing: 3px; margin: 26px 6px 16px; }
+  .sec-title::before { height: 18px; width: 4px; }
+
+  /* Home layout: 2-col grid for content */
+  #view-home.active {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
+    align-items: start;
+  }
+  #view-home .promo-carousel { grid-column: 1 / -1; margin: 0 0 8px; min-height: 240px; }
+  #view-home .promo-slide { min-height: 240px; padding: 32px 28px; }
+  #view-home .promo-title { font-size: 26px; }
+  #view-home .promo-desc { font-size: 14px; margin-bottom: 18px; }
+  #view-home .promo-cta { padding: 12px 26px; font-size: 13px; }
+  #view-home .promo-tag { font-size: 10.5px; padding: 5px 12px; }
+
+  /* Section title spans full row when needed */
+  #view-home .sec-title { grid-column: 1 / -1; margin-top: 0; }
+  #view-home .primary-game-grid { grid-column: 1 / -1; padding: 0; gap: 20px; }
+  #view-home #lobbyInfoContainer { grid-column: 1 / -1; padding: 0 !important; }
+
+  /* Game cards bigger, side-by-side */
+  .primary-game-grid { grid-template-columns: repeat(2, 1fr); gap: 20px; }
+  .primary-game-card { aspect-ratio: 16 / 10; border-radius: 22px; }
+  .primary-game-title { font-size: 22px; letter-spacing: 2px; }
+  .primary-game-sub { font-size: 13px; margin-bottom: 12px; }
+  .primary-game-logo { width: 54px; height: 54px; font-size: 28px; border-radius: 16px; top: 18px; left: 18px; }
+  .primary-game-badge { top: 18px; right: 18px; padding: 6px 14px; font-size: 10.5px; }
+  .primary-game-meta { font-size: 12.5px; }
+  .primary-game-content { padding: 26px 24px; }
+
+  /* Lobby cards bigger grid */
+  #lobbyInfoContainer { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  #lobbyInfoContainer .lobby-card { margin-bottom: 0; }
+  #lobbyInfoContainer .empty-state { grid-column: 1 / -1; }
+
+  /* Match cards 2-col grid */
+  #tournamentsList, #matchesList, #joinedList { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+  .t-card { border-radius: 16px; }
+  .t-card:hover { transform: translateY(-3px); }
+  .t-banner, .t-banner-fallback { height: 140px; }
+  .t-title { font-size: 17px; }
+  .t-stats { padding: 14px 10px; }
+  .stat .val { font-size: 14px; }
+  .join-btn { padding: 14px; font-size: 14px; }
+
+  /* Wallet/profile 2-col */
+  #view-wallet.active { display: grid; grid-template-columns: 420px 1fr; gap: 24px; align-items: start; }
+  #view-wallet .wallet-hero { grid-column: 1; margin-bottom: 0; position: sticky; top: 190px; }
+  #view-wallet .sec-title { grid-column: 2; margin-top: 0; }
+  #view-wallet .tx-list, #view-wallet .tx-empty { grid-column: 2; }
+  .wallet-hero .bal { font-size: 52px; }
+
+  #view-profile.active { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; align-items: start; }
+  #view-profile .profile-card { grid-column: 1 / -1; padding: 32px 24px; }
+  #view-profile .profile-avatar { width: 110px; height: 110px; font-size: 40px; margin-bottom: 18px; }
+  #view-profile .profile-name { font-size: 26px; }
+  #view-profile .info-list { grid-column: 1 / -1; display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+  #view-profile .info-list .info-row { margin: 0; }
+  #view-profile .sec-title { grid-column: 1 / -1; }
+
+  #view-terms.active { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+  #view-terms .terms-card { margin-bottom: 0; }
+
+  /* Legal footer grid */
+  .legal-footer {
+    max-width: 1200px;
+    margin: 40px auto 24px;
+    padding: 32px 28px;
+    border-radius: 20px;
+  }
+  .legal-footer .lf-title { font-size: 13px; letter-spacing: 3px; margin-bottom: 20px; }
+  .legal-links { gap: 10px; }
+  .legal-links a { padding: 10px 20px; font-size: 13px; }
+  .legal-footer .lf-copy { font-size: 12px; margin-top: 20px; }
+
+  /* Bottom nav converts to top-style horizontal */
+  .bottom-nav {
+    position: sticky;
+    top: 0;
+    bottom: auto;
+    max-width: 1200px;
+    padding: 12px 24px;
+    background: rgba(10,14,26,.94);
+    border-top: none;
+    border-bottom: 1px solid var(--stroke);
+    border-radius: 0 0 16px 16px;
+    gap: 8px;
+    z-index: 50;
+  }
+  .nav-btn {
+    flex-direction: row;
+    padding: 10px 20px;
+    font-size: 12px;
+    gap: 8px;
+    border-radius: 10px;
+    max-width: 180px;
+    transition: all .2s;
+  }
+  .nav-btn .ico { font-size: 18px; }
+  .nav-btn:hover { background: rgba(0,229,255,.06); }
+  .nav-btn.active { background: linear-gradient(135deg, rgba(0,229,255,.15), rgba(124,77,255,.1)); }
+  .nav-btn.active .ico { transform: none; }
+  .nav-dot { top: -2px; right: -4px; }
+
+  /* Modals centered on desktop */
+  .modal-overlay { align-items: center; padding: 32px; }
+  .modal {
+    border-radius: 22px;
+    border: 1px solid var(--stroke-2);
+    max-width: 560px;
+    max-height: 88vh;
+  }
+  .modal-hd { padding: 22px 26px 16px; }
+  .modal-hd h3 { font-size: 17px; }
+  .modal-bd { padding: 22px 26px 30px; }
+  .match-summary { padding: 18px; }
+  .ms-title { font-size: 17px; }
+  .ms-row { font-size: 14px; padding: 6px 0; }
+
+  /* Toast */
+  #toast { bottom: 40px; font-size: 14.5px; padding: 14px 26px; }
+
+  /* Support FAB adjust for desktop */
+  #supportFab { right: 32px; bottom: 32px; width: 62px; height: 62px; }
+  #supportFab.support-logged-in { bottom: 32px; }
+  #supportFab svg { width: 28px; height: 28px; }
+
+  /* Modes/teams filters on desktop: centered row */
+  #view-matches .mode-filter,
+  #view-matches .team-filter { padding: 8px 0 12px; }
+  #view-matches.active .card-list { padding-top: 6px; }
+
+  /* Matches screen 2-col */
+  #view-matches.active { display: block; }
+  #view-matches .matches-header { border-radius: 16px; margin-bottom: 16px; padding: 16px 24px; }
+  #view-matches .player-stats-strip { margin: 0 0 16px; padding: 16px 20px; }
+  #view-matches .player-stat-avatar { width: 54px; height: 54px; font-size: 22px; }
+  #view-matches .player-stat-handle { font-size: 16px; }
+  #view-matches .player-stat-sub { font-size: 12.5px; }
+  #view-matches .player-stat-badge { font-size: 11.5px; padding: 7px 14px; }
+
+  /* Auth card bigger on desktop */
+  .auth-card { max-width: 440px; padding: 40px 32px 32px; border-radius: 24px; }
+  .auth-brand { font-size: 34px; }
+  .auth-emblem { font-size: 56px; }
+}
+
+/* Tablet (600px - 899px): simpler upgrade */
+@media (min-width: 600px) and (max-width: 899px) {
+  #appShell { max-width: 780px; padding-left: 16px; padding-right: 16px; }
+  #view-profile .info-list { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+  #lobbyInfoContainer { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+  #lobbyInfoContainer .lobby-card { margin-bottom: 0; }
+  #tournamentsList, #matchesList, #joinedList { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  #view-terms.active { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  .bottom-nav { max-width: 780px; }
+  #toast { max-width: 400px; }
+}
 </style>
 </head>
 <body>
@@ -754,7 +949,6 @@ body.force-update-locked #supportFab { display: none !important; }
   </nav>
 </div>
 
-<!-- 🎧 FLOATING SUPPORT BUTTON -->
 <button id="supportFab" type="button" aria-label="Need Help? Contact Support" title="Need Help? Contact Support">
   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
     <path d="M3 18v-6a9 9 0 0 1 18 0v6"/>
@@ -995,9 +1189,7 @@ const D = {
 
 if (D.profVersion) D.profVersion.textContent = "v" + CURRENT_VERSION_NAME;
 
-/* ═══════════════════════════════════════════════════════════
-   UTILITIES
-═══════════════════════════════════════════════════════════ */
+/* UTILITIES */
 function showToast(msg, type) {
   if (!D.toast) return;
   D.toast.textContent = msg;
@@ -1012,51 +1204,26 @@ function showPrizePopup(title, amount) {
   D.prizePopup.classList.add("show");
   setTimeout(function() { D.prizePopup.classList.remove("show"); }, 4000);
 }
-function setAuthMsg(msg, type) {
-  if (!D.authMsg) return;
-  D.authMsg.textContent = msg;
-  D.authMsg.className = "auth-msg " + (type || "");
-}
-function clearAuthMsg() {
-  if (!D.authMsg) return;
-  D.authMsg.textContent = "";
-  D.authMsg.className = "auth-msg";
-}
-function fmtMoney(n) {
-  return Number(n || 0).toLocaleString("en-IN", { minimumFractionDigits: 2, maximumFractionDigits: 2 });
-}
+function setAuthMsg(msg, type) { if (D.authMsg) { D.authMsg.textContent = msg; D.authMsg.className = "auth-msg " + (type || ""); } }
+function clearAuthMsg() { if (D.authMsg) { D.authMsg.textContent = ""; D.authMsg.className = "auth-msg"; } }
+function fmtMoney(n) { return Number(n || 0).toLocaleString("en-IN", { minimumFractionDigits: 2, maximumFractionDigits: 2 }); }
 function fmtDateTime(ts) {
   if (!ts) return "TBA";
   var d = ts && ts.toDate ? ts.toDate() : new Date(ts);
   if (isNaN(d.getTime())) return "TBA";
   return d.toLocaleString("en-IN", { day: "2-digit", month: "short", hour: "2-digit", minute: "2-digit", hour12: true });
 }
-function escHTML(s) {
-  var d = document.createElement("div");
-  d.textContent = s == null ? "" : s;
-  return d.innerHTML;
-}
-function openModal(id) {
-  if (state.forceUpdateActive) return;
-  var el = document.getElementById(id);
-  if (el) el.classList.add("open");
-}
-function closeModal(id) {
-  var el = document.getElementById(id);
-  if (el) el.classList.remove("open");
-}
+function escHTML(s) { var d = document.createElement("div"); d.textContent = s == null ? "" : s; return d.innerHTML; }
+function openModal(id) { if (state.forceUpdateActive) return; var el = document.getElementById(id); if (el) el.classList.add("open"); }
+function closeModal(id) { var el = document.getElementById(id); if (el) el.classList.remove("open"); }
 function friendlyAuthError(code) {
   var map = {
-    "auth/invalid-email": "Invalid email address.",
-    "auth/user-disabled": "Account disabled.",
-    "auth/user-not-found": "No account found with this email.",
-    "auth/wrong-password": "Incorrect password.",
-    "auth/invalid-credential": "Invalid email or password.",
-    "auth/invalid-login-credentials": "Invalid credentials.",
+    "auth/invalid-email": "Invalid email address.", "auth/user-disabled": "Account disabled.",
+    "auth/user-not-found": "No account found with this email.", "auth/wrong-password": "Incorrect password.",
+    "auth/invalid-credential": "Invalid email or password.", "auth/invalid-login-credentials": "Invalid credentials.",
     "auth/email-already-in-use": "This email is already registered. Please login instead.",
     "auth/weak-password": "Password must be at least 6 characters.",
-    "auth/too-many-requests": "Too many attempts. Try again later.",
-    "auth/network-request-failed": "Network error.",
+    "auth/too-many-requests": "Too many attempts. Try again later.", "auth/network-request-failed": "Network error.",
     "auth/popup-closed-by-user": "Sign-in cancelled."
   };
   return map[code] || "Something went wrong.";
@@ -1068,9 +1235,7 @@ function generateReferralCode(name) {
   return (base || "PLAYER") + Math.floor(1000 + Math.random() * 9000);
 }
 
-/* ═══════════════════════════════════════════════════════════
-   GAME CARD MERGE
-═══════════════════════════════════════════════════════════ */
+/* GAME CARD MERGE */
 function buildGameCard(key) {
   var def = DEFAULT_PRIMARY_GAMES[key] || { display: key, sub: "", logo: "🎮", img: "", cls: key === "BGMI" ? "bgmi" : "ff", badge: "none" };
   var userCfg = state.gameCards[key] || {};
@@ -1087,10 +1252,7 @@ function buildGameCard(key) {
   return merged;
 }
 function refreshPrimaryGames() {
-  PRIMARY_GAMES = {
-    "BGMI": buildGameCard("BGMI"),
-    "Free Fire": buildGameCard("Free Fire")
-  };
+  PRIMARY_GAMES = { "BGMI": buildGameCard("BGMI"), "Free Fire": buildGameCard("Free Fire") };
   renderPrimaryGameGrid();
   if (state.currentScreen === "matches") {
     var asset = PRIMARY_GAMES[state.activeGame];
@@ -1103,14 +1265,11 @@ function refreshPrimaryGames() {
   if (state.joinedMatches.length) renderJoined(state.joinedMatches);
 }
 
-/* ═══════════════════════════════════════════════════════════
-   NORMALIZERS
-═══════════════════════════════════════════════════════════ */
+/* NORMALIZERS */
 function normalizeTeamSize(t) {
   var c = [t.teamSize, t.team, t.teamType, t.type, t.matchType, t.category, t.mode];
   for (var i = 0; i < c.length; i++) {
-    var val = c[i];
-    if (!val) continue;
+    var val = c[i]; if (!val) continue;
     var r = String(val).trim().toLowerCase();
     if (r === "solo" || r === "1v1" || r === "single") return "Solo";
     if (r === "duo" || r === "2v2" || r === "double") return "Duo";
@@ -1122,29 +1281,18 @@ function normalizeTeamSize(t) {
   if (title.indexOf("squad") !== -1) return "Squad";
   return "UNKNOWN";
 }
-function displayTeamSize(t) {
-  var n = normalizeTeamSize(t);
-  return n === "UNKNOWN" ? "Solo" : n;
-}
-function normalizeMode(t) {
-  return String(t.mode || t.category || "").trim() || "Battle Royale";
-}
+function displayTeamSize(t) { var n = normalizeTeamSize(t); return n === "UNKNOWN" ? "Solo" : n; }
+function normalizeMode(t) { return String(t.mode || t.category || "").trim() || "Battle Royale"; }
 function getBonusBalance(u) {
   if (!u) return 0;
   var c = [u.bonusBalance, u.bonus, u.bonusWallet, u.signupBonus, u.referralBonus, u.bonusAmount, u.walletBonus];
-  for (var i = 0; i < c.length; i++) {
-    var n = Number(c[i]);
-    if (!isNaN(n) && n > 0) return n;
-  }
+  for (var i = 0; i < c.length; i++) { var n = Number(c[i]); if (!isNaN(n) && n > 0) return n; }
   return 0;
 }
 function getRealBalance(u) {
   if (!u) return 0;
   var c = [u.balance, u.realBalance, u.mainBalance, u.wallet, u.walletBalance];
-  for (var i = 0; i < c.length; i++) {
-    var n = Number(c[i]);
-    if (!isNaN(n)) return n;
-  }
+  for (var i = 0; i < c.length; i++) { var n = Number(c[i]); if (!isNaN(n)) return n; }
   return 0;
 }
 function getMatchStatus(m) {
@@ -1200,9 +1348,6 @@ function buildBannerHTML(t) {
   return fallbackBannerHTML(t);
 }
 
-/* ═══════════════════════════════════════════════════════════
-   MODE FILTERS
-═══════════════════════════════════════════════════════════ */
 function renderModeFilter() {
   if (!D.modeFilter) return;
   var modes = GAME_MODES[state.activeGame] || [];
@@ -1217,7 +1362,6 @@ function renderMatchesModeFilter() {
     return '<button class="mode-btn ' + (m === state.activeMode ? "active" : "") + '" data-mode="' + escHTML(m) + '">' + escHTML(m) + '</button>';
   }).join("");
 }
-
 function showAuthView(view) {
   if (!D.loginForm || !D.signupForm) return;
   D.loginForm.classList.toggle("hidden", view !== "login");
@@ -1228,21 +1372,14 @@ function showAuthView(view) {
   clearAuthMsg();
 }
 
-/* ═══════════════════════════════════════════════════════════
-   SUPPORT FAB — attach listener
-═══════════════════════════════════════════════════════════ */
+/* SUPPORT FAB */
 function initSupportFab() {
   if (!D.supportFab) return;
   D.supportFab.addEventListener("click", function(e) {
-    e.preventDefault();
-    e.stopPropagation();
+    e.preventDefault(); e.stopPropagation();
     if (state.forceUpdateActive) return;
-    try {
-      var w = window.open(SUPPORT_URL, "_blank", "noopener,noreferrer");
-      if (!w) window.location.href = SUPPORT_URL;
-    } catch (err) {
-      window.location.href = SUPPORT_URL;
-    }
+    try { var w = window.open(SUPPORT_URL, "_blank", "noopener,noreferrer"); if (!w) window.location.href = SUPPORT_URL; }
+    catch (err) { window.location.href = SUPPORT_URL; }
   });
   syncSupportFabPosition();
 }
@@ -1252,17 +1389,14 @@ function syncSupportFabPosition() {
   D.supportFab.classList.toggle("support-logged-in", isLoggedIn);
 }
 
-/* ═══════════════════════════════════════════════════════════
-   SETUP EVENT LISTENERS
-═══════════════════════════════════════════════════════════ */
+/* SETUP */
 function setupEventListeners() {
   if (D.tabLogin) D.tabLogin.addEventListener("click", function() { showAuthView("login"); });
   if (D.tabSignup) D.tabSignup.addEventListener("click", function() { showAuthView("signup"); });
 
   $$(".pw-toggle").forEach(function(btn) {
     btn.addEventListener("click", function() {
-      var t = document.getElementById(btn.dataset.target);
-      if (!t) return;
+      var t = document.getElementById(btn.dataset.target); if (!t) return;
       var isPw = t.type === "password";
       t.type = isPw ? "text" : "password";
       btn.textContent = isPw ? "🙈" : "👁️";
@@ -1270,54 +1404,37 @@ function setupEventListeners() {
   });
 
   if (D.modeFilter) D.modeFilter.addEventListener("click", function(e) {
-    var btn = e.target.closest("[data-mode]");
-    if (!btn) return;
-    state.activeMode = btn.dataset.mode;
-    renderModeFilter();
-    attachTournamentsListener();
+    var btn = e.target.closest("[data-mode]"); if (!btn) return;
+    state.activeMode = btn.dataset.mode; renderModeFilter(); attachTournamentsListener();
   });
-
   if (D.teamFilter) D.teamFilter.addEventListener("click", function(e) {
-    var btn = e.target.closest("[data-team]");
-    if (!btn) return;
+    var btn = e.target.closest("[data-team]"); if (!btn) return;
     state.activeTeam = btn.dataset.team;
     $$(".team-btn").forEach(function(b) { b.classList.toggle("active", b === btn); });
     attachTournamentsListener();
   });
-
   if (D.matchesModeFilter) D.matchesModeFilter.addEventListener("click", function(e) {
-    var btn = e.target.closest("[data-mode]");
-    if (!btn) return;
-    state.activeMode = btn.dataset.mode;
-    renderMatchesModeFilter();
-    attachTournamentsListener();
+    var btn = e.target.closest("[data-mode]"); if (!btn) return;
+    state.activeMode = btn.dataset.mode; renderMatchesModeFilter(); attachTournamentsListener();
   });
-
   if (D.matchesTeamFilter) D.matchesTeamFilter.addEventListener("click", function(e) {
-    var btn = e.target.closest("[data-team]");
-    if (!btn) return;
+    var btn = e.target.closest("[data-team]"); if (!btn) return;
     state.activeTeam = btn.dataset.team;
     $$("#matchesTeamFilter .team-btn").forEach(function(b) { b.classList.toggle("active", b === btn); });
     attachTournamentsListener();
   });
 
-  $$(".nav-btn").forEach(function(b) {
-    b.addEventListener("click", function() { setNav(b.dataset.nav); });
-  });
-
+  $$(".nav-btn").forEach(function(b) { b.addEventListener("click", function() { setNav(b.dataset.nav); }); });
   if (D.hdrWallet) D.hdrWallet.addEventListener("click", function() { setNav("wallet"); });
 
   if (D.notifBtn) D.notifBtn.addEventListener("click", async function() {
-    openModal("notifModal");
-    renderNotifList();
+    openModal("notifModal"); renderNotifList();
     var unread = state.notifications.filter(function(n) { return !n.read; });
     for (var i = 0; i < unread.length; i++) {
       try { await updateDoc(doc(db, "notifications", unread[i].id), { read: true }); } catch (e) {}
     }
   });
-  if (D.matchesNotifBtn) D.matchesNotifBtn.addEventListener("click", function() {
-    if (D.notifBtn) D.notifBtn.click();
-  });
+  if (D.matchesNotifBtn) D.matchesNotifBtn.addEventListener("click", function() { if (D.notifBtn) D.notifBtn.click(); });
 
   document.addEventListener("click", function(e) {
     var closeBtn = e.target.closest("[data-close]");
@@ -1328,11 +1445,7 @@ function setupEventListeners() {
     if (e.key === "Escape") $$(".modal-overlay.open").forEach(function(m) { m.classList.remove("open"); });
   });
 
-  if (D.matchesBackBtn) D.matchesBackBtn.addEventListener("click", function() {
-    state.currentScreen = "home";
-    setNav("home");
-  });
-
+  if (D.matchesBackBtn) D.matchesBackBtn.addEventListener("click", function() { state.currentScreen = "home"; setNav("home"); });
   if (D.signupForm) D.signupForm.addEventListener("submit", handleSignup);
   if (D.loginForm) D.loginForm.addEventListener("submit", handleLogin);
   if (D.btnGoogle) D.btnGoogle.addEventListener("click", handleGoogleSignIn);
@@ -1352,8 +1465,7 @@ function setupEventListeners() {
   if (D.btnDeposit) D.btnDeposit.addEventListener("click", function() {
     if (state.forceUpdateActive) { showToast("Please update the app first.", "error"); return; }
     if (isBanned()) { showToast("🚫 Banned accounts cannot deposit.", "error"); return; }
-    resetDepositFlow();
-    openModal("depositModal");
+    resetDepositFlow(); openModal("depositModal");
   });
   if (D.btnWithdraw) D.btnWithdraw.addEventListener("click", function() {
     if (state.forceUpdateActive) { showToast("Please update the app first.", "error"); return; }
@@ -1368,9 +1480,7 @@ function setupEventListeners() {
         D.wdRuleBox.className = "utr-status pending";
         D.wdRuleBox.innerHTML = "⚠️ You must play at least <b>" + MIN_MATCHES_FOR_WITHDRAW + " matches</b> before withdrawing. You have played <b>" + matchesPlayed + "/" + MIN_MATCHES_FOR_WITHDRAW + "</b>.";
       }
-    } else {
-      if (D.wdRuleBox) D.wdRuleBox.style.display = "none";
-    }
+    } else { if (D.wdRuleBox) D.wdRuleBox.style.display = "none"; }
     openModal("withdrawModal");
   });
   $$(".amt-chip").forEach(function(chip) {
@@ -1394,61 +1504,46 @@ function setupEventListeners() {
   if (D.matchesList) D.matchesList.addEventListener("click", handleListClick);
   if (D.joinedList) D.joinedList.addEventListener("click", function(e) {
     if (state.forceUpdateActive) { e.preventDefault(); e.stopPropagation(); return; }
-    var detailBtn = e.target.closest("[data-detail]");
-    if (detailBtn) {
-      var id = detailBtn.dataset.detail;
-      var match = state.joinedMatches.find(function(t) { return t.id === id; });
-      if (match) openDetailModal(match);
-    }
+    var detailBtn = e.target.closest("[data-detail]"); if (!detailBtn) return;
+    var id = detailBtn.dataset.detail;
+    var match = state.joinedMatches.find(function(t) { return t.id === id; });
+    if (match) openDetailModal(match);
   });
   if (D.primaryGameGrid) D.primaryGameGrid.addEventListener("click", function(e) {
-    var card = e.target.closest(".primary-game-card");
-    if (!card) return;
-    var game = card.dataset.game;
-    if (game) openMatchesScreen(game);
+    var card = e.target.closest(".primary-game-card"); if (!card) return;
+    var game = card.dataset.game; if (game) openMatchesScreen(game);
   });
-
   initSupportFab();
 }
 
-/* ═══════════════════════════════════════════════════════════
-   HANDLERS
-═══════════════════════════════════════════════════════════ */
+/* HANDLERS */
 async function handleSignup(e) {
-  e.preventDefault();
-  clearAuthMsg();
+  e.preventDefault(); clearAuthMsg();
   var name = D.signupName.value.trim();
   var email = D.signupEmail.value.trim().toLowerCase();
   var pw = D.signupPassword.value;
   var pw2 = D.signupConfirm.value;
   var refInput = D.signupReferral.value.trim().toUpperCase();
-
   if (name.length < 2) { setAuthMsg("Name too short.", "error"); return; }
   if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) { setAuthMsg("Invalid email.", "error"); return; }
   if (pw.length < 6) { setAuthMsg("Min 6 characters.", "error"); return; }
   if (pw !== pw2) { setAuthMsg("Passwords don't match.", "error"); return; }
-
   D.signupSubmit.disabled = true;
   D.signupSubmit.innerHTML = '<span class="spinner"></span>CREATING...';
-
   try {
     var cred = await createUserWithEmailAndPassword(auth, email, pw);
     await updateProfile(cred.user, { displayName: name });
     var myRefCode = generateReferralCode(name);
     await setDoc(doc(db, "users", cred.user.uid), {
       uid: cred.user.uid, name: name, email: email, phone: "",
-      balance: 0, bonusBalance: SIGNUP_BONUS,
-      referralCode: myRefCode,
-      referredBy: "", referredByName: "",
-      referralCodeUsed: refInput || "",
+      balance: 0, bonusBalance: SIGNUP_BONUS, referralCode: myRefCode,
+      referredBy: "", referredByName: "", referralCodeUsed: refInput || "",
       referralRewarded: false, firstDepositRewarded: false,
-      matchesPlayed: 0, totalWon: 0, banned: false,
-      createdAt: serverTimestamp()
+      matchesPlayed: 0, totalWon: 0, banned: false, createdAt: serverTimestamp()
     });
     await addDoc(collection(db, "wallet_transactions"), {
       uid: cred.user.uid, amount: SIGNUP_BONUS, type: "credit",
-      category: "signup_bonus", description: "🎁 Signup bonus",
-      createdAt: serverTimestamp()
+      category: "signup_bonus", description: "🎁 Signup bonus", createdAt: serverTimestamp()
     });
     if (refInput) {
       try {
@@ -1457,51 +1552,32 @@ async function handleSignup(e) {
         if (!snap.empty) {
           var refDoc = snap.docs[0];
           await updateDoc(doc(db, "users", cred.user.uid), {
-            referredBy: refDoc.id,
-            referredByName: refDoc.data().name || "Player"
+            referredBy: refDoc.id, referredByName: refDoc.data().name || "Player"
           });
         }
       } catch (err) { console.warn("Referral link failed:", err); }
     }
     showToast("🎁 ₹" + SIGNUP_BONUS + " signup bonus credited!", "success");
-  } catch (err) {
-    setAuthMsg(friendlyAuthError(err.code), "error");
-  } finally {
-    D.signupSubmit.disabled = false;
-    D.signupSubmit.textContent = "CREATE ACCOUNT";
-  }
+  } catch (err) { setAuthMsg(friendlyAuthError(err.code), "error"); }
+  finally { D.signupSubmit.disabled = false; D.signupSubmit.textContent = "CREATE ACCOUNT"; }
 }
-
 async function handleLogin(e) {
-  e.preventDefault();
-  clearAuthMsg();
+  e.preventDefault(); clearAuthMsg();
   var email = D.loginEmail.value.trim().toLowerCase();
   var pw = D.loginPassword.value;
   if (!email || !pw) { setAuthMsg("Enter email and password.", "error"); return; }
   D.loginSubmit.disabled = true;
   D.loginSubmit.innerHTML = '<span class="spinner"></span>LOGGING IN...';
-  try {
-    await signInWithEmailAndPassword(auth, email, pw);
-  } catch (err) {
-    setAuthMsg(friendlyAuthError(err.code), "error");
-  } finally {
-    D.loginSubmit.disabled = false;
-    D.loginSubmit.textContent = "LOGIN";
-  }
+  try { await signInWithEmailAndPassword(auth, email, pw); }
+  catch (err) { setAuthMsg(friendlyAuthError(err.code), "error"); }
+  finally { D.loginSubmit.disabled = false; D.loginSubmit.textContent = "LOGIN"; }
 }
-
 async function handleGoogleSignIn() {
   clearAuthMsg();
-  try {
-    D.btnGoogle.disabled = true;
-    await signInWithPopup(auth, googleProvider);
-  } catch (err) {
-    if (err.code !== "auth/popup-closed-by-user") setAuthMsg(friendlyAuthError(err.code), "error");
-  } finally {
-    D.btnGoogle.disabled = false;
-  }
+  try { D.btnGoogle.disabled = true; await signInWithPopup(auth, googleProvider); }
+  catch (err) { if (err.code !== "auth/popup-closed-by-user") setAuthMsg(friendlyAuthError(err.code), "error"); }
+  finally { D.btnGoogle.disabled = false; }
 }
-
 async function handleJoinSubmit(e) {
   e.preventDefault();
   if (!state.user || !state.selectedMatch) return;
@@ -1527,14 +1603,9 @@ async function handleJoinSubmit(e) {
     if (newCount >= MIN_MATCHES_FOR_WITHDRAW) showToast("🎉 Withdrawal unlocked!", "success");
     else showToast("Match joined! " + newCount + "/" + MIN_MATCHES_FOR_WITHDRAW + " matches played.", "success");
     closeModal("joinModal");
-  } catch (err) {
-    D.joinErr.textContent = err.message || "Failed to join.";
-  } finally {
-    D.joinSubmit.disabled = false;
-    D.joinSubmit.textContent = "CONFIRM & PAY";
-  }
+  } catch (err) { D.joinErr.textContent = err.message || "Failed to join."; }
+  finally { D.joinSubmit.disabled = false; D.joinSubmit.textContent = "CONFIRM & PAY"; }
 }
-
 async function handleWithdrawSubmit(e) {
   e.preventDefault();
   if (!state.user) return;
@@ -1564,14 +1635,9 @@ async function handleWithdrawSubmit(e) {
     if (!resp.ok || !result.ok) throw new Error(result.error || "Withdrawal failed.");
     closeModal("withdrawModal");
     showToast("Withdrawal request submitted successfully.", "success");
-  } catch (err) {
-    D.wdErr.textContent = err.message || "Withdrawal failed.";
-  } finally {
-    D.wdSubmit.disabled = false;
-    D.wdSubmit.textContent = "REQUEST WITHDRAWAL";
-  }
+  } catch (err) { D.wdErr.textContent = err.message || "Withdrawal failed."; }
+  finally { D.wdSubmit.disabled = false; D.wdSubmit.textContent = "REQUEST WITHDRAWAL"; }
 }
-
 async function handleProfileSubmit(e) {
   e.preventDefault();
   if (!state.user) return;
@@ -1584,20 +1650,12 @@ async function handleProfileSubmit(e) {
   D.pfSubmit.disabled = true;
   D.pfSubmit.innerHTML = '<span class="spinner"></span>SAVING...';
   try {
-    await updateDoc(doc(db, "users", state.user.uid), {
-      name: name, gameUid: uid, ign: ign, updatedAt: serverTimestamp()
-    });
+    await updateDoc(doc(db, "users", state.user.uid), { name: name, gameUid: uid, ign: ign, updatedAt: serverTimestamp() });
     try { await updateProfile(state.user, { displayName: name }); } catch (e) {}
-    closeModal("profileModal");
-    showToast("Profile updated successfully.", "success");
-  } catch (err) {
-    D.pfErr.textContent = "Failed to save. " + (err.message || "");
-  } finally {
-    D.pfSubmit.disabled = false;
-    D.pfSubmit.textContent = "SAVE CHANGES";
-  }
+    closeModal("profileModal"); showToast("Profile updated successfully.", "success");
+  } catch (err) { D.pfErr.textContent = "Failed to save. " + (err.message || ""); }
+  finally { D.pfSubmit.disabled = false; D.pfSubmit.textContent = "SAVE CHANGES"; }
 }
-
 async function handleSignOut() {
   if (!confirm("Sign out of ArenaX?")) return;
   try {
@@ -1605,24 +1663,15 @@ async function handleSignOut() {
     Object.keys(state.unsubs).forEach(function(k) {
       if (state.unsubs[k]) { state.unsubs[k](); state.unsubs[k] = null; }
     });
-    state.user = null;
-    state.profile = null;
-    state.tournaments = [];
-    state.joinedMatches = [];
-    state.transactions = [];
-    state.notifications = [];
-    state.referrals = [];
+    state.user = null; state.profile = null;
+    state.tournaments = []; state.joinedMatches = [];
+    state.transactions = []; state.notifications = []; state.referrals = [];
     state.appConfig = null;
-    var banner = document.getElementById("banBanner");
-    if (banner) banner.remove();
+    var banner = document.getElementById("banBanner"); if (banner) banner.remove();
     await signOut(auth);
     showToast("Signed out successfully.", "success");
-  } catch (err) {
-    console.error("Sign out error:", err);
-    showToast("Sign out failed.", "error");
-  }
+  } catch (err) { console.error("Sign out error:", err); showToast("Sign out failed.", "error"); }
 }
-
 async function handlePayNow() {
   if (state.forceUpdateActive) { showToast("Please update the app first.", "error"); return; }
   if (isBanned()) { showToast("🚫 Banned accounts cannot deposit.", "error"); return; }
@@ -1640,11 +1689,7 @@ async function handlePayNow() {
     var resp = await fetch("/api/create-paypal-order", {
       method: "POST",
       headers: { "Content-Type": "application/json", "Authorization": "Bearer " + idToken },
-      body: JSON.stringify({
-        amount: amt,
-        name: (state.profile && state.profile.name) || "Player",
-        email: (state.profile && state.profile.email) || "user@arenax.app"
-      })
+      body: JSON.stringify({ amount: amt, name: (state.profile && state.profile.name) || "Player", email: (state.profile && state.profile.email) || "user@arenax.app" })
     });
     var result = await resp.json();
     if (!resp.ok || !result.ok) throw new Error(result.error || "Failed to create PayPal order.");
@@ -1666,45 +1711,28 @@ async function handlePayNow() {
     D.btnPayNow.innerHTML = "💳 PAY VIA PAYPAL";
   }
 }
-
 async function handleRefCopy() {
   var code = D.refCode.textContent;
   if (!code || code === "—") { showToast("Referral code not loaded yet.", "error"); return; }
   var copyText = "🎮 Join ArenaX and win real cash!\n\n🎁 Use my referral code: " + code + "\n\n📲 Download: " + DOWNLOAD_URL;
-  try {
-    await navigator.clipboard.writeText(copyText);
-    showToast("✅ Referral code + link copied!", "success");
-  } catch (e) {
-    var ta = document.createElement("textarea");
-    ta.value = copyText;
-    document.body.appendChild(ta);
-    ta.select();
-    document.execCommand("copy");
-    ta.remove();
+  try { await navigator.clipboard.writeText(copyText); showToast("✅ Referral code + link copied!", "success"); }
+  catch (e) {
+    var ta = document.createElement("textarea"); ta.value = copyText;
+    document.body.appendChild(ta); ta.select(); document.execCommand("copy"); ta.remove();
     showToast("✅ Referral code + link copied!", "success");
   }
 }
-
 async function handleRefShare() {
   var code = D.refCode.textContent;
   if (!code || code === "—") { showToast("Referral code not loaded yet.", "error"); return; }
   var shareText = "🎮 Join ArenaX and win real cash!\n\n🎁 Use my referral code: " + code + "\n\n💰 You get ₹5 sign-up bonus + ₹20 first-deposit bonus!\n🏆 Compete in BGMI & Free Fire tournaments\n\n📲 Download the app now:\n" + DOWNLOAD_URL + "\n\nStart winning today!";
   if (navigator.share) {
-    try {
-      await navigator.share({ title: "Join ArenaX — Win Real Cash!", text: shareText, url: DOWNLOAD_URL });
-      return;
-    } catch (err) {
-      if (err.name === "AbortError") return;
-    }
+    try { await navigator.share({ title: "Join ArenaX — Win Real Cash!", text: shareText, url: DOWNLOAD_URL }); return; }
+    catch (err) { if (err.name === "AbortError") return; }
   }
-  try {
-    await navigator.clipboard.writeText(shareText);
-    showToast("✅ Share text copied to clipboard!", "success");
-  } catch (e) {
-    showToast("Copy failed.", "error");
-  }
+  try { await navigator.clipboard.writeText(shareText); showToast("✅ Share text copied to clipboard!", "success"); }
+  catch (e) { showToast("Copy failed.", "error"); }
 }
-
 function handleListClick(e) {
   if (state.forceUpdateActive) { e.preventDefault(); e.stopPropagation(); return; }
   var joinBtn = e.target.closest("[data-join]");
@@ -1720,9 +1748,7 @@ function handleListClick(e) {
   }
 }
 
-/* ═══════════════════════════════════════════════════════════
-   DEPOSIT POLLING
-═══════════════════════════════════════════════════════════ */
+/* DEPOSIT POLLING */
 function resetDepositFlow() {
   stopDepositPolling();
   state.deposit = { amount: 0, orderId: "", pollTimer: null };
@@ -1751,19 +1777,15 @@ function startDepositPolling(orderId, amount) {
       if (snap.exists() && snap.data().status === "COMPLETED") {
         stopDepositPolling();
         showToast("✅ ₹" + fmtMoney(amount) + " credited!", "success");
-        closeModal("depositModal");
-        resetDepositFlow();
+        closeModal("depositModal"); resetDepositFlow();
       }
     } catch (e) {}
   }, 5000);
 }
-function stopDepositPolling() {
-  if (state.deposit.pollTimer) { clearInterval(state.deposit.pollTimer); state.deposit.pollTimer = null; }
-}
+function stopDepositPolling() { if (state.deposit.pollTimer) { clearInterval(state.deposit.pollTimer); state.deposit.pollTimer = null; } }
 function checkPaymentRedirect() {
   var params = new URLSearchParams(window.location.search);
-  var status = params.get("status");
-  if (status === "success") {
+  if (params.get("status") === "success") {
     showToast("✅ Payment successful! Balance updating...", "success");
     window.history.replaceState({}, document.title, window.location.pathname);
   }
@@ -1775,8 +1797,7 @@ function setNav(nav) {
   $$(".nav-btn").forEach(function(b) { b.classList.toggle("active", b.dataset.nav === nav); });
   $$(".view").forEach(function(v) { v.classList.remove("active"); });
   var map = { home: "view-home", joined: "view-joined", wallet: "view-wallet", profile: "view-profile", terms: "view-terms" };
-  var el = document.getElementById(map[nav]);
-  if (el) el.classList.add("active");
+  var el = document.getElementById(map[nav]); if (el) el.classList.add("active");
   window.scrollTo({ top: 0, behavior: "instant" });
   syncSupportFabPosition();
 }
@@ -1787,25 +1808,18 @@ function openMatchesScreen(game) {
   state.activeMode = modes[0] || "Battle Royale";
   state.activeTeam = "ALL";
   state.currentScreen = "matches";
-
   var asset = PRIMARY_GAMES[game];
   if (D.matchesGameTitle) D.matchesGameTitle.textContent = asset ? asset.display : game;
   if (D.matchesGameSub) D.matchesGameSub.textContent = asset ? asset.sub + " Tournaments" : "Tournaments";
-
   $$("#matchesTeamFilter .team-btn").forEach(function(b) { b.classList.toggle("active", b.dataset.team === "ALL"); });
   renderMatchesModeFilter();
-
   $$(".view").forEach(function(v) { v.classList.remove("active"); });
-  var el = document.getElementById("view-matches");
-  if (el) el.classList.add("active");
+  var el = document.getElementById("view-matches"); if (el) el.classList.add("active");
   window.scrollTo({ top: 0, behavior: "instant" });
-
   attachTournamentsListener();
 }
 
-/* ═══════════════════════════════════════════════════════════
-   FIRESTORE LISTENERS
-═══════════════════════════════════════════════════════════ */
+/* LISTENERS */
 function attachProfileListener(uid) {
   if (state.unsubs.profile) state.unsubs.profile();
   state.unsubs.profile = onSnapshot(doc(db, "users", uid), function(snap) {
@@ -1817,7 +1831,6 @@ function attachProfileListener(uid) {
     var bonus = banned ? 0 : getBonusBalance(data);
     var matchesPlayed = Number(data.matchesPlayed || 0);
     var totalWon = Number(data.totalWon || 0);
-
     if (D.hdrBal) D.hdrBal.textContent = fmtMoney(bal);
     if (D.hdrName) D.hdrName.textContent = data.name || "Player";
     if (data.photoURL) {
@@ -1831,12 +1844,8 @@ function attachProfileListener(uid) {
       if (D.matchesAvatar) D.matchesAvatar.textContent = initial;
     }
     if (D.walletBig) D.walletBig.textContent = fmtMoney(bal);
-    if (bonus > 0) {
-      if (D.walletBonus) D.walletBonus.classList.remove("hidden");
-      if (D.bonusBig) D.bonusBig.textContent = fmtMoney(bonus);
-    } else {
-      if (D.walletBonus) D.walletBonus.classList.add("hidden");
-    }
+    if (bonus > 0) { if (D.walletBonus) D.walletBonus.classList.remove("hidden"); if (D.bonusBig) D.bonusBig.textContent = fmtMoney(bonus); }
+    else if (D.walletBonus) D.walletBonus.classList.add("hidden");
     if (D.profName) D.profName.textContent = data.name || "Player";
     if (D.profEmail) D.profEmail.textContent = data.email || data.phone || "—";
     if (D.profBal) D.profBal.textContent = "₹" + fmtMoney(bal);
@@ -1846,16 +1855,13 @@ function attachProfileListener(uid) {
     if (D.profMatches) D.profMatches.textContent = matchesPlayed + " / " + MIN_MATCHES_FOR_WITHDRAW;
     if (D.profWon) D.profWon.textContent = "₹" + fmtMoney(totalWon);
     if (data.referralCode && D.refCode) D.refCode.textContent = data.referralCode;
-
     if (D.matchesHandle) D.matchesHandle.textContent = "@" + (data.name || "Player");
     if (D.matchesStats) D.matchesStats.textContent = matchesPlayed + " Matches · ₹" + fmtMoney(totalWon) + " Won";
     if (D.matchesBalance) D.matchesBalance.textContent = "₹" + fmtMoney(bal);
-
     if (state.tournaments.length) renderMatchesList(state.tournaments);
     if (state.joinedMatches.length) renderJoined(state.joinedMatches);
   }, function(err) { console.error("Profile listener:", err); });
 }
-
 function attachTournamentsListener() {
   if (state.unsubs.tournaments) state.unsubs.tournaments();
   if (D.tournamentsSkeleton) D.tournamentsSkeleton.classList.remove("hidden");
@@ -1863,7 +1869,6 @@ function attachTournamentsListener() {
   if (D.tournamentsEmpty) D.tournamentsEmpty.classList.add("hidden");
   if (D.matchesList) D.matchesList.innerHTML = "";
   if (D.matchesEmpty) D.matchesEmpty.classList.add("hidden");
-
   var q = query(collection(db, "tournaments"), where("game", "==", state.activeGame));
   state.unsubs.tournaments = onSnapshot(q, function(snap) {
     var items = [];
@@ -1875,15 +1880,13 @@ function attachTournamentsListener() {
     var visible = items.filter(function(t) { return t.status !== "CANCELLED"; });
     visible.sort(function(a, b) { return ((b.createdAt && b.createdAt.toMillis && b.createdAt.toMillis()) || 0) - ((a.createdAt && a.createdAt.toMillis && a.createdAt.toMillis()) || 0); });
     state.tournaments = visible;
-    renderTournaments(visible);
-    renderMatchesList(visible);
+    renderTournaments(visible); renderMatchesList(visible);
   }, function(err) {
     console.error("Tournaments listener:", err);
     if (D.tournamentsSkeleton) D.tournamentsSkeleton.classList.add("hidden");
     if (D.tournamentsEmpty) D.tournamentsEmpty.classList.remove("hidden");
   });
 }
-
 function attachJoinedListener(uid) {
   if (state.unsubs.joined) state.unsubs.joined();
   var q = query(collection(db, "tournaments"), where("joinedUsers", "array-contains", uid));
@@ -1896,7 +1899,6 @@ function attachJoinedListener(uid) {
     if (state.tournaments.length) renderTournaments(state.tournaments);
   }, function(err) { console.error("Joined listener:", err); });
 }
-
 function attachTxListener(uid) {
   if (state.unsubs.tx) state.unsubs.tx();
   var q = query(collection(db, "wallet_transactions"), where("uid", "==", uid));
@@ -1904,8 +1906,7 @@ function attachTxListener(uid) {
     var items = [];
     snap.forEach(function(d) { items.push(Object.assign({ id: d.id }, d.data())); });
     items.sort(function(a, b) { return ((b.createdAt && b.createdAt.toMillis && b.createdAt.toMillis()) || 0) - ((a.createdAt && a.createdAt.toMillis && a.createdAt.toMillis()) || 0); });
-    state.transactions = items;
-    renderTransactions(items);
+    state.transactions = items; renderTransactions(items);
     var latestPrize = items.find(function(tx) { return tx.type === "credit" && (tx.category === "prize" || (tx.description || "").toLowerCase().indexOf("prize") !== -1); });
     if (latestPrize && latestPrize.id !== state.lastPrizeNotifId) {
       if (state.lastPrizeNotifId !== null) {
@@ -1916,7 +1917,6 @@ function attachTxListener(uid) {
     }
   }, function(err) { console.error("Tx listener:", err); });
 }
-
 function attachNotifListener(uid) {
   if (state.unsubs.notif) state.unsubs.notif();
   var q = query(collection(db, "notifications"), where("uid", "==", uid));
@@ -1924,23 +1924,18 @@ function attachNotifListener(uid) {
     var items = [];
     snap.forEach(function(d) { items.push(Object.assign({ id: d.id }, d.data())); });
     items.sort(function(a, b) { return ((b.createdAt && b.createdAt.toMillis && b.createdAt.toMillis()) || 0) - ((a.createdAt && a.createdAt.toMillis && a.createdAt.toMillis()) || 0); });
-    state.notifications = items;
-    renderNotifBadge();
-    renderNotifList();
+    state.notifications = items; renderNotifBadge(); renderNotifList();
   }, function(err) { console.error("Notif listener:", err); });
 }
-
 function attachReferralsListener(uid) {
   if (state.unsubs.referrals) state.unsubs.referrals();
   var q = query(collection(db, "users"), where("referredBy", "==", uid));
   state.unsubs.referrals = onSnapshot(q, function(snap) {
     var items = [];
     snap.forEach(function(d) { items.push(Object.assign({ id: d.id }, d.data())); });
-    state.referrals = items;
-    renderReferralStats();
+    state.referrals = items; renderReferralStats();
   }, function(err) { console.warn("Referrals listener:", err); });
 }
-
 function attachPromotionsListener() {
   if (state.unsubs.promotions) state.unsubs.promotions();
   var q = query(collection(db, "promotions"), where("active", "==", true));
@@ -1948,17 +1943,14 @@ function attachPromotionsListener() {
     var items = [];
     snap.forEach(function(d) { items.push(Object.assign({ id: d.id }, d.data())); });
     items.sort(function(a, b) { return (Number(a.order || 0)) - (Number(b.order || 0)); });
-    state.promotions = items;
-    renderPromoCarousel();
+    state.promotions = items; renderPromoCarousel();
   }, function(err) { console.warn("Promotions listener:", err); });
 }
-
 function attachGameStatsListener() {
   if (state.unsubs.gameStats) state.unsubs.gameStats();
   var q = query(collection(db, "tournaments"));
   state.unsubs.gameStats = onSnapshot(q, function(snap) {
-    var stats = {};
-    var lobbyItems = [];
+    var stats = {}; var lobbyItems = [];
     snap.forEach(function(d) {
       var t = Object.assign({ id: d.id }, d.data());
       if (t.status === "CANCELLED") return;
@@ -1969,34 +1961,27 @@ function attachGameStatsListener() {
       if (!stats[game].sampleTournament) stats[game].sampleTournament = t;
       if (t.status !== "COMPLETED" && t.completed !== true) lobbyItems.push(t);
     });
-    state.gameStats = stats;
-    state.lastLobbyItems = lobbyItems;
-    renderPrimaryGameGrid();
-    refreshLobbyDisplay();
+    state.gameStats = stats; state.lastLobbyItems = lobbyItems;
+    renderPrimaryGameGrid(); refreshLobbyDisplay();
   }, function(err) { console.warn("Game stats listener:", err); });
 }
-
 function attachGameCardsListener() {
   if (state.unsubs.gameCards) state.unsubs.gameCards();
   state.unsubs.gameCards = onSnapshot(collection(db, "game_cards"), function(snap) {
     var cards = {};
     snap.forEach(function(d) { cards[d.id] = Object.assign({ id: d.id }, d.data()); });
-    state.gameCards = cards;
-    refreshPrimaryGames();
+    state.gameCards = cards; refreshPrimaryGames();
   }, function(err) { console.warn("GameCards listener:", err); });
 }
-
 function attachAdminLobbyListener() {
   if (state.unsubs.adminLobby) state.unsubs.adminLobby();
   var paths = [["app_config", "lobbyInfo"], ["app_config", "lobby"], ["config", "lobbyInfo"]];
   var seen = {}; var handlers = [];
   paths.forEach(function(pair) {
-    var key = pair[0] + "/" + pair[1];
-    if (seen[key]) return; seen[key] = true;
+    var key = pair[0] + "/" + pair[1]; if (seen[key]) return; seen[key] = true;
     var unsub = onSnapshot(doc(db, pair[0], pair[1]), function(snap) {
       if (!snap.exists()) return;
-      var data = snap.data();
-      var items = null;
+      var data = snap.data(); var items = null;
       if (Array.isArray(data.items)) items = data.items;
       else if (Array.isArray(data.lobbies)) items = data.lobbies;
       else if (Array.isArray(data.list)) items = data.list;
@@ -2007,18 +1992,15 @@ function attachAdminLobbyListener() {
   });
   state.unsubs.adminLobby = function() { handlers.forEach(function(fn) { try { fn(); } catch (e) {} }); };
 }
-
 function attachHomeMatchFilterListener() {
   if (state.unsubs.homeMatchFilter) state.unsubs.homeMatchFilter();
   var paths = [["app_config", "homeMatchFilter"], ["config", "homeMatchFilter"]];
   var seen = {}; var handlers = [];
   paths.forEach(function(pair) {
-    var key = pair[0] + "/" + pair[1];
-    if (seen[key]) return; seen[key] = true;
+    var key = pair[0] + "/" + pair[1]; if (seen[key]) return; seen[key] = true;
     var unsub = onSnapshot(doc(db, pair[0], pair[1]), function(snap) {
       if (!snap.exists()) { state.homeMatchIds = null; return; }
-      var data = snap.data();
-      var ids = null;
+      var data = snap.data(); var ids = null;
       if (Array.isArray(data.matchIds)) ids = data.matchIds.map(String);
       else if (Array.isArray(data.ids)) ids = data.ids.map(String);
       else if (Array.isArray(data.matches)) ids = data.matches.map(String);
@@ -2031,14 +2013,12 @@ function attachHomeMatchFilterListener() {
   });
   state.unsubs.homeMatchFilter = function() { handlers.forEach(function(fn) { try { fn(); } catch (e) {} }); };
 }
-
 function attachAppConfigListener() {
   if (state.unsubs.appConfig) state.unsubs.appConfig();
   var paths = [["app_config", "latest"], ["config", "app"]];
   var seen = {}; var handlers = [];
   paths.forEach(function(pair) {
-    var key = pair[0] + "/" + pair[1];
-    if (seen[key]) return; seen[key] = true;
+    var key = pair[0] + "/" + pair[1]; if (seen[key]) return; seen[key] = true;
     var unsub = onSnapshot(doc(db, pair[0], pair[1]), function(snap) {
       if (!snap.exists()) return;
       state.appConfig = snap.data();
@@ -2049,9 +2029,7 @@ function attachAppConfigListener() {
   state.unsubs.appConfig = function() { handlers.forEach(function(fn) { try { fn(); } catch (e) {} }); };
 }
 
-/* ═══════════════════════════════════════════════════════════
-   RENDER FUNCTIONS
-═══════════════════════════════════════════════════════════ */
+/* RENDER FUNCTIONS */
 function renderReferralStats() {
   if (!D.refCountJoined) return;
   var total = state.referrals.length;
@@ -2060,30 +2038,16 @@ function renderReferralStats() {
   D.refCountEarned.textContent = "₹" + (rewarded * REFERRER_BONUS);
   D.refCountPending.textContent = total - rewarded;
 }
-
 function renderNotifBadge() {
   var unread = state.notifications.filter(function(n) { return !n.read; }).length;
   var display = unread > 9 ? "9+" : unread;
-  if (D.notifBadge) {
-    if (unread > 0) { D.notifBadge.textContent = display; D.notifBadge.style.display = "inline-flex"; }
-    else D.notifBadge.style.display = "none";
-  }
-  if (D.navNotifDot) {
-    if (unread > 0) { D.navNotifDot.textContent = display; D.navNotifDot.style.display = "inline-flex"; }
-    else D.navNotifDot.style.display = "none";
-  }
-  if (D.matchesNotifBadge) {
-    if (unread > 0) { D.matchesNotifBadge.textContent = display; D.matchesNotifBadge.style.display = "inline-flex"; }
-    else D.matchesNotifBadge.style.display = "none";
-  }
+  if (D.notifBadge) { if (unread > 0) { D.notifBadge.textContent = display; D.notifBadge.style.display = "inline-flex"; } else D.notifBadge.style.display = "none"; }
+  if (D.navNotifDot) { if (unread > 0) { D.navNotifDot.textContent = display; D.navNotifDot.style.display = "inline-flex"; } else D.navNotifDot.style.display = "none"; }
+  if (D.matchesNotifBadge) { if (unread > 0) { D.matchesNotifBadge.textContent = display; D.matchesNotifBadge.style.display = "inline-flex"; } else D.matchesNotifBadge.style.display = "none"; }
 }
-
 function renderNotifList() {
   if (!D.notifList) return;
-  if (!state.notifications.length) {
-    D.notifList.innerHTML = '<div class="empty-state" style="padding:32px 16px;"><p>No notifications yet.</p></div>';
-    return;
-  }
+  if (!state.notifications.length) { D.notifList.innerHTML = '<div class="empty-state" style="padding:32px 16px;"><p>No notifications yet.</p></div>'; return; }
   D.notifList.innerHTML = state.notifications.slice(0, 50).map(function(n) {
     var isPrize = n.type === "prize" || (n.title || "").indexOf("🏆") !== -1;
     return '<div class="notif-item ' + (n.read ? "read" : "unread") + ' ' + (isPrize ? "prize" : "") + '">' +
@@ -2093,7 +2057,6 @@ function renderNotifList() {
     '</div>';
   }).join("");
 }
-
 function tournamentCardHTML(t, idx, joinedIds) {
   var banned = isBanned();
   var max = Number(t.maxSlots || 100);
@@ -2112,7 +2075,6 @@ function tournamentCardHTML(t, idx, joinedIds) {
   var rawTeam = normalizeTeamSize(t);
   var teamCls = teamClass(rawTeam);
   var teamIco = teamIcon(rawTeam);
-
   var btn = "JOIN NOW", disabled = "", extra = "", actionAttr = "";
   if (banned) { btn = "🚫 ACCOUNT BANNED"; disabled = "disabled"; extra = "banned"; }
   else if (status.key === "cancelled") { btn = "🚫 MATCH CANCELLED"; disabled = "disabled"; extra = "cancelled"; }
@@ -2124,10 +2086,8 @@ function tournamentCardHTML(t, idx, joinedIds) {
   else if (isJoined) { btn = "✓ JOINED — TAP FOR DETAILS"; extra = "joined"; actionAttr = 'data-detail="' + escHTML(t.id) + '"'; }
   else if (full) { btn = "SLOTS FULL"; disabled = "disabled"; }
   else { actionAttr = 'data-join="' + escHTML(t.id) + '"'; }
-
   var banner = buildBannerHTML(t);
   var cardCls = status.key === "cancelled" ? "status-cancelled" : status.key === "completed" ? "status-completed" : "";
-
   return '<article class="t-card ' + cardCls + '" style="animation-delay:' + (idx * 40) + 'ms" data-id="' + escHTML(t.id) + '">' +
     banner +
     '<div class="t-body">' +
@@ -2157,37 +2117,28 @@ function tournamentCardHTML(t, idx, joinedIds) {
     '</div>' +
   '</article>';
 }
-
 function renderTournaments(items) {
   if (D.tournamentsSkeleton) D.tournamentsSkeleton.classList.add("hidden");
   if (!items || items.length === 0) {
     if (D.tournamentsList) D.tournamentsList.innerHTML = "";
-    if (D.tournamentsEmpty) D.tournamentsEmpty.classList.remove("hidden");
-    return;
+    if (D.tournamentsEmpty) D.tournamentsEmpty.classList.remove("hidden"); return;
   }
   if (D.tournamentsEmpty) D.tournamentsEmpty.classList.add("hidden");
   var joinedIds = new Set(state.joinedMatches.map(function(m) { return m.id; }));
   if (D.tournamentsList) D.tournamentsList.innerHTML = items.map(function(t, i) { return tournamentCardHTML(t, i, joinedIds); }).join("");
 }
-
 function renderMatchesList(items) {
   if (D.matchesEmpty) D.matchesEmpty.classList.add("hidden");
   if (!items || items.length === 0) {
     if (D.matchesList) D.matchesList.innerHTML = "";
-    if (D.matchesEmpty) D.matchesEmpty.classList.remove("hidden");
-    return;
+    if (D.matchesEmpty) D.matchesEmpty.classList.remove("hidden"); return;
   }
   var joinedIds = new Set(state.joinedMatches.map(function(m) { return m.id; }));
   if (D.matchesList) D.matchesList.innerHTML = items.map(function(t, i) { return tournamentCardHTML(t, i, joinedIds); }).join("");
 }
-
 function renderJoined(items) {
   if (!D.joinedList) return;
-  if (!items || items.length === 0) {
-    D.joinedList.innerHTML = "";
-    if (D.joinedEmpty) D.joinedEmpty.classList.remove("hidden");
-    return;
-  }
+  if (!items || items.length === 0) { D.joinedList.innerHTML = ""; if (D.joinedEmpty) D.joinedEmpty.classList.remove("hidden"); return; }
   if (D.joinedEmpty) D.joinedEmpty.classList.add("hidden");
   D.joinedList.innerHTML = items.map(function(t, idx) {
     var max = Number(t.maxSlots || 100);
@@ -2223,8 +2174,7 @@ function renderJoined(items) {
             '</div>' +
             '<h3 class="t-title" style="margin-top:8px"><span class="team-label">' + escHTML(teamSizeDisplay) + '</span> ' + escHTML(t.title || "Match") + '</h3>' +
             '<div class="t-time">🗓 ' + escHTML(fmtDateTime(t.matchTime)) + '</div>' +
-          '</div>' +
-          pillHTML +
+          '</div>' + pillHTML +
         '</div>' +
         '<div class="t-stats">' +
           '<div class="stat"><span class="lbl">Prize</span><span class="val prize">₹' + fmtMoney(t.prizePool) + '</span></div>' +
@@ -2240,14 +2190,9 @@ function renderJoined(items) {
     '</article>';
   }).join("");
 }
-
 function renderTransactions(items) {
   if (!D.txList) return;
-  if (!items || items.length === 0) {
-    D.txList.innerHTML = "";
-    if (D.txEmpty) D.txEmpty.classList.remove("hidden");
-    return;
-  }
+  if (!items || items.length === 0) { D.txList.innerHTML = ""; if (D.txEmpty) D.txEmpty.classList.remove("hidden"); return; }
   if (D.txEmpty) D.txEmpty.classList.add("hidden");
   D.txList.innerHTML = items.slice(0, 40).map(function(tx, i) {
     var amt = Number(tx.amount || 0);
@@ -2263,7 +2208,6 @@ function renderTransactions(items) {
     '</div>';
   }).join("");
 }
-
 function renderPromoCarousel() {
   if (!D.promoCarousel || !D.promoTrack) return;
   if (!state.promotions.length) { D.promoCarousel.style.display = "none"; return; }
@@ -2312,11 +2256,8 @@ function goToPromo(idx) {
   if (!state.promotions.length || !D.promoTrack) return;
   state.promoIndex = idx;
   D.promoTrack.style.transform = "translateX(-" + (idx * 100) + "%)";
-  if (D.promoDots) {
-    D.promoDots.querySelectorAll(".promo-dot").forEach(function(d, i) { d.classList.toggle("active", i === idx); });
-  }
+  if (D.promoDots) D.promoDots.querySelectorAll(".promo-dot").forEach(function(d, i) { d.classList.toggle("active", i === idx); });
 }
-
 function renderPrimaryGameGrid() {
   if (!D.primaryGameGrid) return;
   var primaryKeys = ["BGMI", "Free Fire"];
@@ -2326,11 +2267,8 @@ function renderPrimaryGameGrid() {
     var bgImg = asset.img || (stat.sampleTournament && stat.sampleTournament.bannerUrl) || "";
     var cls = asset.cls;
     var logoHTML;
-    if (isImageUrl(asset.logo)) {
-      logoHTML = '<img src="' + escHTML(asset.logo) + '" alt="logo" onerror="this.parentElement.textContent=\'🎮\'"/>';
-    } else {
-      logoHTML = escHTML(asset.logo || "🎮");
-    }
+    if (isImageUrl(asset.logo)) logoHTML = '<img src="' + escHTML(asset.logo) + '" alt="logo" onerror="this.parentElement.textContent=\'🎮\'"/>';
+    else logoHTML = escHTML(asset.logo || "🎮");
     var badgeHTML = "";
     if (asset.badge === "hot") badgeHTML = '<span class="primary-game-badge hot">🔥 HOT</span>';
     else if (asset.badge === "new") badgeHTML = '<span class="primary-game-badge new">✅ NEW</span>';
@@ -2343,20 +2281,15 @@ function renderPrimaryGameGrid() {
       '<div class="primary-game-bg" style="' + bgStyle + '"></div>' +
       '<div class="primary-game-overlay"></div>' +
       '<div class="primary-game-glow"></div>' +
-      '<div class="primary-game-logo">' + logoHTML + '</div>' +
-      badgeHTML +
+      '<div class="primary-game-logo">' + logoHTML + '</div>' + badgeHTML +
       '<div class="primary-game-content">' +
         '<div class="primary-game-title">' + escHTML(asset.display) + '</div>' +
         '<div class="primary-game-sub">' + escHTML(asset.sub) + '</div>' +
-        '<div class="primary-game-meta">' +
-          '<span class="dot-live"></span>' +
-          '<span>' + stat.joinedTotal + ' Players · ' + stat.count + ' Matches</span>' +
-        '</div>' +
+        '<div class="primary-game-meta"><span class="dot-live"></span><span>' + stat.joinedTotal + ' Players · ' + stat.count + ' Matches</span></div>' +
       '</div>' +
     '</div>';
   }).join("");
 }
-
 function applyHomeMatchFilter(items) {
   if (!state.homeMatchIds || state.homeMatchIds.length === 0) return items;
   if (state.homeMatchMode === "include") {
@@ -2367,28 +2300,18 @@ function applyHomeMatchFilter(items) {
     return items.filter(function(t) { return !set2.has(String(t.id)); });
   }
 }
-
 function refreshLobbyDisplay() {
-  if (state.adminLobbyItems && state.adminLobbyItems.length > 0) {
-    renderAdminLobby(state.adminLobbyItems);
-  } else {
-    var filtered = applyHomeMatchFilter(state.lastLobbyItems || []);
-    renderLobbyInfo(filtered);
-  }
+  if (state.adminLobbyItems && state.adminLobbyItems.length > 0) renderAdminLobby(state.adminLobbyItems);
+  else { var filtered = applyHomeMatchFilter(state.lastLobbyItems || []); renderLobbyInfo(filtered); }
 }
-
 function renderAdminLobby(items) {
   if (!D.lobbyInfoContainer) return;
-  if (!items || items.length === 0) {
-    D.lobbyInfoContainer.innerHTML = '<div class="empty-state" style="padding:24px;"><div class="empty-icon">🎮</div><p>No active lobbies right now.</p></div>';
-    return;
-  }
+  if (!items || items.length === 0) { D.lobbyInfoContainer.innerHTML = '<div class="empty-state" style="padding:24px;"><div class="empty-icon">🎮</div><p>No active lobbies right now.</p></div>'; return; }
   D.lobbyInfoContainer.innerHTML = items.map(function(t) {
     var img = t.bannerUrl || t.image || (PRIMARY_GAMES[t.game] && PRIMARY_GAMES[t.game].img) || "";
     var gameIcon = (PRIMARY_GAMES[t.game] && PRIMARY_GAMES[t.game].icon) || "🎮";
     var team = t.teamSize || t.team || displayTeamSize(t);
-    var max = Number(t.maxSlots || 100);
-    var jc = Number(t.joinedCount || 0);
+    var max = Number(t.maxSlots || 100); var jc = Number(t.joinedCount || 0);
     var spotsLeft = Math.max(0, max - jc);
     var statusKey = (t.status || "").toLowerCase();
     var statusCls = "waiting", statusLabel = "WAITING", lobbyCls = "waiting";
@@ -2413,29 +2336,23 @@ function renderAdminLobby(items) {
   }).join("");
   D.lobbyInfoContainer.querySelectorAll(".lobby-card").forEach(function(card) {
     card.addEventListener("click", function() {
-      var id = card.dataset.detail;
-      if (!id) return;
+      var id = card.dataset.detail; if (!id) return;
       var match = state.joinedMatches.find(function(t) { return t.id === id; }) || state.tournaments.find(function(t) { return t.id === id; });
       if (match) openDetailModal(match);
     });
   });
 }
-
 function renderLobbyInfo(items) {
   if (state.adminLobbyItems && state.adminLobbyItems.length > 0) { renderAdminLobby(state.adminLobbyItems); return; }
   if (!D.lobbyInfoContainer) return;
   items.sort(function(a, b) { return ((a.matchTime && a.matchTime.toMillis && a.matchTime.toMillis()) || 0) - ((b.matchTime && b.matchTime.toMillis && b.matchTime.toMillis()) || 0); });
   var top = items.slice(0, 4);
-  if (top.length === 0) {
-    D.lobbyInfoContainer.innerHTML = '<div class="empty-state" style="padding:24px;"><div class="empty-icon">🎮</div><p>No active lobbies right now.</p></div>';
-    return;
-  }
+  if (top.length === 0) { D.lobbyInfoContainer.innerHTML = '<div class="empty-state" style="padding:24px;"><div class="empty-icon">🎮</div><p>No active lobbies right now.</p></div>'; return; }
   D.lobbyInfoContainer.innerHTML = top.map(function(t) {
     var img = t.bannerUrl || (PRIMARY_GAMES[t.game] && PRIMARY_GAMES[t.game].img) || "";
     var gameIcon = (PRIMARY_GAMES[t.game] && PRIMARY_GAMES[t.game].icon) || "🎮";
     var team = displayTeamSize(t);
-    var max = Number(t.maxSlots || 100);
-    var jc = Number(t.joinedCount || 0);
+    var max = Number(t.maxSlots || 100); var jc = Number(t.joinedCount || 0);
     var spotsLeft = Math.max(0, max - jc);
     var status = getMatchStatus(t);
     var statusCls = "waiting", statusLabel = "WAITING";
@@ -2466,7 +2383,6 @@ function renderLobbyInfo(items) {
     });
   });
 }
-
 function openJoinModal(match) {
   if (state.forceUpdateActive) { showToast("Please update the app first.", "error"); return; }
   if (isBanned()) { showToast("🚫 Your account is banned.", "error"); return; }
@@ -2479,7 +2395,6 @@ function openJoinModal(match) {
   var teamSizeDisplay = displayTeamSize(match);
   var rawTeam = normalizeTeamSize(match);
   var teamIco = teamIcon(rawTeam);
-
   D.joinSummary.innerHTML =
     '<div class="ms-title">' + escHTML(match.title || "Match") + '</div>' +
     '<div class="ms-row"><span>Game</span><strong>' + escHTML(match.game || "") + '</strong></div>' +
@@ -2491,20 +2406,14 @@ function openJoinModal(match) {
     '<div class="ms-row"><span>Wallet</span><strong>₹' + fmtMoney(bal) + '</strong></div>' +
     (bonus > 0 ? '<div class="ms-row"><span>Bonus</span><strong style="color:var(--green)">₹' + fmtMoney(bonus) + '</strong></div>' : "") +
     '<div class="ms-row"><span>Total Available</span><strong>₹' + fmtMoney(total) + '</strong></div>';
-
   D.joinForm.reset();
   D.joinErr.textContent = "";
   if (state.profile && state.profile.ign) D.joinIgn.value = state.profile.ign;
   if (state.profile && state.profile.gameUid) D.joinUid.value = state.profile.gameUid;
-  if (fee > total) {
-    D.joinErr.textContent = "Insufficient balance. Need ₹" + fmtMoney(fee - total) + " more.";
-    D.joinSubmit.disabled = true;
-  } else {
-    D.joinSubmit.disabled = false;
-  }
+  if (fee > total) { D.joinErr.textContent = "Insufficient balance. Need ₹" + fmtMoney(fee - total) + " more."; D.joinSubmit.disabled = true; }
+  else D.joinSubmit.disabled = false;
   openModal("joinModal");
 }
-
 function openDetailModal(match) {
   if (state.forceUpdateActive) return;
   var isJoined = state.joinedMatches.some(function(m) { return m.id === match.id; });
@@ -2519,19 +2428,16 @@ function openDetailModal(match) {
   var teamSizeDisplay = displayTeamSize(match);
   var rawTeam = normalizeTeamSize(match);
   var teamIco = teamIcon(rawTeam);
-
   var roomSection = "";
   if (!isJoined) roomSection = '<div class="room-box locked"><div class="room-locked-msg">🔒 Join this match to view room credentials.</div></div>';
   else if (canSeeRoom) roomSection = '<div class="room-box"><div class="room-row"><span class="k">Room ID</span><span class="v">' + escHTML(match.roomId) + '</span></div><div class="room-row"><span class="k">Password</span><span class="v">' + escHTML(match.roomPassword) + '</span></div></div><p class="hint">⏱ Join the custom room 5 minutes before match time.</p>';
   else if (status.key === "cancelled") roomSection = '<div class="room-box locked"><div class="room-locked-msg">🚫 Match cancelled. Refunded.</div></div>';
   else if (status.key === "completed") roomSection = '<div class="room-box locked"><div class="room-locked-msg">🏆 Match completed.</div></div>';
   else roomSection = '<div class="room-box locked"><div class="room-locked-msg">🔒 Room credentials will appear once admin publishes them.</div></div>';
-
   var statusNote = "";
   if (status.key === "started") statusNote = '<p class="hint" style="color:var(--green);font-weight:700;">🔴 Match is LIVE!</p>';
   else if (status.key === "completed") statusNote = '<p class="hint" style="color:var(--gold);font-weight:700;">🏆 Match ended. Check your wallet!</p>';
   else if (status.key === "cancelled") statusNote = '<p class="hint" style="color:var(--red-2);font-weight:700;">🚫 Match cancelled. Refund processed.</p>';
-
   D.detailBody.innerHTML = bannerHTML +
     '<div class="match-summary">' +
       '<div class="ms-title">' + escHTML(match.title || "Match") + '</div>' +
@@ -2543,23 +2449,19 @@ function openDetailModal(match) {
       '<div class="ms-row"><span>Prize Pool</span><strong style="color:var(--gold)">₹' + fmtMoney(match.prizePool) + '</strong></div>' +
       '<div class="ms-row"><span>Per Kill</span><strong style="color:var(--cyan)">₹' + fmtMoney(match.perKill) + '</strong></div>' +
       '<div class="ms-row fee"><span>Entry Fee</span><strong>₹' + fmtMoney(match.entryFee) + '</strong></div>' +
-    '</div>' +
-    statusNote +
+    '</div>' + statusNote +
     '<div class="progress-wrap" style="margin-top:14px;">' +
       '<div class="progress-meta"><span><strong>' + jc + '</strong> / ' + max + ' slots</span><span>' + pct + '%</span></div>' +
       '<div class="progress-bar"><div class="progress-fill" style="width:' + pct + '%"></div></div>' +
     '</div>' +
-    '<div class="sec-title" style="margin:18px 0 10px">🔑 Room Credentials</div>' +
-    roomSection;
+    '<div class="sec-title" style="margin:18px 0 10px">🔑 Room Credentials</div>' + roomSection;
   openModal("detailModal");
 }
-
 function parseVersionCode(cfg) {
   if (!cfg) return 0;
   var c = [cfg.versionCode, cfg.version_code, cfg.version, cfg.appVersionCode, cfg.app_version_code, cfg.latestVersionCode, cfg.latest_version_code];
   for (var i = 0; i < c.length; i++) {
-    var v = c[i];
-    if (v == null || v === "") continue;
+    var v = c[i]; if (v == null || v === "") continue;
     var n = parseInt(String(v).replace(/[^\d]/g, ""), 10);
     if (!isNaN(n) && n > 0) return n;
   }
@@ -2568,19 +2470,14 @@ function parseVersionCode(cfg) {
 function parseVersionName(cfg) {
   if (!cfg) return "?";
   var c = [cfg.versionName, cfg.version_name, cfg.appVersion, cfg.app_version, cfg.latestVersion, cfg.latest_version];
-  for (var i = 0; i < c.length; i++) {
-    var v = c[i];
-    if (v == null || v === "") continue;
-    return String(v);
-  }
+  for (var i = 0; i < c.length; i++) { var v = c[i]; if (v == null || v === "") continue; return String(v); }
   return "?";
 }
 function parseForceUpdate(cfg) {
   if (!cfg) return false;
   var c = [cfg.forceUpdate, cfg.force_update, cfg.mandatory, cfg.isMandatory, cfg.is_mandatory, cfg.force];
   for (var i = 0; i < c.length; i++) {
-    var v = c[i];
-    if (v == null) continue;
+    var v = c[i]; if (v == null) continue;
     if (v === true || v === "true" || v === 1 || v === "1") return true;
     if (v === false || v === "false" || v === 0 || v === "0") return false;
   }
@@ -2589,40 +2486,28 @@ function parseForceUpdate(cfg) {
 function parseDownloadUrl(cfg) {
   if (!cfg) return DOWNLOAD_URL;
   var c = [cfg.downloadUrl, cfg.download_url, cfg.updateUrl, cfg.update_url, cfg.apkUrl, cfg.apk_url, cfg.url, cfg.link];
-  for (var i = 0; i < c.length; i++) {
-    var v = c[i];
-    if (v && typeof v === "string" && v.trim()) return v.trim();
-  }
+  for (var i = 0; i < c.length; i++) { var v = c[i]; if (v && typeof v === "string" && v.trim()) return v.trim(); }
   return DOWNLOAD_URL;
 }
 function checkVersionAndApply() {
-  var cfg = state.appConfig;
-  if (!cfg) return;
+  var cfg = state.appConfig; if (!cfg) return;
   var adminVersion = parseVersionCode(cfg);
   var force = parseForceUpdate(cfg);
-  if (adminVersion > CURRENT_VERSION_CODE) {
-    if (force) showForceUpdateScreen(cfg);
-  }
+  if (adminVersion > CURRENT_VERSION_CODE) { if (force) showForceUpdateScreen(cfg); }
 }
 function showForceUpdateScreen(cfg) {
   state.forceUpdateActive = true;
   document.body.classList.add("force-update-locked");
-  var el = document.getElementById("fuVersion");
-  if (el) el.textContent = "v" + parseVersionName(cfg) + " available";
+  var el = document.getElementById("fuVersion"); if (el) el.textContent = "v" + parseVersionName(cfg) + " available";
   var changelog = (cfg.changelog || cfg.whats_new || cfg.whatsNew || "").trim();
-  var logWrap = document.getElementById("fuChangelog");
-  var logText = document.getElementById("fuChangelogText");
+  var logWrap = document.getElementById("fuChangelog"); var logText = document.getElementById("fuChangelogText");
   if (logWrap) logWrap.style.display = changelog ? "block" : "none";
   if (logText) logText.textContent = changelog;
   var btn = document.getElementById("fuUpdateBtn");
   if (btn) btn.onclick = function(e) { e.preventDefault(); e.stopPropagation(); window.location.href = parseDownloadUrl(state.appConfig); };
-  var screen = document.getElementById("forceUpdateScreen");
-  if (screen) screen.classList.add("show");
+  var screen = document.getElementById("forceUpdateScreen"); if (screen) screen.classList.add("show");
 }
 
-/* ═══════════════════════════════════════════════════════════
-   AUTH STATE
-═══════════════════════════════════════════════════════════ */
 if (auth) {
   attachAppConfigListener();
   onAuthStateChanged(auth, async function(user) {
@@ -2633,22 +2518,15 @@ if (auth) {
     if (window.__hideBoot) window.__hideBoot();
     if (!user) {
       state.user = null; state.profile = null;
-      D.authGate.classList.remove("hidden");
-      D.appShell.classList.add("hidden");
-      showAuthView("login");
-      syncSupportFabPosition();
-      return;
+      D.authGate.classList.remove("hidden"); D.appShell.classList.add("hidden");
+      showAuthView("login"); syncSupportFabPosition(); return;
     }
     try {
       var adminSnap = await getDoc(doc(db, "admins", user.uid)).catch(function() { return null; });
       if (adminSnap && adminSnap.exists()) {
         await signOut(auth);
-        D.authGate.classList.remove("hidden");
-        D.appShell.classList.add("hidden");
-        showAuthView("login");
-        setAuthMsg("⛔ Admins must use the Admin Panel.", "error");
-        syncSupportFabPosition();
-        return;
+        D.authGate.classList.remove("hidden"); D.appShell.classList.add("hidden");
+        showAuthView("login"); setAuthMsg("⛔ Admins must use the Admin Panel.", "error"); syncSupportFabPosition(); return;
       }
       state.user = user;
       var userSnap = await getDoc(doc(db, "users", user.uid));
@@ -2656,57 +2534,35 @@ if (auth) {
         var fallbackName = user.displayName || (user.email ? user.email.split("@")[0] : "Player");
         var myRefCode = generateReferralCode(fallbackName);
         await setDoc(doc(db, "users", user.uid), {
-          uid: user.uid, name: fallbackName,
-          email: user.email || "", phone: user.phoneNumber || "",
-          balance: 0, bonusBalance: SIGNUP_BONUS,
-          referralCode: myRefCode,
-          referredBy: "", referredByName: "",
-          referralRewarded: false, firstDepositRewarded: false,
-          matchesPlayed: 0, totalWon: 0, banned: false,
-          createdAt: serverTimestamp()
+          uid: user.uid, name: fallbackName, email: user.email || "", phone: user.phoneNumber || "",
+          balance: 0, bonusBalance: SIGNUP_BONUS, referralCode: myRefCode,
+          referredBy: "", referredByName: "", referralRewarded: false, firstDepositRewarded: false,
+          matchesPlayed: 0, totalWon: 0, banned: false, createdAt: serverTimestamp()
         });
         await addDoc(collection(db, "wallet_transactions"), {
           uid: user.uid, amount: SIGNUP_BONUS, type: "credit",
-          category: "signup_bonus", description: "🎁 Signup bonus",
-          createdAt: serverTimestamp()
+          category: "signup_bonus", description: "🎁 Signup bonus", createdAt: serverTimestamp()
         });
       }
-      D.authGate.classList.add("hidden");
-      D.appShell.classList.remove("hidden");
-      renderModeFilter();
-      renderMatchesModeFilter();
-      attachProfileListener(user.uid);
-      attachTournamentsListener();
-      attachJoinedListener(user.uid);
-      attachTxListener(user.uid);
-      attachNotifListener(user.uid);
-      attachReferralsListener(user.uid);
-      attachPromotionsListener();
-      attachGameStatsListener();
-      attachGameCardsListener();
-      attachAdminLobbyListener();
-      attachHomeMatchFilterListener();
-      checkPaymentRedirect();
-      syncSupportFabPosition();
+      D.authGate.classList.add("hidden"); D.appShell.classList.remove("hidden");
+      renderModeFilter(); renderMatchesModeFilter();
+      attachProfileListener(user.uid); attachTournamentsListener();
+      attachJoinedListener(user.uid); attachTxListener(user.uid); attachNotifListener(user.uid);
+      attachReferralsListener(user.uid); attachPromotionsListener();
+      attachGameStatsListener(); attachGameCardsListener();
+      attachAdminLobbyListener(); attachHomeMatchFilterListener();
+      checkPaymentRedirect(); syncSupportFabPosition();
     } catch (err) {
       console.error("Auth state handler error:", err);
-      D.authGate.classList.remove("hidden");
-      D.appShell.classList.add("hidden");
-      showAuthView("login");
-      setAuthMsg("Error loading profile: " + (err.message || "unknown"), "error");
+      D.authGate.classList.remove("hidden"); D.appShell.classList.add("hidden");
+      showAuthView("login"); setAuthMsg("Error loading profile: " + (err.message || "unknown"), "error");
       syncSupportFabPosition();
     }
   });
 }
 
-/* ═══════════════════════════════════════════════════════════
-   INIT — Setup listeners after DOM ready
-═══════════════════════════════════════════════════════════ */
-if (document.readyState === "loading") {
-  document.addEventListener("DOMContentLoaded", setupEventListeners);
-} else {
-  setupEventListeners();
-}
+if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", setupEventListeners);
+else setupEventListeners();
 
 var lastTouch = 0;
 document.addEventListener("touchend", function(e) {
@@ -2715,7 +2571,7 @@ document.addEventListener("touchend", function(e) {
   lastTouch = now;
 }, { passive: false });
 
-console.log("%c ArenaX ", "background:#00e5ff;color:#050810;font-weight:bold;padding:4px 8px;border-radius:4px", "User App Loaded ✅ Support FAB added");
+console.log("%c ArenaX ", "background:#00e5ff;color:#050810;font-weight:bold;padding:4px 8px;border-radius:4px", "Desktop + Mobile Optimized ✅ Support FAB included");
 </script>
 </body>
 </html>
