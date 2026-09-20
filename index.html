@@ -83,43 +83,10 @@ a{color:inherit;text-decoration:none;}
 .auth-fine{color:var(--mute);font-size:11px;margin-top:14px;line-height:1.6;}
 
 /* ── Pre-login app download promo ──────────────────── */
-.app-dl-promo {
-  margin-top: 18px;
-  padding: 14px 16px 16px;
-  background: linear-gradient(135deg, rgba(0,229,255,.08), rgba(124,77,255,.06));
-  border: 1px solid rgba(0,229,255,.3);
-  border-radius: var(--r-sm);
-  text-align: center;
-}
-.app-dl-promo p {
-  font-size: 12.5px;
-  color: var(--dim);
-  margin-bottom: 11px;
-  font-weight: 600;
-  letter-spacing: .3px;
-}
-.app-dl-btn {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: 8px;
-  padding: 11px 24px;
-  border-radius: 100px;
-  background: linear-gradient(135deg, var(--cyan), var(--cyan-2));
-  color: #04121a;
-  font-family: var(--font-d);
-  font-weight: 700;
-  font-size: 12.5px;
-  letter-spacing: 1px;
-  text-decoration: none;
-  box-shadow: 0 6px 20px rgba(0,229,255,.35);
-  transition: transform .18s ease, box-shadow .18s ease;
-}
-.app-dl-btn:hover, .app-dl-btn:focus-visible {
-  transform: translateY(-2px);
-  box-shadow: 0 10px 28px rgba(0,229,255,.5);
-  outline: none;
-}
+.app-dl-promo { margin-top: 18px; padding: 14px 16px 16px; background: linear-gradient(135deg, rgba(0,229,255,.08), rgba(124,77,255,.06)); border: 1px solid rgba(0,229,255,.3); border-radius: var(--r-sm); text-align: center; }
+.app-dl-promo p { font-size: 12.5px; color: var(--dim); margin-bottom: 11px; font-weight: 600; letter-spacing: .3px; }
+.app-dl-btn { display: inline-flex; align-items: center; justify-content: center; gap: 8px; padding: 11px 24px; border-radius: 100px; background: linear-gradient(135deg, var(--cyan), var(--cyan-2)); color: #04121a; font-family: var(--font-d); font-weight: 700; font-size: 12.5px; letter-spacing: 1px; text-decoration: none; box-shadow: 0 6px 20px rgba(0,229,255,.35); transition: transform .18s ease, box-shadow .18s ease; }
+.app-dl-btn:hover, .app-dl-btn:focus-visible { transform: translateY(-2px); box-shadow: 0 10px 28px rgba(0,229,255,.5); outline: none; }
 
 #appShell{position:relative;z-index:1;min-height:100vh;padding-bottom:calc(80px + env(safe-area-inset-bottom,0px));max-width:680px;margin:0 auto;}
 .app-header{position:sticky;top:0;z-index:30;display:flex;align-items:center;justify-content:space-between;padding:14px 16px;background:rgba(10,14,26,.92);backdrop-filter:blur(14px);border-bottom:1px solid var(--stroke);gap:8px;}
@@ -130,44 +97,13 @@ a{color:inherit;text-decoration:none;}
 .hdr-hi{font-size:10px;color:var(--mute);text-transform:uppercase;letter-spacing:1.5px;font-weight:600;}
 .hdr-name{font-weight:700;font-size:15px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:110px;}
 .hdr-right{display:flex;align-items:center;gap:8px;}
-
-/* ── Post-login header download button ──────────────── */
-.hdr-dl-btn {
-  display: inline-flex;
-  align-items: center;
-  gap: 5px;
-  padding: 7px 12px;
-  border-radius: 100px;
-  background: linear-gradient(135deg, rgba(0,229,255,.15), rgba(124,77,255,.1));
-  border: 1px solid rgba(0,229,255,.4);
-  color: var(--cyan);
-  font-family: var(--font-d);
-  font-weight: 700;
-  font-size: 10.5px;
-  letter-spacing: .5px;
-  text-decoration: none;
-  white-space: nowrap;
-  flex-shrink: 0;
-  transition: all .2s;
-}
-.hdr-dl-btn:hover, .hdr-dl-btn:focus-visible {
-  background: rgba(0,229,255,.25);
-  border-color: var(--cyan);
-  outline: none;
-}
-@media (max-width: 460px) {
-  .hdr-dl-btn span { display: none; }
-  .hdr-dl-btn { padding: 8px 11px; font-size: 15px; gap: 0; }
-}
-
+.hdr-dl-btn { display: inline-flex; align-items: center; gap: 5px; padding: 7px 12px; border-radius: 100px; background: linear-gradient(135deg, rgba(0,229,255,.15), rgba(124,77,255,.1)); border: 1px solid rgba(0,229,255,.4); color: var(--cyan); font-family: var(--font-d); font-weight: 700; font-size: 10.5px; letter-spacing: .5px; text-decoration: none; white-space: nowrap; flex-shrink: 0; transition: all .2s; }
+.hdr-dl-btn:hover, .hdr-dl-btn:focus-visible { background: rgba(0,229,255,.25); border-color: var(--cyan); outline: none; }
+@media (max-width: 460px) { .hdr-dl-btn span { display: none; } .hdr-dl-btn { padding: 8px 11px; font-size: 15px; gap: 0; } }
 .hdr-wallet{display:flex;align-items:center;gap:6px;background:linear-gradient(135deg,rgba(255,179,0,.18),rgba(255,179,0,.06));border:1px solid rgba(255,179,0,.45);color:var(--gold);padding:7px 13px;border-radius:100px;font-family:var(--font-d);font-weight:700;font-size:13px;}
 .hdr-wallet .coin{background:var(--gold);color:#050810;width:18px;height:18px;border-radius:50%;display:inline-flex;align-items:center;justify-content:center;font-size:11px;font-weight:900;}
 .hdr-notif{position:relative;width:40px;height:40px;border-radius:50%;background:var(--bg-2);border:1px solid var(--stroke);display:flex;align-items:center;justify-content:center;font-size:18px;}
 .notif-badge{display:none;position:absolute;top:2px;right:2px;min-width:18px;height:18px;padding:0 4px;background:var(--red);color:#fff;border-radius:100px;font-size:10px;font-weight:700;align-items:center;justify-content:center;border:2px solid var(--bg-1);}
-.game-filter{display:flex;gap:8px;padding:12px 14px 6px;overflow-x:auto;scrollbar-width:none;}
-.game-filter::-webkit-scrollbar{display:none;}
-.gf-btn{flex-shrink:0;padding:9px 18px;border-radius:100px;background:var(--bg-2);border:1px solid var(--stroke);color:var(--dim);font-weight:700;font-size:13px;transition:all .2s;white-space:nowrap;}
-.gf-btn.active{background:linear-gradient(135deg,var(--cyan),var(--cyan-2));color:#050810;border-color:transparent;}
 .mode-filter{display:flex;gap:8px;padding:6px 14px 10px;overflow-x:auto;scrollbar-width:none;}
 .mode-filter::-webkit-scrollbar{display:none;}
 .mode-btn{flex-shrink:0;padding:7px 15px;border-radius:100px;background:rgba(255,255,255,.03);border:1px solid var(--stroke);color:var(--mute);font-weight:600;font-size:12px;transition:all .2s;white-space:nowrap;}
@@ -190,7 +126,9 @@ a{color:inherit;text-decoration:none;}
 .t-card.status-cancelled::before{background:linear-gradient(90deg,var(--red),#8b0000);}
 .t-card.status-cancelled{opacity:.72;}
 .t-banner{width:100%;height:110px;object-fit:cover;display:block;}
-.t-banner-fallback{width:100%;height:110px;background:linear-gradient(135deg,#131a2e,#0a0e1a);display:flex;align-items:center;justify-content:center;font-family:var(--font-d);font-size:22px;letter-spacing:3px;color:var(--stroke-2);}
+.t-banner-fallback{width:100%;height:110px;background:linear-gradient(135deg,#131a2e,#0a0e1a);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;}
+.t-banner-fallback .tb-icon{font-size:32px;line-height:1;filter:drop-shadow(0 0 8px rgba(0,229,255,.5));}
+.t-banner-fallback .tb-label{font-family:var(--font-d);font-size:14px;letter-spacing:2px;color:var(--stroke-2);}
 .t-body{padding:14px;}
 .t-head{display:flex;justify-content:space-between;align-items:flex-start;gap:10px;margin-bottom:10px;}
 .t-head-left{min-width:0;flex:1;}
@@ -373,184 +311,113 @@ a{color:inherit;text-decoration:none;}
 .paypal-badge .pp-ico{font-size:16px;}
 
 /* ── Legal footer ─────────────────────────────────────── */
-.legal-footer {
-  margin: 28px 14px 16px;
-  padding: 22px 18px;
-  background: linear-gradient(160deg, var(--bg-2), var(--bg-1));
-  border: 1px solid var(--stroke);
-  border-radius: var(--r);
-  text-align: center;
-}
-.legal-footer .lf-title {
-  font-family: var(--font-d);
-  font-size: 11px;
-  font-weight: 700;
-  letter-spacing: 2.5px;
-  text-transform: uppercase;
-  color: var(--mute);
-  margin-bottom: 14px;
-}
-.legal-links {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: 8px 6px;
-}
-.legal-links a {
-  padding: 8px 14px;
-  border-radius: 100px;
-  background: rgba(255,255,255,.04);
-  border: 1px solid var(--stroke);
-  color: var(--dim);
-  font-size: 12px;
-  font-weight: 600;
-  text-decoration: none;
-  transition: all .2s;
-  white-space: nowrap;
-}
-.legal-links a:hover,
-.legal-links a:focus-visible {
-  color: var(--cyan);
-  border-color: rgba(0,229,255,.45);
-  background: rgba(0,229,255,.08);
-  outline: none;
-}
-.legal-footer .lf-copy {
-  margin-top: 14px;
-  font-size: 11px;
-  color: var(--mute);
-  line-height: 1.6;
-}
-@media (max-width: 400px) {
-  .legal-links a { padding: 7px 11px; font-size: 11px; }
-}
+.legal-footer { margin: 28px 14px 16px; padding: 22px 18px; background: linear-gradient(160deg, var(--bg-2), var(--bg-1)); border: 1px solid var(--stroke); border-radius: var(--r); text-align: center; }
+.legal-footer .lf-title { font-family: var(--font-d); font-size: 11px; font-weight: 700; letter-spacing: 2.5px; text-transform: uppercase; color: var(--mute); margin-bottom: 14px; }
+.legal-links { display: flex; flex-wrap: wrap; justify-content: center; gap: 8px 6px; }
+.legal-links a { padding: 8px 14px; border-radius: 100px; background: rgba(255,255,255,.04); border: 1px solid var(--stroke); color: var(--dim); font-size: 12px; font-weight: 600; text-decoration: none; transition: all .2s; white-space: nowrap; }
+.legal-links a:hover, .legal-links a:focus-visible { color: var(--cyan); border-color: rgba(0,229,255,.45); background: rgba(0,229,255,.08); outline: none; }
+.legal-footer .lf-copy { margin-top: 14px; font-size: 11px; color: var(--mute); line-height: 1.6; }
+@media (max-width: 400px) { .legal-links a { padding: 7px 11px; font-size: 11px; } }
 
 /* ═══════════════════════════════════════════════════════════
-   🎧 FLOATING SUPPORT BUTTON (FAB) — added feature
+   HEADER ARENAX BRAND (above welcome)
 ═══════════════════════════════════════════════════════════ */
-#supportFab {
-  position: fixed;
-  right: 20px;
-  bottom: 20px;
-  z-index: 999;
-  width: 58px;
-  height: 58px;
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-  background: radial-gradient(circle at 30% 30%, #1a0f3a, #05060d 85%);
-  border: 2px solid #00f2fe;
-  box-shadow:
-    0 0 12px rgba(0, 242, 254, 0.55),
-    0 0 26px rgba(157, 0, 255, 0.35),
-    0 6px 20px rgba(0, 0, 0, 0.55);
-  transition: transform .25s cubic-bezier(.34,1.56,.64,1),
-              box-shadow .25s ease,
-              bottom .25s ease;
-  animation: supportPulse 2.6s ease-in-out infinite;
-  color: #00f2fe;
-  -webkit-tap-highlight-color: transparent;
-  outline: none;
-  padding: 0;
-}
-#supportFab svg {
-  width: 26px;
-  height: 26px;
-  display: block;
-  filter: drop-shadow(0 0 6px rgba(0, 242, 254, 0.75));
-  transition: transform .25s ease;
-}
-#supportFab:hover,
-#supportFab:focus-visible {
-  transform: scale(1.12);
-  border-color: #9d00ff;
-  color: #9d00ff;
-  box-shadow:
-    0 0 20px rgba(0, 242, 254, 0.75),
-    0 0 40px rgba(157, 0, 255, 0.6),
-    0 8px 26px rgba(0, 0, 0, 0.6);
-}
-#supportFab:hover svg { transform: rotate(-8deg) scale(1.06); }
-#supportFab:active { transform: scale(0.96); }
+.hdr-brand { display: flex; align-items: center; justify-content: center; gap: 8px; padding: 6px 0 4px; position: relative; overflow: hidden; }
+.hdr-brand-text { font-family: var(--font-d); font-size: 18px; font-weight: 900; letter-spacing: 5px; color: #f5f9ff; position: relative; z-index: 2; text-shadow: 0 0 10px rgba(0,229,255,.9), 0 0 24px rgba(0,229,255,.55), 0 0 40px rgba(124,77,255,.35); animation: brandFloat 3.6s ease-in-out infinite, brandGlow 2.4s ease-in-out infinite; }
+.hdr-brand-text span { color: var(--cyan); text-shadow: 0 0 12px rgba(0,229,255,1), 0 0 28px rgba(0,229,255,.7), 0 0 50px rgba(124,77,255,.5); }
+@keyframes brandFloat { 0%, 100% { transform: translateY(0) scale(1); } 50% { transform: translateY(-2.5px) scale(1.015); } }
+@keyframes brandGlow { 0%, 100% { filter: brightness(1); } 50% { filter: brightness(1.28); } }
+.hdr-brand-bg { position: absolute; inset: 0; background: linear-gradient(90deg, transparent 0%, rgba(0,229,255,.14) 20%, rgba(124,77,255,.20) 50%, rgba(0,229,255,.14) 80%, transparent 100%); border-radius: 12px; z-index: 1; animation: brandBgPulse 3s ease-in-out infinite; }
+@keyframes brandBgPulse { 0%, 100% { opacity: .6; transform: scaleX(1); } 50% { opacity: 1; transform: scaleX(1.08); } }
+.hdr-brand-trophy { font-size: 16px; z-index: 2; position: relative; filter: drop-shadow(0 0 8px rgba(255,179,0,.9)) drop-shadow(0 0 16px rgba(255,149,0,.5)); animation: trophySpin 4s ease-in-out infinite; }
+@keyframes trophySpin { 0%, 100% { transform: rotate(-6deg) scale(1); } 50% { transform: rotate(6deg) scale(1.12); } }
+.app-header-stack { position: sticky; top: 0; z-index: 30; background: rgba(10,14,26,.92); backdrop-filter: blur(14px); border-bottom: 1px solid var(--stroke); }
+.hdr-welcome-row { display: flex; align-items: center; justify-content: space-between; padding: 10px 16px 12px; gap: 8px; }
 
-#supportFab.support-logged-in { bottom: 90px; }
+/* ═══════════════════════════════════════════════════════════
+   PROMO CAROUSEL
+═══════════════════════════════════════════════════════════ */
+.promo-carousel { position: relative; margin: 0 14px 16px; border-radius: 18px; overflow: hidden; box-shadow: 0 10px 30px rgba(0,0,0,.6); }
+.promo-track { display: flex; transition: transform .5s cubic-bezier(.34,1.2,.64,1); }
+.promo-slide { flex: 0 0 100%; position: relative; min-height: 150px; background-size: cover; background-position: center; display: flex; flex-direction: column; justify-content: flex-end; padding: 20px 18px; }
+.promo-slide::before { content: ""; position: absolute; inset: 0; background: linear-gradient(135deg, rgba(0,0,0,.85), rgba(0,0,0,.35)); }
+.promo-slide.cyan::before { background: linear-gradient(135deg, rgba(0,229,255,.9), rgba(124,77,255,.75)); }
+.promo-slide.red::before { background: linear-gradient(135deg, rgba(255,46,81,.9), rgba(255,92,115,.75)); }
+.promo-tag { display: inline-block; padding: 4px 10px; border-radius: 100px; background: rgba(255,255,255,.28); color: #fff; font-family: var(--font-d); font-size: 9px; font-weight: 800; letter-spacing: 1.5px; text-transform: uppercase; margin-bottom: 8px; backdrop-filter: blur(4px); align-self: flex-start; position: relative; z-index: 1; }
+.promo-title { font-family: var(--font-d); font-size: 18px; font-weight: 900; letter-spacing: 1px; color: #fff; margin-bottom: 4px; text-shadow: 0 2px 8px rgba(0,0,0,.5); position: relative; z-index: 1; }
+.promo-desc { font-size: 12px; color: rgba(255,255,255,.9); font-weight: 600; margin-bottom: 12px; text-shadow: 0 1px 4px rgba(0,0,0,.4); position: relative; z-index: 1; }
+.promo-cta { display: inline-flex; align-items: center; gap: 6px; padding: 9px 18px; border-radius: 100px; background: rgba(255,255,255,.95); color: #1a1200; font-family: var(--font-d); font-weight: 800; font-size: 11px; letter-spacing: 1px; text-transform: uppercase; box-shadow: 0 4px 14px rgba(0,0,0,.3); position: relative; z-index: 1; align-self: flex-start; }
+.promo-dots { position: absolute; bottom: 10px; right: 14px; display: flex; gap: 6px; z-index: 2; }
+.promo-dot { width: 6px; height: 6px; border-radius: 50%; background: rgba(255,255,255,.4); transition: all .3s; }
+.promo-dot.active { background: #fff; width: 18px; border-radius: 100px; }
 
-@keyframes supportPulse {
-  0%, 100% {
-    box-shadow:
-      0 0 10px rgba(0, 242, 254, 0.45),
-      0 0 22px rgba(157, 0, 255, 0.28),
-      0 6px 20px rgba(0, 0, 0, 0.5);
-  }
-  50% {
-    box-shadow:
-      0 0 22px rgba(0, 242, 254, 0.85),
-      0 0 44px rgba(157, 0, 255, 0.55),
-      0 6px 22px rgba(0, 0, 0, 0.55);
-  }
-}
+/* ═══════════════════════════════════════════════════════════
+   PRIMARY GAME CARDS GRID
+═══════════════════════════════════════════════════════════ */
+.primary-game-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 14px; padding: 0 14px; margin-bottom: 6px; }
+.primary-game-card { position: relative; border-radius: 18px; overflow: hidden; aspect-ratio: 1 / 1.15; cursor: pointer; transition: transform .25s ease, box-shadow .25s ease; box-shadow: 0 10px 30px rgba(0,0,0,.55); }
+.primary-game-card:active { transform: scale(.96); }
+.primary-game-card:hover { box-shadow: 0 14px 40px rgba(0,229,255,.3); }
+.primary-game-bg { position: absolute; inset: 0; background-size: cover; background-position: center; transition: transform .5s ease; }
+.primary-game-card:hover .primary-game-bg { transform: scale(1.08); }
+.primary-game-overlay { position: absolute; inset: 0; background: linear-gradient(180deg, transparent 25%, rgba(0,0,0,.9) 100%); }
+.primary-game-glow { position: absolute; inset: 0; opacity: 0; transition: opacity .3s; }
+.primary-game-card.bgmi .primary-game-glow { background: radial-gradient(circle at 50% 100%, rgba(255,179,0,.5), transparent 60%); }
+.primary-game-card.ff .primary-game-glow { background: radial-gradient(circle at 50% 100%, rgba(255,46,81,.5), transparent 60%); }
+.primary-game-card:hover .primary-game-glow { opacity: 1; }
+.primary-game-logo { position: absolute; top: 12px; left: 12px; width: 42px; height: 42px; border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 22px; background: linear-gradient(135deg, rgba(0,0,0,.75), rgba(0,0,0,.55)); border: 2px solid rgba(255,255,255,.55); backdrop-filter: blur(6px); box-shadow: 0 4px 14px rgba(0,0,0,.55); z-index: 2; overflow: hidden; }
+.primary-game-logo img { width: 100%; height: 100%; object-fit: cover; }
+.primary-game-card.bgmi .primary-game-logo { border-color: rgba(255,179,0,.85); box-shadow: 0 4px 14px rgba(0,0,0,.55), 0 0 22px rgba(255,179,0,.55); }
+.primary-game-card.ff .primary-game-logo { border-color: rgba(255,46,81,.85); box-shadow: 0 4px 14px rgba(0,0,0,.55), 0 0 22px rgba(255,46,81,.55); }
+.primary-game-content { position: absolute; bottom: 0; left: 0; right: 0; padding: 18px 16px; z-index: 1; }
+.primary-game-title { font-family: var(--font-d); font-size: 16px; font-weight: 900; letter-spacing: 1.5px; color: #fff; text-transform: uppercase; margin-bottom: 4px; text-shadow: 0 2px 10px rgba(0,0,0,.7); }
+.primary-game-sub { font-size: 11px; color: rgba(255,255,255,.8); font-weight: 600; letter-spacing: .5px; margin-bottom: 8px; }
+.primary-game-meta { display: flex; align-items: center; gap: 6px; font-size: 10.5px; color: rgba(255,255,255,.9); font-weight: 700; }
+.primary-game-meta .dot-live { width: 6px; height: 6px; border-radius: 50%; background: #00e676; box-shadow: 0 0 8px #00e676; }
+.primary-game-badge { position: absolute; top: 12px; right: 12px; padding: 5px 11px; border-radius: 100px; font-family: var(--font-d); font-size: 9px; font-weight: 800; letter-spacing: 1px; text-transform: uppercase; z-index: 2; }
+.primary-game-badge.hot { background: linear-gradient(135deg, #ff2e51, #ff5c73); color: #fff; box-shadow: 0 4px 12px rgba(255,46,81,.5); }
+.primary-game-badge.new { background: linear-gradient(135deg, #00e676, #00b894); color: #04121a; box-shadow: 0 4px 12px rgba(0,230,118,.5); }
 
-#supportFab .support-tooltip {
-  position: absolute;
-  right: 74px;
-  top: 50%;
-  transform: translateY(-50%) translateX(8px);
-  background: linear-gradient(135deg, rgba(10,14,26,.98), rgba(16,22,42,.98));
-  color: #eef2ff;
-  font-family: var(--font-d, 'Orbitron', system-ui, sans-serif);
-  font-size: 11.5px;
-  font-weight: 700;
-  letter-spacing: 1px;
-  padding: 9px 14px;
-  border-radius: 10px;
-  border: 1px solid #00f2fe;
-  box-shadow:
-    0 0 14px rgba(0, 242, 254, 0.5),
-    0 0 28px rgba(157, 0, 255, 0.3);
-  white-space: nowrap;
-  opacity: 0;
-  pointer-events: none;
-  transition: opacity .22s ease, transform .22s ease;
-}
-#supportFab .support-tooltip::after {
-  content: "";
-  position: absolute;
-  right: -6px;
-  top: 50%;
-  transform: translateY(-50%) rotate(45deg);
-  width: 10px;
-  height: 10px;
-  background: rgba(16,22,42,.98);
-  border-right: 1px solid #00f2fe;
-  border-top: 1px solid #00f2fe;
-}
-#supportFab:hover .support-tooltip,
-#supportFab:focus-visible .support-tooltip {
-  opacity: 1;
-  transform: translateY(-50%) translateX(0);
-}
+/* ═══════════════════════════════════════════════════════════
+   LOBBY INFO
+═══════════════════════════════════════════════════════════ */
+.lobby-card { display: flex; gap: 12px; padding: 12px; background: linear-gradient(160deg, var(--bg-2), var(--bg-1)); border: 1px solid var(--stroke); border-radius: 14px; margin-bottom: 12px; overflow: hidden; position: relative; transition: border-color .2s; cursor: pointer; }
+.lobby-card:active { border-color: var(--stroke-2); }
+.lobby-card::after { content: ""; position: absolute; top: 0; left: 0; width: 3px; height: 100%; border-radius: 3px; }
+.lobby-card.live::after { background: linear-gradient(180deg, #00e676, #00b894); box-shadow: 0 0 10px #00e676; }
+.lobby-card.ready::after { background: linear-gradient(180deg, var(--cyan), var(--cyan-2)); box-shadow: 0 0 10px var(--cyan); }
+.lobby-card.waiting::after { background: linear-gradient(180deg, var(--gold), var(--orange)); }
+.lobby-img { width: 74px; height: 74px; border-radius: 10px; background-size: cover; background-position: center; flex-shrink: 0; border: 1px solid var(--stroke-2); display: flex; align-items: center; justify-content: center; font-size: 26px; }
+.lobby-info { flex: 1; min-width: 0; display: flex; flex-direction: column; justify-content: center; }
+.lobby-title { font-weight: 700; font-size: 14px; margin-bottom: 4px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.lobby-meta { font-size: 11px; color: var(--mute); display: flex; align-items: center; gap: 6px; margin-bottom: 6px; }
+.lobby-tags { display: flex; gap: 5px; flex-wrap: wrap; }
+.lobby-tag { font-size: 9px; padding: 3px 8px; border-radius: 4px; font-weight: 700; letter-spacing: .5px; text-transform: uppercase; }
+.lobby-tag.players { background: rgba(0,229,255,.12); color: var(--cyan); border: 1px solid rgba(0,229,255,.3); }
+.lobby-tag.gold { background: rgba(255,179,0,.12); color: var(--gold); border: 1px solid rgba(255,179,0,.3); }
+.lobby-tag.green { background: rgba(0,230,118,.12); color: var(--green); border: 1px solid rgba(0,230,118,.3); }
+.lobby-status { font-size: 9.5px; font-weight: 800; letter-spacing: 1px; text-transform: uppercase; padding: 3px 9px; border-radius: 100px; align-self: flex-start; margin-top: 6px; }
+.lobby-status.live { background: rgba(0,230,118,.15); color: var(--green); border: 1px solid rgba(0,230,118,.4); }
+.lobby-status.ready { background: rgba(0,229,255,.15); color: var(--cyan); border: 1px solid rgba(0,229,255,.4); }
+.lobby-status.waiting { background: rgba(255,179,0,.15); color: var(--gold); border: 1px solid rgba(255,179,0,.4); }
 
-@media (max-width: 480px) {
-  #supportFab {
-    width: 54px;
-    height: 54px;
-    right: 16px;
-    bottom: 16px;
-  }
-  #supportFab.support-logged-in { bottom: 84px; }
-  #supportFab svg { width: 24px; height: 24px; }
-  #supportFab .support-tooltip {
-    font-size: 10.5px;
-    padding: 8px 12px;
-    right: 68px;
-  }
-}
+/* ═══════════════════════════════════════════════════════════
+   MATCHES SCREEN HEADER
+═══════════════════════════════════════════════════════════ */
+.matches-header { display: flex; align-items: center; gap: 12px; padding: 14px 16px; background: rgba(10,14,26,.92); backdrop-filter: blur(14px); border-bottom: 1px solid var(--stroke); position: sticky; top: 0; z-index: 30; }
+.back-btn { width: 40px; height: 40px; border-radius: 50%; background: var(--bg-2); border: 1px solid var(--stroke); display: flex; align-items: center; justify-content: center; color: var(--text); font-size: 18px; flex-shrink: 0; transition: all .2s; }
+.back-btn:active { transform: scale(.92); background: var(--bg-3); }
+.matches-title { flex: 1; min-width: 0; }
+.matches-title h2 { font-family: var(--font-d); font-size: 16px; font-weight: 900; letter-spacing: 1.5px; color: var(--text); margin: 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.matches-title p { font-size: 11px; color: var(--mute); margin: 2px 0 0; font-weight: 600; }
 
-body.force-update-locked #supportFab {
-  display: none !important;
-}
+.player-stats-strip { display: flex; align-items: center; gap: 10px; padding: 12px 14px; margin: 0 14px 14px; background: linear-gradient(135deg, rgba(0,229,255,.08), rgba(124,77,255,.05)); border: 1px solid rgba(0,229,255,.3); border-radius: 14px; }
+.player-stat-avatar { width: 46px; height: 46px; border-radius: 50%; background: linear-gradient(135deg, var(--cyan-2), var(--cyan)); display: flex; align-items: center; justify-content: center; font-family: var(--font-d); font-weight: 900; font-size: 18px; color: #050810; border: 2px solid var(--stroke-2); overflow: hidden; flex-shrink: 0; }
+.player-stat-avatar img { width: 100%; height: 100%; object-fit: cover; }
+.player-stat-info { flex: 1; min-width: 0; }
+.player-stat-handle { font-family: var(--font-d); font-size: 14px; font-weight: 700; color: var(--text); margin-bottom: 2px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.player-stat-sub { font-size: 11px; color: var(--mute); font-weight: 600; }
+.player-stat-badge { font-family: var(--font-d); font-size: 10px; font-weight: 800; letter-spacing: 1px; padding: 5px 12px; border-radius: 100px; background: rgba(255,179,0,.15); color: var(--gold); border: 1px solid rgba(255,179,0,.4); flex-shrink: 0; }
 </style>
 </head>
 <body>
@@ -660,7 +527,6 @@ body.force-update-locked #supportFab {
       <button class="auth-btn google" id="btnGoogle" type="button">G Sign in with Google</button>
     </div>
 
-    <!-- 📱 Pre-login App Download Promo -->
     <div class="app-dl-promo">
       <p>📱 Better experience using our app</p>
       <a href="download.html" class="app-dl-btn">⬇️ App Download</a>
@@ -672,43 +538,86 @@ body.force-update-locked #supportFab {
 </div>
 
 <div id="appShell" class="hidden">
-  <header class="app-header">
-    <div class="hdr-user">
-      <div class="hdr-avatar" id="hdrAvatar">U</div>
-      <div class="hdr-meta"><span class="hdr-hi">Welcome</span><span class="hdr-name" id="hdrName">Player</span></div>
+  <!-- HEADER with ARENAX brand -->
+  <div class="app-header-stack">
+    <div class="hdr-brand">
+      <div class="hdr-brand-bg"></div>
+      <div class="hdr-brand-trophy">🏆</div>
+      <div class="hdr-brand-text">ARENA<span>X</span></div>
+      <div class="hdr-brand-trophy">🏆</div>
     </div>
-    <div class="hdr-right">
-      <!-- 📲 Post-login Download App Button -->
-      <a href="download.html" class="hdr-dl-btn" aria-label="Download App">⬇️ <span>Download App</span></a>
-      <button class="hdr-wallet" id="hdrWallet"><span class="coin">₹</span><span id="hdrBal">0.00</span></button>
-      <button class="hdr-notif" id="notifBtn">🔔<span class="notif-badge" id="notifBadge">0</span></button>
+    <div class="hdr-welcome-row">
+      <div class="hdr-user">
+        <div class="hdr-avatar" id="hdrAvatar">U</div>
+        <div class="hdr-meta"><span class="hdr-hi">Welcome</span><span class="hdr-name" id="hdrName">Player</span></div>
+      </div>
+      <div class="hdr-right">
+        <a href="download.html" class="hdr-dl-btn" aria-label="Download App">⬇️ <span>Download</span></a>
+        <button class="hdr-wallet" id="hdrWallet"><span class="coin">₹</span><span id="hdrBal">0.00</span></button>
+        <button class="hdr-notif" id="notifBtn">🔔<span class="notif-badge" id="notifBadge">0</span></button>
+      </div>
     </div>
-  </header>
+  </div>
 
   <div class="view-container">
+    <!-- HOME SCREEN -->
     <section id="view-home" class="view active">
-      <div class="game-filter">
-        <button class="gf-btn active" data-game="BGMI">🔥 BGMI</button>
-        <button class="gf-btn" data-game="Free Fire">💥 Free Fire</button>
+      <!-- Promo Carousel (admin-managed) -->
+      <div class="promo-carousel" id="promoCarousel" style="display:none;margin-top:14px;">
+        <div class="promo-track" id="promoTrack"></div>
+        <div class="promo-dots" id="promoDots"></div>
       </div>
-      <div class="mode-filter" id="modeFilter"></div>
-      <div class="team-filter" id="teamFilter">
+
+      <!-- Games Section (2 cards) -->
+      <div class="sec-title">Games</div>
+      <div class="primary-game-grid" id="primaryGameGrid"></div>
+
+      <!-- Your Lobby Info (admin-controlled or auto) -->
+      <div class="sec-title">Your Lobby Info</div>
+      <div id="lobbyInfoContainer" style="padding:0 14px;"></div>
+    </section>
+
+    <!-- MATCHES SCREEN -->
+    <section id="view-matches" class="view">
+      <div class="matches-header">
+        <button class="back-btn" id="matchesBackBtn">←</button>
+        <div class="matches-title">
+          <h2 id="matchesGameTitle">BGMI INDIA</h2>
+          <p id="matchesGameSub">Battle Royale Tournaments</p>
+        </div>
+        <button class="hdr-notif" id="matchesNotifBtn">🔔<span class="notif-badge" id="matchesNotifBadge">0</span></button>
+      </div>
+
+      <div class="player-stats-strip" style="margin-top:14px;">
+        <div class="player-stat-avatar" id="matchesAvatar">U</div>
+        <div class="player-stat-info">
+          <div class="player-stat-handle" id="matchesHandle">Player</div>
+          <div class="player-stat-sub" id="matchesStats">0 Matches · ₹0.00 Won</div>
+        </div>
+        <div class="player-stat-badge" id="matchesBalance">₹0.00</div>
+      </div>
+
+      <div class="sec-title">Category</div>
+      <div class="mode-filter" id="matchesModeFilter"></div>
+      <div class="team-filter" id="matchesTeamFilter">
         <button class="team-btn active" data-team="ALL">🎯 All</button>
         <button class="team-btn" data-team="Solo">👤 Solo</button>
         <button class="team-btn" data-team="Duo">👥 Duo</button>
         <button class="team-btn" data-team="Squad">👨‍👩‍👦 Squad</button>
       </div>
-      <div id="tournamentsList" class="card-list" style="padding-top:6px;"></div>
-      <div id="tournamentsSkeleton" class="card-list"><div class="skel"></div><div class="skel"></div></div>
-      <div id="tournamentsEmpty" class="empty-state hidden"><div class="empty-icon">🎯</div><h3>No active tournaments</h3><p>New matches drop daily. Check back soon!</p></div>
+
+      <div id="matchesList" class="card-list"></div>
+      <div id="matchesEmpty" class="empty-state hidden"><div class="empty-icon">🎯</div><h3>No matches found</h3><p>Try a different filter or check back later.</p></div>
     </section>
 
+    <!-- JOINED MATCHES -->
     <section id="view-joined" class="view">
       <div class="sec-title">My Joined Matches</div>
       <div id="joinedList" class="card-list"></div>
       <div id="joinedEmpty" class="empty-state hidden"><div class="empty-icon">🎫</div><h3>No matches joined yet</h3><p>Join a tournament from Home to see it here.</p></div>
     </section>
 
+    <!-- WALLET -->
     <section id="view-wallet" class="view">
       <div class="wallet-hero">
         <span class="lbl">Available Balance</span>
@@ -724,6 +633,7 @@ body.force-update-locked #supportFab {
       <div id="txEmpty" class="empty-state hidden" style="padding:28px"><p>No transactions yet.</p></div>
     </section>
 
+    <!-- PROFILE -->
     <section id="view-profile" class="view">
       <div class="profile-card">
         <div class="profile-avatar" id="profAvatar">U</div>
@@ -765,6 +675,7 @@ body.force-update-locked #supportFab {
       <button class="btn-main" id="btnSignOut" style="background:linear-gradient(135deg,#2a3860,#1a2238);box-shadow:none">🚪 Sign Out</button>
     </section>
 
+    <!-- TERMS -->
     <section id="view-terms" class="view">
       <div class="terms-card">
         <h3>📜 TERMS &amp; CONDITIONS</h3>
@@ -798,7 +709,7 @@ body.force-update-locked #supportFab {
     </section>
   </div>
 
-  <!-- ── Legal Footer ─────────────────────────────────────── -->
+  <!-- Legal Footer -->
   <footer class="legal-footer">
     <div class="lf-title">Legal & Policies</div>
     <div class="legal-links">
@@ -926,24 +837,6 @@ body.force-update-locked #supportFab {
   </div>
 </div>
 
-<!-- ═══════════════════════════════════════════════════════════
-     🎧 FLOATING SUPPORT BUTTON — added feature
-═══════════════════════════════════════════════════════════ -->
-<button
-  id="supportFab"
-  type="button"
-  aria-label="Need Help? Contact Support"
-  title="Need Help? Contact Support"
->
-  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"
-       stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-       aria-hidden="true">
-    <path d="M3 18v-6a9 9 0 0 1 18 0v6"/>
-    <path d="M21 19a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2h3zM3 19a2 2 0 0 0 2 2h1a2 2 0 0 0 2-2v-3a2 2 0 0 0-2-2H3z"/>
-  </svg>
-  <span class="support-tooltip">Need Help? Contact Support</span>
-</button>
-
 <div id="toast"></div>
 
 <script type="module">
@@ -951,7 +844,7 @@ import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/fireba
 import {
   getAuth, GoogleAuthProvider, signInWithPopup, signOut,
   onAuthStateChanged, createUserWithEmailAndPassword,
-  signInWithEmailAndPassword, updateProfile, sendPasswordResetEmail,
+  signInWithEmailAndPassword, updateProfile,
   setPersistence, browserLocalPersistence
 } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
 import {
@@ -965,7 +858,7 @@ import {
 ═══════════════════════════════════════════════════════════ */
 const firebaseConfig = {
   apiKey: "AIzaSyDEquBta5rSGYGbFe1EhzC7vSIjrWqSIkk",
-  authDomain: "arenax-beige.vercel.app",   // ← SIRF YE LINE CHANGE KI
+  authDomain: "tournament-b2771.firebaseapp.com",
   databaseURL: "https://tournament-b2771-default-rtdb.firebaseio.com",
   projectId: "tournament-b2771",
   storageBucket: "tournament-b2771.firebasestorage.app",
@@ -988,6 +881,16 @@ const GAME_MODES = {
   "Free Fire": ["Clash Squad", "Battle Royale"]
 };
 
+const DEFAULT_PRIMARY_GAMES = {
+  "BGMI": { display: "BGMI INDIA", sub: "Battle Royale · TDM", logo: "🎯", img: "https://images.unsplash.com/photo-1542751371-adc38448a05e?w=600&q=80", cls: "bgmi", badge: "none" },
+  "Free Fire": { display: "GARENA FREE FIRE", sub: "Clash Squad · BR", logo: "🔥", img: "https://images.unsplash.com/photo-1560253023-3ec5d502959f?w=600&q=80", cls: "ff", badge: "none" }
+};
+
+let PRIMARY_GAMES = {
+  "BGMI": { ...DEFAULT_PRIMARY_GAMES["BGMI"], icon: "🎯" },
+  "Free Fire": { ...DEFAULT_PRIMARY_GAMES["Free Fire"], icon: "🔥" }
+};
+
 /* ═══════════════════════════════════════════════════════════
    FIREBASE INIT
 ═══════════════════════════════════════════════════════════ */
@@ -1004,9 +907,13 @@ const state = {
   user: null, profile: null,
   activeGame: "BGMI", activeMode: "Battle Royale", activeTeam: "ALL",
   activeNav: "home",
+  currentScreen: "home",
   tournaments: [], joinedMatches: [], transactions: [], notifications: [],
   appConfig: null, forceUpdateActive: false, bannerDismissed: false,
   selectedMatch: null, referrals: [],
+  promotions: [], gameStats: {}, adminLobbyItems: null,
+  gameCards: {}, homeMatchIds: null, homeMatchMode: "include",
+  promoIndex: 0, promoTimer: null,
   unsubs: {},
   deposit: { amount: 0, orderId: "", pollTimer: null },
   lastPrizeNotifId: null
@@ -1054,20 +961,66 @@ const D = {
   btnSignOut: $("#btnSignOut"),
   notifModal: $("#notifModal"), notifList: $("#notifList"),
   prizePopup: $("#prizePopup"), pnpTitle: $("#pnpTitle"), pnpAmt: $("#pnpAmt"),
-  toast: $("#toast")
+  toast: $("#toast"),
+  promoCarousel: $("#promoCarousel"), promoTrack: $("#promoTrack"), promoDots: $("#promoDots"),
+  primaryGameGrid: $("#primaryGameGrid"), lobbyInfoContainer: $("#lobbyInfoContainer"),
+  matchesBackBtn: $("#matchesBackBtn"), matchesGameTitle: $("#matchesGameTitle"), matchesGameSub: $("#matchesGameSub"),
+  matchesNotifBtn: $("#matchesNotifBtn"), matchesNotifBadge: $("#matchesNotifBadge"),
+  matchesAvatar: $("#matchesAvatar"), matchesHandle: $("#matchesHandle"), matchesStats: $("#matchesStats"), matchesBalance: $("#matchesBalance"),
+  matchesModeFilter: $("#matchesModeFilter"), matchesTeamFilter: $("#matchesTeamFilter"),
+  matchesList: $("#matchesList"), matchesEmpty: $("#matchesEmpty")
 };
 
 D.profVersion.textContent = "v" + CURRENT_VERSION_NAME;
 
 /* ═══════════════════════════════════════════════════════════
+   GAME CARD MERGE — Admin vs Default
+═══════════════════════════════════════════════════════════ */
+function isImageUrl(s) { return typeof s === "string" && /^https?:\/\//i.test(String(s).trim()); }
+function buildGameCard(key) {
+  const def = DEFAULT_PRIMARY_GAMES[key] || { display: key, sub: "", logo: "🎮", img: "", cls: key === "BGMI" ? "bgmi" : "ff", badge: "none" };
+  const userCfg = state.gameCards[key] || {};
+  const merged = {
+    display: userCfg.display || def.display,
+    sub: userCfg.sub || def.sub,
+    logo: userCfg.logo || def.logo,
+    img: userCfg.img || def.img,
+    badge: userCfg.badge || def.badge || "none",
+    cls: def.cls,
+    icon: def.logo
+  };
+  merged.icon = isImageUrl(merged.logo) ? (def.logo || "🎮") : merged.logo;
+  return merged;
+}
+function refreshPrimaryGames() {
+  PRIMARY_GAMES = {
+    "BGMI": buildGameCard("BGMI"),
+    "Free Fire": buildGameCard("Free Fire")
+  };
+  renderPrimaryGameGrid();
+  if (state.currentScreen === "matches") {
+    const asset = PRIMARY_GAMES[state.activeGame];
+    if (asset) {
+      D.matchesGameTitle.textContent = asset.display;
+      D.matchesGameSub.textContent = asset.sub + " Tournaments";
+    }
+    renderMatchesList(state.tournaments);
+  }
+  if (state.joinedMatches.length) renderJoined(state.joinedMatches);
+}
+function attachGameCardsListener() {
+  if (state.unsubs.gameCards) state.unsubs.gameCards();
+  state.unsubs.gameCards = onSnapshot(collection(db, "game_cards"), (snap) => {
+    const cards = {};
+    snap.forEach(d => { cards[d.id] = { id: d.id, ...d.data() }; });
+    state.gameCards = cards;
+    refreshPrimaryGames();
+  }, (err) => { console.warn("GameCards listener:", err); });
+}
+
+/* ═══════════════════════════════════════════════════════════
    UTILITIES
 ═══════════════════════════════════════════════════════════ */
-function showBootError(msg) {
-  const errEl = document.getElementById("bootError");
-  const errMsgEl = document.getElementById("bootErrorMsg");
-  if (errEl && errMsgEl) { errMsgEl.textContent = msg; errEl.classList.remove("hidden"); }
-  if (window.__hideBoot) window.__hideBoot();
-}
 function showToast(msg, type = "") {
   D.toast.textContent = msg;
   D.toast.className = "show " + type;
@@ -1185,11 +1138,31 @@ function generateReferralCode(name) {
 }
 
 /* ═══════════════════════════════════════════════════════════
+   BANNER FALLBACK
+═══════════════════════════════════════════════════════════ */
+function buildBannerHTML(t) {
+  if (t.bannerUrl && String(t.bannerUrl).trim()) {
+    return `<img class="t-banner" src="${escHTML(t.bannerUrl)}" alt="" loading="lazy" onerror="this.outerHTML='${fallbackBannerHTML(t).replace(/'/g, "\\'")}'"/>`;
+  }
+  return fallbackBannerHTML(t);
+}
+function fallbackBannerHTML(t) {
+  const gameKey = String(t.game || "").trim();
+  const asset = PRIMARY_GAMES[gameKey];
+  const icon = asset?.icon || "🎮";
+  const label = asset?.display || (gameKey || "MATCH").toUpperCase();
+  return `<div class="t-banner-fallback">
+    <div class="tb-icon">${icon}</div>
+    <div class="tb-label">${escHTML(label)}</div>
+  </div>`;
+}
+
+/* ═══════════════════════════════════════════════════════════
    MODE FILTER
 ═══════════════════════════════════════════════════════════ */
 function renderModeFilter() {
   const modes = GAME_MODES[state.activeGame] || [];
-  D.modeFilter.innerHTML = modes.map(m => 
+  D.modeFilter.innerHTML = modes.map(m =>
     `<button class="mode-btn ${m === state.activeMode ? 'active' : ''}" data-mode="${escHTML(m)}">${escHTML(m)}</button>`
   ).join("");
 }
@@ -1205,6 +1178,30 @@ D.teamFilter.addEventListener("click", (e) => {
   if (!btn) return;
   state.activeTeam = btn.dataset.team;
   $$(".team-btn").forEach(b => b.classList.toggle("active", b === btn));
+  attachTournamentsListener();
+});
+
+/* ═══════════════════════════════════════════════════════════
+   MATCHES SCREEN FILTERS
+═══════════════════════════════════════════════════════════ */
+function renderMatchesModeFilter() {
+  const modes = GAME_MODES[state.activeGame] || [];
+  D.matchesModeFilter.innerHTML = modes.map(m =>
+    `<button class="mode-btn ${m === state.activeMode ? 'active' : ''}" data-mode="${escHTML(m)}">${escHTML(m)}</button>`
+  ).join("");
+}
+D.matchesModeFilter.addEventListener("click", (e) => {
+  const btn = e.target.closest("[data-mode]");
+  if (!btn) return;
+  state.activeMode = btn.dataset.mode;
+  renderMatchesModeFilter();
+  attachTournamentsListener();
+});
+D.matchesTeamFilter.addEventListener("click", (e) => {
+  const btn = e.target.closest("[data-team]");
+  if (!btn) return;
+  state.activeTeam = btn.dataset.team;
+  $$("#matchesTeamFilter .team-btn").forEach(b => b.classList.toggle("active", b === btn));
   attachTournamentsListener();
 });
 
@@ -1257,19 +1254,13 @@ D.signupForm.addEventListener("submit", async (e) => {
 
     const myRefCode = generateReferralCode(name);
     await setDoc(doc(db, "users", cred.user.uid), {
-      uid: cred.user.uid,
-      name, email, phone: "",
-      balance: 0,
-      bonusBalance: SIGNUP_BONUS,
+      uid: cred.user.uid, name, email, phone: "",
+      balance: 0, bonusBalance: SIGNUP_BONUS,
       referralCode: myRefCode,
-      referredBy: "",
-      referredByName: "",
+      referredBy: "", referredByName: "",
       referralCodeUsed: refInput || "",
-      referralRewarded: false,
-      firstDepositRewarded: false,
-      matchesPlayed: 0,
-      totalWon: 0,
-      banned: false,
+      referralRewarded: false, firstDepositRewarded: false,
+      matchesPlayed: 0, totalWon: 0, banned: false,
       createdAt: serverTimestamp()
     });
 
@@ -1391,12 +1382,18 @@ onAuthStateChanged(auth, async (user) => {
   D.authGate.classList.add("hidden");
   D.appShell.classList.remove("hidden");
   renderModeFilter();
+  renderMatchesModeFilter();
   attachProfileListener(user.uid);
   attachTournamentsListener();
   attachJoinedListener(user.uid);
   attachTxListener(user.uid);
   attachNotifListener(user.uid);
   attachReferralsListener(user.uid);
+  attachPromotionsListener();
+  attachGameStatsListener();
+  attachGameCardsListener();
+  attachAdminLobbyListener();
+  attachHomeMatchFilterListener();
   checkPaymentRedirect();
 });
 
@@ -1419,18 +1416,16 @@ function attachProfileListener(uid) {
     if (data.photoURL) {
       D.hdrAvatar.innerHTML = `<img src="${escHTML(data.photoURL)}" alt="av"/>`;
       D.profAvatar.innerHTML = `<img src="${escHTML(data.photoURL)}" alt="av"/>`;
+      D.matchesAvatar.innerHTML = `<img src="${escHTML(data.photoURL)}" alt="av"/>`;
     } else {
       const initial = (data.name || "U").charAt(0).toUpperCase();
       D.hdrAvatar.textContent = initial;
       D.profAvatar.textContent = initial;
+      D.matchesAvatar.textContent = initial;
     }
     D.walletBig.textContent = fmtMoney(bal);
-    if (bonus > 0) {
-      D.walletBonus.classList.remove("hidden");
-      D.bonusBig.textContent = fmtMoney(bonus);
-    } else {
-      D.walletBonus.classList.add("hidden");
-    }
+    if (bonus > 0) { D.walletBonus.classList.remove("hidden"); D.bonusBig.textContent = fmtMoney(bonus); }
+    else D.walletBonus.classList.add("hidden");
     D.profName.textContent = data.name || "Player";
     D.profEmail.textContent = data.email || data.phone || "—";
     D.profBal.textContent = "₹" + fmtMoney(bal);
@@ -1439,10 +1434,13 @@ function attachProfileListener(uid) {
     D.profIgn.textContent = data.ign || "Not Set";
     D.profMatches.textContent = matchesPlayed + " / " + MIN_MATCHES_FOR_WITHDRAW;
     D.profWon.textContent = "₹" + fmtMoney(totalWon);
-
     if (data.referralCode) D.refCode.textContent = data.referralCode;
 
-    if (state.tournaments.length) renderTournaments(state.tournaments);
+    D.matchesHandle.textContent = "@" + (data.name || "Player");
+    D.matchesStats.textContent = `${matchesPlayed} Matches · ₹${fmtMoney(totalWon)} Won`;
+    D.matchesBalance.textContent = "₹" + fmtMoney(bal);
+
+    if (state.tournaments.length) renderMatchesList(state.tournaments);
     if (state.joinedMatches.length) renderJoined(state.joinedMatches);
   }, (err) => console.error("Profile listener:", err));
 }
@@ -1455,6 +1453,8 @@ function attachTournamentsListener() {
   D.tournamentsSkeleton.classList.remove("hidden");
   D.tournamentsList.innerHTML = "";
   D.tournamentsEmpty.classList.add("hidden");
+  D.matchesList.innerHTML = "";
+  D.matchesEmpty.classList.add("hidden");
 
   const q = query(collection(db, "tournaments"), where("game", "==", state.activeGame));
   state.unsubs.tournaments = onSnapshot(q, (snap) => {
@@ -1468,6 +1468,7 @@ function attachTournamentsListener() {
     visible.sort((a, b) => (b.createdAt?.toMillis?.() || 0) - (a.createdAt?.toMillis?.() || 0));
     state.tournaments = visible;
     renderTournaments(visible);
+    renderMatchesList(visible);
   }, (err) => {
     console.error("Tournaments listener:", err);
     D.tournamentsSkeleton.classList.add("hidden");
@@ -1530,6 +1531,346 @@ function attachReferralsListener(uid) {
 }
 
 /* ═══════════════════════════════════════════════════════════
+   PROMOTIONS (Admin promo cards)
+═══════════════════════════════════════════════════════════ */
+function attachPromotionsListener() {
+  if (state.unsubs.promotions) state.unsubs.promotions();
+  const q = query(collection(db, "promotions"), where("active", "==", true));
+  state.unsubs.promotions = onSnapshot(q, (snap) => {
+    const items = [];
+    snap.forEach(d => items.push({ id: d.id, ...d.data() }));
+    items.sort((a, b) => (Number(a.order || 0)) - (Number(b.order || 0)));
+    state.promotions = items;
+    renderPromoCarousel();
+  }, (err) => console.warn("Promotions listener:", err));
+}
+
+function renderPromoCarousel() {
+  if (!state.promotions.length) { D.promoCarousel.style.display = "none"; return; }
+  D.promoCarousel.style.display = "block";
+  D.promoTrack.innerHTML = state.promotions.map(p => {
+    const theme = (p.theme || "").toLowerCase();
+    const themeCls = theme === "cyan" ? "cyan" : theme === "red" ? "red" : "";
+    const bgStyle = p.imageUrl ? `background-image: url('${escHTML(p.imageUrl)}');` : "";
+    return `
+      <div class="promo-slide ${themeCls}" style="${bgStyle}">
+        <span class="promo-tag">${escHTML(p.tag || "🔥 Featured")}</span>
+        <div class="promo-title">${escHTML(p.title || "Tournament")}</div>
+        <div class="promo-desc">${escHTML(p.description || "Join now and win big prizes!")}</div>
+        <button class="promo-cta" data-promo-link="${escHTML(p.ctaLink || "")}">${escHTML(p.ctaText || "JOIN NOW ›")}</button>
+      </div>
+    `;
+  }).join("");
+  D.promoDots.innerHTML = state.promotions.map((_, i) =>
+    `<div class="promo-dot ${i === 0 ? 'active' : ''}" data-slide="${i}"></div>`
+  ).join("");
+  D.promoTrack.querySelectorAll("[data-promo-link]").forEach(btn => {
+    btn.addEventListener("click", (e) => {
+      e.stopPropagation();
+      const link = btn.dataset.promoLink;
+      if (link) {
+        try { const w = window.open(link, "_blank", "noopener,noreferrer"); if (!w) window.location.href = link; }
+        catch (err) { window.location.href = link; }
+      } else showToast("Details coming soon!", "success");
+    });
+  });
+  D.promoDots.querySelectorAll("[data-slide]").forEach(dot => {
+    dot.addEventListener("click", () => goToPromo(Number(dot.dataset.slide)));
+  });
+  if (state.promoTimer) clearInterval(state.promoTimer);
+  if (state.promotions.length > 1) {
+    state.promoTimer = setInterval(() => {
+      state.promoIndex = (state.promoIndex + 1) % state.promotions.length;
+      goToPromo(state.promoIndex);
+    }, 5000);
+  }
+  goToPromo(0);
+}
+function goToPromo(idx) {
+  if (!state.promotions.length) return;
+  state.promoIndex = idx;
+  D.promoTrack.style.transform = `translateX(-${idx * 100}%)`;
+  D.promoDots.querySelectorAll(".promo-dot").forEach((d, i) => d.classList.toggle("active", i === idx));
+}
+
+/* ═══════════════════════════════════════════════════════════
+   GAME STATS
+═══════════════════════════════════════════════════════════ */
+function attachGameStatsListener() {
+  if (state.unsubs.gameStats) state.unsubs.gameStats();
+  const q = query(collection(db, "tournaments"));
+  state.unsubs.gameStats = onSnapshot(q, (snap) => {
+    const stats = {};
+    const lobbyItems = [];
+    snap.forEach(d => {
+      const t = { id: d.id, ...d.data() };
+      if (t.status === "CANCELLED") return;
+      const game = String(t.game || "Unknown").trim();
+      if (!stats[game]) stats[game] = { game, count: 0, joinedTotal: 0, sampleTournament: null };
+      stats[game].count += 1;
+      stats[game].joinedTotal += Number(t.joinedCount || 0);
+      if (!stats[game].sampleTournament) stats[game].sampleTournament = t;
+      if (t.status !== "COMPLETED" && t.completed !== true) lobbyItems.push(t);
+    });
+    state.gameStats = stats;
+    window.__lastLobbyItems = lobbyItems;
+    renderPrimaryGameGrid();
+    refreshLobbyDisplay();
+  }, (err) => console.warn("Game stats listener:", err));
+}
+
+function renderPrimaryGameGrid() {
+  const primaryKeys = ["BGMI", "Free Fire"];
+  D.primaryGameGrid.innerHTML = primaryKeys.map(key => {
+    const asset = PRIMARY_GAMES[key];
+    const stat = state.gameStats[key] || { count: 0, joinedTotal: 0 };
+    const bgImg = asset.img || stat.sampleTournament?.bannerUrl || "";
+    const cls = asset.cls;
+    let logoHTML;
+    if (isImageUrl(asset.logo)) {
+      logoHTML = `<img src="${escHTML(asset.logo)}" alt="logo" onerror="this.parentElement.textContent='🎮'"/>`;
+    } else {
+      logoHTML = escHTML(asset.logo || "🎮");
+    }
+    let badgeHTML = "";
+    if (asset.badge === "hot") badgeHTML = `<span class="primary-game-badge hot">🔥 HOT</span>`;
+    else if (asset.badge === "new") badgeHTML = `<span class="primary-game-badge new">✅ NEW</span>`;
+    else {
+      if (stat.joinedTotal > 50) badgeHTML = `<span class="primary-game-badge hot">🔥 HOT</span>`;
+      else if (stat.count > 0) badgeHTML = `<span class="primary-game-badge new">${stat.count} LIVE</span>`;
+    }
+    const bgStyle = bgImg ? `background-image: url('${escHTML(bgImg)}');` : "background:linear-gradient(135deg,#1a2238,#0a0e1a);";
+    return `
+      <div class="primary-game-card ${cls}" data-game="${escHTML(key)}">
+        <div class="primary-game-bg" style="${bgStyle}"></div>
+        <div class="primary-game-overlay"></div>
+        <div class="primary-game-glow"></div>
+        <div class="primary-game-logo">${logoHTML}</div>
+        ${badgeHTML}
+        <div class="primary-game-content">
+          <div class="primary-game-title">${escHTML(asset.display)}</div>
+          <div class="primary-game-sub">${escHTML(asset.sub)}</div>
+          <div class="primary-game-meta">
+            <span class="dot-live"></span>
+            <span>${stat.joinedTotal} Players · ${stat.count} Matches</span>
+          </div>
+        </div>
+      </div>
+    `;
+  }).join("");
+  D.primaryGameGrid.querySelectorAll(".primary-game-card").forEach(card => {
+    card.addEventListener("click", () => {
+      const game = card.dataset.game;
+      if (!game) return;
+      openMatchesScreen(game);
+    });
+  });
+}
+
+/* ═══════════════════════════════════════════════════════════
+   LOBBY INFO (admin-controlled + home match filter)
+═══════════════════════════════════════════════════════════ */
+function attachAdminLobbyListener() {
+  if (state.unsubs.adminLobby) state.unsubs.adminLobby();
+  const paths = [["app_config", "lobbyInfo"], ["app_config", "lobby"], ["config", "lobbyInfo"], ["settings", "lobbyInfo"]];
+  const seen = {}; const handlers = [];
+  paths.forEach(([col, docId]) => {
+    const key = col + "/" + docId;
+    if (seen[key]) return; seen[key] = true;
+    const unsub = onSnapshot(doc(db, col, docId), (snap) => {
+      if (!snap.exists()) return;
+      const data = snap.data();
+      let items = null;
+      if (Array.isArray(data.items)) items = data.items;
+      else if (Array.isArray(data.lobbies)) items = data.lobbies;
+      else if (Array.isArray(data.list)) items = data.list;
+      state.adminLobbyItems = (items && items.length > 0) ? items : null;
+      refreshLobbyDisplay();
+    }, (err) => {});
+    handlers.push(unsub);
+  });
+  state.unsubs.adminLobby = () => handlers.forEach(fn => { try { fn(); } catch (e) {} });
+}
+
+function attachHomeMatchFilterListener() {
+  if (state.unsubs.homeMatchFilter) state.unsubs.homeMatchFilter();
+  const paths = [["app_config", "homeMatchFilter"], ["config", "homeMatchFilter"], ["settings", "homeMatchFilter"]];
+  const seen = {}; const handlers = [];
+  paths.forEach(([col, docId]) => {
+    const key = col + "/" + docId;
+    if (seen[key]) return; seen[key] = true;
+    const unsub = onSnapshot(doc(db, col, docId), (snap) => {
+      if (!snap.exists()) { state.homeMatchIds = null; return; }
+      const data = snap.data();
+      let ids = null;
+      if (Array.isArray(data.matchIds)) ids = data.matchIds.map(String);
+      else if (Array.isArray(data.ids)) ids = data.ids.map(String);
+      else if (Array.isArray(data.matches)) ids = data.matches.map(String);
+      state.homeMatchIds = ids;
+      const m = String(data.mode || data.filterMode || "include").toLowerCase();
+      state.homeMatchMode = (m === "exclude") ? "exclude" : "include";
+      refreshLobbyDisplay();
+    }, (err) => {});
+    handlers.push(unsub);
+  });
+  state.unsubs.homeMatchFilter = () => handlers.forEach(fn => { try { fn(); } catch (e) {} });
+}
+function applyHomeMatchFilter(items) {
+  if (!state.homeMatchIds || state.homeMatchIds.length === 0) return items;
+  if (state.homeMatchMode === "include") {
+    const set = new Set(state.homeMatchIds);
+    return items.filter(t => set.has(String(t.id)));
+  } else {
+    const set = new Set(state.homeMatchIds);
+    return items.filter(t => !set.has(String(t.id)));
+  }
+}
+
+function refreshLobbyDisplay() {
+  if (state.adminLobbyItems && state.adminLobbyItems.length > 0) {
+    renderAdminLobby(state.adminLobbyItems);
+  } else {
+    const filtered = applyHomeMatchFilter(window.__lastLobbyItems || []);
+    renderLobbyInfo(filtered);
+  }
+}
+
+function renderAdminLobby(items) {
+  if (!items || items.length === 0) {
+    D.lobbyInfoContainer.innerHTML = `<div class="empty-state" style="padding:24px;"><div class="empty-icon">🎮</div><p>No active lobbies right now. Check back soon!</p></div>`;
+    return;
+  }
+  D.lobbyInfoContainer.innerHTML = items.map(t => {
+    const img = t.bannerUrl || t.image || PRIMARY_GAMES[t.game]?.img || "";
+    const gameIcon = PRIMARY_GAMES[t.game]?.icon || "🎮";
+    const team = t.teamSize || t.team || displayTeamSize(t);
+    const max = Number(t.maxSlots || 100);
+    const jc = Number(t.joinedCount || 0);
+    const spotsLeft = Math.max(0, max - jc);
+    const statusKey = (t.status || "").toLowerCase();
+    let statusCls = "waiting"; let statusLabel = "WAITING"; let lobbyCls = "waiting";
+    if (statusKey === "started" || statusKey === "live") { statusCls = "live"; statusLabel = "● LIVE"; lobbyCls = "live"; }
+    else if (statusKey === "room-ready" || statusKey === "ready") { statusCls = "ready"; statusLabel = "ROOM READY"; lobbyCls = "ready"; }
+    else if (statusKey === "completed" || statusKey === "ended") { statusCls = "waiting"; statusLabel = "ENDED"; }
+    const timeStr = t.matchTimeText || (t.matchTime ? fmtDateTime(t.matchTime) : "TBA");
+    const imgStyle = img ? `background-image: url('${escHTML(img)}');` : `background:linear-gradient(135deg,#1a2238,#0a0e1a);display:flex;align-items:center;justify-content:center;font-size:26px;`;
+    return `
+      <div class="lobby-card ${lobbyCls}" ${t.id ? `data-detail="${escHTML(t.id)}"` : ""}>
+        <div class="lobby-img" style="${imgStyle}">${!img ? gameIcon : ""}</div>
+        <div class="lobby-info">
+          <div class="lobby-title">${escHTML(t.title || "Match")}</div>
+          <div class="lobby-meta">🕐 ${escHTML(timeStr)}</div>
+          <div class="lobby-tags">
+            <span class="lobby-tag players">${spotsLeft} spots left</span>
+            <span class="lobby-tag gold">₹${fmtMoney(t.prizePool)}</span>
+            <span class="lobby-tag green">${escHTML(team)}</span>
+          </div>
+          <div class="lobby-status ${statusCls}">${escHTML(statusLabel)}</div>
+        </div>
+      </div>
+    `;
+  }).join("");
+  D.lobbyInfoContainer.querySelectorAll(".lobby-card").forEach(card => {
+    card.addEventListener("click", () => {
+      const id = card.dataset.detail;
+      if (!id) return;
+      const match = state.joinedMatches.find(t => t.id === id) || state.tournaments.find(t => t.id === id);
+      if (match) openDetailModal(match);
+    });
+  });
+}
+
+function renderLobbyInfo(items) {
+  if (state.adminLobbyItems && state.adminLobbyItems.length > 0) {
+    renderAdminLobby(state.adminLobbyItems);
+    return;
+  }
+  items.sort((a, b) => (a.matchTime?.toMillis?.() || 0) - (b.matchTime?.toMillis?.() || 0));
+  const top = items.slice(0, 4);
+  if (top.length === 0) {
+    D.lobbyInfoContainer.innerHTML = `<div class="empty-state" style="padding:24px;"><div class="empty-icon">🎮</div><p>No active lobbies right now. Check back soon!</p></div>`;
+    return;
+  }
+  D.lobbyInfoContainer.innerHTML = top.map(t => {
+    const img = t.bannerUrl || PRIMARY_GAMES[t.game]?.img || "";
+    const gameIcon = PRIMARY_GAMES[t.game]?.icon || "🎮";
+    const team = displayTeamSize(t);
+    const max = Number(t.maxSlots || 100);
+    const jc = Number(t.joinedCount || 0);
+    const spotsLeft = Math.max(0, max - jc);
+    const status = getMatchStatus(t);
+    let statusCls = "waiting"; let statusLabel = "WAITING";
+    if (status.key === "started") { statusCls = "live"; statusLabel = "● LIVE"; }
+    else if (status.key === "room-ready") { statusCls = "ready"; statusLabel = "ROOM READY"; }
+    else if (status.key === "completed") { statusCls = "waiting"; statusLabel = "ENDED"; }
+    const lobbyCls = statusCls === "live" ? "live" : statusCls === "ready" ? "ready" : "waiting";
+    const imgStyle = img ? `background-image: url('${escHTML(img)}');` : `background:linear-gradient(135deg,#1a2238,#0a0e1a);display:flex;align-items:center;justify-content:center;font-size:26px;`;
+    return `
+      <div class="lobby-card ${lobbyCls}" data-detail="${escHTML(t.id)}">
+        <div class="lobby-img" style="${imgStyle}">${!img ? gameIcon : ""}</div>
+        <div class="lobby-info">
+          <div class="lobby-title">${escHTML(t.title || "Match")}</div>
+          <div class="lobby-meta">🕐 ${escHTML(fmtDateTime(t.matchTime))}</div>
+          <div class="lobby-tags">
+            <span class="lobby-tag players">${spotsLeft} spots left</span>
+            <span class="lobby-tag gold">₹${fmtMoney(t.prizePool)}</span>
+            <span class="lobby-tag green">${escHTML(team)}</span>
+          </div>
+          <div class="lobby-status ${statusCls}">${escHTML(statusLabel)}</div>
+        </div>
+      </div>
+    `;
+  }).join("");
+  D.lobbyInfoContainer.querySelectorAll(".lobby-card").forEach(card => {
+    card.addEventListener("click", () => {
+      const id = card.dataset.detail;
+      const match = state.joinedMatches.find(t => t.id === id) || state.tournaments.find(t => t.id === id);
+      if (match) openDetailModal(match);
+    });
+  });
+}
+
+/* ═══════════════════════════════════════════════════════════
+   MATCHES SCREEN
+═══════════════════════════════════════════════════════════ */
+function openMatchesScreen(game) {
+  state.activeGame = game;
+  const modes = GAME_MODES[game] || [];
+  state.activeMode = modes[0] || "Battle Royale";
+  state.activeTeam = "ALL";
+  state.currentScreen = "matches";
+
+  const asset = PRIMARY_GAMES[game];
+  D.matchesGameTitle.textContent = asset ? asset.display : game;
+  D.matchesGameSub.textContent = asset ? asset.sub + " Tournaments" : "Tournaments";
+
+  $$("#matchesTeamFilter .team-btn").forEach(b => b.classList.toggle("active", b.dataset.team === "ALL"));
+  renderMatchesModeFilter();
+
+  $$(".view").forEach(v => v.classList.remove("active"));
+  document.getElementById("view-matches").classList.add("active");
+  window.scrollTo({ top: 0, behavior: "instant" });
+
+  attachTournamentsListener();
+}
+
+D.matchesBackBtn.addEventListener("click", () => {
+  state.currentScreen = "home";
+  setNav("home");
+});
+
+function renderMatchesList(items) {
+  D.matchesEmpty.classList.add("hidden");
+  if (!items || items.length === 0) {
+    D.matchesList.innerHTML = "";
+    D.matchesEmpty.classList.remove("hidden");
+    return;
+  }
+  const joinedIds = new Set(state.joinedMatches.map(m => m.id));
+  D.matchesList.innerHTML = items.map((t, i) => tournamentCardHTML(t, i, joinedIds)).join("");
+}
+
+/* ═══════════════════════════════════════════════════════════
    RENDER FUNCTIONS
 ═══════════════════════════════════════════════════════════ */
 function renderReferralStats() {
@@ -1550,6 +1891,10 @@ function renderNotifBadge() {
   if (D.navNotifDot) {
     if (unread > 0) { D.navNotifDot.textContent = unread > 9 ? "9+" : unread; D.navNotifDot.style.display = "inline-flex"; }
     else D.navNotifDot.style.display = "none";
+  }
+  if (D.matchesNotifBadge) {
+    if (unread > 0) { D.matchesNotifBadge.textContent = unread > 9 ? "9+" : unread; D.matchesNotifBadge.style.display = "inline-flex"; }
+    else D.matchesNotifBadge.style.display = "none";
   }
 }
 
@@ -1600,9 +1945,7 @@ function tournamentCardHTML(t, idx, joinedIds) {
   else if (full) { btn = "SLOTS FULL"; disabled = "disabled"; }
   else { actionAttr = `data-join="${escHTML(t.id)}"`; }
 
-  const banner = t.bannerUrl
-    ? `<img class="t-banner" src="${escHTML(t.bannerUrl)}" alt="" loading="lazy" onerror="this.style.display='none'"/>`
-    : `<div class="t-banner-fallback">${escHTML(t.game || "MATCH")}</div>`;
+  const banner = buildBannerHTML(t);
   const cardCls = status.key === "cancelled" ? "status-cancelled" : status.key === "completed" ? "status-completed" : "";
 
   return `<article class="t-card ${cardCls}" style="animation-delay:${idx * 40}ms" data-id="${escHTML(t.id)}">
@@ -1667,9 +2010,7 @@ function renderJoined(items) {
     const rawTeam = normalizeTeamSize(t);
     const teamCls = teamClass(rawTeam);
     const teamIco = teamIcon(rawTeam);
-    const banner = t.bannerUrl
-      ? `<img class="t-banner" src="${escHTML(t.bannerUrl)}" alt="" loading="lazy" onerror="this.style.display='none'"/>`
-      : `<div class="t-banner-fallback">${escHTML(t.game || "MATCH")}</div>`;
+    const banner = buildBannerHTML(t);
     let btnHTML = "";
     if (status.key === "cancelled") btnHTML = `<button class="join-btn cancelled" disabled>🚫 CANCELLED — REFUNDED</button>`;
     else if (status.key === "completed") btnHTML = `<button class="join-btn completed" disabled>🏆 COMPLETED</button>`;
@@ -1735,6 +2076,7 @@ function renderTransactions(items) {
 ═══════════════════════════════════════════════════════════ */
 function setNav(nav) {
   state.activeNav = nav;
+  state.currentScreen = nav === "home" ? "home" : nav;
   $$(".nav-btn").forEach(b => b.classList.toggle("active", b.dataset.nav === nav));
   $$(".view").forEach(v => v.classList.remove("active"));
   const map = { home: "view-home", joined: "view-joined", wallet: "view-wallet", profile: "view-profile", terms: "view-terms" };
@@ -1742,17 +2084,6 @@ function setNav(nav) {
   window.scrollTo({ top: 0, behavior: "instant" });
 }
 $$(".nav-btn").forEach(b => b.addEventListener("click", () => setNav(b.dataset.nav)));
-
-$$(".gf-btn").forEach(b => {
-  b.addEventListener("click", () => {
-    if (state.activeGame === b.dataset.game) return;
-    state.activeGame = b.dataset.game;
-    state.activeMode = (GAME_MODES[state.activeGame] || [])[0] || "Battle Royale";
-    $$(".gf-btn").forEach(x => x.classList.toggle("active", x === b));
-    renderModeFilter();
-    attachTournamentsListener();
-  });
-});
 
 D.hdrWallet.addEventListener("click", () => setNav("wallet"));
 
@@ -1764,6 +2095,7 @@ D.notifBtn?.addEventListener("click", async () => {
     try { await updateDoc(doc(db, "notifications", n.id), { read: true }); } catch (e) {}
   }
 });
+D.matchesNotifBtn?.addEventListener("click", () => D.notifBtn.click());
 
 document.addEventListener("click", (e) => {
   const closeBtn = e.target.closest("[data-close]");
@@ -1777,7 +2109,7 @@ document.addEventListener("keydown", (e) => {
 /* ═══════════════════════════════════════════════════════════
    TOURNAMENT CARD CLICK — OPEN JOIN / DETAIL MODALS
 ═══════════════════════════════════════════════════════════ */
-D.tournamentsList.addEventListener("click", (e) => {
+function handleListClick(e) {
   if (state.forceUpdateActive) { e.preventDefault(); e.stopPropagation(); return; }
   const joinBtn = e.target.closest("[data-join]");
   const detailBtn = e.target.closest("[data-detail]");
@@ -1790,7 +2122,9 @@ D.tournamentsList.addEventListener("click", (e) => {
     const match = state.tournaments.find(t => t.id === id) || state.joinedMatches.find(t => t.id === id);
     if (match) openDetailModal(match);
   }
-});
+}
+D.tournamentsList.addEventListener("click", handleListClick);
+D.matchesList.addEventListener("click", handleListClick);
 D.joinedList.addEventListener("click", (e) => {
   if (state.forceUpdateActive) { e.preventDefault(); e.stopPropagation(); return; }
   const detailBtn = e.target.closest("[data-detail]");
@@ -2153,7 +2487,7 @@ D.btnDeposit.addEventListener("click", () => {
 });
 
 /* ═══════════════════════════════════════════════════════════
-   PROFILE UPDATE — Firebase Firestore
+   PROFILE UPDATE
 ═══════════════════════════════════════════════════════════ */
 D.btnEditProfile.addEventListener("click", () => {
   D.profileForm.reset();
@@ -2273,62 +2607,10 @@ document.addEventListener("touchend", (e) => {
   lastTouch = now;
 }, { passive: false });
 
-/* ═══════════════════════════════════════════════════════════
-   🎧 FLOATING SUPPORT BUTTON — added feature
-   - Adjusts position when logged in vs logged out
-   - Opens support page on click
-   - Hides when force update is active
-═══════════════════════════════════════════════════════════ */
-(function initSupportFab() {
-  const fab = document.getElementById("supportFab");
-  if (!fab) return;
-
-  const SUPPORT_URL = "support.html";
-
-  fab.addEventListener("click", (e) => {
-    e.preventDefault();
-    e.stopPropagation();
-    if (state.forceUpdateActive) return;
-    try {
-      const w = window.open(SUPPORT_URL, "_blank", "noopener,noreferrer");
-      if (!w) window.location.href = SUPPORT_URL;
-    } catch (err) {
-      window.location.href = SUPPORT_URL;
-    }
-  });
-
-  function syncSupportFabPosition() {
-    const isLoggedIn = !!(state.user && state.profile) && !D.appShell.classList.contains("hidden");
-    fab.classList.toggle("support-logged-in", isLoggedIn);
-  }
-
-  const observer = new MutationObserver(syncSupportFabPosition);
-  if (D.appShell) observer.observe(D.appShell, { attributes: true, attributeFilter: ["class"] });
-  if (D.authGate) observer.observe(D.authGate, { attributes: true, attributeFilter: ["class"] });
-
-  if (auth) onAuthStateChanged(auth, () => setTimeout(syncSupportFabPosition, 50));
-  window.addEventListener("storage", syncSupportFabPosition);
-  window.addEventListener("focus", syncSupportFabPosition);
-
-  function syncForceUpdateLock() {
-    document.body.classList.toggle("force-update-locked", state.forceUpdateActive === true);
-  }
-
-  setInterval(() => {
-    syncSupportFabPosition();
-    syncForceUpdateLock();
-  }, 400);
-
-  syncSupportFabPosition();
-  syncForceUpdateLock();
-
-  console.log("[ArenaX] Support FAB initialized ✅");
-})();
-
 console.log(
   "%c ArenaX ",
   "background:#00e5ff;color:#050810;font-weight:bold;padding:4px 8px;border-radius:4px",
-  "User App Loaded ✅"
+  "User App Loaded ✅ — New interface + Old backend (PayPal + API routes) preserved"
 );
 </script>
 </body>
