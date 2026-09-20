@@ -1,0 +1,12 @@
+{
+  "rewrites": [
+    {
+      "source": "/__/auth/(.*)",
+      "destination": "https://tournament-b2771.firebaseapp.com/__/auth/$1"
+    },
+    {
+      "source": "/__/firebase/(.*)",
+      "destination": "https://tournament-b2771.firebaseapp.com/__/firebase/$1"
+    }
+  ]
+}
