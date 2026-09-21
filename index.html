@@ -1126,11 +1126,12 @@ function generateReferralCode(name) {
 }
 
 /* ═══════════════════════════════════════════════════════════
-   🛠 MAINTENANCE MODE — ROBUST (accepts boolean OR string)
+   🛠 MAINTENANCE MODE
    Reads app_config/maintenance: { active, noticeTitle, message, eta }
 ═══════════════════════════════════════════════════════════ */
 function isTruthy(v) {
   if (v === true || v === 1) return true;
+  if (v === false || v === 0 || v === null || v === undefined) return false;
   if (typeof v === "string") {
     var s = v.trim().toLowerCase();
     return s === "true" || s === "1" || s === "yes" || s === "on" || s === "active";
