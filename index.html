@@ -48,9 +48,12 @@ a{color:inherit;text-decoration:none;}
 .mt-notice-box{background:var(--bg-1);border:1px solid rgba(255,179,0,.4);border-radius:var(--r-sm);padding:16px;text-align:left;margin-bottom:20px;font-size:13.5px;color:var(--text);line-height:1.7;white-space:pre-wrap;max-height:220px;overflow-y:auto;}
 .mt-notice-label{font-family:var(--font-d);font-size:10.5px;color:var(--gold);margin-bottom:8px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;display:flex;align-items:center;gap:6px;}
 .mt-eta{font-family:var(--font-d);font-size:13px;font-weight:700;color:var(--cyan);margin-bottom:16px;padding:8px 16px;background:rgba(0,229,255,.08);border:1px solid rgba(0,229,255,.35);border-radius:100px;display:inline-block;}
-.mt-refresh-btn{width:100%;padding:14px;border-radius:12px;font-family:var(--font-d);font-weight:900;font-size:14px;letter-spacing:1.5px;color:#1a1200;background:linear-gradient(135deg,var(--gold),var(--orange));box-shadow:0 8px 24px rgba(255,179,0,.4);}
+.mt-refresh-btn{width:100%;padding:14px;border-radius:12px;font-family:var(--font-d);font-weight:900;font-size:14px;letter-spacing:1.5px;color:#1a1200;background:linear-gradient(135deg,var(--gold),var(--orange));box-shadow:0 8px 24px rgba(255,179,0,.4);transition:transform .15s ease, opacity .2s;}
+.mt-refresh-btn:active{transform:scale(.97);}
+.mt-refresh-btn:disabled{opacity:.6;cursor:not-allowed;}
 .mt-support-btn{width:100%;padding:12px;border-radius:12px;font-family:var(--font-d);font-weight:700;font-size:13px;letter-spacing:1px;color:var(--cyan);background:transparent;border:1px solid rgba(0,229,255,.4);margin-top:10px;}
 .mt-note{font-size:11.5px;color:var(--mute);margin-top:14px;line-height:1.6;}
+.mt-checking{font-size:11.5px;color:var(--cyan);margin-top:10px;font-weight:600;min-height:14px;display:block;}
 
 /* 📢 SITE NOTICE BANNER */
 #siteNoticeBanner{position:fixed;top:0;left:0;right:0;z-index:260;background:linear-gradient(135deg,rgba(124,77,255,.96),rgba(0,229,255,.96));color:#050810;padding:12px 16px;display:none;align-items:flex-start;gap:12px;box-shadow:0 4px 20px rgba(0,0,0,.4);}
@@ -63,6 +66,9 @@ a{color:inherit;text-decoration:none;}
 .snb-close:hover{background:rgba(0,0,0,.2);}
 body.has-notice-banner .app-header-stack{top:52px;}
 body.has-notice-banner #appShell{padding-top:52px;}
+body.maintenance-locked #appShell,
+body.maintenance-locked #authGate,
+body.maintenance-locked #siteNoticeBanner{display:none!important;}
 
 #authGate{position:fixed;inset:0;z-index:100;display:flex;align-items:center;justify-content:center;padding:22px;background:radial-gradient(circle at 50% 30%,#0d1424,#03050a 85%);overflow-y:auto;}
 .auth-card{width:100%;max-width:400px;background:linear-gradient(160deg,var(--bg-2),var(--bg-1));border:1px solid var(--stroke);border-radius:22px;padding:32px 24px 26px;text-align:center;box-shadow:var(--shadow);margin:auto;}
@@ -422,7 +428,6 @@ body.has-notice-banner #appShell{padding-top:52px;}
 #supportFab .support-tooltip::after { content: ""; position: absolute; right: -6px; top: 50%; transform: translateY(-50%) rotate(45deg); width: 10px; height: 10px; background: rgba(16,22,42,.98); border-right: 1px solid #00f2fe; border-top: 1px solid #00f2fe; }
 #supportFab:hover .support-tooltip, #supportFab:focus-visible .support-tooltip { opacity: 1; transform: translateY(-50%) translateX(0); }
 body.maintenance-locked #supportFab { display: none !important; }
-
 @media (min-width: 900px) {
   html, body { font-size: 16px; }
   #appShell { max-width: 1200px; padding-bottom: 40px; padding-left: 24px; padding-right: 24px; }
@@ -548,7 +553,8 @@ body.maintenance-locked #supportFab { display: none !important; }
       <div class="mt-notice-label">📢 <span id="mtNoticeTitle">Notice from Admin</span></div>
       <div id="mtNoticeText"></div>
     </div>
-    <button class="mt-refresh-btn" onclick="location.reload()">🔄 TRY AGAIN</button>
+    <button class="mt-refresh-btn" id="mtRefreshBtn" type="button">🔄 TRY AGAIN</button>
+    <span class="mt-checking" id="mtChecking"></span>
     <button class="mt-support-btn" id="mtSupportBtn">💬 Contact Support</button>
     <p class="mt-note">🔒 We're working hard. Sorry for the inconvenience.</p>
   </div>
@@ -575,6 +581,47 @@ body.maintenance-locked #supportFab { display: none !important; }
 </div>
 
 <script>
+/* 🔥 CRITICAL FIX — Maintenance pre-check BEFORE boot loader hides
+   Ye script bahut jaldi chalta hai (module load se pehle)
+   sessionStorage mein maintenance flag check karta hai aur turant dikhata hai */
+(function earlyMaintenanceCheck() {
+  try {
+    var flag = sessionStorage.getItem("ax_mt_active");
+    if (flag === "1") {
+      var screen = document.getElementById("maintenanceScreen");
+      if (screen) {
+        screen.classList.add("show");
+        document.body.classList.add("maintenance-locked");
+        document.body.style.overflow = "hidden";
+        // Try restore cached message
+        var cached = sessionStorage.getItem("ax_mt_cache");
+        if (cached) {
+          try {
+            var c = JSON.parse(cached);
+            if (c.noticeTitle) {
+              var t = document.getElementById("mtNoticeTitle");
+              if (t) t.textContent = c.noticeTitle;
+            }
+            if (c.message) {
+              var box = document.getElementById("mtNoticeBox");
+              var txt = document.getElementById("mtNoticeText");
+              if (box && txt) { box.style.display = "block"; txt.textContent = c.message; }
+            }
+            if (c.eta) {
+              var e = document.getElementById("mtEta");
+              var et = document.getElementById("mtEtaText");
+              if (e && et) { e.style.display = "inline-block"; et.textContent = c.eta; }
+            }
+          } catch (e) {}
+        }
+      }
+      // Hide boot loader immediately since we know we're in maintenance
+      var bootEl = document.getElementById("bootLoader");
+      if (bootEl) bootEl.classList.add("hidden");
+    }
+  } catch (e) {}
+})();
+
 (function () {
   var BOOT_TIMEOUT_MS = 10000;
   var bootEl = document.getElementById("bootLoader");
@@ -682,10 +729,8 @@ body.maintenance-locked #supportFab { display: none !important; }
         <div class="promo-track" id="promoTrack"></div>
         <div class="promo-dots" id="promoDots"></div>
       </div>
-
       <div class="sec-title">Games</div>
       <div class="primary-game-grid" id="primaryGameGrid"></div>
-
       <div class="sec-title" id="lobbySectionTitle">Your Lobby Info</div>
       <div id="lobbyInfoContainer" style="padding:0 14px;"></div>
     </section>
@@ -699,7 +744,6 @@ body.maintenance-locked #supportFab { display: none !important; }
         </div>
         <button class="hdr-notif" id="matchesNotifBtn">🔔<span class="notif-badge" id="matchesNotifBadge">0</span></button>
       </div>
-
       <div class="player-stats-strip" style="margin-top:14px;">
         <div class="player-stat-avatar" id="matchesAvatar">U</div>
         <div class="player-stat-info">
@@ -708,7 +752,6 @@ body.maintenance-locked #supportFab { display: none !important; }
         </div>
         <div class="player-stat-badge" id="matchesBalance">₹0.00</div>
       </div>
-
       <div class="sec-title">Category</div>
       <div class="mode-filter" id="matchesModeFilter"></div>
       <div class="team-filter" id="matchesTeamFilter">
@@ -717,7 +760,6 @@ body.maintenance-locked #supportFab { display: none !important; }
         <button class="team-btn" data-team="Duo">👥 Duo</button>
         <button class="team-btn" data-team="Squad">👨‍👩‍👦 Squad</button>
       </div>
-
       <div id="matchesList" class="card-list"></div>
       <div id="matchesEmpty" class="empty-state hidden"><div class="empty-icon">🎯</div><h3>No matches found</h3><p>Try a different filter or check back later.</p></div>
     </section>
@@ -758,12 +800,9 @@ body.maintenance-locked #supportFab { display: none !important; }
         <div class="info-row"><span class="k">Total Won</span><span class="v gold" id="profWon">₹0.00</span></div>
         <div class="info-row"><span class="k">App Version</span><span class="v" id="profVersion">v1.0.0</span></div>
       </div>
-
       <div class="sec-title">🎁 Refer &amp; Earn</div>
       <div class="ref-card">
-        <p style="font-size:12.5px;color:var(--dim);line-height:1.6;margin-bottom:12px;">
-          Share your code. When your friend deposits <b style="color:var(--cyan)">₹100</b>, you earn <b style="color:var(--gold)">₹5</b>. Your friend gets <b style="color:var(--green)">₹5 sign-up + ₹20 first-deposit</b>!
-        </p>
+        <p style="font-size:12.5px;color:var(--dim);line-height:1.6;margin-bottom:12px;">Share your code. When your friend deposits <b style="color:var(--cyan)">₹100</b>, you earn <b style="color:var(--gold)">₹5</b>. Your friend gets <b style="color:var(--green)">₹5 sign-up + ₹20 first-deposit</b>!</p>
         <div class="ref-code-box">
           <div style="font-size:10.5px;color:var(--mute);letter-spacing:2px;font-weight:700;margin-bottom:6px;">YOUR REFERRAL CODE</div>
           <div class="ref-code" id="refCode">—</div>
@@ -778,7 +817,6 @@ body.maintenance-locked #supportFab { display: none !important; }
           <div class="ref-stat"><span class="num" id="refCountPending">0</span><span class="lbl">Pending</span></div>
         </div>
       </div>
-
       <div class="sec-title">Account</div>
       <button class="btn-main" id="btnEditProfile" style="margin-bottom:10px">✏️ Update Game Details</button>
       <button class="btn-main" id="btnSignOut" style="background:linear-gradient(135deg,#2a3860,#1a2238);box-shadow:none">🚪 Sign Out</button>
@@ -979,6 +1017,8 @@ const REFERRER_BONUS = 5;
 const MIN_DEPOSIT_FOR_BONUS = 100;
 const SIGNUP_BONUS = 5;
 const CURRENT_VERSION_NAME = "4.3.0";
+const MT_SESSION_KEY = "ax_mt_active";
+const MT_CACHE_KEY = "ax_mt_cache";
 
 const GAME_MODES = {
   "BGMI": ["Battle Royale", "TDM"],
@@ -1073,7 +1113,7 @@ const D = {
   supportFab: $("#supportFab"),
   maintenanceScreen: $("#maintenanceScreen"), mtEta: $("#mtEta"), mtEtaText: $("#mtEtaText"),
   mtNoticeBox: $("#mtNoticeBox"), mtNoticeTitle: $("#mtNoticeTitle"), mtNoticeText: $("#mtNoticeText"),
-  mtSupportBtn: $("#mtSupportBtn"),
+  mtSupportBtn: $("#mtSupportBtn"), mtRefreshBtn: $("#mtRefreshBtn"), mtChecking: $("#mtChecking"),
   siteNoticeBanner: $("#siteNoticeBanner"), snbTitle: $("#snbTitle"), snbText: $("#snbText"), snbCloseBtn: $("#snbCloseBtn")
 };
 
@@ -1126,8 +1166,7 @@ function generateReferralCode(name) {
 }
 
 /* ═══════════════════════════════════════════════════════════
-   🛠 MAINTENANCE MODE
-   Reads app_config/maintenance: { active, noticeTitle, message, eta }
+   🛠 MAINTENANCE MODE — WITH SESSIONSTORAGE CACHE
 ═══════════════════════════════════════════════════════════ */
 function isTruthy(v) {
   if (v === true || v === 1) return true;
@@ -1138,6 +1177,24 @@ function isTruthy(v) {
   }
   return false;
 }
+
+function persistMaintenanceCache(cfg) {
+  try {
+    sessionStorage.setItem(MT_SESSION_KEY, "1");
+    sessionStorage.setItem(MT_CACHE_KEY, JSON.stringify({
+      noticeTitle: cfg.noticeTitle || cfg.title || "Notice from Admin",
+      message: cfg.message || cfg.notice || cfg.description || "",
+      eta: cfg.eta || cfg.backIn || ""
+    }));
+  } catch (e) {}
+}
+function clearMaintenanceCache() {
+  try {
+    sessionStorage.removeItem(MT_SESSION_KEY);
+    sessionStorage.removeItem(MT_CACHE_KEY);
+  } catch (e) {}
+}
+
 function applyMaintenance(cfg) {
   if (!cfg) { hideMaintenance(); return; }
   var active = isTruthy(cfg.active) || isTruthy(cfg.enabled) || isTruthy(cfg.maintenance);
@@ -1158,12 +1215,15 @@ function applyMaintenance(cfg) {
   }
   if (D.maintenanceScreen) D.maintenanceScreen.classList.add("show");
   document.body.style.overflow = "hidden";
+  // Persist to sessionStorage so next reload shows instantly
+  persistMaintenanceCache(cfg);
 }
 function hideMaintenance() {
   state.maintenanceActive = false;
   document.body.classList.remove("maintenance-locked");
   if (D.maintenanceScreen) D.maintenanceScreen.classList.remove("show");
   document.body.style.overflow = "";
+  clearMaintenanceCache();
 }
 function attachMaintenanceListener() {
   if (state.unsubs.maintenance) state.unsubs.maintenance();
@@ -1406,6 +1466,68 @@ if (D.snbCloseBtn) {
     state.noticeDismissed = true;
     if (D.siteNoticeBanner) D.siteNoticeBanner.classList.remove("show");
     document.body.classList.remove("has-notice-banner");
+  });
+}
+
+/* 🔄 TRY AGAIN — manual Firestore re-check without reload */
+if (D.mtRefreshBtn) {
+  D.mtRefreshBtn.addEventListener("click", async function() {
+    D.mtRefreshBtn.disabled = true;
+    var origText = D.mtRefreshBtn.textContent;
+    D.mtRefreshBtn.innerHTML = '<span class="spinner"></span>CHECKING...';
+    if (D.mtChecking) D.mtChecking.textContent = "Contacting server...";
+    try {
+      // Force fresh fetch from Firestore (bypass onSnapshot cache)
+      var found = false;
+      var paths = [["app_config", "maintenance"], ["config", "maintenance"], ["settings", "maintenance"]];
+      for (var i = 0; i < paths.length; i++) {
+        try {
+          var snap = await getDoc(doc(db, paths[i][0], paths[i][1]));
+          if (snap.exists()) {
+            var data = snap.data();
+            var active = isTruthy(data.active) || isTruthy(data.enabled) || isTruthy(data.maintenance);
+            if (!active) {
+              // Maintenance OFF now
+              found = true;
+              hideMaintenance();
+              if (window.__hideBoot) window.__hideBoot();
+              showToast("✅ Maintenance completed — reloading...", "success");
+              setTimeout(function() { location.reload(); }, 800);
+              return;
+            } else {
+              // Still ON — refresh displayed message
+              found = true;
+              applyMaintenance(data);
+              if (D.mtChecking) D.mtChecking.textContent = "Still under maintenance. Please wait.";
+            }
+            break;
+          }
+        } catch (e) { /* try next */ }
+      }
+      if (!found) {
+        // No document found anywhere → maintenance is off
+        hideMaintenance();
+        if (window.__hideBoot) window.__hideBoot();
+        showToast("✅ No maintenance found — reloading...", "success");
+        setTimeout(function() { location.reload(); }, 800);
+        return;
+      }
+      // Still under maintenance — reset button
+      setTimeout(function() {
+        if (D.mtRefreshBtn) {
+          D.mtRefreshBtn.disabled = false;
+          D.mtRefreshBtn.textContent = origText;
+        }
+        if (D.mtChecking) D.mtChecking.textContent = "";
+      }, 600);
+    } catch (err) {
+      console.error("Try again failed:", err);
+      if (D.mtChecking) D.mtChecking.textContent = "Check failed. Please try again.";
+      if (D.mtRefreshBtn) {
+        D.mtRefreshBtn.disabled = false;
+        D.mtRefreshBtn.textContent = origText;
+      }
+    }
   });
 }
 
@@ -2523,7 +2645,7 @@ document.addEventListener("touchend", function(e) {
   lastTouch = now;
 }, { passive: false });
 
-console.log("%c ArenaX ", "background:#00e5ff;color:#050810;font-weight:bold;padding:4px 8px;border-radius:4px", "Maintenance + Notice + Lobby + No Force Update ✅");
+console.log("%c ArenaX ", "background:#00e5ff;color:#050810;font-weight:bold;padding:4px 8px;border-radius:4px", "Maintenance + Notice + Lobby ✅ (sessionStorage cached)");
 </script>
 </body>
 </html>
