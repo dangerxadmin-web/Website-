@@ -19,6 +19,7 @@
   --glow:0 0 22px rgba(0,229,255,.4);
   --font-d:'Orbitron','Rajdhani',system-ui,sans-serif;
   --font-b:'Rajdhani','Segoe UI',system-ui,sans-serif;
+  --max-w: 680px;
 }
 html,body{height:100%;background:var(--bg-0);color:var(--text);font-family:var(--font-b);font-size:15px;overflow-x:hidden;overscroll-behavior-y:contain;-webkit-font-smoothing:antialiased;}
 body::before{content:"";position:fixed;inset:0;pointer-events:none;z-index:0;background:radial-gradient(700px 500px at -10% -20%,rgba(124,77,255,.18),transparent 60%),radial-gradient(700px 500px at 110% 5%,rgba(0,229,255,.14),transparent 60%),radial-gradient(500px 400px at 50% 110%,rgba(255,46,81,.12),transparent 60%);}
@@ -36,7 +37,9 @@ a{color:inherit;text-decoration:none;}
 #bootError{max-width:340px;margin:24px auto 0;padding:14px 16px;background:rgba(255,46,81,.1);border:1px solid rgba(255,46,81,.4);border-radius:10px;color:#ff5c73;font-size:13px;line-height:1.55;text-align:center;}
 #bootError button{margin-top:12px;padding:9px 18px;background:linear-gradient(135deg,#ff2e51,#ff5c73);color:#fff;border-radius:8px;font-weight:700;font-size:12px;cursor:pointer;}
 
-/* 🛠️ MAINTENANCE SCREEN — starts visible by default to prevent flash */
+/* ═══════════════════════════════════════════════════════════
+   🛠 MAINTENANCE MODE SCREEN
+═══════════════════════════════════════════════════════════ */
 #maintenanceScreen{position:fixed;inset:0;z-index:9998;background:radial-gradient(circle at 50% 30%,#1a1200,#050208 90%);display:none;align-items:center;justify-content:center;padding:24px;overflow-y:auto;}
 #maintenanceScreen.show{display:flex;}
 .mt-card{width:100%;max-width:440px;background:linear-gradient(160deg,var(--bg-2),var(--bg-1));border:2px solid var(--gold);border-radius:22px;padding:34px 26px 28px;text-align:center;box-shadow:0 0 60px rgba(255,179,0,.4);}
@@ -47,13 +50,13 @@ a{color:inherit;text-decoration:none;}
 .mt-notice-box{background:var(--bg-1);border:1px solid rgba(255,179,0,.4);border-radius:var(--r-sm);padding:16px;text-align:left;margin-bottom:20px;font-size:13.5px;color:var(--text);line-height:1.7;white-space:pre-wrap;max-height:220px;overflow-y:auto;}
 .mt-notice-label{font-family:var(--font-d);font-size:10.5px;color:var(--gold);margin-bottom:8px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;display:flex;align-items:center;gap:6px;}
 .mt-eta{font-family:var(--font-d);font-size:13px;font-weight:700;color:var(--cyan);margin-bottom:16px;padding:8px 16px;background:rgba(0,229,255,.08);border:1px solid rgba(0,229,255,.35);border-radius:100px;display:inline-block;}
-.mt-refresh-btn{width:100%;padding:14px;border-radius:12px;font-family:var(--font-d);font-weight:900;font-size:14px;letter-spacing:1.5px;color:#1a1200;background:linear-gradient(135deg,var(--gold),var(--orange));box-shadow:0 8px 24px rgba(255,179,0,.4);transition:opacity .2s;}
-.mt-refresh-btn:disabled{opacity:.6;cursor:not-allowed;}
+.mt-refresh-btn{width:100%;padding:14px;border-radius:12px;font-family:var(--font-d);font-weight:900;font-size:14px;letter-spacing:1.5px;color:#1a1200;background:linear-gradient(135deg,var(--gold),var(--orange));box-shadow:0 8px 24px rgba(255,179,0,.4);}
 .mt-support-btn{width:100%;padding:12px;border-radius:12px;font-family:var(--font-d);font-weight:700;font-size:13px;letter-spacing:1px;color:var(--cyan);background:transparent;border:1px solid rgba(0,229,255,.4);margin-top:10px;}
 .mt-note{font-size:11.5px;color:var(--mute);margin-top:14px;line-height:1.6;}
-.mt-checking{font-size:12px;color:var(--cyan);margin-top:10px;font-weight:600;letter-spacing:.5px;}
 
-/* SITE NOTICE */
+/* ═══════════════════════════════════════════════════════════
+   📢 SITE NOTICE BANNER (non-blocking)
+═══════════════════════════════════════════════════════════ */
 #siteNoticeBanner{position:fixed;top:0;left:0;right:0;z-index:260;background:linear-gradient(135deg,rgba(124,77,255,.96),rgba(0,229,255,.96));color:#050810;padding:12px 16px;display:none;align-items:flex-start;gap:12px;box-shadow:0 4px 20px rgba(0,0,0,.4);}
 #siteNoticeBanner.show{display:flex;}
 .snb-icon{font-size:22px;flex-shrink:0;line-height:1.3;}
@@ -111,22 +114,14 @@ body.has-notice-banner #appShell{padding-top:52px;}
 .auth-msg.success{color:var(--green);}
 .auth-hint{font-size:11px;color:var(--mute);margin-top:4px;line-height:1.4;text-align:left;}
 .auth-fine{color:var(--mute);font-size:11px;margin-top:14px;line-height:1.6;}
+
 .app-dl-promo { margin-top: 18px; padding: 14px 16px 16px; background: linear-gradient(135deg, rgba(0,229,255,.08), rgba(124,77,255,.06)); border: 1px solid rgba(0,229,255,.3); border-radius: var(--r-sm); text-align: center; }
 .app-dl-promo p { font-size: 12.5px; color: var(--dim); margin-bottom: 11px; font-weight: 600; letter-spacing: .3px; }
 .app-dl-btn { display: inline-flex; align-items: center; justify-content: center; gap: 8px; padding: 11px 24px; border-radius: 100px; background: linear-gradient(135deg, var(--cyan), var(--cyan-2)); color: #04121a; font-family: var(--font-d); font-weight: 700; font-size: 12.5px; letter-spacing: 1px; text-decoration: none; box-shadow: 0 6px 20px rgba(0,229,255,.35); transition: transform .18s ease, box-shadow .18s ease; }
 .app-dl-btn:hover, .app-dl-btn:focus-visible { transform: translateY(-2px); box-shadow: 0 10px 28px rgba(0,229,255,.5); outline: none; }
+
 #appShell{position:relative;z-index:1;min-height:100vh;padding-bottom:calc(80px + env(safe-area-inset-bottom,0px));max-width:680px;margin:0 auto;}
-.app-header-stack { position: sticky; top: 0; z-index: 30; background: rgba(10,14,26,.92); backdrop-filter: blur(14px); border-bottom: 1px solid var(--stroke); transition: top .2s ease; }
-.hdr-brand { display: flex; align-items: center; justify-content: center; gap: 8px; padding: 6px 0 4px; position: relative; overflow: hidden; }
-.hdr-brand-text { font-family: var(--font-d); font-size: 18px; font-weight: 900; letter-spacing: 5px; color: #f5f9ff; position: relative; z-index: 2; text-shadow: 0 0 10px rgba(0,229,255,.9), 0 0 24px rgba(0,229,255,.55), 0 0 40px rgba(124,77,255,.35); animation: brandFloat 3.6s ease-in-out infinite, brandGlow 2.4s ease-in-out infinite; }
-.hdr-brand-text span { color: var(--cyan); text-shadow: 0 0 12px rgba(0,229,255,1), 0 0 28px rgba(0,229,255,.7), 0 0 50px rgba(124,77,255,.5); }
-@keyframes brandFloat { 0%, 100% { transform: translateY(0) scale(1); } 50% { transform: translateY(-2.5px) scale(1.015); } }
-@keyframes brandGlow { 0%, 100% { filter: brightness(1); } 50% { filter: brightness(1.28); } }
-.hdr-brand-bg { position: absolute; inset: 0; background: linear-gradient(90deg, transparent 0%, rgba(0,229,255,.14) 20%, rgba(124,77,255,.20) 50%, rgba(0,229,255,.14) 80%, transparent 100%); border-radius: 12px; z-index: 1; animation: brandBgPulse 3s ease-in-out infinite; }
-@keyframes brandBgPulse { 0%, 100% { opacity: .6; transform: scaleX(1); } 50% { opacity: 1; transform: scaleX(1.08); } }
-.hdr-brand-trophy { font-size: 16px; z-index: 2; position: relative; filter: drop-shadow(0 0 8px rgba(255,179,0,.9)) drop-shadow(0 0 16px rgba(255,149,0,.5)); animation: trophySpin 4s ease-in-out infinite; }
-@keyframes trophySpin { 0%, 100% { transform: rotate(-6deg) scale(1); } 50% { transform: rotate(6deg) scale(1.12); } }
-.hdr-welcome-row { display: flex; align-items: center; justify-content: space-between; padding: 10px 16px 12px; gap: 8px; }
+.app-header{position:sticky;top:0;z-index:30;display:flex;align-items:center;justify-content:space-between;padding:14px 16px;background:rgba(10,14,26,.92);backdrop-filter:blur(14px);border-bottom:1px solid var(--stroke);gap:8px;}
 .hdr-user{display:flex;align-items:center;gap:10px;min-width:0;}
 .hdr-avatar{width:42px;height:42px;border-radius:50%;background:linear-gradient(135deg,var(--cyan-2),var(--cyan));display:flex;align-items:center;justify-content:center;font-family:var(--font-d);font-weight:900;font-size:17px;color:#050810;border:2px solid var(--stroke-2);overflow:hidden;flex-shrink:0;}
 .hdr-avatar img{width:100%;height:100%;object-fit:cover;}
@@ -294,6 +289,7 @@ body.has-notice-banner #appShell{padding-top:52px;}
 .btn-main:hover:not(:disabled){transform:translateY(-1px);box-shadow:0 8px 26px rgba(255,46,81,.5);}
 .btn-main:disabled{opacity:.5;cursor:not-allowed;}
 .btn-cyan{background:linear-gradient(135deg,var(--cyan),var(--cyan-2));color:#04121a;}
+.btn-green{background:linear-gradient(135deg,var(--green),#00b894);color:#04121a;}
 .hint{font-size:12px;color:var(--mute);margin-bottom:12px;line-height:1.5;}
 .err{color:var(--red-2);font-size:13px;font-weight:600;min-height:16px;margin-bottom:10px;word-break:break-word;}
 .room-box{background:linear-gradient(135deg,rgba(0,229,255,.08),rgba(124,77,255,.06));border:1px solid rgba(0,229,255,.3);border-radius:var(--r-sm);padding:14px;margin-bottom:14px;}
@@ -354,26 +350,148 @@ body.has-notice-banner #appShell{padding-top:52px;}
 .prize-notif-popup .pnp-amt{font-family:var(--font-d);font-size:22px;font-weight:900;color:#1a1200;}
 .paypal-badge{display:inline-flex;align-items:center;gap:6px;padding:6px 12px;border-radius:100px;background:linear-gradient(135deg,#0070ba,#003087);color:#fff;font-family:var(--font-d);font-size:11px;font-weight:700;letter-spacing:1px;margin-bottom:12px;}
 .paypal-badge .pp-ico{font-size:16px;}
+
 .legal-footer { margin: 28px 14px 16px; padding: 22px 18px; background: linear-gradient(160deg, var(--bg-2), var(--bg-1)); border: 1px solid var(--stroke); border-radius: var(--r); text-align: center; }
 .legal-footer .lf-title { font-family: var(--font-d); font-size: 11px; font-weight: 700; letter-spacing: 2.5px; text-transform: uppercase; color: var(--mute); margin-bottom: 14px; }
 .legal-links { display: flex; flex-wrap: wrap; justify-content: center; gap: 8px 6px; }
 .legal-links a { padding: 8px 14px; border-radius: 100px; background: rgba(255,255,255,.04); border: 1px solid var(--stroke); color: var(--dim); font-size: 12px; font-weight: 600; text-decoration: none; transition: all .2s; white-space: nowrap; }
 .legal-links a:hover, .legal-links a:focus-visible { color: var(--cyan); border-color: rgba(0,229,255,.45); background: rgba(0,229,255,.08); outline: none; }
 .legal-footer .lf-copy { margin-top: 14px; font-size: 11px; color: var(--mute); line-height: 1.6; }
-#supportFab { position: fixed; right: 20px; bottom: 20px; z-index: 999; width: 58px; height: 58px; border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; background: radial-gradient(circle at 30% 30%, #1a0f3a, #05060d 85%); border: 2px solid #00f2fe; box-shadow: 0 0 12px rgba(0, 242, 254, 0.55), 0 0 26px rgba(157, 0, 255, 0.35), 0 6px 20px rgba(0, 0, 0, 0.55); transition: transform .25s cubic-bezier(.34,1.56,.64,1), box-shadow .25s ease, bottom .25s ease; animation: supportPulse 2.6s ease-in-out infinite; color: #00f2fe; -webkit-tap-highlight-color: transparent; outline: none; padding: 0; }
+
+.hdr-brand { display: flex; align-items: center; justify-content: center; gap: 8px; padding: 6px 0 4px; position: relative; overflow: hidden; }
+.hdr-brand-text { font-family: var(--font-d); font-size: 18px; font-weight: 900; letter-spacing: 5px; color: #f5f9ff; position: relative; z-index: 2; text-shadow: 0 0 10px rgba(0,229,255,.9), 0 0 24px rgba(0,229,255,.55), 0 0 40px rgba(124,77,255,.35); animation: brandFloat 3.6s ease-in-out infinite, brandGlow 2.4s ease-in-out infinite; }
+.hdr-brand-text span { color: var(--cyan); text-shadow: 0 0 12px rgba(0,229,255,1), 0 0 28px rgba(0,229,255,.7), 0 0 50px rgba(124,77,255,.5); }
+@keyframes brandFloat { 0%, 100% { transform: translateY(0) scale(1); } 50% { transform: translateY(-2.5px) scale(1.015); } }
+@keyframes brandGlow { 0%, 100% { filter: brightness(1); } 50% { filter: brightness(1.28); } }
+.hdr-brand-bg { position: absolute; inset: 0; background: linear-gradient(90deg, transparent 0%, rgba(0,229,255,.14) 20%, rgba(124,77,255,.20) 50%, rgba(0,229,255,.14) 80%, transparent 100%); border-radius: 12px; z-index: 1; animation: brandBgPulse 3s ease-in-out infinite; }
+@keyframes brandBgPulse { 0%, 100% { opacity: .6; transform: scaleX(1); } 50% { opacity: 1; transform: scaleX(1.08); } }
+.hdr-brand-trophy { font-size: 16px; z-index: 2; position: relative; filter: drop-shadow(0 0 8px rgba(255,179,0,.9)) drop-shadow(0 0 16px rgba(255,149,0,.5)); animation: trophySpin 4s ease-in-out infinite; }
+@keyframes trophySpin { 0%, 100% { transform: rotate(-6deg) scale(1); } 50% { transform: rotate(6deg) scale(1.12); } }
+.app-header-stack { position: sticky; top: 0; z-index: 30; background: rgba(10,14,26,.92); backdrop-filter: blur(14px); border-bottom: 1px solid var(--stroke); transition: top .2s ease; }
+.hdr-welcome-row { display: flex; align-items: center; justify-content: space-between; padding: 10px 16px 12px; gap: 8px; }
+
+.promo-carousel { position: relative; margin: 0 14px 16px; border-radius: 18px; overflow: hidden; box-shadow: 0 10px 30px rgba(0,0,0,.6); }
+.promo-track { display: flex; transition: transform .5s cubic-bezier(.34,1.2,.64,1); }
+.promo-slide { flex: 0 0 100%; position: relative; min-height: 150px; background-size: cover; background-position: center; display: flex; flex-direction: column; justify-content: flex-end; padding: 20px 18px; }
+.promo-slide::before { content: ""; position: absolute; inset: 0; background: linear-gradient(135deg, rgba(0,0,0,.85), rgba(0,0,0,.35)); }
+.promo-slide.cyan::before { background: linear-gradient(135deg, rgba(0,229,255,.9), rgba(124,77,255,.75)); }
+.promo-slide.red::before { background: linear-gradient(135deg, rgba(255,46,81,.9), rgba(255,92,115,.75)); }
+.promo-tag { display: inline-block; padding: 4px 10px; border-radius: 100px; background: rgba(255,255,255,.28); color: #fff; font-family: var(--font-d); font-size: 9px; font-weight: 800; letter-spacing: 1.5px; text-transform: uppercase; margin-bottom: 8px; backdrop-filter: blur(4px); align-self: flex-start; position: relative; z-index: 1; }
+.promo-title { font-family: var(--font-d); font-size: 18px; font-weight: 900; letter-spacing: 1px; color: #fff; margin-bottom: 4px; text-shadow: 0 2px 8px rgba(0,0,0,.5); position: relative; z-index: 1; }
+.promo-desc { font-size: 12px; color: rgba(255,255,255,.9); font-weight: 600; margin-bottom: 12px; text-shadow: 0 1px 4px rgba(0,0,0,.4); position: relative; z-index: 1; }
+.promo-cta { display: inline-flex; align-items: center; gap: 6px; padding: 9px 18px; border-radius: 100px; background: rgba(255,255,255,.95); color: #1a1200; font-family: var(--font-d); font-weight: 800; font-size: 11px; letter-spacing: 1px; text-transform: uppercase; box-shadow: 0 4px 14px rgba(0,0,0,.3); position: relative; z-index: 1; align-self: flex-start; }
+.promo-cta:hover{transform:translateY(-1px);box-shadow:0 6px 18px rgba(0,0,0,.4);}
+.promo-dots { position: absolute; bottom: 10px; right: 14px; display: flex; gap: 6px; z-index: 2; }
+.promo-dot { width: 6px; height: 6px; border-radius: 50%; background: rgba(255,255,255,.4); transition: all .3s; cursor:pointer;}
+.promo-dot.active { background: #fff; width: 18px; border-radius: 100px; }
+
+.primary-game-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 14px; padding: 0 14px; margin-bottom: 6px; }
+.primary-game-card { position: relative; border-radius: 18px; overflow: hidden; aspect-ratio: 1 / 1.15; cursor: pointer; transition: transform .25s ease, box-shadow .25s ease; box-shadow: 0 10px 30px rgba(0,0,0,.55); }
+.primary-game-card:active { transform: scale(.96); }
+.primary-game-card:hover { box-shadow: 0 14px 40px rgba(0,229,255,.3); }
+.primary-game-bg { position: absolute; inset: 0; background-size: cover; background-position: center; transition: transform .5s ease; }
+.primary-game-card:hover .primary-game-bg { transform: scale(1.08); }
+.primary-game-overlay { position: absolute; inset: 0; background: linear-gradient(180deg, transparent 25%, rgba(0,0,0,.9) 100%); }
+.primary-game-glow { position: absolute; inset: 0; opacity: 0; transition: opacity .3s; }
+.primary-game-card.bgmi .primary-game-glow { background: radial-gradient(circle at 50% 100%, rgba(255,179,0,.5), transparent 60%); }
+.primary-game-card.ff .primary-game-glow { background: radial-gradient(circle at 50% 100%, rgba(255,46,81,.5), transparent 60%); }
+.primary-game-card:hover .primary-game-glow { opacity: 1; }
+.primary-game-logo { position: absolute; top: 12px; left: 12px; width: 42px; height: 42px; border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 22px; background: linear-gradient(135deg, rgba(0,0,0,.75), rgba(0,0,0,.55)); border: 2px solid rgba(255,255,255,.55); backdrop-filter: blur(6px); box-shadow: 0 4px 14px rgba(0,0,0,.55); z-index: 2; overflow: hidden; }
+.primary-game-logo img { width: 100%; height: 100%; object-fit: cover; }
+.primary-game-card.bgmi .primary-game-logo { border-color: rgba(255,179,0,.85); box-shadow: 0 4px 14px rgba(0,0,0,.55), 0 0 22px rgba(255,179,0,.55); }
+.primary-game-card.ff .primary-game-logo { border-color: rgba(255,46,81,.85); box-shadow: 0 4px 14px rgba(0,0,0,.55), 0 0 22px rgba(255,46,81,.55); }
+.primary-game-content { position: absolute; bottom: 0; left: 0; right: 0; padding: 18px 16px; z-index: 1; }
+.primary-game-title { font-family: var(--font-d); font-size: 16px; font-weight: 900; letter-spacing: 1.5px; color: #fff; text-transform: uppercase; margin-bottom: 4px; text-shadow: 0 2px 10px rgba(0,0,0,.7); }
+.primary-game-sub { font-size: 11px; color: rgba(255,255,255,.8); font-weight: 600; letter-spacing: .5px; margin-bottom: 8px; }
+.primary-game-meta { display: flex; align-items: center; gap: 6px; font-size: 10.5px; color: rgba(255,255,255,.9); font-weight: 700; }
+.primary-game-meta .dot-live { width: 6px; height: 6px; border-radius: 50%; background: #00e676; box-shadow: 0 0 8px #00e676; }
+.primary-game-badge { position: absolute; top: 12px; right: 12px; padding: 5px 11px; border-radius: 100px; font-family: var(--font-d); font-size: 9px; font-weight: 800; letter-spacing: 1px; text-transform: uppercase; z-index: 2; }
+.primary-game-badge.hot { background: linear-gradient(135deg, #ff2e51, #ff5c73); color: #fff; box-shadow: 0 4px 12px rgba(255,46,81,.5); }
+.primary-game-badge.new { background: linear-gradient(135deg, #00e676, #00b894); color: #04121a; box-shadow: 0 4px 12px rgba(0,230,118,.5); }
+
+.lobby-card { display: flex; gap: 12px; padding: 12px; background: linear-gradient(160deg, var(--bg-2), var(--bg-1)); border: 1px solid var(--stroke); border-radius: 14px; margin-bottom: 12px; overflow: hidden; position: relative; transition: border-color .2s, transform .2s; cursor: pointer; }
+.lobby-card:hover { border-color: var(--stroke-2); transform: translateY(-1px); }
+.lobby-card::after { content: ""; position: absolute; top: 0; left: 0; width: 3px; height: 100%; border-radius: 3px; }
+.lobby-card.live::after { background: linear-gradient(180deg, #00e676, #00b894); box-shadow: 0 0 10px #00e676; }
+.lobby-card.ready::after { background: linear-gradient(180deg, var(--cyan), var(--cyan-2)); box-shadow: 0 0 10px var(--cyan); }
+.lobby-card.waiting::after { background: linear-gradient(180deg, var(--gold), var(--orange)); }
+.lobby-img { width: 74px; height: 74px; border-radius: 10px; background-size: cover; background-position: center; flex-shrink: 0; border: 1px solid var(--stroke-2); display: flex; align-items: center; justify-content: center; font-size: 26px; }
+.lobby-info { flex: 1; min-width: 0; display: flex; flex-direction: column; justify-content: center; }
+.lobby-title { font-weight: 700; font-size: 14px; margin-bottom: 4px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.lobby-meta { font-size: 11px; color: var(--mute); display: flex; align-items: center; gap: 6px; margin-bottom: 6px; }
+.lobby-tags { display: flex; gap: 5px; flex-wrap: wrap; }
+.lobby-tag { font-size: 9px; padding: 3px 8px; border-radius: 4px; font-weight: 700; letter-spacing: .5px; text-transform: uppercase; }
+.lobby-tag.players { background: rgba(0,229,255,.12); color: var(--cyan); border: 1px solid rgba(0,229,255,.3); }
+.lobby-tag.gold { background: rgba(255,179,0,.12); color: var(--gold); border: 1px solid rgba(255,179,0,.3); }
+.lobby-tag.green { background: rgba(0,230,118,.12); color: var(--green); border: 1px solid rgba(0,230,118,.3); }
+.lobby-status { font-size: 9.5px; font-weight: 800; letter-spacing: 1px; text-transform: uppercase; padding: 3px 9px; border-radius: 100px; align-self: flex-start; margin-top: 6px; }
+.lobby-status.live { background: rgba(0,230,118,.15); color: var(--green); border: 1px solid rgba(0,230,118,.4); }
+.lobby-status.ready { background: rgba(0,229,255,.15); color: var(--cyan); border: 1px solid rgba(0,229,255,.4); }
+.lobby-status.waiting { background: rgba(255,179,0,.15); color: var(--gold); border: 1px solid rgba(255,179,0,.4); }
+
+.matches-header { display: flex; align-items: center; gap: 12px; padding: 14px 16px; background: rgba(10,14,26,.92); backdrop-filter: blur(14px); border-bottom: 1px solid var(--stroke); position: sticky; top: 0; z-index: 30; }
+.back-btn { width: 40px; height: 40px; border-radius: 50%; background: var(--bg-2); border: 1px solid var(--stroke); display: flex; align-items: center; justify-content: center; color: var(--text); font-size: 18px; flex-shrink: 0; transition: all .2s; }
+.back-btn:hover{background:var(--bg-3);}
+.back-btn:active { transform: scale(.92); }
+.matches-title { flex: 1; min-width: 0; }
+.matches-title h2 { font-family: var(--font-d); font-size: 16px; font-weight: 900; letter-spacing: 1.5px; color: var(--text); margin: 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.matches-title p { font-size: 11px; color: var(--mute); margin: 2px 0 0; font-weight: 600; }
+
+.player-stats-strip { display: flex; align-items: center; gap: 10px; padding: 12px 14px; margin: 0 14px 14px; background: linear-gradient(135deg, rgba(0,229,255,.08), rgba(124,77,255,.05)); border: 1px solid rgba(0,229,255,.3); border-radius: 14px; }
+.player-stat-avatar { width: 46px; height: 46px; border-radius: 50%; background: linear-gradient(135deg, var(--cyan-2), var(--cyan)); display: flex; align-items: center; justify-content: center; font-family: var(--font-d); font-weight: 900; font-size: 18px; color: #050810; border: 2px solid var(--stroke-2); overflow: hidden; flex-shrink: 0; }
+.player-stat-avatar img { width: 100%; height: 100%; object-fit: cover; }
+.player-stat-info { flex: 1; min-width: 0; }
+.player-stat-handle { font-family: var(--font-d); font-size: 14px; font-weight: 700; color: var(--text); margin-bottom: 2px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.player-stat-sub { font-size: 11px; color: var(--mute); font-weight: 600; }
+.player-stat-badge { font-family: var(--font-d); font-size: 10px; font-weight: 800; letter-spacing: 1px; padding: 5px 12px; border-radius: 100px; background: rgba(255,179,0,.15); color: var(--gold); border: 1px solid rgba(255,179,0,.4); flex-shrink: 0; }
+
+#supportFab {
+  position: fixed; right: 20px; bottom: 20px; z-index: 999;
+  width: 58px; height: 58px; border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  cursor: pointer;
+  background: radial-gradient(circle at 30% 30%, #1a0f3a, #05060d 85%);
+  border: 2px solid #00f2fe;
+  box-shadow: 0 0 12px rgba(0, 242, 254, 0.55), 0 0 26px rgba(157, 0, 255, 0.35), 0 6px 20px rgba(0, 0, 0, 0.55);
+  transition: transform .25s cubic-bezier(.34,1.56,.64,1), box-shadow .25s ease, bottom .25s ease;
+  animation: supportPulse 2.6s ease-in-out infinite;
+  color: #00f2fe; -webkit-tap-highlight-color: transparent; outline: none; padding: 0;
+}
 #supportFab svg { width: 26px; height: 26px; display: block; filter: drop-shadow(0 0 6px rgba(0, 242, 254, 0.75)); transition: transform .25s ease; }
 #supportFab:hover, #supportFab:focus-visible { transform: scale(1.12); border-color: #9d00ff; color: #9d00ff; box-shadow: 0 0 20px rgba(0, 242, 254, 0.75), 0 0 40px rgba(157, 0, 255, 0.6), 0 8px 26px rgba(0, 0, 0, 0.6); }
 #supportFab:hover svg { transform: rotate(-8deg) scale(1.06); }
 #supportFab:active { transform: scale(0.96); }
 #supportFab.support-logged-in { bottom: 90px; }
-@keyframes supportPulse { 0%, 100% { box-shadow: 0 0 10px rgba(0, 242, 254, 0.45), 0 0 22px rgba(157, 0, 255, 0.28), 0 6px 20px rgba(0, 0, 0, 0.5); } 50% { box-shadow: 0 0 22px rgba(0, 242, 254, 0.85), 0 0 44px rgba(157, 0, 255, 0.55), 0 6px 22px rgba(0, 0, 0, 0.55); } }
-#supportFab .support-tooltip { position: absolute; right: 74px; top: 50%; transform: translateY(-50%) translateX(8px); background: linear-gradient(135deg, rgba(10,14,26,.98), rgba(16,22,42,.98)); color: #eef2ff; font-family: var(--font-d, 'Orbitron', system-ui, sans-serif); font-size: 11.5px; font-weight: 700; letter-spacing: 1px; padding: 9px 14px; border-radius: 10px; border: 1px solid #00f2fe; box-shadow: 0 0 14px rgba(0, 242, 254, 0.5), 0 0 28px rgba(157, 0, 255, 0.3); white-space: nowrap; opacity: 0; pointer-events: none; transition: opacity .22s ease, transform .22s ease; }
-#supportFab .support-tooltip::after { content: ""; position: absolute; right: -6px; top: 50%; transform: translateY(-50%) rotate(45deg); width: 10px; height: 10px; background: rgba(16,22,42,.98); border-right: 1px solid #00f2fe; border-top: 1px solid #00f2fe; }
+@keyframes supportPulse {
+  0%, 100% { box-shadow: 0 0 10px rgba(0, 242, 254, 0.45), 0 0 22px rgba(157, 0, 255, 0.28), 0 6px 20px rgba(0, 0, 0, 0.5); }
+  50% { box-shadow: 0 0 22px rgba(0, 242, 254, 0.85), 0 0 44px rgba(157, 0, 255, 0.55), 0 6px 22px rgba(0, 0, 0, 0.55); }
+}
+#supportFab .support-tooltip {
+  position: absolute; right: 74px; top: 50%;
+  transform: translateY(-50%) translateX(8px);
+  background: linear-gradient(135deg, rgba(10,14,26,.98), rgba(16,22,42,.98));
+  color: #eef2ff; font-family: var(--font-d, 'Orbitron', system-ui, sans-serif);
+  font-size: 11.5px; font-weight: 700; letter-spacing: 1px;
+  padding: 9px 14px; border-radius: 10px; border: 1px solid #00f2fe;
+  box-shadow: 0 0 14px rgba(0, 242, 254, 0.5), 0 0 28px rgba(157, 0, 255, 0.3);
+  white-space: nowrap; opacity: 0; pointer-events: none;
+  transition: opacity .22s ease, transform .22s ease;
+}
+#supportFab .support-tooltip::after {
+  content: ""; position: absolute; right: -6px; top: 50%;
+  transform: translateY(-50%) rotate(45deg);
+  width: 10px; height: 10px; background: rgba(16,22,42,.98);
+  border-right: 1px solid #00f2fe; border-top: 1px solid #00f2fe;
+}
 #supportFab:hover .support-tooltip, #supportFab:focus-visible .support-tooltip { opacity: 1; transform: translateY(-50%) translateX(0); }
-body.force-update-locked #supportFab, body.maintenance-locked #supportFab { display: none !important; }
+#forceUpdateScreen.show ~ #supportFab,
+body.force-update-locked #supportFab,
+body.maintenance-locked #supportFab { display: none !important; }
+
 @media (min-width: 900px) {
   html, body { font-size: 16px; }
   #appShell { max-width: 1200px; padding-bottom: 40px; padding-left: 24px; padding-right: 24px; }
+  .app-header-stack { border-radius: 0 0 16px 16px; }
   .hdr-brand { padding: 10px 0 8px; }
   .hdr-brand-text { font-size: 22px; letter-spacing: 7px; }
   .hdr-brand-trophy { font-size: 20px; }
@@ -410,6 +528,7 @@ body.force-update-locked #supportFab, body.maintenance-locked #supportFab { disp
   #lobbyInfoContainer .empty-state { grid-column: 1 / -1; }
   #tournamentsList, #matchesList, #joinedList { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
   .t-card { border-radius: 16px; }
+  .t-card:hover { transform: translateY(-3px); }
   .t-banner, .t-banner-fallback { height: 140px; }
   .t-title { font-size: 17px; }
   .t-stats { padding: 14px 10px; }
@@ -453,6 +572,15 @@ body.force-update-locked #supportFab, body.maintenance-locked #supportFab { disp
   #supportFab { right: 32px; bottom: 32px; width: 62px; height: 62px; }
   #supportFab.support-logged-in { bottom: 32px; }
   #supportFab svg { width: 28px; height: 28px; }
+  #view-matches .mode-filter, #view-matches .team-filter { padding: 8px 0 12px; }
+  #view-matches.active .card-list { padding-top: 6px; }
+  #view-matches.active { display: block; }
+  #view-matches .matches-header { border-radius: 16px; margin-bottom: 16px; padding: 16px 24px; }
+  #view-matches .player-stats-strip { margin: 0 0 16px; padding: 16px 20px; }
+  #view-matches .player-stat-avatar { width: 54px; height: 54px; font-size: 22px; }
+  #view-matches .player-stat-handle { font-size: 16px; }
+  #view-matches .player-stat-sub { font-size: 12.5px; }
+  #view-matches .player-stat-badge { font-size: 11.5px; padding: 7px 14px; }
   .auth-card { max-width: 440px; padding: 40px 32px 32px; border-radius: 24px; }
   .auth-brand { font-size: 34px; }
   .auth-emblem { font-size: 56px; }
@@ -462,11 +590,19 @@ body.force-update-locked #supportFab, body.maintenance-locked #supportFab { disp
 }
 @media (min-width: 600px) and (max-width: 899px) {
   #appShell { max-width: 780px; padding-left: 16px; padding-right: 16px; }
+  #view-profile .info-list { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+  #lobbyInfoContainer { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+  #lobbyInfoContainer .lobby-card { margin-bottom: 0; }
+  #tournamentsList, #matchesList, #joinedList { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  #view-terms.active { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  .bottom-nav { max-width: 780px; }
+  #toast { max-width: 400px; }
 }
 </style>
 </head>
 <body>
 
+<!-- 🛠 MAINTENANCE SCREEN -->
 <div id="maintenanceScreen">
   <div class="mt-card">
     <div class="mt-icon">🛠️</div>
@@ -477,13 +613,13 @@ body.force-update-locked #supportFab, body.maintenance-locked #supportFab { disp
       <div class="mt-notice-label">📢 <span id="mtNoticeTitle">Notice from Admin</span></div>
       <div id="mtNoticeText"></div>
     </div>
-    <button class="mt-refresh-btn" id="mtRefreshBtn" type="button">🔄 TRY AGAIN</button>
-    <div class="mt-checking" id="mtChecking" style="display:none;">🔄 Checking status…</div>
-    <button class="mt-support-btn" id="mtSupportBtn" type="button">💬 Contact Support</button>
+    <button class="mt-refresh-btn" onclick="location.reload()">🔄 TRY AGAIN</button>
+    <button class="mt-support-btn" id="mtSupportBtn">💬 Contact Support</button>
     <p class="mt-note">🔒 We're working hard. Sorry for the inconvenience.</p>
   </div>
 </div>
 
+<!-- 📢 SITE NOTICE BANNER -->
 <div id="siteNoticeBanner">
   <div class="snb-icon">📢</div>
   <div class="snb-body">
@@ -972,7 +1108,6 @@ const state = {
   activeGame: "BGMI", activeMode: "Battle Royale", activeTeam: "ALL",
   activeNav: "home", currentScreen: "home",
   tournaments: [], joinedMatches: [], transactions: [], notifications: [],
-  allTournaments: [],
   appConfig: null, forceUpdateActive: false, bannerDismissed: false,
   selectedMatch: null, referrals: [],
   promotions: [], gameStats: {}, adminLobbyItems: null,
@@ -982,10 +1117,7 @@ const state = {
   promoIndex: 0, promoTimer: null, lastLobbyItems: [],
   unsubs: {},
   deposit: { amount: 0, orderId: "", pollTimer: null },
-  lastPrizeNotifId: null,
-  // 🆕 Tracks whether the FIRST maintenance snapshot has arrived.
-  // Until this is true, we show the maintenance screen (safety default).
-  maintenanceChecked: false
+  lastPrizeNotifId: null
 };
 
 const $ = (s) => document.querySelector(s);
@@ -1036,7 +1168,7 @@ const D = {
   supportFab: $("#supportFab"),
   maintenanceScreen: $("#maintenanceScreen"), mtEta: $("#mtEta"), mtEtaText: $("#mtEtaText"),
   mtNoticeBox: $("#mtNoticeBox"), mtNoticeTitle: $("#mtNoticeTitle"), mtNoticeText: $("#mtNoticeText"),
-  mtSupportBtn: $("#mtSupportBtn"), mtRefreshBtn: $("#mtRefreshBtn"), mtChecking: $("#mtChecking"),
+  mtSupportBtn: $("#mtSupportBtn"),
   siteNoticeBanner: $("#siteNoticeBanner"), snbTitle: $("#snbTitle"), snbText: $("#snbText"), snbCloseBtn: $("#snbCloseBtn")
 };
 
@@ -1067,10 +1199,7 @@ function fmtDateTime(ts) {
   return d.toLocaleString("en-IN", { day: "2-digit", month: "short", hour: "2-digit", minute: "2-digit", hour12: true });
 }
 function escHTML(s) { var d = document.createElement("div"); d.textContent = s == null ? "" : s; return d.innerHTML; }
-function openModal(id) {
-  if (state.forceUpdateActive || state.maintenanceActive) return;
-  var el = document.getElementById(id); if (el) el.classList.add("open");
-}
+function openModal(id) { if (state.forceUpdateActive || state.maintenanceActive) return; var el = document.getElementById(id); if (el) el.classList.add("open"); }
 function closeModal(id) { var el = document.getElementById(id); if (el) el.classList.remove("open"); }
 function friendlyAuthError(code) {
   var map = {
@@ -1092,70 +1221,20 @@ function generateReferralCode(name) {
 }
 
 /* ═══════════════════════════════════════════════════════════
-   🎯 FIND MATCH HELPER
+   🛠 MAINTENANCE MODE HANDLER
+   Reads app_config/maintenance: { active, title, message, eta }
 ═══════════════════════════════════════════════════════════ */
-function findMatchById(id) {
-  if (!id) return null;
-  var sid = String(id);
-  var m = state.joinedMatches.find(function(t) { return String(t.id) === sid; });
-  if (m) return m;
-  m = state.tournaments.find(function(t) { return String(t.id) === sid; });
-  if (m) return m;
-  m = state.allTournaments.find(function(t) { return String(t.id) === sid; });
-  if (m) return m;
-  m = (state.lastLobbyItems || []).find(function(t) { return String(t.id) === sid; });
-  if (m) return m;
-  return null;
-}
-
-/* ═══════════════════════════════════════════════════════════
-   🛠 MAINTENANCE MODE — FINAL FIX
-   Strategy:
-   1. Show maintenance screen IMMEDIATELY on page load (default).
-   2. Wait for first Firestore snapshot.
-   3. If maintenance OFF → hide screen, show auth/app.
-   4. If maintenance ON → keep screen, lock everything.
-   5. "Try Again" button → fresh fetch from Firestore.
-═══════════════════════════════════════════════════════════ */
-function showMaintenanceScreen() {
-  if (D.maintenanceScreen) D.maintenanceScreen.classList.add("show");
-  document.body.classList.add("maintenance-locked");
-  document.body.style.overflow = "hidden";
-  // Hide everything else
-  if (D.authGate) D.authGate.classList.add("hidden");
-  if (D.appShell) D.appShell.classList.add("hidden");
-  if (D.siteNoticeBanner) D.siteNoticeBanner.classList.remove("show");
-  document.body.classList.remove("has-notice-banner");
-  var ub = document.getElementById("updateBanner"); if (ub) ub.classList.remove("show");
-  var fus = document.getElementById("forceUpdateScreen"); if (fus) fus.classList.remove("show");
-  if (D.supportFab) D.supportFab.style.display = "none";
-  $$(".modal-overlay.open").forEach(function(m) { m.classList.remove("open"); });
-}
-
-function hideMaintenanceScreen() {
-  if (D.maintenanceScreen) D.maintenanceScreen.classList.remove("show");
-  document.body.classList.remove("maintenance-locked");
-  document.body.style.overflow = "";
-  if (D.supportFab) D.supportFab.style.display = "";
-}
-
-function applyMaintenanceConfig(cfg) {
-  state.maintenanceChecked = true;
-  if (!cfg) {
-    state.maintenanceActive = false;
-    hideMaintenanceScreen();
-    return;
-  }
-  var isOn = cfg.active === true || cfg.enabled === true || cfg.maintenance === true;
-  if (!isOn) {
-    state.maintenanceActive = false;
-    hideMaintenanceScreen();
-    return;
-  }
+function applyMaintenance(cfg) {
+  if (!cfg) { hideMaintenance(); return; }
+  var active = cfg.active === true || cfg.enabled === true || cfg.maintenance === true;
+  if (!active) { hideMaintenance(); return; }
   state.maintenanceActive = true;
+  document.body.classList.add("maintenance-locked");
+  // ETA
   var eta = cfg.eta || cfg.backIn || "";
   if (eta && D.mtEta && D.mtEtaText) { D.mtEta.style.display = "inline-block"; D.mtEtaText.textContent = eta; }
   else if (D.mtEta) D.mtEta.style.display = "none";
+  // Notice
   var noticeTitle = cfg.noticeTitle || cfg.title || "Notice from Admin";
   var noticeMsg = cfg.message || cfg.notice || cfg.description || "";
   if (noticeMsg && D.mtNoticeBox) {
@@ -1165,11 +1244,16 @@ function applyMaintenanceConfig(cfg) {
   } else if (D.mtNoticeBox) {
     D.mtNoticeBox.style.display = "none";
   }
-  if (D.mtRefreshBtn) { D.mtRefreshBtn.disabled = false; D.mtRefreshBtn.textContent = "🔄 TRY AGAIN"; }
-  if (D.mtChecking) D.mtChecking.style.display = "none";
-  showMaintenanceScreen();
+  // Show screen
+  if (D.maintenanceScreen) D.maintenanceScreen.classList.add("show");
+  document.body.style.overflow = "hidden";
 }
-
+function hideMaintenance() {
+  state.maintenanceActive = false;
+  document.body.classList.remove("maintenance-locked");
+  if (D.maintenanceScreen) D.maintenanceScreen.classList.remove("show");
+  document.body.style.overflow = "";
+}
 function attachMaintenanceListener() {
   if (state.unsubs.maintenance) state.unsubs.maintenance();
   var paths = [["app_config", "maintenance"], ["config", "maintenance"], ["settings", "maintenance"]];
@@ -1177,87 +1261,18 @@ function attachMaintenanceListener() {
   paths.forEach(function(pair) {
     var key = pair[0] + "/" + pair[1]; if (seen[key]) return; seen[key] = true;
     var unsub = onSnapshot(doc(db, pair[0], pair[1]), function(snap) {
-      var data = snap.exists() ? snap.data() : null;
-      // First path that responds determines initial state
-      if (!state.maintenanceChecked || !data || state.maintenanceActive || (data && (data.active === true || data.enabled === true || data.maintenance === true))) {
-        applyMaintenanceConfig(data);
-      } else {
-        // Non-active snapshot but we already got a definitive answer
-        state.maintenanceChecked = true;
-      }
-    }, function(err) {
-      console.warn("Maintenance listener error:", err);
-      // If no path responded within timeout, assume OFF
-      if (!state.maintenanceChecked) {
-        state.maintenanceChecked = true;
-        hideMaintenanceScreen();
-      }
-    });
+      if (!snap.exists()) { applyMaintenance(null); return; }
+      applyMaintenance(snap.data());
+    }, function(err) { console.warn("Maintenance listener:", err); });
     handlers.push(unsub);
   });
   state.unsubs.maintenance = function() { handlers.forEach(function(fn) { try { fn(); } catch (e) {} }); };
 }
 
-/* 🔄 TRY AGAIN — fetch fresh from Firestore */
-async function recheckMaintenance() {
-  if (!D.mtRefreshBtn) return;
-  D.mtRefreshBtn.disabled = true;
-  D.mtRefreshBtn.textContent = "⏳ CHECKING…";
-  if (D.mtChecking) D.mtChecking.style.display = "block";
-  try {
-    var paths = [["app_config", "maintenance"], ["config", "maintenance"], ["settings", "maintenance"]];
-    var stillActive = false;
-    var foundActiveCfg = null;
-    for (var i = 0; i < paths.length; i++) {
-      try {
-        var snap = await getDoc(doc(db, paths[i][0], paths[i][1]));
-        if (snap.exists()) {
-          var data = snap.data();
-          if (data.active === true || data.enabled === true || data.maintenance === true) {
-            stillActive = true;
-            foundActiveCfg = data;
-            break;
-          }
-        }
-      } catch (e) { console.warn("Recheck path failed:", e); }
-    }
-    if (stillActive) {
-      applyMaintenanceConfig(foundActiveCfg);
-      showToast("🛠️ Still under maintenance. Please wait.", "error");
-    } else {
-      state.maintenanceActive = false;
-      state.maintenanceChecked = true;
-      hideMaintenanceScreen();
-      showToast("✅ Maintenance complete! Welcome back.", "success");
-      // Re-evaluate auth state to show correct view
-      setTimeout(function() { reevaluateAuthView(); }, 100);
-    }
-  } catch (err) {
-    console.error("Recheck failed:", err);
-    showToast("Failed to check. Try again.", "error");
-  } finally {
-    if (D.mtRefreshBtn) { D.mtRefreshBtn.disabled = false; D.mtRefreshBtn.textContent = "🔄 TRY AGAIN"; }
-    if (D.mtChecking) D.mtChecking.style.display = "none";
-  }
-}
-
-/* Re-evaluate which view to show after maintenance ends */
-function reevaluateAuthView() {
-  if (state.maintenanceActive || state.forceUpdateActive) return;
-  if (state.user && state.profile) {
-    D.authGate.classList.add("hidden");
-    D.appShell.classList.remove("hidden");
-  } else if (state.user && !state.profile) {
-    // Try to load profile
-    loadUserProfile(state.user);
-  } else {
-    D.authGate.classList.remove("hidden");
-    D.appShell.classList.add("hidden");
-    showAuthView("login");
-  }
-}
-
-/* 📢 SITE NOTICE BANNER */
+/* ═══════════════════════════════════════════════════════════
+   📢 SITE NOTICE BANNER (non-blocking)
+   Reads app_config/siteNotice: { active, title, message }
+═══════════════════════════════════════════════════════════ */
 function applySiteNotice(cfg) {
   if (!cfg || !cfg.active) {
     if (D.siteNoticeBanner) D.siteNoticeBanner.classList.remove("show");
@@ -1288,7 +1303,9 @@ function attachSiteNoticeListener() {
   state.unsubs.siteNotice = function() { handlers.forEach(function(fn) { try { fn(); } catch (e) {} }); };
 }
 
-/* LOBBY SETTINGS */
+/* ═══════════════════════════════════════════════════════════
+   🎯 LOBBY SETTINGS LISTENER (admin panel: lobby_settings/current)
+═══════════════════════════════════════════════════════════ */
 function attachLobbySettingsListener() {
   if (state.unsubs.lobbySettings) state.unsubs.lobbySettings();
   state.unsubs.lobbySettings = onSnapshot(doc(db, "lobby_settings", "current"), function(snap) {
@@ -1308,6 +1325,7 @@ function attachLobbySettingsListener() {
     console.warn("LobbySettings listener:", err);
   });
 }
+
 function applyLobbySettings() {
   var s = state.lobbySettings;
   if (D.lobbySectionTitle) D.lobbySectionTitle.textContent = s.title || "Your Lobby Info";
@@ -1433,6 +1451,7 @@ function buildBannerHTML(t) {
   }
   return fallbackBannerHTML(t);
 }
+
 function renderModeFilter() {
   if (!D.modeFilter) return;
   var modes = GAME_MODES[state.activeGame] || [];
@@ -1470,23 +1489,18 @@ function initSupportFab() {
 }
 function syncSupportFabPosition() {
   if (!D.supportFab) return;
-  if (state.maintenanceActive || state.forceUpdateActive) {
-    D.supportFab.style.display = "none";
-    return;
-  }
-  D.supportFab.style.display = "";
   var isLoggedIn = !!(state.user && state.profile) && !D.appShell.classList.contains("hidden");
   D.supportFab.classList.toggle("support-logged-in", isLoggedIn);
 }
+
+/* MAINTENANCE SUPPORT BTN */
 if (D.mtSupportBtn) {
   D.mtSupportBtn.addEventListener("click", function() {
     try { var w = window.open(SUPPORT_URL, "_blank", "noopener,noreferrer"); if (!w) window.location.href = SUPPORT_URL; }
     catch (e) { window.location.href = SUPPORT_URL; }
   });
 }
-if (D.mtRefreshBtn) {
-  D.mtRefreshBtn.addEventListener("click", recheckMaintenance);
-}
+/* SITE NOTICE CLOSE */
 if (D.snbCloseBtn) {
   D.snbCloseBtn.addEventListener("click", function() {
     state.noticeDismissed = true;
@@ -1499,6 +1513,7 @@ if (D.snbCloseBtn) {
 function setupEventListeners() {
   if (D.tabLogin) D.tabLogin.addEventListener("click", function() { showAuthView("login"); });
   if (D.tabSignup) D.tabSignup.addEventListener("click", function() { showAuthView("signup"); });
+
   $$(".pw-toggle").forEach(function(btn) {
     btn.addEventListener("click", function() {
       var t = document.getElementById(btn.dataset.target); if (!t) return;
@@ -1507,6 +1522,7 @@ function setupEventListeners() {
       btn.textContent = isPw ? "🙈" : "👁️";
     });
   });
+
   if (D.modeFilter) D.modeFilter.addEventListener("click", function(e) {
     var btn = e.target.closest("[data-mode]"); if (!btn) return;
     state.activeMode = btn.dataset.mode; renderModeFilter(); attachTournamentsListener();
@@ -1527,10 +1543,11 @@ function setupEventListeners() {
     $$("#matchesTeamFilter .team-btn").forEach(function(b) { b.classList.toggle("active", b === btn); });
     attachTournamentsListener();
   });
+
   $$(".nav-btn").forEach(function(b) { b.addEventListener("click", function() { setNav(b.dataset.nav); }); });
   if (D.hdrWallet) D.hdrWallet.addEventListener("click", function() { setNav("wallet"); });
+
   if (D.notifBtn) D.notifBtn.addEventListener("click", async function() {
-    if (state.maintenanceActive || state.forceUpdateActive) return;
     openModal("notifModal"); renderNotifList();
     var unread = state.notifications.filter(function(n) { return !n.read; });
     for (var i = 0; i < unread.length; i++) {
@@ -1538,6 +1555,7 @@ function setupEventListeners() {
     }
   });
   if (D.matchesNotifBtn) D.matchesNotifBtn.addEventListener("click", function() { if (D.notifBtn) D.notifBtn.click(); });
+
   document.addEventListener("click", function(e) {
     var closeBtn = e.target.closest("[data-close]");
     if (closeBtn) { closeModal(closeBtn.dataset.close); return; }
@@ -1546,6 +1564,7 @@ function setupEventListeners() {
   document.addEventListener("keydown", function(e) {
     if (e.key === "Escape") $$(".modal-overlay.open").forEach(function(m) { m.classList.remove("open"); });
   });
+
   if (D.matchesBackBtn) D.matchesBackBtn.addEventListener("click", function() { state.currentScreen = "home"; setNav("home"); });
   if (D.signupForm) D.signupForm.addEventListener("submit", handleSignup);
   if (D.loginForm) D.loginForm.addEventListener("submit", handleLogin);
@@ -1555,7 +1574,6 @@ function setupEventListeners() {
   if (D.profileForm) D.profileForm.addEventListener("submit", handleProfileSubmit);
   if (D.btnSignOut) D.btnSignOut.addEventListener("click", handleSignOut);
   if (D.btnEditProfile) D.btnEditProfile.addEventListener("click", function() {
-    if (state.maintenanceActive || state.forceUpdateActive) return;
     if (!D.profileForm) return;
     D.profileForm.reset();
     if (D.pfErr) D.pfErr.textContent = "";
@@ -1610,11 +1628,11 @@ function setupEventListeners() {
     if (state.forceUpdateActive || state.maintenanceActive) { e.preventDefault(); e.stopPropagation(); return; }
     var detailBtn = e.target.closest("[data-detail]"); if (!detailBtn) return;
     var id = detailBtn.dataset.detail;
-    var match = findMatchById(id);
+    var match = state.joinedMatches.find(function(t) { return t.id === id; });
     if (match) openDetailModal(match);
   });
   if (D.primaryGameGrid) D.primaryGameGrid.addEventListener("click", function(e) {
-    if (state.maintenanceActive || state.forceUpdateActive) return;
+    if (state.maintenanceActive) return;
     var card = e.target.closest(".primary-game-card"); if (!card) return;
     var game = card.dataset.game; if (game) openMatchesScreen(game);
   });
@@ -1751,7 +1769,6 @@ async function handleWithdrawSubmit(e) {
 async function handleProfileSubmit(e) {
   e.preventDefault();
   if (!state.user) return;
-  if (state.maintenanceActive) { D.pfErr.textContent = "App under maintenance."; return; }
   var name = D.pfName.value.trim();
   var uid = D.pfUid.value.trim();
   var ign = D.pfIgn.value.trim();
@@ -1851,11 +1868,11 @@ function handleListClick(e) {
   var detailBtn = e.target.closest("[data-detail]");
   if (joinBtn) {
     var id = joinBtn.dataset.join;
-    var match = findMatchById(id);
+    var match = state.tournaments.find(function(t) { return t.id === id; });
     if (match) openJoinModal(match);
   } else if (detailBtn) {
     var id2 = detailBtn.dataset.detail;
-    var match2 = findMatchById(id2);
+    var match2 = state.tournaments.find(function(t) { return t.id === id2; }) || state.joinedMatches.find(function(t) { return t.id === id2; });
     if (match2) openDetailModal(match2);
   }
 }
@@ -1904,7 +1921,6 @@ function checkPaymentRedirect() {
 }
 
 function setNav(nav) {
-  if (state.maintenanceActive || state.forceUpdateActive) return;
   state.activeNav = nav;
   state.currentScreen = nav === "home" ? "home" : nav;
   $$(".nav-btn").forEach(function(b) { b.classList.toggle("active", b.dataset.nav === nav); });
@@ -1916,7 +1932,7 @@ function setNav(nav) {
 }
 
 function openMatchesScreen(game) {
-  if (state.maintenanceActive || state.forceUpdateActive) return;
+  if (state.maintenanceActive) return;
   state.activeGame = game;
   var modes = GAME_MODES[game] || [];
   state.activeMode = modes[0] || "Battle Royale";
@@ -2001,18 +2017,6 @@ function attachTournamentsListener() {
     if (D.tournamentsEmpty) D.tournamentsEmpty.classList.remove("hidden");
   });
 }
-function attachAllTournamentsListener() {
-  if (state.unsubs.allTournaments) state.unsubs.allTournaments();
-  var q = query(collection(db, "tournaments"));
-  state.unsubs.allTournaments = onSnapshot(q, function(snap) {
-    var items = [];
-    snap.forEach(function(d) { items.push(Object.assign({ id: d.id }, d.data())); });
-    state.allTournaments = items;
-    if (state.lobbySettings && state.lobbySettings.mode === "manual") {
-      refreshLobbyDisplay();
-    }
-  }, function(err) { console.warn("All tournaments listener:", err); });
-}
 function attachJoinedListener(uid) {
   if (state.unsubs.joined) state.unsubs.joined();
   var q = query(collection(db, "tournaments"), where("joinedUsers", "array-contains", uid));
@@ -2023,7 +2027,6 @@ function attachJoinedListener(uid) {
     state.joinedMatches = items;
     renderJoined(items);
     if (state.tournaments.length) renderTournaments(state.tournaments);
-    if (state.lobbySettings && state.lobbySettings.mode === "manual") refreshLobbyDisplay();
   }, function(err) { console.error("Joined listener:", err); });
 }
 function attachTxListener(uid) {
@@ -2451,7 +2454,16 @@ function renderLobbyFromSettings() {
 
   var items = [];
   if (s.mode === "manual" && s.featuredIds.length > 0) {
-    var items = s.featuredIds.map(function(id) { return findMatchById(id); }).filter(Boolean);
+    var allMatches = [].concat(state.tournaments, state.joinedMatches);
+    var map = new Map();
+    allMatches.forEach(function(t) { map.set(String(t.id), t); });
+    items = s.featuredIds.map(function(id) { return map.get(String(id)); }).filter(Boolean);
+    if (items.length === 0) {
+      var allFromStats = state.lastLobbyItems || [];
+      var map2 = new Map();
+      allFromStats.forEach(function(t) { map2.set(String(t.id), t); });
+      items = s.featuredIds.map(function(id) { return map2.get(String(id)); }).filter(Boolean);
+    }
   } else {
     var now = Date.now();
     items = (state.lastLobbyItems || []).filter(function(t) {
@@ -2512,11 +2524,9 @@ function renderLobbyCards(items) {
   }).join("");
   D.lobbyInfoContainer.querySelectorAll(".lobby-card").forEach(function(card) {
     card.addEventListener("click", function() {
-      if (state.maintenanceActive || state.forceUpdateActive) return;
       var id = card.dataset.detail; if (!id) return;
-      var match = findMatchById(id);
+      var match = state.joinedMatches.find(function(t) { return t.id === id; }) || state.tournaments.find(function(t) { return t.id === id; });
       if (match) openDetailModal(match);
-      else showToast("Match details not available.", "error");
     });
   });
 }
@@ -2652,97 +2662,23 @@ function showForceUpdateScreen(cfg) {
   var btn = document.getElementById("fuUpdateBtn");
   if (btn) btn.onclick = function(e) { e.preventDefault(); e.stopPropagation(); window.location.href = parseDownloadUrl(state.appConfig); };
   var screen = document.getElementById("forceUpdateScreen"); if (screen) screen.classList.add("show");
-  if (D.appShell) D.appShell.classList.add("hidden");
-  if (D.authGate) D.authGate.classList.add("hidden");
-  if (D.supportFab) D.supportFab.style.display = "none";
 }
 
-/* ═══════════════════════════════════════════════════════════
-   🚀 BOOT SEQUENCE — SHOW MAINTENANCE BY DEFAULT
-═══════════════════════════════════════════════════════════ */
-// 1. On page load: show maintenance screen (hidden behind boot loader)
-showMaintenanceScreen();
-
-// 2. Safety timeout: if no maintenance snapshot arrives within 3s, hide it
-setTimeout(function() {
-  if (!state.maintenanceChecked) {
-    state.maintenanceChecked = true;
-    hideMaintenanceScreen();
-    console.log("[Maintenance] No config received in 3s — assuming OFF");
-  }
-}, 3000);
-
-/* Load profile helper (used when maintenance ends mid-session) */
-async function loadUserProfile(user) {
-  try {
-    var userSnap = await getDoc(doc(db, "users", user.uid));
-    if (!userSnap.exists()) {
-      var fallbackName = user.displayName || (user.email ? user.email.split("@")[0] : "Player");
-      var myRefCode = generateReferralCode(fallbackName);
-      await setDoc(doc(db, "users", user.uid), {
-        uid: user.uid, name: fallbackName, email: user.email || "", phone: user.phoneNumber || "",
-        balance: 0, bonusBalance: SIGNUP_BONUS, referralCode: myRefCode,
-        referredBy: "", referredByName: "", referralRewarded: false, firstDepositRewarded: false,
-        matchesPlayed: 0, totalWon: 0, banned: false, createdAt: serverTimestamp()
-      });
-      await addDoc(collection(db, "wallet_transactions"), {
-        uid: user.uid, amount: SIGNUP_BONUS, type: "credit",
-        category: "signup_bonus", description: "🎁 Signup bonus", createdAt: serverTimestamp()
-      });
-    }
-    D.authGate.classList.add("hidden");
-    D.appShell.classList.remove("hidden");
-    renderModeFilter(); renderMatchesModeFilter();
-    attachProfileListener(user.uid); attachTournamentsListener();
-    attachJoinedListener(user.uid); attachTxListener(user.uid); attachNotifListener(user.uid);
-    attachReferralsListener(user.uid); attachPromotionsListener();
-    attachGameStatsListener(); attachGameCardsListener();
-    attachAdminLobbyListener(); attachHomeMatchFilterListener();
-    attachAllTournamentsListener();
-    attachLobbySettingsListener();
-    checkPaymentRedirect(); syncSupportFabPosition();
-  } catch (err) {
-    console.error("loadUserProfile error:", err);
-    D.authGate.classList.remove("hidden"); D.appShell.classList.add("hidden");
-    showAuthView("login");
-  }
-}
-
-/* AUTH LISTENER */
 if (auth) {
   attachAppConfigListener();
   attachMaintenanceListener();
   attachSiteNoticeListener();
-
   onAuthStateChanged(auth, async function(user) {
-    // Clean up user-specific listeners
     Object.keys(state.unsubs).forEach(function(k) {
       if (k === "appConfig" || k === "maintenance" || k === "siteNotice") return;
       if (state.unsubs[k]) { try { state.unsubs[k](); } catch (e) {} state.unsubs[k] = null; }
     });
     if (window.__hideBoot) window.__hideBoot();
-
-    // 🛡️ If maintenance is active, keep everything locked. Do not touch UI.
-    if (state.maintenanceActive) {
-      showMaintenanceScreen();
-      state.user = user || null;
-      return;
-    }
-
-    // If maintenance hasn't been checked yet, don't reveal UI yet
-    if (!state.maintenanceChecked) {
-      // Wait for maintenance check — the listener will trigger re-evaluation
-      state.user = user || null;
-      return;
-    }
-
     if (!user) {
       state.user = null; state.profile = null;
       D.authGate.classList.remove("hidden"); D.appShell.classList.add("hidden");
-      showAuthView("login");
-      syncSupportFabPosition(); return;
+      showAuthView("login"); syncSupportFabPosition(); return;
     }
-
     try {
       var adminSnap = await getDoc(doc(db, "admins", user.uid)).catch(function() { return null; });
       if (adminSnap && adminSnap.exists()) {
@@ -2751,12 +2687,30 @@ if (auth) {
         showAuthView("login"); setAuthMsg("⛔ Admins must use the Admin Panel.", "error"); syncSupportFabPosition(); return;
       }
       state.user = user;
-      // Re-check maintenance one more time
-      if (state.maintenanceActive) {
-        showMaintenanceScreen();
-        return;
+      var userSnap = await getDoc(doc(db, "users", user.uid));
+      if (!userSnap.exists()) {
+        var fallbackName = user.displayName || (user.email ? user.email.split("@")[0] : "Player");
+        var myRefCode = generateReferralCode(fallbackName);
+        await setDoc(doc(db, "users", user.uid), {
+          uid: user.uid, name: fallbackName, email: user.email || "", phone: user.phoneNumber || "",
+          balance: 0, bonusBalance: SIGNUP_BONUS, referralCode: myRefCode,
+          referredBy: "", referredByName: "", referralRewarded: false, firstDepositRewarded: false,
+          matchesPlayed: 0, totalWon: 0, banned: false, createdAt: serverTimestamp()
+        });
+        await addDoc(collection(db, "wallet_transactions"), {
+          uid: user.uid, amount: SIGNUP_BONUS, type: "credit",
+          category: "signup_bonus", description: "🎁 Signup bonus", createdAt: serverTimestamp()
+        });
       }
-      await loadUserProfile(user);
+      D.authGate.classList.add("hidden"); D.appShell.classList.remove("hidden");
+      renderModeFilter(); renderMatchesModeFilter();
+      attachProfileListener(user.uid); attachTournamentsListener();
+      attachJoinedListener(user.uid); attachTxListener(user.uid); attachNotifListener(user.uid);
+      attachReferralsListener(user.uid); attachPromotionsListener();
+      attachGameStatsListener(); attachGameCardsListener();
+      attachAdminLobbyListener(); attachHomeMatchFilterListener();
+      attachLobbySettingsListener();
+      checkPaymentRedirect(); syncSupportFabPosition();
     } catch (err) {
       console.error("Auth state handler error:", err);
       D.authGate.classList.remove("hidden"); D.appShell.classList.add("hidden");
@@ -2776,7 +2730,7 @@ document.addEventListener("touchend", function(e) {
   lastTouch = now;
 }, { passive: false });
 
-console.log("%c ArenaX ", "background:#00e5ff;color:#050810;font-weight:bold;padding:4px 8px;border-radius:4px", "Maintenance FIXED ✅ — screen shown by default, auth waits for maintenance check");
+console.log("%c ArenaX ", "background:#00e5ff;color:#050810;font-weight:bold;padding:4px 8px;border-radius:4px", "Desktop + Mobile + Maintenance + Notice + Lobby Settings ✅");
 </script>
 </body>
 </html>
