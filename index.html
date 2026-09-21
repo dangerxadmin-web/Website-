@@ -36,6 +36,38 @@ a{color:inherit;text-decoration:none;}
 @keyframes spin{to{transform:rotate(360deg);}}
 #bootError{max-width:340px;margin:24px auto 0;padding:14px 16px;background:rgba(255,46,81,.1);border:1px solid rgba(255,46,81,.4);border-radius:10px;color:#ff5c73;font-size:13px;line-height:1.55;text-align:center;}
 #bootError button{margin-top:12px;padding:9px 18px;background:linear-gradient(135deg,#ff2e51,#ff5c73);color:#fff;border-radius:8px;font-weight:700;font-size:12px;cursor:pointer;}
+
+/* ═══════════════════════════════════════════════════════════
+   🛠 MAINTENANCE MODE SCREEN
+═══════════════════════════════════════════════════════════ */
+#maintenanceScreen{position:fixed;inset:0;z-index:9998;background:radial-gradient(circle at 50% 30%,#1a1200,#050208 90%);display:none;align-items:center;justify-content:center;padding:24px;overflow-y:auto;}
+#maintenanceScreen.show{display:flex;}
+.mt-card{width:100%;max-width:440px;background:linear-gradient(160deg,var(--bg-2),var(--bg-1));border:2px solid var(--gold);border-radius:22px;padding:34px 26px 28px;text-align:center;box-shadow:0 0 60px rgba(255,179,0,.4);}
+.mt-icon{font-size:68px;margin-bottom:14px;animation:mtWobble 2.4s ease-in-out infinite;display:inline-block;}
+@keyframes mtWobble{0%,100%{transform:rotate(-6deg) scale(1);}50%{transform:rotate(6deg) scale(1.08);}}
+.mt-title{font-family:var(--font-d);font-size:24px;font-weight:900;letter-spacing:3px;color:var(--gold);margin-bottom:10px;}
+.mt-sub{color:var(--dim);font-size:14px;line-height:1.6;margin-bottom:20px;}
+.mt-notice-box{background:var(--bg-1);border:1px solid rgba(255,179,0,.4);border-radius:var(--r-sm);padding:16px;text-align:left;margin-bottom:20px;font-size:13.5px;color:var(--text);line-height:1.7;white-space:pre-wrap;max-height:220px;overflow-y:auto;}
+.mt-notice-label{font-family:var(--font-d);font-size:10.5px;color:var(--gold);margin-bottom:8px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;display:flex;align-items:center;gap:6px;}
+.mt-eta{font-family:var(--font-d);font-size:13px;font-weight:700;color:var(--cyan);margin-bottom:16px;padding:8px 16px;background:rgba(0,229,255,.08);border:1px solid rgba(0,229,255,.35);border-radius:100px;display:inline-block;}
+.mt-refresh-btn{width:100%;padding:14px;border-radius:12px;font-family:var(--font-d);font-weight:900;font-size:14px;letter-spacing:1.5px;color:#1a1200;background:linear-gradient(135deg,var(--gold),var(--orange));box-shadow:0 8px 24px rgba(255,179,0,.4);}
+.mt-support-btn{width:100%;padding:12px;border-radius:12px;font-family:var(--font-d);font-weight:700;font-size:13px;letter-spacing:1px;color:var(--cyan);background:transparent;border:1px solid rgba(0,229,255,.4);margin-top:10px;}
+.mt-note{font-size:11.5px;color:var(--mute);margin-top:14px;line-height:1.6;}
+
+/* ═══════════════════════════════════════════════════════════
+   📢 SITE NOTICE BANNER (non-blocking)
+═══════════════════════════════════════════════════════════ */
+#siteNoticeBanner{position:fixed;top:0;left:0;right:0;z-index:260;background:linear-gradient(135deg,rgba(124,77,255,.96),rgba(0,229,255,.96));color:#050810;padding:12px 16px;display:none;align-items:flex-start;gap:12px;box-shadow:0 4px 20px rgba(0,0,0,.4);}
+#siteNoticeBanner.show{display:flex;}
+.snb-icon{font-size:22px;flex-shrink:0;line-height:1.3;}
+.snb-body{flex:1;min-width:0;}
+.snb-title{font-family:var(--font-d);font-weight:900;font-size:13px;letter-spacing:1px;margin-bottom:3px;}
+.snb-text{font-size:12.5px;line-height:1.5;font-weight:600;word-break:break-word;}
+.snb-close{width:28px;height:28px;border-radius:50%;display:flex;align-items:center;justify-content:center;color:#050810;font-size:18px;font-weight:700;flex-shrink:0;background:rgba(0,0,0,.1);}
+.snb-close:hover{background:rgba(0,0,0,.2);}
+body.has-notice-banner .app-header-stack{top:52px;}
+body.has-notice-banner #appShell{padding-top:52px;}
+
 #forceUpdateScreen{position:fixed;inset:0;z-index:9999;background:radial-gradient(circle at 50% 30%,#1a0a12,#050208 90%);display:none;align-items:center;justify-content:center;padding:24px;overflow-y:auto;}
 #forceUpdateScreen.show{display:flex;}
 .fu-card{width:100%;max-width:420px;background:linear-gradient(160deg,var(--bg-2),var(--bg-1));border:2px solid var(--red);border-radius:22px;padding:32px 24px 26px;text-align:center;box-shadow:0 0 60px rgba(255,46,81,.5);}
@@ -335,7 +367,7 @@ a{color:inherit;text-decoration:none;}
 @keyframes brandBgPulse { 0%, 100% { opacity: .6; transform: scaleX(1); } 50% { opacity: 1; transform: scaleX(1.08); } }
 .hdr-brand-trophy { font-size: 16px; z-index: 2; position: relative; filter: drop-shadow(0 0 8px rgba(255,179,0,.9)) drop-shadow(0 0 16px rgba(255,149,0,.5)); animation: trophySpin 4s ease-in-out infinite; }
 @keyframes trophySpin { 0%, 100% { transform: rotate(-6deg) scale(1); } 50% { transform: rotate(6deg) scale(1.12); } }
-.app-header-stack { position: sticky; top: 0; z-index: 30; background: rgba(10,14,26,.92); backdrop-filter: blur(14px); border-bottom: 1px solid var(--stroke); }
+.app-header-stack { position: sticky; top: 0; z-index: 30; background: rgba(10,14,26,.92); backdrop-filter: blur(14px); border-bottom: 1px solid var(--stroke); transition: top .2s ease; }
 .hdr-welcome-row { display: flex; align-items: center; justify-content: space-between; padding: 10px 16px 12px; gap: 8px; }
 
 .promo-carousel { position: relative; margin: 0 14px 16px; border-radius: 18px; overflow: hidden; box-shadow: 0 10px 30px rgba(0,0,0,.6); }
@@ -413,9 +445,6 @@ a{color:inherit;text-decoration:none;}
 .player-stat-sub { font-size: 11px; color: var(--mute); font-weight: 600; }
 .player-stat-badge { font-family: var(--font-d); font-size: 10px; font-weight: 800; letter-spacing: 1px; padding: 5px 12px; border-radius: 100px; background: rgba(255,179,0,.15); color: var(--gold); border: 1px solid rgba(255,179,0,.4); flex-shrink: 0; }
 
-/* ═══════════════════════════════════════════════════════════
-   🎧 FLOATING SUPPORT BUTTON (FAB)
-═══════════════════════════════════════════════════════════ */
 #supportFab {
   position: fixed; right: 20px; bottom: 20px; z-index: 999;
   width: 58px; height: 58px; border-radius: 50%;
@@ -456,23 +485,12 @@ a{color:inherit;text-decoration:none;}
 }
 #supportFab:hover .support-tooltip, #supportFab:focus-visible .support-tooltip { opacity: 1; transform: translateY(-50%) translateX(0); }
 #forceUpdateScreen.show ~ #supportFab,
-body.force-update-locked #supportFab { display: none !important; }
+body.force-update-locked #supportFab,
+body.maintenance-locked #supportFab { display: none !important; }
 
-/* ═══════════════════════════════════════════════════════════
-   🖥️  DESKTOP OPTIMIZATIONS (min-width: 900px)
-═══════════════════════════════════════════════════════════ */
 @media (min-width: 900px) {
   html, body { font-size: 16px; }
-
-  /* Shell expands to full width */
-  #appShell {
-    max-width: 1200px;
-    padding-bottom: 40px;
-    padding-left: 24px;
-    padding-right: 24px;
-  }
-
-  /* Header */
+  #appShell { max-width: 1200px; padding-bottom: 40px; padding-left: 24px; padding-right: 24px; }
   .app-header-stack { border-radius: 0 0 16px 16px; }
   .hdr-brand { padding: 10px 0 8px; }
   .hdr-brand-text { font-size: 22px; letter-spacing: 7px; }
@@ -484,32 +502,19 @@ body.force-update-locked #supportFab { display: none !important; }
   .hdr-wallet { font-size: 15px; padding: 9px 16px; }
   .hdr-notif { width: 46px; height: 46px; font-size: 20px; }
   .hdr-dl-btn { font-size: 12px; padding: 9px 16px; }
-
-  /* Container */
   .view-container { padding: 0 24px; }
   .sec-title { font-size: 14px; letter-spacing: 3px; margin: 26px 6px 16px; }
   .sec-title::before { height: 18px; width: 4px; }
-
-  /* Home layout: 2-col grid for content */
-  #view-home.active {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 24px;
-    align-items: start;
-  }
+  #view-home.active { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; align-items: start; }
   #view-home .promo-carousel { grid-column: 1 / -1; margin: 0 0 8px; min-height: 240px; }
   #view-home .promo-slide { min-height: 240px; padding: 32px 28px; }
   #view-home .promo-title { font-size: 26px; }
   #view-home .promo-desc { font-size: 14px; margin-bottom: 18px; }
   #view-home .promo-cta { padding: 12px 26px; font-size: 13px; }
   #view-home .promo-tag { font-size: 10.5px; padding: 5px 12px; }
-
-  /* Section title spans full row when needed */
   #view-home .sec-title { grid-column: 1 / -1; margin-top: 0; }
   #view-home .primary-game-grid { grid-column: 1 / -1; padding: 0; gap: 20px; }
   #view-home #lobbyInfoContainer { grid-column: 1 / -1; padding: 0 !important; }
-
-  /* Game cards bigger, side-by-side */
   .primary-game-grid { grid-template-columns: repeat(2, 1fr); gap: 20px; }
   .primary-game-card { aspect-ratio: 16 / 10; border-radius: 22px; }
   .primary-game-title { font-size: 22px; letter-spacing: 2px; }
@@ -518,13 +523,9 @@ body.force-update-locked #supportFab { display: none !important; }
   .primary-game-badge { top: 18px; right: 18px; padding: 6px 14px; font-size: 10.5px; }
   .primary-game-meta { font-size: 12.5px; }
   .primary-game-content { padding: 26px 24px; }
-
-  /* Lobby cards bigger grid */
   #lobbyInfoContainer { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
   #lobbyInfoContainer .lobby-card { margin-bottom: 0; }
   #lobbyInfoContainer .empty-state { grid-column: 1 / -1; }
-
-  /* Match cards 2-col grid */
   #tournamentsList, #matchesList, #joinedList { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
   .t-card { border-radius: 16px; }
   .t-card:hover { transform: translateY(-3px); }
@@ -533,14 +534,11 @@ body.force-update-locked #supportFab { display: none !important; }
   .t-stats { padding: 14px 10px; }
   .stat .val { font-size: 14px; }
   .join-btn { padding: 14px; font-size: 14px; }
-
-  /* Wallet/profile 2-col */
   #view-wallet.active { display: grid; grid-template-columns: 420px 1fr; gap: 24px; align-items: start; }
   #view-wallet .wallet-hero { grid-column: 1; margin-bottom: 0; position: sticky; top: 190px; }
   #view-wallet .sec-title { grid-column: 2; margin-top: 0; }
   #view-wallet .tx-list, #view-wallet .tx-empty { grid-column: 2; }
   .wallet-hero .bal { font-size: 52px; }
-
   #view-profile.active { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; align-items: start; }
   #view-profile .profile-card { grid-column: 1 / -1; padding: 32px 24px; }
   #view-profile .profile-avatar { width: 110px; height: 110px; font-size: 40px; margin-bottom: 18px; }
@@ -548,80 +546,34 @@ body.force-update-locked #supportFab { display: none !important; }
   #view-profile .info-list { grid-column: 1 / -1; display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
   #view-profile .info-list .info-row { margin: 0; }
   #view-profile .sec-title { grid-column: 1 / -1; }
-
   #view-terms.active { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
   #view-terms .terms-card { margin-bottom: 0; }
-
-  /* Legal footer grid */
-  .legal-footer {
-    max-width: 1200px;
-    margin: 40px auto 24px;
-    padding: 32px 28px;
-    border-radius: 20px;
-  }
+  .legal-footer { max-width: 1200px; margin: 40px auto 24px; padding: 32px 28px; border-radius: 20px; }
   .legal-footer .lf-title { font-size: 13px; letter-spacing: 3px; margin-bottom: 20px; }
   .legal-links { gap: 10px; }
   .legal-links a { padding: 10px 20px; font-size: 13px; }
   .legal-footer .lf-copy { font-size: 12px; margin-top: 20px; }
-
-  /* Bottom nav converts to top-style horizontal */
-  .bottom-nav {
-    position: sticky;
-    top: 0;
-    bottom: auto;
-    max-width: 1200px;
-    padding: 12px 24px;
-    background: rgba(10,14,26,.94);
-    border-top: none;
-    border-bottom: 1px solid var(--stroke);
-    border-radius: 0 0 16px 16px;
-    gap: 8px;
-    z-index: 50;
-  }
-  .nav-btn {
-    flex-direction: row;
-    padding: 10px 20px;
-    font-size: 12px;
-    gap: 8px;
-    border-radius: 10px;
-    max-width: 180px;
-    transition: all .2s;
-  }
+  .bottom-nav { position: sticky; top: 0; bottom: auto; max-width: 1200px; padding: 12px 24px; background: rgba(10,14,26,.94); border-top: none; border-bottom: 1px solid var(--stroke); border-radius: 0 0 16px 16px; gap: 8px; z-index: 50; }
+  .nav-btn { flex-direction: row; padding: 10px 20px; font-size: 12px; gap: 8px; border-radius: 10px; max-width: 180px; transition: all .2s; }
   .nav-btn .ico { font-size: 18px; }
   .nav-btn:hover { background: rgba(0,229,255,.06); }
   .nav-btn.active { background: linear-gradient(135deg, rgba(0,229,255,.15), rgba(124,77,255,.1)); }
   .nav-btn.active .ico { transform: none; }
   .nav-dot { top: -2px; right: -4px; }
-
-  /* Modals centered on desktop */
   .modal-overlay { align-items: center; padding: 32px; }
-  .modal {
-    border-radius: 22px;
-    border: 1px solid var(--stroke-2);
-    max-width: 560px;
-    max-height: 88vh;
-  }
+  .modal { border-radius: 22px; border: 1px solid var(--stroke-2); max-width: 560px; max-height: 88vh; }
   .modal-hd { padding: 22px 26px 16px; }
   .modal-hd h3 { font-size: 17px; }
   .modal-bd { padding: 22px 26px 30px; }
   .match-summary { padding: 18px; }
   .ms-title { font-size: 17px; }
   .ms-row { font-size: 14px; padding: 6px 0; }
-
-  /* Toast */
   #toast { bottom: 40px; font-size: 14.5px; padding: 14px 26px; }
-
-  /* Support FAB adjust for desktop */
   #supportFab { right: 32px; bottom: 32px; width: 62px; height: 62px; }
   #supportFab.support-logged-in { bottom: 32px; }
   #supportFab svg { width: 28px; height: 28px; }
-
-  /* Modes/teams filters on desktop: centered row */
-  #view-matches .mode-filter,
-  #view-matches .team-filter { padding: 8px 0 12px; }
+  #view-matches .mode-filter, #view-matches .team-filter { padding: 8px 0 12px; }
   #view-matches.active .card-list { padding-top: 6px; }
-
-  /* Matches screen 2-col */
   #view-matches.active { display: block; }
   #view-matches .matches-header { border-radius: 16px; margin-bottom: 16px; padding: 16px 24px; }
   #view-matches .player-stats-strip { margin: 0 0 16px; padding: 16px 20px; }
@@ -629,14 +581,13 @@ body.force-update-locked #supportFab { display: none !important; }
   #view-matches .player-stat-handle { font-size: 16px; }
   #view-matches .player-stat-sub { font-size: 12.5px; }
   #view-matches .player-stat-badge { font-size: 11.5px; padding: 7px 14px; }
-
-  /* Auth card bigger on desktop */
   .auth-card { max-width: 440px; padding: 40px 32px 32px; border-radius: 24px; }
   .auth-brand { font-size: 34px; }
   .auth-emblem { font-size: 56px; }
+  .mt-card { max-width: 480px; padding: 44px 34px 34px; }
+  .mt-title { font-size: 28px; }
+  .mt-icon { font-size: 80px; }
 }
-
-/* Tablet (600px - 899px): simpler upgrade */
 @media (min-width: 600px) and (max-width: 899px) {
   #appShell { max-width: 780px; padding-left: 16px; padding-right: 16px; }
   #view-profile .info-list { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
@@ -650,6 +601,33 @@ body.force-update-locked #supportFab { display: none !important; }
 </style>
 </head>
 <body>
+
+<!-- 🛠 MAINTENANCE SCREEN -->
+<div id="maintenanceScreen">
+  <div class="mt-card">
+    <div class="mt-icon">🛠️</div>
+    <div class="mt-title">MAINTENANCE</div>
+    <p class="mt-sub">We're upgrading ArenaX to serve you better.<br>We'll be back shortly!</p>
+    <div class="mt-eta" id="mtEta" style="display:none;">⏱ Back in: <span id="mtEtaText"></span></div>
+    <div class="mt-notice-box" id="mtNoticeBox" style="display:none;">
+      <div class="mt-notice-label">📢 <span id="mtNoticeTitle">Notice from Admin</span></div>
+      <div id="mtNoticeText"></div>
+    </div>
+    <button class="mt-refresh-btn" onclick="location.reload()">🔄 TRY AGAIN</button>
+    <button class="mt-support-btn" id="mtSupportBtn">💬 Contact Support</button>
+    <p class="mt-note">🔒 We're working hard. Sorry for the inconvenience.</p>
+  </div>
+</div>
+
+<!-- 📢 SITE NOTICE BANNER -->
+<div id="siteNoticeBanner">
+  <div class="snb-icon">📢</div>
+  <div class="snb-body">
+    <div class="snb-title" id="snbTitle">Notice</div>
+    <div class="snb-text" id="snbText"></div>
+  </div>
+  <button class="snb-close" id="snbCloseBtn">✕</button>
+</div>
 
 <div id="forceUpdateScreen">
   <div class="fu-card">
@@ -797,7 +775,7 @@ body.force-update-locked #supportFab { display: none !important; }
       <div class="sec-title">Games</div>
       <div class="primary-game-grid" id="primaryGameGrid"></div>
 
-      <div class="sec-title">Your Lobby Info</div>
+      <div class="sec-title" id="lobbySectionTitle">Your Lobby Info</div>
       <div id="lobbyInfoContainer" style="padding:0 14px;"></div>
     </section>
 
@@ -1134,6 +1112,8 @@ const state = {
   selectedMatch: null, referrals: [],
   promotions: [], gameStats: {}, adminLobbyItems: null,
   gameCards: {}, homeMatchIds: null, homeMatchMode: "include",
+  lobbySettings: { title: "Your Lobby Info", mode: "auto", maxItems: 4, featuredIds: [] },
+  maintenanceActive: false, noticeDismissed: false,
   promoIndex: 0, promoTimer: null, lastLobbyItems: [],
   unsubs: {},
   deposit: { amount: 0, orderId: "", pollTimer: null },
@@ -1179,12 +1159,17 @@ const D = {
   toast: $("#toast"),
   promoCarousel: $("#promoCarousel"), promoTrack: $("#promoTrack"), promoDots: $("#promoDots"),
   primaryGameGrid: $("#primaryGameGrid"), lobbyInfoContainer: $("#lobbyInfoContainer"),
+  lobbySectionTitle: $("#lobbySectionTitle"),
   matchesBackBtn: $("#matchesBackBtn"), matchesGameTitle: $("#matchesGameTitle"), matchesGameSub: $("#matchesGameSub"),
   matchesNotifBtn: $("#matchesNotifBtn"), matchesNotifBadge: $("#matchesNotifBadge"),
   matchesAvatar: $("#matchesAvatar"), matchesHandle: $("#matchesHandle"), matchesStats: $("#matchesStats"), matchesBalance: $("#matchesBalance"),
   matchesModeFilter: $("#matchesModeFilter"), matchesTeamFilter: $("#matchesTeamFilter"),
   matchesList: $("#matchesList"), matchesEmpty: $("#matchesEmpty"),
-  supportFab: $("#supportFab")
+  supportFab: $("#supportFab"),
+  maintenanceScreen: $("#maintenanceScreen"), mtEta: $("#mtEta"), mtEtaText: $("#mtEtaText"),
+  mtNoticeBox: $("#mtNoticeBox"), mtNoticeTitle: $("#mtNoticeTitle"), mtNoticeText: $("#mtNoticeText"),
+  mtSupportBtn: $("#mtSupportBtn"),
+  siteNoticeBanner: $("#siteNoticeBanner"), snbTitle: $("#snbTitle"), snbText: $("#snbText"), snbCloseBtn: $("#snbCloseBtn")
 };
 
 if (D.profVersion) D.profVersion.textContent = "v" + CURRENT_VERSION_NAME;
@@ -1214,7 +1199,7 @@ function fmtDateTime(ts) {
   return d.toLocaleString("en-IN", { day: "2-digit", month: "short", hour: "2-digit", minute: "2-digit", hour12: true });
 }
 function escHTML(s) { var d = document.createElement("div"); d.textContent = s == null ? "" : s; return d.innerHTML; }
-function openModal(id) { if (state.forceUpdateActive) return; var el = document.getElementById(id); if (el) el.classList.add("open"); }
+function openModal(id) { if (state.forceUpdateActive || state.maintenanceActive) return; var el = document.getElementById(id); if (el) el.classList.add("open"); }
 function closeModal(id) { var el = document.getElementById(id); if (el) el.classList.remove("open"); }
 function friendlyAuthError(code) {
   var map = {
@@ -1233,6 +1218,125 @@ function isImageUrl(s) { return typeof s === "string" && /^https?:\/\//i.test(St
 function generateReferralCode(name) {
   var base = String(name || "PLAYER").toUpperCase().replace(/[^A-Z0-9]/g, "").slice(0, 8);
   return (base || "PLAYER") + Math.floor(1000 + Math.random() * 9000);
+}
+
+/* ═══════════════════════════════════════════════════════════
+   🛠 MAINTENANCE MODE HANDLER
+   Reads app_config/maintenance: { active, title, message, eta }
+═══════════════════════════════════════════════════════════ */
+function applyMaintenance(cfg) {
+  if (!cfg) { hideMaintenance(); return; }
+  var active = cfg.active === true || cfg.enabled === true || cfg.maintenance === true;
+  if (!active) { hideMaintenance(); return; }
+  state.maintenanceActive = true;
+  document.body.classList.add("maintenance-locked");
+  // ETA
+  var eta = cfg.eta || cfg.backIn || "";
+  if (eta && D.mtEta && D.mtEtaText) { D.mtEta.style.display = "inline-block"; D.mtEtaText.textContent = eta; }
+  else if (D.mtEta) D.mtEta.style.display = "none";
+  // Notice
+  var noticeTitle = cfg.noticeTitle || cfg.title || "Notice from Admin";
+  var noticeMsg = cfg.message || cfg.notice || cfg.description || "";
+  if (noticeMsg && D.mtNoticeBox) {
+    D.mtNoticeBox.style.display = "block";
+    if (D.mtNoticeTitle) D.mtNoticeTitle.textContent = noticeTitle;
+    if (D.mtNoticeText) D.mtNoticeText.textContent = noticeMsg;
+  } else if (D.mtNoticeBox) {
+    D.mtNoticeBox.style.display = "none";
+  }
+  // Show screen
+  if (D.maintenanceScreen) D.maintenanceScreen.classList.add("show");
+  document.body.style.overflow = "hidden";
+}
+function hideMaintenance() {
+  state.maintenanceActive = false;
+  document.body.classList.remove("maintenance-locked");
+  if (D.maintenanceScreen) D.maintenanceScreen.classList.remove("show");
+  document.body.style.overflow = "";
+}
+function attachMaintenanceListener() {
+  if (state.unsubs.maintenance) state.unsubs.maintenance();
+  var paths = [["app_config", "maintenance"], ["config", "maintenance"], ["settings", "maintenance"]];
+  var seen = {}; var handlers = [];
+  paths.forEach(function(pair) {
+    var key = pair[0] + "/" + pair[1]; if (seen[key]) return; seen[key] = true;
+    var unsub = onSnapshot(doc(db, pair[0], pair[1]), function(snap) {
+      if (!snap.exists()) { applyMaintenance(null); return; }
+      applyMaintenance(snap.data());
+    }, function(err) { console.warn("Maintenance listener:", err); });
+    handlers.push(unsub);
+  });
+  state.unsubs.maintenance = function() { handlers.forEach(function(fn) { try { fn(); } catch (e) {} }); };
+}
+
+/* ═══════════════════════════════════════════════════════════
+   📢 SITE NOTICE BANNER (non-blocking)
+   Reads app_config/siteNotice: { active, title, message }
+═══════════════════════════════════════════════════════════ */
+function applySiteNotice(cfg) {
+  if (!cfg || !cfg.active) {
+    if (D.siteNoticeBanner) D.siteNoticeBanner.classList.remove("show");
+    document.body.classList.remove("has-notice-banner");
+    return;
+  }
+  if (state.noticeDismissed) return;
+  var title = cfg.title || "Notice";
+  var msg = cfg.message || cfg.notice || "";
+  if (!msg) { if (D.siteNoticeBanner) D.siteNoticeBanner.classList.remove("show"); document.body.classList.remove("has-notice-banner"); return; }
+  if (D.snbTitle) D.snbTitle.textContent = title;
+  if (D.snbText) D.snbText.textContent = msg;
+  if (D.siteNoticeBanner) D.siteNoticeBanner.classList.add("show");
+  document.body.classList.add("has-notice-banner");
+}
+function attachSiteNoticeListener() {
+  if (state.unsubs.siteNotice) state.unsubs.siteNotice();
+  var paths = [["app_config", "siteNotice"], ["config", "siteNotice"], ["settings", "siteNotice"]];
+  var seen = {}; var handlers = [];
+  paths.forEach(function(pair) {
+    var key = pair[0] + "/" + pair[1]; if (seen[key]) return; seen[key] = true;
+    var unsub = onSnapshot(doc(db, pair[0], pair[1]), function(snap) {
+      if (!snap.exists()) { applySiteNotice(null); return; }
+      applySiteNotice(snap.data());
+    }, function(err) {});
+    handlers.push(unsub);
+  });
+  state.unsubs.siteNotice = function() { handlers.forEach(function(fn) { try { fn(); } catch (e) {} }); };
+}
+
+/* ═══════════════════════════════════════════════════════════
+   🎯 LOBBY SETTINGS LISTENER (admin panel: lobby_settings/current)
+═══════════════════════════════════════════════════════════ */
+function attachLobbySettingsListener() {
+  if (state.unsubs.lobbySettings) state.unsubs.lobbySettings();
+  state.unsubs.lobbySettings = onSnapshot(doc(db, "lobby_settings", "current"), function(snap) {
+    if (snap.exists()) {
+      var data = snap.data();
+      state.lobbySettings = {
+        title: data.title || "Your Lobby Info",
+        mode: data.mode || "auto",
+        maxItems: Math.max(1, Math.min(10, Number(data.maxItems) || 4)),
+        featuredIds: Array.isArray(data.featuredIds) ? data.featuredIds.map(String) : []
+      };
+    } else {
+      state.lobbySettings = { title: "Your Lobby Info", mode: "auto", maxItems: 4, featuredIds: [] };
+    }
+    applyLobbySettings();
+  }, function(err) {
+    console.warn("LobbySettings listener:", err);
+  });
+}
+
+function applyLobbySettings() {
+  var s = state.lobbySettings;
+  if (D.lobbySectionTitle) D.lobbySectionTitle.textContent = s.title || "Your Lobby Info";
+  if (s.mode === "hidden") {
+    if (D.lobbySectionTitle) D.lobbySectionTitle.style.display = "none";
+    if (D.lobbyInfoContainer) D.lobbyInfoContainer.style.display = "none";
+    return;
+  }
+  if (D.lobbySectionTitle) D.lobbySectionTitle.style.display = "";
+  if (D.lobbyInfoContainer) D.lobbyInfoContainer.style.display = "";
+  refreshLobbyDisplay();
 }
 
 /* GAME CARD MERGE */
@@ -1377,7 +1481,7 @@ function initSupportFab() {
   if (!D.supportFab) return;
   D.supportFab.addEventListener("click", function(e) {
     e.preventDefault(); e.stopPropagation();
-    if (state.forceUpdateActive) return;
+    if (state.forceUpdateActive || state.maintenanceActive) return;
     try { var w = window.open(SUPPORT_URL, "_blank", "noopener,noreferrer"); if (!w) window.location.href = SUPPORT_URL; }
     catch (err) { window.location.href = SUPPORT_URL; }
   });
@@ -1387,6 +1491,22 @@ function syncSupportFabPosition() {
   if (!D.supportFab) return;
   var isLoggedIn = !!(state.user && state.profile) && !D.appShell.classList.contains("hidden");
   D.supportFab.classList.toggle("support-logged-in", isLoggedIn);
+}
+
+/* MAINTENANCE SUPPORT BTN */
+if (D.mtSupportBtn) {
+  D.mtSupportBtn.addEventListener("click", function() {
+    try { var w = window.open(SUPPORT_URL, "_blank", "noopener,noreferrer"); if (!w) window.location.href = SUPPORT_URL; }
+    catch (e) { window.location.href = SUPPORT_URL; }
+  });
+}
+/* SITE NOTICE CLOSE */
+if (D.snbCloseBtn) {
+  D.snbCloseBtn.addEventListener("click", function() {
+    state.noticeDismissed = true;
+    if (D.siteNoticeBanner) D.siteNoticeBanner.classList.remove("show");
+    document.body.classList.remove("has-notice-banner");
+  });
 }
 
 /* SETUP */
@@ -1464,11 +1584,13 @@ function setupEventListeners() {
   });
   if (D.btnDeposit) D.btnDeposit.addEventListener("click", function() {
     if (state.forceUpdateActive) { showToast("Please update the app first.", "error"); return; }
+    if (state.maintenanceActive) { showToast("App under maintenance.", "error"); return; }
     if (isBanned()) { showToast("🚫 Banned accounts cannot deposit.", "error"); return; }
     resetDepositFlow(); openModal("depositModal");
   });
   if (D.btnWithdraw) D.btnWithdraw.addEventListener("click", function() {
     if (state.forceUpdateActive) { showToast("Please update the app first.", "error"); return; }
+    if (state.maintenanceActive) { showToast("App under maintenance.", "error"); return; }
     if (isBanned()) { showToast("🚫 Banned accounts cannot withdraw.", "error"); return; }
     if (!D.withdrawForm) return;
     D.withdrawForm.reset();
@@ -1503,13 +1625,14 @@ function setupEventListeners() {
   if (D.tournamentsList) D.tournamentsList.addEventListener("click", handleListClick);
   if (D.matchesList) D.matchesList.addEventListener("click", handleListClick);
   if (D.joinedList) D.joinedList.addEventListener("click", function(e) {
-    if (state.forceUpdateActive) { e.preventDefault(); e.stopPropagation(); return; }
+    if (state.forceUpdateActive || state.maintenanceActive) { e.preventDefault(); e.stopPropagation(); return; }
     var detailBtn = e.target.closest("[data-detail]"); if (!detailBtn) return;
     var id = detailBtn.dataset.detail;
     var match = state.joinedMatches.find(function(t) { return t.id === id; });
     if (match) openDetailModal(match);
   });
   if (D.primaryGameGrid) D.primaryGameGrid.addEventListener("click", function(e) {
+    if (state.maintenanceActive) return;
     var card = e.target.closest(".primary-game-card"); if (!card) return;
     var game = card.dataset.game; if (game) openMatchesScreen(game);
   });
@@ -1519,6 +1642,7 @@ function setupEventListeners() {
 /* HANDLERS */
 async function handleSignup(e) {
   e.preventDefault(); clearAuthMsg();
+  if (state.maintenanceActive) { setAuthMsg("App under maintenance.", "error"); return; }
   var name = D.signupName.value.trim();
   var email = D.signupEmail.value.trim().toLowerCase();
   var pw = D.signupPassword.value;
@@ -1563,6 +1687,7 @@ async function handleSignup(e) {
 }
 async function handleLogin(e) {
   e.preventDefault(); clearAuthMsg();
+  if (state.maintenanceActive) { setAuthMsg("App under maintenance.", "error"); return; }
   var email = D.loginEmail.value.trim().toLowerCase();
   var pw = D.loginPassword.value;
   if (!email || !pw) { setAuthMsg("Enter email and password.", "error"); return; }
@@ -1574,6 +1699,7 @@ async function handleLogin(e) {
 }
 async function handleGoogleSignIn() {
   clearAuthMsg();
+  if (state.maintenanceActive) { setAuthMsg("App under maintenance.", "error"); return; }
   try { D.btnGoogle.disabled = true; await signInWithPopup(auth, googleProvider); }
   catch (err) { if (err.code !== "auth/popup-closed-by-user") setAuthMsg(friendlyAuthError(err.code), "error"); }
   finally { D.btnGoogle.disabled = false; }
@@ -1581,6 +1707,7 @@ async function handleGoogleSignIn() {
 async function handleJoinSubmit(e) {
   e.preventDefault();
   if (!state.user || !state.selectedMatch) return;
+  if (state.maintenanceActive) { D.joinErr.textContent = "App under maintenance."; return; }
   if (isBanned()) { D.joinErr.textContent = "Account banned."; return; }
   var match = state.selectedMatch;
   var ign = D.joinIgn.value.trim();
@@ -1609,6 +1736,7 @@ async function handleJoinSubmit(e) {
 async function handleWithdrawSubmit(e) {
   e.preventDefault();
   if (!state.user) return;
+  if (state.maintenanceActive) { D.wdErr.textContent = "App under maintenance."; return; }
   if (isBanned()) { D.wdErr.textContent = "Account banned."; return; }
   var matchesPlayed = Number((state.profile && state.profile.matchesPlayed) || 0);
   if (matchesPlayed < MIN_MATCHES_FOR_WITHDRAW) {
@@ -1674,6 +1802,7 @@ async function handleSignOut() {
 }
 async function handlePayNow() {
   if (state.forceUpdateActive) { showToast("Please update the app first.", "error"); return; }
+  if (state.maintenanceActive) { showToast("App under maintenance.", "error"); return; }
   if (isBanned()) { showToast("🚫 Banned accounts cannot deposit.", "error"); return; }
   var amt = Number(D.depAmount.value);
   if (!amt || amt < MIN_DEPOSIT) { D.depErr.textContent = "Minimum deposit is ₹" + MIN_DEPOSIT + "."; return; }
@@ -1734,7 +1863,7 @@ async function handleRefShare() {
   catch (e) { showToast("Copy failed.", "error"); }
 }
 function handleListClick(e) {
-  if (state.forceUpdateActive) { e.preventDefault(); e.stopPropagation(); return; }
+  if (state.forceUpdateActive || state.maintenanceActive) { e.preventDefault(); e.stopPropagation(); return; }
   var joinBtn = e.target.closest("[data-join]");
   var detailBtn = e.target.closest("[data-detail]");
   if (joinBtn) {
@@ -1803,6 +1932,7 @@ function setNav(nav) {
 }
 
 function openMatchesScreen(game) {
+  if (state.maintenanceActive) return;
   state.activeGame = game;
   var modes = GAME_MODES[game] || [];
   state.activeMode = modes[0] || "Battle Royale";
@@ -2301,12 +2431,69 @@ function applyHomeMatchFilter(items) {
   }
 }
 function refreshLobbyDisplay() {
+  if (state.lobbySettings && state.lobbySettings.mode === "hidden") {
+    applyLobbySettings();
+    return;
+  }
+  if (state.lobbySettings && (state.lobbySettings.mode === "manual" || state.lobbySettings.mode === "auto")) {
+    renderLobbyFromSettings();
+    return;
+  }
   if (state.adminLobbyItems && state.adminLobbyItems.length > 0) renderAdminLobby(state.adminLobbyItems);
   else { var filtered = applyHomeMatchFilter(state.lastLobbyItems || []); renderLobbyInfo(filtered); }
 }
+function renderLobbyFromSettings() {
+  var s = state.lobbySettings;
+  if (s.mode === "hidden") {
+    if (D.lobbySectionTitle) D.lobbySectionTitle.style.display = "none";
+    if (D.lobbyInfoContainer) D.lobbyInfoContainer.style.display = "none";
+    return;
+  }
+  if (D.lobbySectionTitle) D.lobbySectionTitle.style.display = "";
+  if (D.lobbyInfoContainer) D.lobbyInfoContainer.style.display = "";
+
+  var items = [];
+  if (s.mode === "manual" && s.featuredIds.length > 0) {
+    var allMatches = [].concat(state.tournaments, state.joinedMatches);
+    var map = new Map();
+    allMatches.forEach(function(t) { map.set(String(t.id), t); });
+    items = s.featuredIds.map(function(id) { return map.get(String(id)); }).filter(Boolean);
+    if (items.length === 0) {
+      var allFromStats = state.lastLobbyItems || [];
+      var map2 = new Map();
+      allFromStats.forEach(function(t) { map2.set(String(t.id), t); });
+      items = s.featuredIds.map(function(id) { return map2.get(String(id)); }).filter(Boolean);
+    }
+  } else {
+    var now = Date.now();
+    items = (state.lastLobbyItems || []).filter(function(t) {
+      if (t.status === "CANCELLED" || t.status === "COMPLETED" || t.completed === true) return false;
+      if (t.status === "STARTED" || t.started === true) return true;
+      var mt = (t.matchTime && t.matchTime.toMillis && t.matchTime.toMillis()) || (t.matchTime && t.matchTime.seconds ? t.matchTime.seconds * 1000 : 0);
+      return mt >= now - 60 * 60 * 1000;
+    });
+    items.sort(function(a, b) {
+      var ta = (a.matchTime && a.matchTime.toMillis && a.matchTime.toMillis()) || (a.matchTime && a.matchTime.seconds ? a.matchTime.seconds * 1000 : 0);
+      var tb = (b.matchTime && b.matchTime.toMillis && b.matchTime.toMillis()) || (b.matchTime && b.matchTime.seconds ? b.matchTime.seconds * 1000 : 0);
+      return ta - tb;
+    });
+    items = items.slice(0, s.maxItems || 4);
+  }
+  if (!items || items.length === 0) {
+    D.lobbyInfoContainer.innerHTML = '<div class="empty-state" style="padding:24px;"><div class="empty-icon">🎮</div><p>No active lobbies right now. Check back soon!</p></div>';
+    return;
+  }
+  renderLobbyCards(items);
+}
 function renderAdminLobby(items) {
+  if (!items || items.length === 0) {
+    D.lobbyInfoContainer.innerHTML = '<div class="empty-state" style="padding:24px;"><div class="empty-icon">🎮</div><p>No active lobbies right now.</p></div>';
+    return;
+  }
+  renderLobbyCards(items);
+}
+function renderLobbyCards(items) {
   if (!D.lobbyInfoContainer) return;
-  if (!items || items.length === 0) { D.lobbyInfoContainer.innerHTML = '<div class="empty-state" style="padding:24px;"><div class="empty-icon">🎮</div><p>No active lobbies right now.</p></div>'; return; }
   D.lobbyInfoContainer.innerHTML = items.map(function(t) {
     var img = t.bannerUrl || t.image || (PRIMARY_GAMES[t.game] && PRIMARY_GAMES[t.game].img) || "";
     var gameIcon = (PRIMARY_GAMES[t.game] && PRIMARY_GAMES[t.game].icon) || "🎮";
@@ -2316,11 +2503,12 @@ function renderAdminLobby(items) {
     var statusKey = (t.status || "").toLowerCase();
     var statusCls = "waiting", statusLabel = "WAITING", lobbyCls = "waiting";
     if (statusKey === "started" || statusKey === "live") { statusCls = "live"; statusLabel = "● LIVE"; lobbyCls = "live"; }
-    else if (statusKey === "room-ready" || statusKey === "ready") { statusCls = "ready"; statusLabel = "ROOM READY"; lobbyCls = "ready"; }
+    else if (statusKey === "room-ready" || statusKey === "ready" || (t.roomId && t.roomPassword)) { statusCls = "ready"; statusLabel = "ROOM READY"; lobbyCls = "ready"; }
     else if (statusKey === "completed" || statusKey === "ended") { statusCls = "waiting"; statusLabel = "ENDED"; }
     var timeStr = t.matchTimeText || (t.matchTime ? fmtDateTime(t.matchTime) : "TBA");
     var imgStyle = img ? "background-image: url('" + escHTML(img) + "');" : "background:linear-gradient(135deg,#1a2238,#0a0e1a);display:flex;align-items:center;justify-content:center;font-size:26px;";
-    return '<div class="lobby-card ' + lobbyCls + '" ' + (t.id ? 'data-detail="' + escHTML(t.id) + '"' : "") + '>' +
+    var detailAttr = t.id ? 'data-detail="' + escHTML(t.id) + '"' : "";
+    return '<div class="lobby-card ' + lobbyCls + '" ' + detailAttr + '>' +
       '<div class="lobby-img" style="' + imgStyle + '">' + (!img ? gameIcon : "") + '</div>' +
       '<div class="lobby-info">' +
         '<div class="lobby-title">' + escHTML(t.title || "Match") + '</div>' +
@@ -2343,48 +2531,16 @@ function renderAdminLobby(items) {
   });
 }
 function renderLobbyInfo(items) {
-  if (state.adminLobbyItems && state.adminLobbyItems.length > 0) { renderAdminLobby(state.adminLobbyItems); return; }
   if (!D.lobbyInfoContainer) return;
+  if (state.adminLobbyItems && state.adminLobbyItems.length > 0) { renderAdminLobby(state.adminLobbyItems); return; }
   items.sort(function(a, b) { return ((a.matchTime && a.matchTime.toMillis && a.matchTime.toMillis()) || 0) - ((b.matchTime && b.matchTime.toMillis && b.matchTime.toMillis()) || 0); });
-  var top = items.slice(0, 4);
+  var top = items.slice(0, (state.lobbySettings && state.lobbySettings.maxItems) || 4);
   if (top.length === 0) { D.lobbyInfoContainer.innerHTML = '<div class="empty-state" style="padding:24px;"><div class="empty-icon">🎮</div><p>No active lobbies right now.</p></div>'; return; }
-  D.lobbyInfoContainer.innerHTML = top.map(function(t) {
-    var img = t.bannerUrl || (PRIMARY_GAMES[t.game] && PRIMARY_GAMES[t.game].img) || "";
-    var gameIcon = (PRIMARY_GAMES[t.game] && PRIMARY_GAMES[t.game].icon) || "🎮";
-    var team = displayTeamSize(t);
-    var max = Number(t.maxSlots || 100); var jc = Number(t.joinedCount || 0);
-    var spotsLeft = Math.max(0, max - jc);
-    var status = getMatchStatus(t);
-    var statusCls = "waiting", statusLabel = "WAITING";
-    if (status.key === "started") { statusCls = "live"; statusLabel = "● LIVE"; }
-    else if (status.key === "room-ready") { statusCls = "ready"; statusLabel = "ROOM READY"; }
-    else if (status.key === "completed") { statusCls = "waiting"; statusLabel = "ENDED"; }
-    var lobbyCls = statusCls === "live" ? "live" : statusCls === "ready" ? "ready" : "waiting";
-    var imgStyle = img ? "background-image: url('" + escHTML(img) + "');" : "background:linear-gradient(135deg,#1a2238,#0a0e1a);display:flex;align-items:center;justify-content:center;font-size:26px;";
-    return '<div class="lobby-card ' + lobbyCls + '" data-detail="' + escHTML(t.id) + '">' +
-      '<div class="lobby-img" style="' + imgStyle + '">' + (!img ? gameIcon : "") + '</div>' +
-      '<div class="lobby-info">' +
-        '<div class="lobby-title">' + escHTML(t.title || "Match") + '</div>' +
-        '<div class="lobby-meta">🕐 ' + escHTML(fmtDateTime(t.matchTime)) + '</div>' +
-        '<div class="lobby-tags">' +
-          '<span class="lobby-tag players">' + spotsLeft + ' spots left</span>' +
-          '<span class="lobby-tag gold">₹' + fmtMoney(t.prizePool) + '</span>' +
-          '<span class="lobby-tag green">' + escHTML(team) + '</span>' +
-        '</div>' +
-        '<div class="lobby-status ' + statusCls + '">' + escHTML(statusLabel) + '</div>' +
-      '</div>' +
-    '</div>';
-  }).join("");
-  D.lobbyInfoContainer.querySelectorAll(".lobby-card").forEach(function(card) {
-    card.addEventListener("click", function() {
-      var id = card.dataset.detail;
-      var match = state.joinedMatches.find(function(t) { return t.id === id; }) || state.tournaments.find(function(t) { return t.id === id; });
-      if (match) openDetailModal(match);
-    });
-  });
+  renderLobbyCards(top);
 }
 function openJoinModal(match) {
   if (state.forceUpdateActive) { showToast("Please update the app first.", "error"); return; }
+  if (state.maintenanceActive) { showToast("App under maintenance.", "error"); return; }
   if (isBanned()) { showToast("🚫 Your account is banned.", "error"); return; }
   state.selectedMatch = match;
   var fee = Number(match.entryFee || 0);
@@ -2415,7 +2571,7 @@ function openJoinModal(match) {
   openModal("joinModal");
 }
 function openDetailModal(match) {
-  if (state.forceUpdateActive) return;
+  if (state.forceUpdateActive || state.maintenanceActive) return;
   var isJoined = state.joinedMatches.some(function(m) { return m.id === match.id; });
   var max = Number(match.maxSlots || 100);
   var jc = Number(match.joinedCount || 0);
@@ -2510,9 +2666,11 @@ function showForceUpdateScreen(cfg) {
 
 if (auth) {
   attachAppConfigListener();
+  attachMaintenanceListener();
+  attachSiteNoticeListener();
   onAuthStateChanged(auth, async function(user) {
     Object.keys(state.unsubs).forEach(function(k) {
-      if (k === "appConfig") return;
+      if (k === "appConfig" || k === "maintenance" || k === "siteNotice") return;
       if (state.unsubs[k]) { try { state.unsubs[k](); } catch (e) {} state.unsubs[k] = null; }
     });
     if (window.__hideBoot) window.__hideBoot();
@@ -2551,6 +2709,7 @@ if (auth) {
       attachReferralsListener(user.uid); attachPromotionsListener();
       attachGameStatsListener(); attachGameCardsListener();
       attachAdminLobbyListener(); attachHomeMatchFilterListener();
+      attachLobbySettingsListener();
       checkPaymentRedirect(); syncSupportFabPosition();
     } catch (err) {
       console.error("Auth state handler error:", err);
@@ -2571,7 +2730,7 @@ document.addEventListener("touchend", function(e) {
   lastTouch = now;
 }, { passive: false });
 
-console.log("%c ArenaX ", "background:#00e5ff;color:#050810;font-weight:bold;padding:4px 8px;border-radius:4px", "Desktop + Mobile Optimized ✅ Support FAB included");
+console.log("%c ArenaX ", "background:#00e5ff;color:#050810;font-weight:bold;padding:4px 8px;border-radius:4px", "Desktop + Mobile + Maintenance + Notice + Lobby Settings ✅");
 </script>
 </body>
 </html>
