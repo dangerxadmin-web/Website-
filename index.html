@@ -49,8 +49,10 @@ a{color:inherit;text-decoration:none;}
 .mt-notice-label{font-family:var(--font-d);font-size:10.5px;color:var(--gold);margin-bottom:8px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;display:flex;align-items:center;gap:6px;}
 .mt-eta{font-family:var(--font-d);font-size:13px;font-weight:700;color:var(--cyan);margin-bottom:16px;padding:8px 16px;background:rgba(0,229,255,.08);border:1px solid rgba(0,229,255,.35);border-radius:100px;display:inline-block;}
 .mt-refresh-btn{width:100%;padding:14px;border-radius:12px;font-family:var(--font-d);font-weight:900;font-size:14px;letter-spacing:1.5px;color:#1a1200;background:linear-gradient(135deg,var(--gold),var(--orange));box-shadow:0 8px 24px rgba(255,179,0,.4);}
+.mt-refresh-btn:disabled{opacity:.6;cursor:not-allowed;}
 .mt-support-btn{width:100%;padding:12px;border-radius:12px;font-family:var(--font-d);font-weight:700;font-size:13px;letter-spacing:1px;color:var(--cyan);background:transparent;border:1px solid rgba(0,229,255,.4);margin-top:10px;}
 .mt-note{font-size:11.5px;color:var(--mute);margin-top:14px;line-height:1.6;}
+.mt-checking{font-size:12px;color:var(--cyan);margin-top:10px;font-weight:600;letter-spacing:.5px;}
 
 /* SITE NOTICE */
 #siteNoticeBanner{position:fixed;top:0;left:0;right:0;z-index:260;background:linear-gradient(135deg,rgba(124,77,255,.96),rgba(0,229,255,.96));color:#050810;padding:12px 16px;display:none;align-items:flex-start;gap:12px;box-shadow:0 4px 20px rgba(0,0,0,.4);}
@@ -566,8 +568,9 @@ body.has-notice-banner #appShell{padding-top:52px;}
       <div class="mt-notice-label">📢 <span id="mtNoticeTitle">Notice from Admin</span></div>
       <div id="mtNoticeText"></div>
     </div>
-    <button class="mt-refresh-btn" onclick="location.reload()">🔄 TRY AGAIN</button>
-    <button class="mt-support-btn" id="mtSupportBtn">💬 Contact Support</button>
+    <button class="mt-refresh-btn" id="mtRefreshBtn" type="button">🔄 TRY AGAIN</button>
+    <div class="mt-checking" id="mtChecking" style="display:none;">🔄 Checking status…</div>
+    <button class="mt-support-btn" id="mtSupportBtn" type="button">💬 Contact Support</button>
     <p class="mt-note">🔒 We're working hard. Sorry for the inconvenience.</p>
   </div>
 </div>
@@ -1060,7 +1063,6 @@ const state = {
   activeGame: "BGMI", activeMode: "Battle Royale", activeTeam: "ALL",
   activeNav: "home", currentScreen: "home",
   tournaments: [], joinedMatches: [], transactions: [], notifications: [],
-  // 🆕 ALL tournaments cache (unfiltered by game) — used for lobby lookup
   allTournaments: [],
   appConfig: null, forceUpdateActive: false, bannerDismissed: false,
   selectedMatch: null, referrals: [],
@@ -1071,7 +1073,9 @@ const state = {
   promoIndex: 0, promoTimer: null, lastLobbyItems: [],
   unsubs: {},
   deposit: { amount: 0, orderId: "", pollTimer: null },
-  lastPrizeNotifId: null
+  lastPrizeNotifId: null,
+  // 🆕 track whether initial config has been loaded (so maintenance can block immediately)
+  configLoaded: false
 };
 
 const $ = (s) => document.querySelector(s);
@@ -1122,7 +1126,7 @@ const D = {
   supportFab: $("#supportFab"),
   maintenanceScreen: $("#maintenanceScreen"), mtEta: $("#mtEta"), mtEtaText: $("#mtEtaText"),
   mtNoticeBox: $("#mtNoticeBox"), mtNoticeTitle: $("#mtNoticeTitle"), mtNoticeText: $("#mtNoticeText"),
-  mtSupportBtn: $("#mtSupportBtn"),
+  mtSupportBtn: $("#mtSupportBtn"), mtRefreshBtn: $("#mtRefreshBtn"), mtChecking: $("#mtChecking"),
   siteNoticeBanner: $("#siteNoticeBanner"), snbTitle: $("#snbTitle"), snbText: $("#snbText"), snbCloseBtn: $("#snbCloseBtn")
 };
 
@@ -1153,7 +1157,10 @@ function fmtDateTime(ts) {
   return d.toLocaleString("en-IN", { day: "2-digit", month: "short", hour: "2-digit", minute: "2-digit", hour12: true });
 }
 function escHTML(s) { var d = document.createElement("div"); d.textContent = s == null ? "" : s; return d.innerHTML; }
-function openModal(id) { if (state.forceUpdateActive || state.maintenanceActive) return; var el = document.getElementById(id); if (el) el.classList.add("open"); }
+function openModal(id) {
+  if (state.forceUpdateActive || state.maintenanceActive) return;
+  var el = document.getElementById(id); if (el) el.classList.add("open");
+}
 function closeModal(id) { var el = document.getElementById(id); if (el) el.classList.remove("open"); }
 function friendlyAuthError(code) {
   var map = {
@@ -1175,34 +1182,50 @@ function generateReferralCode(name) {
 }
 
 /* ═══════════════════════════════════════════════════════════
-   🎯 FIND MATCH HELPER — search across all caches
+   🎯 FIND MATCH HELPER
 ═══════════════════════════════════════════════════════════ */
 function findMatchById(id) {
   if (!id) return null;
   var sid = String(id);
-  // 1. joined matches
   var m = state.joinedMatches.find(function(t) { return String(t.id) === sid; });
   if (m) return m;
-  // 2. current view tournaments
   m = state.tournaments.find(function(t) { return String(t.id) === sid; });
   if (m) return m;
-  // 3. all tournaments cache (unfiltered) 🆕
   m = state.allTournaments.find(function(t) { return String(t.id) === sid; });
   if (m) return m;
-  // 4. last lobby items
   m = (state.lastLobbyItems || []).find(function(t) { return String(t.id) === sid; });
   if (m) return m;
   return null;
 }
 
 /* ═══════════════════════════════════════════════════════════
-   🛠 MAINTENANCE MODE
+   🛠 MAINTENANCE MODE — LOCK UI SO USERS CANNOT BYPASS
 ═══════════════════════════════════════════════════════════ */
+function lockUIForMaintenance() {
+  // Hide everything that could let the user interact with the app
+  if (D.authGate) D.authGate.classList.add("hidden");
+  if (D.appShell) D.appShell.classList.add("hidden");
+  // Close any open modals
+  $$(".modal-overlay.open").forEach(function(m) { m.classList.remove("open"); });
+  // Remove any update banners
+  var ub = document.getElementById("updateBanner");
+  if (ub) ub.classList.remove("show");
+  // Hide force update screen if somehow visible
+  var fus = document.getElementById("forceUpdateScreen");
+  if (fus) fus.classList.remove("show");
+  if (D.supportFab) D.supportFab.style.display = "none";
+}
+function unlockUIForMaintenance() {
+  // Nothing — the auth state listener will handle re-showing the right view
+  if (D.supportFab) D.supportFab.style.display = "";
+}
+
 function applyMaintenance(cfg) {
   if (!cfg) { hideMaintenance(); return; }
   var active = cfg.active === true || cfg.enabled === true || cfg.maintenance === true;
   if (!active) { hideMaintenance(); return; }
   state.maintenanceActive = true;
+  state.configLoaded = true;
   document.body.classList.add("maintenance-locked");
   var eta = cfg.eta || cfg.backIn || "";
   if (eta && D.mtEta && D.mtEtaText) { D.mtEta.style.display = "inline-block"; D.mtEtaText.textContent = eta; }
@@ -1217,13 +1240,26 @@ function applyMaintenance(cfg) {
     D.mtNoticeBox.style.display = "none";
   }
   if (D.maintenanceScreen) D.maintenanceScreen.classList.add("show");
+  if (D.mtChecking) D.mtChecking.style.display = "none";
+  if (D.mtRefreshBtn) {
+    D.mtRefreshBtn.disabled = false;
+    D.mtRefreshBtn.textContent = "🔄 TRY AGAIN";
+  }
   document.body.style.overflow = "hidden";
+  lockUIForMaintenance();
 }
 function hideMaintenance() {
   state.maintenanceActive = false;
+  state.configLoaded = true;
   document.body.classList.remove("maintenance-locked");
   if (D.maintenanceScreen) D.maintenanceScreen.classList.remove("show");
+  if (D.mtChecking) D.mtChecking.style.display = "none";
+  if (D.mtRefreshBtn) {
+    D.mtRefreshBtn.disabled = false;
+    D.mtRefreshBtn.textContent = "🔄 TRY AGAIN";
+  }
   document.body.style.overflow = "";
+  unlockUIForMaintenance();
 }
 function attachMaintenanceListener() {
   if (state.unsubs.maintenance) state.unsubs.maintenance();
@@ -1238,6 +1274,54 @@ function attachMaintenanceListener() {
     handlers.push(unsub);
   });
   state.unsubs.maintenance = function() { handlers.forEach(function(fn) { try { fn(); } catch (e) {} }); };
+}
+
+/* 🔄 TRY AGAIN — re-check maintenance status WITHOUT page reload */
+async function recheckMaintenance() {
+  if (!D.mtRefreshBtn) return;
+  D.mtRefreshBtn.disabled = true;
+  D.mtRefreshBtn.textContent = "⏳ CHECKING…";
+  if (D.mtChecking) D.mtChecking.style.display = "block";
+  try {
+    // Try all possible paths — if any says active, stay in maintenance
+    var paths = [["app_config", "maintenance"], ["config", "maintenance"], ["settings", "maintenance"]];
+    var stillActive = false;
+    var found = false;
+    for (var i = 0; i < paths.length; i++) {
+      try {
+        var snap = await getDoc(doc(db, paths[i][0], paths[i][1]));
+        if (snap.exists()) {
+          found = true;
+          var data = snap.data();
+          if (data.active === true || data.enabled === true || data.maintenance === true) {
+            stillActive = true;
+            applyMaintenance(data);
+            break;
+          }
+        }
+      } catch (e) { console.warn("Recheck path failed:", e); }
+    }
+    if (!stillActive) {
+      // Maintenance is OFF — hide screen, let auth flow take over
+      hideMaintenance();
+      showToast("✅ Maintenance complete! Welcome back.", "success");
+    } else {
+      showToast("🛠️ Still under maintenance. Please wait.", "error");
+      if (D.mtRefreshBtn) {
+        D.mtRefreshBtn.disabled = false;
+        D.mtRefreshBtn.textContent = "🔄 TRY AGAIN";
+      }
+      if (D.mtChecking) D.mtChecking.style.display = "none";
+    }
+  } catch (err) {
+    console.error("Recheck failed:", err);
+    showToast("Failed to check. Try again.", "error");
+    if (D.mtRefreshBtn) {
+      D.mtRefreshBtn.disabled = false;
+      D.mtRefreshBtn.textContent = "🔄 TRY AGAIN";
+    }
+    if (D.mtChecking) D.mtChecking.style.display = "none";
+  }
 }
 
 /* 📢 SITE NOTICE BANNER */
@@ -1271,9 +1355,7 @@ function attachSiteNoticeListener() {
   state.unsubs.siteNotice = function() { handlers.forEach(function(fn) { try { fn(); } catch (e) {} }); };
 }
 
-/* ═══════════════════════════════════════════════════════════
-   🎯 LOBBY SETTINGS LISTENER
-═══════════════════════════════════════════════════════════ */
+/* LOBBY SETTINGS */
 function attachLobbySettingsListener() {
   if (state.unsubs.lobbySettings) state.unsubs.lobbySettings();
   state.unsubs.lobbySettings = onSnapshot(doc(db, "lobby_settings", "current"), function(snap) {
@@ -1455,6 +1537,11 @@ function initSupportFab() {
 }
 function syncSupportFabPosition() {
   if (!D.supportFab) return;
+  if (state.maintenanceActive || state.forceUpdateActive) {
+    D.supportFab.style.display = "none";
+    return;
+  }
+  D.supportFab.style.display = "";
   var isLoggedIn = !!(state.user && state.profile) && !D.appShell.classList.contains("hidden");
   D.supportFab.classList.toggle("support-logged-in", isLoggedIn);
 }
@@ -1463,6 +1550,9 @@ if (D.mtSupportBtn) {
     try { var w = window.open(SUPPORT_URL, "_blank", "noopener,noreferrer"); if (!w) window.location.href = SUPPORT_URL; }
     catch (e) { window.location.href = SUPPORT_URL; }
   });
+}
+if (D.mtRefreshBtn) {
+  D.mtRefreshBtn.addEventListener("click", recheckMaintenance);
 }
 if (D.snbCloseBtn) {
   D.snbCloseBtn.addEventListener("click", function() {
@@ -1507,6 +1597,7 @@ function setupEventListeners() {
   $$(".nav-btn").forEach(function(b) { b.addEventListener("click", function() { setNav(b.dataset.nav); }); });
   if (D.hdrWallet) D.hdrWallet.addEventListener("click", function() { setNav("wallet"); });
   if (D.notifBtn) D.notifBtn.addEventListener("click", async function() {
+    if (state.maintenanceActive || state.forceUpdateActive) return;
     openModal("notifModal"); renderNotifList();
     var unread = state.notifications.filter(function(n) { return !n.read; });
     for (var i = 0; i < unread.length; i++) {
@@ -1531,6 +1622,7 @@ function setupEventListeners() {
   if (D.profileForm) D.profileForm.addEventListener("submit", handleProfileSubmit);
   if (D.btnSignOut) D.btnSignOut.addEventListener("click", handleSignOut);
   if (D.btnEditProfile) D.btnEditProfile.addEventListener("click", function() {
+    if (state.maintenanceActive || state.forceUpdateActive) return;
     if (!D.profileForm) return;
     D.profileForm.reset();
     if (D.pfErr) D.pfErr.textContent = "";
@@ -1589,7 +1681,7 @@ function setupEventListeners() {
     if (match) openDetailModal(match);
   });
   if (D.primaryGameGrid) D.primaryGameGrid.addEventListener("click", function(e) {
-    if (state.maintenanceActive) return;
+    if (state.maintenanceActive || state.forceUpdateActive) return;
     var card = e.target.closest(".primary-game-card"); if (!card) return;
     var game = card.dataset.game; if (game) openMatchesScreen(game);
   });
@@ -1726,6 +1818,7 @@ async function handleWithdrawSubmit(e) {
 async function handleProfileSubmit(e) {
   e.preventDefault();
   if (!state.user) return;
+  if (state.maintenanceActive) { D.pfErr.textContent = "App under maintenance."; return; }
   var name = D.pfName.value.trim();
   var uid = D.pfUid.value.trim();
   var ign = D.pfIgn.value.trim();
@@ -1878,6 +1971,7 @@ function checkPaymentRedirect() {
 }
 
 function setNav(nav) {
+  if (state.maintenanceActive || state.forceUpdateActive) return;
   state.activeNav = nav;
   state.currentScreen = nav === "home" ? "home" : nav;
   $$(".nav-btn").forEach(function(b) { b.classList.toggle("active", b.dataset.nav === nav); });
@@ -1889,7 +1983,7 @@ function setNav(nav) {
 }
 
 function openMatchesScreen(game) {
-  if (state.maintenanceActive) return;
+  if (state.maintenanceActive || state.forceUpdateActive) return;
   state.activeGame = game;
   var modes = GAME_MODES[game] || [];
   state.activeMode = modes[0] || "Battle Royale";
@@ -1974,8 +2068,6 @@ function attachTournamentsListener() {
     if (D.tournamentsEmpty) D.tournamentsEmpty.classList.remove("hidden");
   });
 }
-
-/* 🆕 ALL TOURNAMENTS LISTENER — for lobby featuredIds lookup */
 function attachAllTournamentsListener() {
   if (state.unsubs.allTournaments) state.unsubs.allTournaments();
   var q = query(collection(db, "tournaments"));
@@ -1983,13 +2075,11 @@ function attachAllTournamentsListener() {
     var items = [];
     snap.forEach(function(d) { items.push(Object.assign({ id: d.id }, d.data())); });
     state.allTournaments = items;
-    // Re-render lobby when all tournaments update (so featuredIds resolve)
     if (state.lobbySettings && state.lobbySettings.mode === "manual") {
       refreshLobbyDisplay();
     }
   }, function(err) { console.warn("All tournaments listener:", err); });
 }
-
 function attachJoinedListener(uid) {
   if (state.unsubs.joined) state.unsubs.joined();
   var q = query(collection(db, "tournaments"), where("joinedUsers", "array-contains", uid));
@@ -2000,7 +2090,6 @@ function attachJoinedListener(uid) {
     state.joinedMatches = items;
     renderJoined(items);
     if (state.tournaments.length) renderTournaments(state.tournaments);
-    // Re-render lobby if in manual mode
     if (state.lobbySettings && state.lobbySettings.mode === "manual") refreshLobbyDisplay();
   }, function(err) { console.error("Joined listener:", err); });
 }
@@ -2429,7 +2518,6 @@ function renderLobbyFromSettings() {
 
   var items = [];
   if (s.mode === "manual" && s.featuredIds.length > 0) {
-    // 🆕 Search across allTournaments + tournaments + joinedMatches + lastLobbyItems
     var items = s.featuredIds.map(function(id) { return findMatchById(id); }).filter(Boolean);
   } else {
     var now = Date.now();
@@ -2491,6 +2579,7 @@ function renderLobbyCards(items) {
   }).join("");
   D.lobbyInfoContainer.querySelectorAll(".lobby-card").forEach(function(card) {
     card.addEventListener("click", function() {
+      if (state.maintenanceActive || state.forceUpdateActive) return;
       var id = card.dataset.detail; if (!id) return;
       var match = findMatchById(id);
       if (match) openDetailModal(match);
@@ -2630,6 +2719,10 @@ function showForceUpdateScreen(cfg) {
   var btn = document.getElementById("fuUpdateBtn");
   if (btn) btn.onclick = function(e) { e.preventDefault(); e.stopPropagation(); window.location.href = parseDownloadUrl(state.appConfig); };
   var screen = document.getElementById("forceUpdateScreen"); if (screen) screen.classList.add("show");
+  // Also hide app shell
+  if (D.appShell) D.appShell.classList.add("hidden");
+  if (D.authGate) D.authGate.classList.add("hidden");
+  if (D.supportFab) D.supportFab.style.display = "none";
 }
 
 if (auth) {
@@ -2642,10 +2735,21 @@ if (auth) {
       if (state.unsubs[k]) { try { state.unsubs[k](); } catch (e) {} state.unsubs[k] = null; }
     });
     if (window.__hideBoot) window.__hideBoot();
+
+    // 🛡️ If maintenance is active, DO NOT proceed with auth UI
+    if (state.maintenanceActive) {
+      lockUIForMaintenance();
+      return;
+    }
+
     if (!user) {
       state.user = null; state.profile = null;
-      D.authGate.classList.remove("hidden"); D.appShell.classList.add("hidden");
-      showAuthView("login"); syncSupportFabPosition(); return;
+      // Only show auth gate if maintenance is NOT active
+      if (!state.maintenanceActive) {
+        D.authGate.classList.remove("hidden"); D.appShell.classList.add("hidden");
+        showAuthView("login");
+      }
+      syncSupportFabPosition(); return;
     }
     try {
       var adminSnap = await getDoc(doc(db, "admins", user.uid)).catch(function() { return null; });
@@ -2670,6 +2774,13 @@ if (auth) {
           category: "signup_bonus", description: "🎁 Signup bonus", createdAt: serverTimestamp()
         });
       }
+
+      // 🛡️ Re-check maintenance before showing app shell
+      if (state.maintenanceActive) {
+        lockUIForMaintenance();
+        return;
+      }
+
       D.authGate.classList.add("hidden"); D.appShell.classList.remove("hidden");
       renderModeFilter(); renderMatchesModeFilter();
       attachProfileListener(user.uid); attachTournamentsListener();
@@ -2682,8 +2793,10 @@ if (auth) {
       checkPaymentRedirect(); syncSupportFabPosition();
     } catch (err) {
       console.error("Auth state handler error:", err);
-      D.authGate.classList.remove("hidden"); D.appShell.classList.add("hidden");
-      showAuthView("login"); setAuthMsg("Error loading profile: " + (err.message || "unknown"), "error");
+      if (!state.maintenanceActive) {
+        D.authGate.classList.remove("hidden"); D.appShell.classList.add("hidden");
+        showAuthView("login"); setAuthMsg("Error loading profile: " + (err.message || "unknown"), "error");
+      }
       syncSupportFabPosition();
     }
   });
@@ -2699,7 +2812,7 @@ document.addEventListener("touchend", function(e) {
   lastTouch = now;
 }, { passive: false });
 
-console.log("%c ArenaX ", "background:#00e5ff;color:#050810;font-weight:bold;padding:4px 8px;border-radius:4px", "Lobby + Maintenance + Notice + findMatchById ✅");
+console.log("%c ArenaX ", "background:#00e5ff;color:#050810;font-weight:bold;padding:4px 8px;border-radius:4px", "Maintenance fix + Try Again re-check ✅");
 </script>
 </body>
 </html>
