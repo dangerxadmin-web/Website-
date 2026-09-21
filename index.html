@@ -37,9 +37,7 @@ a{color:inherit;text-decoration:none;}
 #bootError{max-width:340px;margin:24px auto 0;padding:14px 16px;background:rgba(255,46,81,.1);border:1px solid rgba(255,46,81,.4);border-radius:10px;color:#ff5c73;font-size:13px;line-height:1.55;text-align:center;}
 #bootError button{margin-top:12px;padding:9px 18px;background:linear-gradient(135deg,#ff2e51,#ff5c73);color:#fff;border-radius:8px;font-weight:700;font-size:12px;cursor:pointer;}
 
-/* ═══════════════════════════════════════════════════════════
-   🛠 MAINTENANCE MODE SCREEN
-═══════════════════════════════════════════════════════════ */
+/* MAINTENANCE */
 #maintenanceScreen{position:fixed;inset:0;z-index:9998;background:radial-gradient(circle at 50% 30%,#1a1200,#050208 90%);display:none;align-items:center;justify-content:center;padding:24px;overflow-y:auto;}
 #maintenanceScreen.show{display:flex;}
 .mt-card{width:100%;max-width:440px;background:linear-gradient(160deg,var(--bg-2),var(--bg-1));border:2px solid var(--gold);border-radius:22px;padding:34px 26px 28px;text-align:center;box-shadow:0 0 60px rgba(255,179,0,.4);}
@@ -54,9 +52,7 @@ a{color:inherit;text-decoration:none;}
 .mt-support-btn{width:100%;padding:12px;border-radius:12px;font-family:var(--font-d);font-weight:700;font-size:13px;letter-spacing:1px;color:var(--cyan);background:transparent;border:1px solid rgba(0,229,255,.4);margin-top:10px;}
 .mt-note{font-size:11.5px;color:var(--mute);margin-top:14px;line-height:1.6;}
 
-/* ═══════════════════════════════════════════════════════════
-   📢 SITE NOTICE BANNER (non-blocking)
-═══════════════════════════════════════════════════════════ */
+/* SITE NOTICE */
 #siteNoticeBanner{position:fixed;top:0;left:0;right:0;z-index:260;background:linear-gradient(135deg,rgba(124,77,255,.96),rgba(0,229,255,.96));color:#050810;padding:12px 16px;display:none;align-items:flex-start;gap:12px;box-shadow:0 4px 20px rgba(0,0,0,.4);}
 #siteNoticeBanner.show{display:flex;}
 .snb-icon{font-size:22px;flex-shrink:0;line-height:1.3;}
@@ -114,12 +110,10 @@ body.has-notice-banner #appShell{padding-top:52px;}
 .auth-msg.success{color:var(--green);}
 .auth-hint{font-size:11px;color:var(--mute);margin-top:4px;line-height:1.4;text-align:left;}
 .auth-fine{color:var(--mute);font-size:11px;margin-top:14px;line-height:1.6;}
-
 .app-dl-promo { margin-top: 18px; padding: 14px 16px 16px; background: linear-gradient(135deg, rgba(0,229,255,.08), rgba(124,77,255,.06)); border: 1px solid rgba(0,229,255,.3); border-radius: var(--r-sm); text-align: center; }
 .app-dl-promo p { font-size: 12.5px; color: var(--dim); margin-bottom: 11px; font-weight: 600; letter-spacing: .3px; }
 .app-dl-btn { display: inline-flex; align-items: center; justify-content: center; gap: 8px; padding: 11px 24px; border-radius: 100px; background: linear-gradient(135deg, var(--cyan), var(--cyan-2)); color: #04121a; font-family: var(--font-d); font-weight: 700; font-size: 12.5px; letter-spacing: 1px; text-decoration: none; box-shadow: 0 6px 20px rgba(0,229,255,.35); transition: transform .18s ease, box-shadow .18s ease; }
 .app-dl-btn:hover, .app-dl-btn:focus-visible { transform: translateY(-2px); box-shadow: 0 10px 28px rgba(0,229,255,.5); outline: none; }
-
 #appShell{position:relative;z-index:1;min-height:100vh;padding-bottom:calc(80px + env(safe-area-inset-bottom,0px));max-width:680px;margin:0 auto;}
 .app-header{position:sticky;top:0;z-index:30;display:flex;align-items:center;justify-content:space-between;padding:14px 16px;background:rgba(10,14,26,.92);backdrop-filter:blur(14px);border-bottom:1px solid var(--stroke);gap:8px;}
 .hdr-user{display:flex;align-items:center;gap:10px;min-width:0;}
@@ -350,14 +344,12 @@ body.has-notice-banner #appShell{padding-top:52px;}
 .prize-notif-popup .pnp-amt{font-family:var(--font-d);font-size:22px;font-weight:900;color:#1a1200;}
 .paypal-badge{display:inline-flex;align-items:center;gap:6px;padding:6px 12px;border-radius:100px;background:linear-gradient(135deg,#0070ba,#003087);color:#fff;font-family:var(--font-d);font-size:11px;font-weight:700;letter-spacing:1px;margin-bottom:12px;}
 .paypal-badge .pp-ico{font-size:16px;}
-
 .legal-footer { margin: 28px 14px 16px; padding: 22px 18px; background: linear-gradient(160deg, var(--bg-2), var(--bg-1)); border: 1px solid var(--stroke); border-radius: var(--r); text-align: center; }
 .legal-footer .lf-title { font-family: var(--font-d); font-size: 11px; font-weight: 700; letter-spacing: 2.5px; text-transform: uppercase; color: var(--mute); margin-bottom: 14px; }
 .legal-links { display: flex; flex-wrap: wrap; justify-content: center; gap: 8px 6px; }
 .legal-links a { padding: 8px 14px; border-radius: 100px; background: rgba(255,255,255,.04); border: 1px solid var(--stroke); color: var(--dim); font-size: 12px; font-weight: 600; text-decoration: none; transition: all .2s; white-space: nowrap; }
 .legal-links a:hover, .legal-links a:focus-visible { color: var(--cyan); border-color: rgba(0,229,255,.45); background: rgba(0,229,255,.08); outline: none; }
 .legal-footer .lf-copy { margin-top: 14px; font-size: 11px; color: var(--mute); line-height: 1.6; }
-
 .hdr-brand { display: flex; align-items: center; justify-content: center; gap: 8px; padding: 6px 0 4px; position: relative; overflow: hidden; }
 .hdr-brand-text { font-family: var(--font-d); font-size: 18px; font-weight: 900; letter-spacing: 5px; color: #f5f9ff; position: relative; z-index: 2; text-shadow: 0 0 10px rgba(0,229,255,.9), 0 0 24px rgba(0,229,255,.55), 0 0 40px rgba(124,77,255,.35); animation: brandFloat 3.6s ease-in-out infinite, brandGlow 2.4s ease-in-out infinite; }
 .hdr-brand-text span { color: var(--cyan); text-shadow: 0 0 12px rgba(0,229,255,1), 0 0 28px rgba(0,229,255,.7), 0 0 50px rgba(124,77,255,.5); }
@@ -369,7 +361,6 @@ body.has-notice-banner #appShell{padding-top:52px;}
 @keyframes trophySpin { 0%, 100% { transform: rotate(-6deg) scale(1); } 50% { transform: rotate(6deg) scale(1.12); } }
 .app-header-stack { position: sticky; top: 0; z-index: 30; background: rgba(10,14,26,.92); backdrop-filter: blur(14px); border-bottom: 1px solid var(--stroke); transition: top .2s ease; }
 .hdr-welcome-row { display: flex; align-items: center; justify-content: space-between; padding: 10px 16px 12px; gap: 8px; }
-
 .promo-carousel { position: relative; margin: 0 14px 16px; border-radius: 18px; overflow: hidden; box-shadow: 0 10px 30px rgba(0,0,0,.6); }
 .promo-track { display: flex; transition: transform .5s cubic-bezier(.34,1.2,.64,1); }
 .promo-slide { flex: 0 0 100%; position: relative; min-height: 150px; background-size: cover; background-position: center; display: flex; flex-direction: column; justify-content: flex-end; padding: 20px 18px; }
@@ -384,7 +375,6 @@ body.has-notice-banner #appShell{padding-top:52px;}
 .promo-dots { position: absolute; bottom: 10px; right: 14px; display: flex; gap: 6px; z-index: 2; }
 .promo-dot { width: 6px; height: 6px; border-radius: 50%; background: rgba(255,255,255,.4); transition: all .3s; cursor:pointer;}
 .promo-dot.active { background: #fff; width: 18px; border-radius: 100px; }
-
 .primary-game-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 14px; padding: 0 14px; margin-bottom: 6px; }
 .primary-game-card { position: relative; border-radius: 18px; overflow: hidden; aspect-ratio: 1 / 1.15; cursor: pointer; transition: transform .25s ease, box-shadow .25s ease; box-shadow: 0 10px 30px rgba(0,0,0,.55); }
 .primary-game-card:active { transform: scale(.96); }
@@ -408,7 +398,6 @@ body.has-notice-banner #appShell{padding-top:52px;}
 .primary-game-badge { position: absolute; top: 12px; right: 12px; padding: 5px 11px; border-radius: 100px; font-family: var(--font-d); font-size: 9px; font-weight: 800; letter-spacing: 1px; text-transform: uppercase; z-index: 2; }
 .primary-game-badge.hot { background: linear-gradient(135deg, #ff2e51, #ff5c73); color: #fff; box-shadow: 0 4px 12px rgba(255,46,81,.5); }
 .primary-game-badge.new { background: linear-gradient(135deg, #00e676, #00b894); color: #04121a; box-shadow: 0 4px 12px rgba(0,230,118,.5); }
-
 .lobby-card { display: flex; gap: 12px; padding: 12px; background: linear-gradient(160deg, var(--bg-2), var(--bg-1)); border: 1px solid var(--stroke); border-radius: 14px; margin-bottom: 12px; overflow: hidden; position: relative; transition: border-color .2s, transform .2s; cursor: pointer; }
 .lobby-card:hover { border-color: var(--stroke-2); transform: translateY(-1px); }
 .lobby-card::after { content: ""; position: absolute; top: 0; left: 0; width: 3px; height: 100%; border-radius: 3px; }
@@ -428,7 +417,6 @@ body.has-notice-banner #appShell{padding-top:52px;}
 .lobby-status.live { background: rgba(0,230,118,.15); color: var(--green); border: 1px solid rgba(0,230,118,.4); }
 .lobby-status.ready { background: rgba(0,229,255,.15); color: var(--cyan); border: 1px solid rgba(0,229,255,.4); }
 .lobby-status.waiting { background: rgba(255,179,0,.15); color: var(--gold); border: 1px solid rgba(255,179,0,.4); }
-
 .matches-header { display: flex; align-items: center; gap: 12px; padding: 14px 16px; background: rgba(10,14,26,.92); backdrop-filter: blur(14px); border-bottom: 1px solid var(--stroke); position: sticky; top: 0; z-index: 30; }
 .back-btn { width: 40px; height: 40px; border-radius: 50%; background: var(--bg-2); border: 1px solid var(--stroke); display: flex; align-items: center; justify-content: center; color: var(--text); font-size: 18px; flex-shrink: 0; transition: all .2s; }
 .back-btn:hover{background:var(--bg-3);}
@@ -436,7 +424,6 @@ body.has-notice-banner #appShell{padding-top:52px;}
 .matches-title { flex: 1; min-width: 0; }
 .matches-title h2 { font-family: var(--font-d); font-size: 16px; font-weight: 900; letter-spacing: 1.5px; color: var(--text); margin: 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 .matches-title p { font-size: 11px; color: var(--mute); margin: 2px 0 0; font-weight: 600; }
-
 .player-stats-strip { display: flex; align-items: center; gap: 10px; padding: 12px 14px; margin: 0 14px 14px; background: linear-gradient(135deg, rgba(0,229,255,.08), rgba(124,77,255,.05)); border: 1px solid rgba(0,229,255,.3); border-radius: 14px; }
 .player-stat-avatar { width: 46px; height: 46px; border-radius: 50%; background: linear-gradient(135deg, var(--cyan-2), var(--cyan)); display: flex; align-items: center; justify-content: center; font-family: var(--font-d); font-weight: 900; font-size: 18px; color: #050810; border: 2px solid var(--stroke-2); overflow: hidden; flex-shrink: 0; }
 .player-stat-avatar img { width: 100%; height: 100%; object-fit: cover; }
@@ -444,50 +431,17 @@ body.has-notice-banner #appShell{padding-top:52px;}
 .player-stat-handle { font-family: var(--font-d); font-size: 14px; font-weight: 700; color: var(--text); margin-bottom: 2px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 .player-stat-sub { font-size: 11px; color: var(--mute); font-weight: 600; }
 .player-stat-badge { font-family: var(--font-d); font-size: 10px; font-weight: 800; letter-spacing: 1px; padding: 5px 12px; border-radius: 100px; background: rgba(255,179,0,.15); color: var(--gold); border: 1px solid rgba(255,179,0,.4); flex-shrink: 0; }
-
-#supportFab {
-  position: fixed; right: 20px; bottom: 20px; z-index: 999;
-  width: 58px; height: 58px; border-radius: 50%;
-  display: flex; align-items: center; justify-content: center;
-  cursor: pointer;
-  background: radial-gradient(circle at 30% 30%, #1a0f3a, #05060d 85%);
-  border: 2px solid #00f2fe;
-  box-shadow: 0 0 12px rgba(0, 242, 254, 0.55), 0 0 26px rgba(157, 0, 255, 0.35), 0 6px 20px rgba(0, 0, 0, 0.55);
-  transition: transform .25s cubic-bezier(.34,1.56,.64,1), box-shadow .25s ease, bottom .25s ease;
-  animation: supportPulse 2.6s ease-in-out infinite;
-  color: #00f2fe; -webkit-tap-highlight-color: transparent; outline: none; padding: 0;
-}
+#supportFab { position: fixed; right: 20px; bottom: 20px; z-index: 999; width: 58px; height: 58px; border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; background: radial-gradient(circle at 30% 30%, #1a0f3a, #05060d 85%); border: 2px solid #00f2fe; box-shadow: 0 0 12px rgba(0, 242, 254, 0.55), 0 0 26px rgba(157, 0, 255, 0.35), 0 6px 20px rgba(0, 0, 0, 0.55); transition: transform .25s cubic-bezier(.34,1.56,.64,1), box-shadow .25s ease, bottom .25s ease; animation: supportPulse 2.6s ease-in-out infinite; color: #00f2fe; -webkit-tap-highlight-color: transparent; outline: none; padding: 0; }
 #supportFab svg { width: 26px; height: 26px; display: block; filter: drop-shadow(0 0 6px rgba(0, 242, 254, 0.75)); transition: transform .25s ease; }
 #supportFab:hover, #supportFab:focus-visible { transform: scale(1.12); border-color: #9d00ff; color: #9d00ff; box-shadow: 0 0 20px rgba(0, 242, 254, 0.75), 0 0 40px rgba(157, 0, 255, 0.6), 0 8px 26px rgba(0, 0, 0, 0.6); }
 #supportFab:hover svg { transform: rotate(-8deg) scale(1.06); }
 #supportFab:active { transform: scale(0.96); }
 #supportFab.support-logged-in { bottom: 90px; }
-@keyframes supportPulse {
-  0%, 100% { box-shadow: 0 0 10px rgba(0, 242, 254, 0.45), 0 0 22px rgba(157, 0, 255, 0.28), 0 6px 20px rgba(0, 0, 0, 0.5); }
-  50% { box-shadow: 0 0 22px rgba(0, 242, 254, 0.85), 0 0 44px rgba(157, 0, 255, 0.55), 0 6px 22px rgba(0, 0, 0, 0.55); }
-}
-#supportFab .support-tooltip {
-  position: absolute; right: 74px; top: 50%;
-  transform: translateY(-50%) translateX(8px);
-  background: linear-gradient(135deg, rgba(10,14,26,.98), rgba(16,22,42,.98));
-  color: #eef2ff; font-family: var(--font-d, 'Orbitron', system-ui, sans-serif);
-  font-size: 11.5px; font-weight: 700; letter-spacing: 1px;
-  padding: 9px 14px; border-radius: 10px; border: 1px solid #00f2fe;
-  box-shadow: 0 0 14px rgba(0, 242, 254, 0.5), 0 0 28px rgba(157, 0, 255, 0.3);
-  white-space: nowrap; opacity: 0; pointer-events: none;
-  transition: opacity .22s ease, transform .22s ease;
-}
-#supportFab .support-tooltip::after {
-  content: ""; position: absolute; right: -6px; top: 50%;
-  transform: translateY(-50%) rotate(45deg);
-  width: 10px; height: 10px; background: rgba(16,22,42,.98);
-  border-right: 1px solid #00f2fe; border-top: 1px solid #00f2fe;
-}
+@keyframes supportPulse { 0%, 100% { box-shadow: 0 0 10px rgba(0, 242, 254, 0.45), 0 0 22px rgba(157, 0, 255, 0.28), 0 6px 20px rgba(0, 0, 0, 0.5); } 50% { box-shadow: 0 0 22px rgba(0, 242, 254, 0.85), 0 0 44px rgba(157, 0, 255, 0.55), 0 6px 22px rgba(0, 0, 0, 0.55); } }
+#supportFab .support-tooltip { position: absolute; right: 74px; top: 50%; transform: translateY(-50%) translateX(8px); background: linear-gradient(135deg, rgba(10,14,26,.98), rgba(16,22,42,.98)); color: #eef2ff; font-family: var(--font-d, 'Orbitron', system-ui, sans-serif); font-size: 11.5px; font-weight: 700; letter-spacing: 1px; padding: 9px 14px; border-radius: 10px; border: 1px solid #00f2fe; box-shadow: 0 0 14px rgba(0, 242, 254, 0.5), 0 0 28px rgba(157, 0, 255, 0.3); white-space: nowrap; opacity: 0; pointer-events: none; transition: opacity .22s ease, transform .22s ease; }
+#supportFab .support-tooltip::after { content: ""; position: absolute; right: -6px; top: 50%; transform: translateY(-50%) rotate(45deg); width: 10px; height: 10px; background: rgba(16,22,42,.98); border-right: 1px solid #00f2fe; border-top: 1px solid #00f2fe; }
 #supportFab:hover .support-tooltip, #supportFab:focus-visible .support-tooltip { opacity: 1; transform: translateY(-50%) translateX(0); }
-#forceUpdateScreen.show ~ #supportFab,
-body.force-update-locked #supportFab,
-body.maintenance-locked #supportFab { display: none !important; }
-
+#forceUpdateScreen.show ~ #supportFab, body.force-update-locked #supportFab, body.maintenance-locked #supportFab { display: none !important; }
 @media (min-width: 900px) {
   html, body { font-size: 16px; }
   #appShell { max-width: 1200px; padding-bottom: 40px; padding-left: 24px; padding-right: 24px; }
@@ -602,7 +556,6 @@ body.maintenance-locked #supportFab { display: none !important; }
 </head>
 <body>
 
-<!-- 🛠 MAINTENANCE SCREEN -->
 <div id="maintenanceScreen">
   <div class="mt-card">
     <div class="mt-icon">🛠️</div>
@@ -619,7 +572,6 @@ body.maintenance-locked #supportFab { display: none !important; }
   </div>
 </div>
 
-<!-- 📢 SITE NOTICE BANNER -->
 <div id="siteNoticeBanner">
   <div class="snb-icon">📢</div>
   <div class="snb-body">
@@ -1108,6 +1060,8 @@ const state = {
   activeGame: "BGMI", activeMode: "Battle Royale", activeTeam: "ALL",
   activeNav: "home", currentScreen: "home",
   tournaments: [], joinedMatches: [], transactions: [], notifications: [],
+  // 🆕 ALL tournaments cache (unfiltered by game) — used for lobby lookup
+  allTournaments: [],
   appConfig: null, forceUpdateActive: false, bannerDismissed: false,
   selectedMatch: null, referrals: [],
   promotions: [], gameStats: {}, adminLobbyItems: null,
@@ -1221,8 +1175,28 @@ function generateReferralCode(name) {
 }
 
 /* ═══════════════════════════════════════════════════════════
-   🛠 MAINTENANCE MODE HANDLER
-   Reads app_config/maintenance: { active, title, message, eta }
+   🎯 FIND MATCH HELPER — search across all caches
+═══════════════════════════════════════════════════════════ */
+function findMatchById(id) {
+  if (!id) return null;
+  var sid = String(id);
+  // 1. joined matches
+  var m = state.joinedMatches.find(function(t) { return String(t.id) === sid; });
+  if (m) return m;
+  // 2. current view tournaments
+  m = state.tournaments.find(function(t) { return String(t.id) === sid; });
+  if (m) return m;
+  // 3. all tournaments cache (unfiltered) 🆕
+  m = state.allTournaments.find(function(t) { return String(t.id) === sid; });
+  if (m) return m;
+  // 4. last lobby items
+  m = (state.lastLobbyItems || []).find(function(t) { return String(t.id) === sid; });
+  if (m) return m;
+  return null;
+}
+
+/* ═══════════════════════════════════════════════════════════
+   🛠 MAINTENANCE MODE
 ═══════════════════════════════════════════════════════════ */
 function applyMaintenance(cfg) {
   if (!cfg) { hideMaintenance(); return; }
@@ -1230,11 +1204,9 @@ function applyMaintenance(cfg) {
   if (!active) { hideMaintenance(); return; }
   state.maintenanceActive = true;
   document.body.classList.add("maintenance-locked");
-  // ETA
   var eta = cfg.eta || cfg.backIn || "";
   if (eta && D.mtEta && D.mtEtaText) { D.mtEta.style.display = "inline-block"; D.mtEtaText.textContent = eta; }
   else if (D.mtEta) D.mtEta.style.display = "none";
-  // Notice
   var noticeTitle = cfg.noticeTitle || cfg.title || "Notice from Admin";
   var noticeMsg = cfg.message || cfg.notice || cfg.description || "";
   if (noticeMsg && D.mtNoticeBox) {
@@ -1244,7 +1216,6 @@ function applyMaintenance(cfg) {
   } else if (D.mtNoticeBox) {
     D.mtNoticeBox.style.display = "none";
   }
-  // Show screen
   if (D.maintenanceScreen) D.maintenanceScreen.classList.add("show");
   document.body.style.overflow = "hidden";
 }
@@ -1269,10 +1240,7 @@ function attachMaintenanceListener() {
   state.unsubs.maintenance = function() { handlers.forEach(function(fn) { try { fn(); } catch (e) {} }); };
 }
 
-/* ═══════════════════════════════════════════════════════════
-   📢 SITE NOTICE BANNER (non-blocking)
-   Reads app_config/siteNotice: { active, title, message }
-═══════════════════════════════════════════════════════════ */
+/* 📢 SITE NOTICE BANNER */
 function applySiteNotice(cfg) {
   if (!cfg || !cfg.active) {
     if (D.siteNoticeBanner) D.siteNoticeBanner.classList.remove("show");
@@ -1304,7 +1272,7 @@ function attachSiteNoticeListener() {
 }
 
 /* ═══════════════════════════════════════════════════════════
-   🎯 LOBBY SETTINGS LISTENER (admin panel: lobby_settings/current)
+   🎯 LOBBY SETTINGS LISTENER
 ═══════════════════════════════════════════════════════════ */
 function attachLobbySettingsListener() {
   if (state.unsubs.lobbySettings) state.unsubs.lobbySettings();
@@ -1325,7 +1293,6 @@ function attachLobbySettingsListener() {
     console.warn("LobbySettings listener:", err);
   });
 }
-
 function applyLobbySettings() {
   var s = state.lobbySettings;
   if (D.lobbySectionTitle) D.lobbySectionTitle.textContent = s.title || "Your Lobby Info";
@@ -1451,7 +1418,6 @@ function buildBannerHTML(t) {
   }
   return fallbackBannerHTML(t);
 }
-
 function renderModeFilter() {
   if (!D.modeFilter) return;
   var modes = GAME_MODES[state.activeGame] || [];
@@ -1492,15 +1458,12 @@ function syncSupportFabPosition() {
   var isLoggedIn = !!(state.user && state.profile) && !D.appShell.classList.contains("hidden");
   D.supportFab.classList.toggle("support-logged-in", isLoggedIn);
 }
-
-/* MAINTENANCE SUPPORT BTN */
 if (D.mtSupportBtn) {
   D.mtSupportBtn.addEventListener("click", function() {
     try { var w = window.open(SUPPORT_URL, "_blank", "noopener,noreferrer"); if (!w) window.location.href = SUPPORT_URL; }
     catch (e) { window.location.href = SUPPORT_URL; }
   });
 }
-/* SITE NOTICE CLOSE */
 if (D.snbCloseBtn) {
   D.snbCloseBtn.addEventListener("click", function() {
     state.noticeDismissed = true;
@@ -1513,7 +1476,6 @@ if (D.snbCloseBtn) {
 function setupEventListeners() {
   if (D.tabLogin) D.tabLogin.addEventListener("click", function() { showAuthView("login"); });
   if (D.tabSignup) D.tabSignup.addEventListener("click", function() { showAuthView("signup"); });
-
   $$(".pw-toggle").forEach(function(btn) {
     btn.addEventListener("click", function() {
       var t = document.getElementById(btn.dataset.target); if (!t) return;
@@ -1522,7 +1484,6 @@ function setupEventListeners() {
       btn.textContent = isPw ? "🙈" : "👁️";
     });
   });
-
   if (D.modeFilter) D.modeFilter.addEventListener("click", function(e) {
     var btn = e.target.closest("[data-mode]"); if (!btn) return;
     state.activeMode = btn.dataset.mode; renderModeFilter(); attachTournamentsListener();
@@ -1543,10 +1504,8 @@ function setupEventListeners() {
     $$("#matchesTeamFilter .team-btn").forEach(function(b) { b.classList.toggle("active", b === btn); });
     attachTournamentsListener();
   });
-
   $$(".nav-btn").forEach(function(b) { b.addEventListener("click", function() { setNav(b.dataset.nav); }); });
   if (D.hdrWallet) D.hdrWallet.addEventListener("click", function() { setNav("wallet"); });
-
   if (D.notifBtn) D.notifBtn.addEventListener("click", async function() {
     openModal("notifModal"); renderNotifList();
     var unread = state.notifications.filter(function(n) { return !n.read; });
@@ -1555,7 +1514,6 @@ function setupEventListeners() {
     }
   });
   if (D.matchesNotifBtn) D.matchesNotifBtn.addEventListener("click", function() { if (D.notifBtn) D.notifBtn.click(); });
-
   document.addEventListener("click", function(e) {
     var closeBtn = e.target.closest("[data-close]");
     if (closeBtn) { closeModal(closeBtn.dataset.close); return; }
@@ -1564,7 +1522,6 @@ function setupEventListeners() {
   document.addEventListener("keydown", function(e) {
     if (e.key === "Escape") $$(".modal-overlay.open").forEach(function(m) { m.classList.remove("open"); });
   });
-
   if (D.matchesBackBtn) D.matchesBackBtn.addEventListener("click", function() { state.currentScreen = "home"; setNav("home"); });
   if (D.signupForm) D.signupForm.addEventListener("submit", handleSignup);
   if (D.loginForm) D.loginForm.addEventListener("submit", handleLogin);
@@ -1628,7 +1585,7 @@ function setupEventListeners() {
     if (state.forceUpdateActive || state.maintenanceActive) { e.preventDefault(); e.stopPropagation(); return; }
     var detailBtn = e.target.closest("[data-detail]"); if (!detailBtn) return;
     var id = detailBtn.dataset.detail;
-    var match = state.joinedMatches.find(function(t) { return t.id === id; });
+    var match = findMatchById(id);
     if (match) openDetailModal(match);
   });
   if (D.primaryGameGrid) D.primaryGameGrid.addEventListener("click", function(e) {
@@ -1868,11 +1825,11 @@ function handleListClick(e) {
   var detailBtn = e.target.closest("[data-detail]");
   if (joinBtn) {
     var id = joinBtn.dataset.join;
-    var match = state.tournaments.find(function(t) { return t.id === id; });
+    var match = findMatchById(id);
     if (match) openJoinModal(match);
   } else if (detailBtn) {
     var id2 = detailBtn.dataset.detail;
-    var match2 = state.tournaments.find(function(t) { return t.id === id2; }) || state.joinedMatches.find(function(t) { return t.id === id2; });
+    var match2 = findMatchById(id2);
     if (match2) openDetailModal(match2);
   }
 }
@@ -2017,6 +1974,22 @@ function attachTournamentsListener() {
     if (D.tournamentsEmpty) D.tournamentsEmpty.classList.remove("hidden");
   });
 }
+
+/* 🆕 ALL TOURNAMENTS LISTENER — for lobby featuredIds lookup */
+function attachAllTournamentsListener() {
+  if (state.unsubs.allTournaments) state.unsubs.allTournaments();
+  var q = query(collection(db, "tournaments"));
+  state.unsubs.allTournaments = onSnapshot(q, function(snap) {
+    var items = [];
+    snap.forEach(function(d) { items.push(Object.assign({ id: d.id }, d.data())); });
+    state.allTournaments = items;
+    // Re-render lobby when all tournaments update (so featuredIds resolve)
+    if (state.lobbySettings && state.lobbySettings.mode === "manual") {
+      refreshLobbyDisplay();
+    }
+  }, function(err) { console.warn("All tournaments listener:", err); });
+}
+
 function attachJoinedListener(uid) {
   if (state.unsubs.joined) state.unsubs.joined();
   var q = query(collection(db, "tournaments"), where("joinedUsers", "array-contains", uid));
@@ -2027,6 +2000,8 @@ function attachJoinedListener(uid) {
     state.joinedMatches = items;
     renderJoined(items);
     if (state.tournaments.length) renderTournaments(state.tournaments);
+    // Re-render lobby if in manual mode
+    if (state.lobbySettings && state.lobbySettings.mode === "manual") refreshLobbyDisplay();
   }, function(err) { console.error("Joined listener:", err); });
 }
 function attachTxListener(uid) {
@@ -2454,16 +2429,8 @@ function renderLobbyFromSettings() {
 
   var items = [];
   if (s.mode === "manual" && s.featuredIds.length > 0) {
-    var allMatches = [].concat(state.tournaments, state.joinedMatches);
-    var map = new Map();
-    allMatches.forEach(function(t) { map.set(String(t.id), t); });
-    items = s.featuredIds.map(function(id) { return map.get(String(id)); }).filter(Boolean);
-    if (items.length === 0) {
-      var allFromStats = state.lastLobbyItems || [];
-      var map2 = new Map();
-      allFromStats.forEach(function(t) { map2.set(String(t.id), t); });
-      items = s.featuredIds.map(function(id) { return map2.get(String(id)); }).filter(Boolean);
-    }
+    // 🆕 Search across allTournaments + tournaments + joinedMatches + lastLobbyItems
+    var items = s.featuredIds.map(function(id) { return findMatchById(id); }).filter(Boolean);
   } else {
     var now = Date.now();
     items = (state.lastLobbyItems || []).filter(function(t) {
@@ -2525,8 +2492,9 @@ function renderLobbyCards(items) {
   D.lobbyInfoContainer.querySelectorAll(".lobby-card").forEach(function(card) {
     card.addEventListener("click", function() {
       var id = card.dataset.detail; if (!id) return;
-      var match = state.joinedMatches.find(function(t) { return t.id === id; }) || state.tournaments.find(function(t) { return t.id === id; });
+      var match = findMatchById(id);
       if (match) openDetailModal(match);
+      else showToast("Match details not available.", "error");
     });
   });
 }
@@ -2709,6 +2677,7 @@ if (auth) {
       attachReferralsListener(user.uid); attachPromotionsListener();
       attachGameStatsListener(); attachGameCardsListener();
       attachAdminLobbyListener(); attachHomeMatchFilterListener();
+      attachAllTournamentsListener();
       attachLobbySettingsListener();
       checkPaymentRedirect(); syncSupportFabPosition();
     } catch (err) {
@@ -2730,7 +2699,7 @@ document.addEventListener("touchend", function(e) {
   lastTouch = now;
 }, { passive: false });
 
-console.log("%c ArenaX ", "background:#00e5ff;color:#050810;font-weight:bold;padding:4px 8px;border-radius:4px", "Desktop + Mobile + Maintenance + Notice + Lobby Settings ✅");
+console.log("%c ArenaX ", "background:#00e5ff;color:#050810;font-weight:bold;padding:4px 8px;border-radius:4px", "Lobby + Maintenance + Notice + findMatchById ✅");
 </script>
 </body>
 </html>
